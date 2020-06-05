@@ -10,6 +10,8 @@ import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
+import static com.vaadin.ui.UI.getCurrent;
+
 public class TopPanelUser extends HorizontalLayout {
 
     public TopPanelUser(){
@@ -41,22 +43,22 @@ public class TopPanelUser extends HorizontalLayout {
         bar.addStyleName("user-menu");
         MenuBar.MenuItem item1 = null;
 
-        if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            profilbild = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getImage();
+        if(getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            profilbild = ((Student) getCurrent().getSession().getAttribute(Roles.Student)).getImage();
             profilbild.setHeight(70, Unit.PIXELS);
             profilbild.setWidth(70, Unit.PIXELS);
             // Topgrid.addComponent(profilbild,4,0,4,0);
             //   Topgrid.setComponentAlignment(profilbild, Alignment.BOTTOM_RIGHT);
             item1 = bar.addItem(
-                    ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getVorname(),
+                    ((Student) getCurrent().getSession().getAttribute(Roles.Student)).getVorname(),
                     profilbild.getSource(),
                     null);
-        } else if(MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            firma_logo = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo();
+        } else if(getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            firma_logo = ((Unternehmen) getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo();
             firma_logo.setHeight(70, Unit.PIXELS);
             firma_logo.setWidth(70, Unit.PIXELS);
             item1 = bar.addItem(
-                    ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname(),
+                    ((Unternehmen) getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname(),
                     firma_logo.getSource(),
                     null);
         }

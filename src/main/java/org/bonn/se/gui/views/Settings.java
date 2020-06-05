@@ -79,9 +79,7 @@ public class Settings extends VerticalLayout implements View {
         if( user != null) {
             this.setUp();
         } else {
-
-            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
-
+            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
         }
     }
 }
