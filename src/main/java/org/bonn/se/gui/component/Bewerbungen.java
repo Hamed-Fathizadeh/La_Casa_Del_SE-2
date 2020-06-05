@@ -63,7 +63,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T> {
 
         this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Unternehmen");
         this.addComponentColumn(p ->{
-            RatingStars rating = new RatingStars(); rating.setMaxValue(5); rating.setValue(p.getRating());
+            RatingStars rating = new RatingStars(); rating.setMaxValue(5); rating.setValue(p.getRating()); rating.setReadOnly(true);
             return rating;  }).setCaption("Bewertung");
         this.addColumn(BewerbungDTO::getTitel).setCaption("Titel");
         this.addColumn(BewerbungDTO::getDatum).setCaption("Beginn");

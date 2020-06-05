@@ -141,13 +141,13 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",containerNeuigkeiten);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
-        gAnzeigen.setWidth("700px");
+        gAnzeigen.setWidth("705px");
 
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungen.load("Top 5");
         Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen);
         gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
-        gBewerbungen.setWidth("700px");
+        gBewerbungen.setWidth("705px");
 
 //bottom grid für bewerbung und Neugkeiten
         String ls1 = "<p class=MsoNormal><b><span style='font-size:18.0pt;line-height:107%;\n" +
