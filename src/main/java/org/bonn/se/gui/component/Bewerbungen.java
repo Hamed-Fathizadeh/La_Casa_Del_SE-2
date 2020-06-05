@@ -5,6 +5,7 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.util.List;
 
@@ -57,14 +58,13 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T> {
         ThemeResource resource3 = new ThemeResource("img/Anzeigen/orange.png");
         Image orange = new Image(null, resource3);
         orange.setDescription("Entwurf");
-       // RatingStars ratingStars = new RatingStars();
-       // ratingStars.setMaxValue(5);
+        RatingStars ratingStars = new RatingStars();
+        ratingStars.setMaxValue(5);
 
         this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Unternehmen");
-      //  this.addComponentColumn(p ->{
-       //     RatingStars rating = new RatingStars(); rating.setMaxValue(5); rating.setValue(p.getRating());
-       //     return rating;  }).setCaption("Bewertung");
-
+        this.addComponentColumn(p ->{
+            RatingStars rating = new RatingStars(); rating.setMaxValue(5); rating.setValue(p.getRating());
+            return rating;  }).setCaption("Bewertung");
         this.addColumn(BewerbungDTO::getTitel).setCaption("Titel");
         this.addColumn(BewerbungDTO::getDatum).setCaption("Beginn");
         this.addColumn(Be -> (Be.getStatus() == 1 ? "gesendet" : Be.getStatus() == 2 ? "in Bearbeitung" : Be.getStatus() == 3 ? "Entwurf": "gelöscht" )).setCaption("Status");
