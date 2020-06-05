@@ -1,0 +1,11 @@
+//$mat-background-color: #303030;
+@import "mytheme.scss";
+
+
+
+@import "../material/material.scss";
+
+.demo {
+  @include demo;
+  @include material;
+}
