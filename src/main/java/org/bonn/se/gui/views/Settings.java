@@ -6,7 +6,6 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.gui.window.KontoLoeschen;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.util.Views;
 
@@ -59,8 +58,7 @@ public class Settings extends VerticalLayout implements View {
         loeschen.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                KontoLoeschen window = new KontoLoeschen();
-                UI.getCurrent().addWindow(window);
+
             }
         });
 
