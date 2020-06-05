@@ -6,7 +6,9 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.User;
+import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 
@@ -28,15 +30,18 @@ public class Settings extends VerticalLayout implements View {
 
         TopPanelUser topPanelUser = new TopPanelUser();
         Label ls = new Label(ls3, ContentMode.HTML);
+        //Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
 
 
         Label label1 = new Label("<h2>Benutzerkonto löschen</h2>", ContentMode.HTML);
 
         Label label3 = new Label("<h3>Hier klnnen Sie Ihr Benutzerkonto löschen.Bitte beachten Sie, dass wenn" +
                 "Sie Ihr Benutzerkonto löschen all Ihre Daten endgültig gelöscht werden und Ihre Email aus dem " +
-                "System entfernt wird. Sollten Sie sich erneut bei Lacolsco anmekden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
+                "System entfernt wird. Sollten Sie sich erneut bei Lacolsco anmelden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
 
         Button loeschen = new Button("Konto löschen");
+
+        Label line = new Label("<hr>",ContentMode.HTML);
 
         layout.addComponent(ls);
         layout.setComponentAlignment(ls, Alignment.MIDDLE_CENTER);
@@ -49,6 +54,9 @@ public class Settings extends VerticalLayout implements View {
 
         layout.addComponent(loeschen);
         layout.setComponentAlignment(loeschen, Alignment.MIDDLE_CENTER);
+
+        layout.addComponent(line);
+        layout.setComponentAlignment(line, Alignment.MIDDLE_CENTER);
 
         loeschen.setEnabled(false);
 

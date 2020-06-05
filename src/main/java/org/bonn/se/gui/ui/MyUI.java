@@ -15,6 +15,7 @@ import org.bonn.se.model.objects.entitites.User;
 import javax.servlet.annotation.WebServlet;
 
 import static org.bonn.se.services.util.Views.*;
+import static org.bonn.se.services.util.Views.Settings;
 
 
 /**
@@ -55,7 +56,7 @@ public class MyUI extends UI {
         navi.addView(Stellenbeschreibung, org.bonn.se.gui.views.Stellenbeschreibung.class);
         navi.addView(ProfilVerwaltenStudent, org.bonn.se.gui.views.ProfilVerwaltenStudent.class);
         navi.addView(AlleBewerbungenView, org.bonn.se.gui.views.AlleBewerbungenView.class);
-
+        navi.addView(Settings, org.bonn.se.gui.views.Settings.class);
 
 
         UI.getCurrent().getNavigator().navigateTo(RegisterStudent);
