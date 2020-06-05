@@ -47,7 +47,7 @@ public class MyUI extends UI {
 
         Navigator navi = new Navigator(this , this );
         navi.addView(RegisterStudent, RegisterStudent.class);
-        navi.addView(MainView, org.bonn.se.gui.views.MainView.class);//loginview
+        navi.addView(MainView, org.bonn.se.gui.views.MainView.class);
         navi.addView(RegisterUnternehmen, RegisterUnternehmer.class);
         navi.addView(StudentHomeView, StudentHomeView.class);
         navi.addView(UnternehmenHomeView, org.bonn.se.gui.views.UnternehmenHomeView.class);
