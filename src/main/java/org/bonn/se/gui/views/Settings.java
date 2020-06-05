@@ -19,7 +19,7 @@ public class Settings extends VerticalLayout implements View {
     public void setUp(){
         VerticalLayout layout = new VerticalLayout();
         this.setSizeFull();
-        //layout.setMargin(false);
+        layout.setMargin(false);
 
         String ls3 = "<p class=MsoNormal><b><span style='font-size:20.0pt;line-height:107%;\n" +
                 "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
