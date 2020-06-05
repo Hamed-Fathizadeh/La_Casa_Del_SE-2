@@ -30,6 +30,25 @@
 // Example variants can be copy/pasted from https://vaadin.com/docs/v8/framework/articles/ValoExamples.html
 //0f2a54
 
+$green: #40b527;
+div .onoffswitch-slider {
+  background-color: #d32f2f;
+  border-color: #d32f2f;
+
+}
+div .onoffswitch-slider:before {
+  border-color: #d32f2f;
+}
+
+div .onoffswitch-slider.on {
+  background-color: $green;
+  border-color: $green;
+}
+
+div .onoffswitch-slider.on:before {
+  border-color: $green;
+}
+
 .demo .v-menubar-user-menu  > .v-menubar-menuitem {
   color: white;
 }
@@ -90,6 +109,7 @@
   @include material;
 
   // Insert your own theme rules here
+
 
 
 }

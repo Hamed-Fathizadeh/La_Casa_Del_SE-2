@@ -4,6 +4,7 @@ import com.vaadin.addon.onoffswitch.OnOffSwitch;
 import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.bonn.se.control.AnzStatusControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
@@ -16,6 +17,10 @@ import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 
 public class StellenanzeigeWindow extends Window {
+
+
+    private OnOffSwitch onOffSwitch = new OnOffSwitch();
+
 
     public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data)  {
         setUp(stellenanzeige,unternehmen_data);
@@ -161,18 +166,40 @@ public class StellenanzeigeWindow extends Window {
             gridLayout.addComponent(bearbeiten, 2, 12, 2, 12);
             gridLayout.addComponent(delete, 3, 12, 3, 12);
 
+            onOffSwitch.setCaption("Status");
+            if(stellenanzeige.getStatus() == 1) {
+                onOffSwitch = new OnOffSwitch(true);
 
-            final OnOffSwitch onoffSwitch = new OnOffSwitch(false);
+            } else if(stellenanzeige.getStatus() == 2) {
+                 onOffSwitch = new OnOffSwitch(false);
 
-// Vaadin8
-            onoffSwitch.addValueChangeListener(new HasValue.ValueChangeListener<Boolean>() {
+            }
+            gridLayout.addComponent(onOffSwitch,4,12,4,12);
+            gridLayout.setComponentAlignment(onOffSwitch,Alignment.MIDDLE_CENTER);
+            onOffSwitch.addValueChangeListener(new HasValue.ValueChangeListener<Boolean>() {
                 @Override
                 public void valueChange(HasValue.ValueChangeEvent<Boolean> event) {
                     boolean checked = event.getValue();
+                    if(checked) {
+                        stellenanzeige.setStatus(1);
+                        Notification.show("Anzeige online!");
+                    } else {
+                        stellenanzeige.setStatus(2);
+                        Notification.show("Anzeige offline!");
+                    }
+                    try {
+                        AnzStatusControl.changeStatus(stellenanzeige);
+                    } catch (DatabaseException e) {
+                        e.printStackTrace();
+                    }
+
                     System.out.println("OnOffSwitch checked : " + checked);
+
                 }
             });
-           gridLayout.addComponent(onoffSwitch,4,12,4,12);
+
+// Vaadin8
+
 
 
             back.addClickListener(event -> {
