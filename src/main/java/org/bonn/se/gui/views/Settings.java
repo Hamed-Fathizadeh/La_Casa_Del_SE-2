@@ -59,6 +59,7 @@ public class Settings extends VerticalLayout implements View {
         layout.setComponentAlignment(line, Alignment.MIDDLE_CENTER);
 
         loeschen.setEnabled(false);
+        layout.addComponent(topPanelUser);
 
         this.addComponent(layout);
         this.setSizeFull();
@@ -73,13 +74,30 @@ public class Settings extends VerticalLayout implements View {
 
     }
 
+   // @Override
+   // public void enter(ViewChangeListener.ViewChangeEvent event) {
+     //   User user = ((MyUI) UI.getCurrent()).getUser();
+    //    if( user != null) {
+      //      this.setUp();
+        //} else {
+          //  UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+    //    }
+  //  }
+
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        User user = ((MyUI) UI.getCurrent()).getUser();
-        if( user != null) {
+
+
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.setUp();
+           // UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            this.setUp();
+            //UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+          UI.getCurrent().getNavigator().getCurrentNavigationState();
         }
     }
 }
