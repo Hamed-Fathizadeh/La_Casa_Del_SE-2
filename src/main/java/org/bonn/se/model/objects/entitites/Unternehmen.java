@@ -1,5 +1,6 @@
 package org.bonn.se.model.objects.entitites;
 import com.vaadin.ui.Image;
+import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.util.IllegalException;
 
 import java.util.ArrayList;
@@ -19,6 +20,15 @@ public class Unternehmen extends User {
        private String branche;
        private String kontaktnummer;
        private Adresse adresse;
+       private StellenanzeigeDTO stellenanzeigeDTO;
+
+    public StellenanzeigeDTO getStellenanzeigeDTO() {
+        return stellenanzeigeDTO;
+    }
+
+    public void setStellenanzeigeDTO(StellenanzeigeDTO stellenanzeigeDTO) {
+        this.stellenanzeigeDTO = stellenanzeigeDTO;
+    }
 
     public int getGruendungsjahr() {
         return gruendungsjahr;

@@ -6,12 +6,15 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.SingleSelect;
 import com.vaadin.ui.UI;
+import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenanzeigeWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.Views;
 
 import java.util.List;
 
@@ -46,9 +49,13 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
-            StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(sa,unternehmen_data);
-            UI.getCurrent().addWindow(stellenanzeigeWindow);
-
+            if(sa.getStatus() == 3 || sa.getStatus() == 0) {
+                ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigeDTO(sa);
+                MyUI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
+            } else {
+                StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmen_data);
+                UI.getCurrent().addWindow(stellenanzeigeWindow);
+            }
         });
 
         List<T> liste = (List<T>) container.getListe();

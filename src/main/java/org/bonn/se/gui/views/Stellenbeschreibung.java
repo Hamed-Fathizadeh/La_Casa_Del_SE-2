@@ -30,9 +30,13 @@ public class Stellenbeschreibung extends GridLayout implements View {
 
         final RichTextArea richTextArea = new RichTextArea();
         richTextArea.setSizeFull();
-        richTextArea.setValue("<h1>Hallo</h1>\n" +
-                "<p>Hier können Sie ihre Stellenbeschreibung verfassen.</p>");
-
+        if( ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigeDTO() != null) {
+         richTextArea.setValue( ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigeDTO().getBeschreibung());
+         ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigeDTO(null);
+        } else {
+            richTextArea.setValue("<h1>Hallo</h1>\n" +
+                    "<p>Hier können Sie ihre Stellenbeschreibung verfassen.</p>");
+        }
         Button abbrechen = new Button("Abbrechen");
 
         abbrechen.addClickListener(new Button.ClickListener() {
@@ -142,12 +146,10 @@ public class Stellenbeschreibung extends GridLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        if( ((MyUI) UI.getCurrent()).getUser() != null) {
+        if( ( MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)!= null )) {
             this.setUp();
         } else {
-
             UI.getCurrent().getNavigator().navigateTo(Views.RegisterUnternehmen);
-
         }
     }
 
