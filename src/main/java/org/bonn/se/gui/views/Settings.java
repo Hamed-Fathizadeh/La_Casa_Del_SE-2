@@ -35,13 +35,15 @@ public class Settings extends VerticalLayout implements View {
 
         Label label1 = new Label("<h2>Benutzerkonto löschen</h2>", ContentMode.HTML);
 
-        Label label3 = new Label("<h3>Hier klnnen Sie Ihr Benutzerkonto löschen.Bitte beachten Sie, dass wenn" +
-                "Sie Ihr Benutzerkonto löschen all Ihre Daten endgültig gelöscht werden und Ihre Email aus dem " +
-                "System entfernt wird. Sollten Sie sich erneut bei Lacolsco anmelden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
+        Label label3 = new Label("<h3>Hier können Sie Ihr Benutzerkonto löschen. Bitte beachten Sie, dass wenn " +
+                "Sie Ihr Benutzerkonto löschen \n" + "all Ihre Daten endgültig gelöscht werden und Ihre Email aus dem " +
+                "System entfernt wird. Sollten Sie sich erneut" + " bei Lacolsco anmelden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
 
         Button loeschen = new Button("Konto löschen");
 
         Label line = new Label("<hr>",ContentMode.HTML);
+
+        layout.addComponent(topPanelUser);
 
         layout.addComponent(ls);
         layout.setComponentAlignment(ls, Alignment.MIDDLE_CENTER);
@@ -58,11 +60,12 @@ public class Settings extends VerticalLayout implements View {
         layout.addComponent(line);
         layout.setComponentAlignment(line, Alignment.MIDDLE_CENTER);
 
-        loeschen.setEnabled(false);
-        layout.addComponent(topPanelUser);
+        loeschen.setEnabled(true);
+
 
         this.addComponent(layout);
-        this.setSizeFull();
+        this.setMargin(false);
+
 
         loeschen.addClickListener(new Button.ClickListener() {
             @Override
