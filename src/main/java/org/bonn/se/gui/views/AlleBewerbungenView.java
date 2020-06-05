@@ -10,6 +10,7 @@ import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.*;
+import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 public class AlleBewerbungenView extends VerticalLayout implements View {
@@ -69,13 +70,16 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        User user = ((MyUI) UI.getCurrent()).getUser();
-        if( user == null) {
+        User user = null;
+        if( UI.getCurrent().getSession().getAttribute(Roles.Student) == null) {
             UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+
         } else {
 
             this.setUp();
         }
+
     }
 
 }
+

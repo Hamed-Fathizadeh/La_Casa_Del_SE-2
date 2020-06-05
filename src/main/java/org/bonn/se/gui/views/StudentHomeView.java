@@ -170,6 +170,7 @@ public class StudentHomeView extends VerticalLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
+                System.out.println("stuhomeview hier 1");
             }
         });
 
