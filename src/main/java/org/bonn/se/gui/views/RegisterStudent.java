@@ -51,12 +51,12 @@ public class RegisterStudent extends GridLayout implements View {
 
         FormLayout form = new FormLayout();
         form.setMargin(true);
-        RegistrationTextField vorname = new RegistrationTextField( VaadinIcons.USER+" Vorname");
-
+        RegistrationTextField vorname = new RegistrationTextField( "Vorname");
+        vorname.setIcon(VaadinIcons.USER);
         vorname.selectAll();
 
         System.out.println(vorname.getPrimaryStyleName());
-        RegistrationTextField nachname = new RegistrationTextField(VaadinIcons.USER +" Nachname");
+        RegistrationTextField nachname = new RegistrationTextField( "Nachname");
         RegistrationTextField email = new RegistrationTextField(VaadinIcons.ENVELOPE+ " E-Mail");
         RegistrationPasswordField passwort = new RegistrationPasswordField(VaadinIcons.PASSWORD + " Passwort");
       //  RegistrationPasswordField Vnummer = new RegistrationPasswordField("Verifizierungscode");
