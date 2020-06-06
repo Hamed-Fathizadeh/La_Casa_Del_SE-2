@@ -4,6 +4,7 @@ package org.bonn.se.gui.views;
 import com.vaadin.data.Binder;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileResource;
@@ -50,13 +51,14 @@ public class RegisterStudent extends GridLayout implements View {
 
         FormLayout form = new FormLayout();
         form.setMargin(true);
-        RegistrationTextField vorname = new RegistrationTextField("Vorname");
+        RegistrationTextField vorname = new RegistrationTextField( VaadinIcons.USER+" Vorname");
+
         vorname.selectAll();
 
         System.out.println(vorname.getPrimaryStyleName());
-        RegistrationTextField nachname = new RegistrationTextField("Nachname");
-        RegistrationTextField email = new RegistrationTextField("E-Mail");
-        RegistrationPasswordField passwort = new RegistrationPasswordField("Passwort");
+        RegistrationTextField nachname = new RegistrationTextField(VaadinIcons.USER +" Nachname");
+        RegistrationTextField email = new RegistrationTextField(VaadinIcons.ENVELOPE+ " E-Mail");
+        RegistrationPasswordField passwort = new RegistrationPasswordField(VaadinIcons.PASSWORD + " Passwort");
       //  RegistrationPasswordField Vnummer = new RegistrationPasswordField("Verifizierungscode");
 
         Button registerButton = new Button("Registrieren");
