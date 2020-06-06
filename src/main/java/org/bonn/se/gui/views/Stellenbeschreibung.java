@@ -31,9 +31,11 @@ public class Stellenbeschreibung extends GridLayout implements View {
 
         final RichTextArea richTextArea = new RichTextArea();
         richTextArea.setSizeFull();
+
         if( ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigeDTO() != null) {
          richTextArea.setValue( ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigeDTO().getBeschreibung());
          ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigeDTO(null);
+
         } else {
             richTextArea.setValue("<h1>Hallo</h1>\n" +
                     "<p>Hier können Sie ihre Stellenbeschreibung verfassen.</p>");
@@ -65,6 +67,7 @@ public class Stellenbeschreibung extends GridLayout implements View {
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
                                     if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
+
                                         ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
                                                 .getStellenanzeige().setBeschreibung(richTextArea.getValue());
                                         ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))

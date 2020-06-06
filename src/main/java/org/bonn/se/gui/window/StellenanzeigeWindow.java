@@ -174,7 +174,10 @@ public class StellenanzeigeWindow extends Window {
                  onOffSwitch = new OnOffSwitch(false);
 
             }
-            gridLayout.addComponent(onOffSwitch,4,12,4,12);
+
+            Label status = new Label("Status");
+            gridLayout.addComponent(status,0,0,0,0);
+            gridLayout.addComponent(onOffSwitch,1,0,1,0);
             gridLayout.setComponentAlignment(onOffSwitch,Alignment.MIDDLE_CENTER);
             onOffSwitch.addValueChangeListener(new HasValue.ValueChangeListener<Boolean>() {
                 @Override
