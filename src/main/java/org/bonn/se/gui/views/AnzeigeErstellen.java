@@ -168,15 +168,15 @@ public class AnzeigeErstellen extends GridLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        User user = ((MyUI) UI.getCurrent()).getUser();
-        if( user != null) {
-            this.setUp();
+
+        Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
+        if( unternehmen == null) {
+            UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-
-            UI.getCurrent().getNavigator().navigateTo(Views.RegisterUnternehmen);
-
+            this.setUp();
         }
     }
+
 
 
 }
