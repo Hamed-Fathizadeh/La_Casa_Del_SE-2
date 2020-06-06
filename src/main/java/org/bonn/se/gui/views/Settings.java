@@ -12,24 +12,30 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 
-public class Settings extends VerticalLayout implements View {
+public class Settings extends GridLayout implements View {
 
 
 
     public void setUp(){
-        VerticalLayout layout = new VerticalLayout();
+        //VerticalLayout layout = new VerticalLayout();
+        //this.setSizeFull();
+        //layout.setMargin(false);
+        this.setRows(4);
+        this.setColumns(10);
+        this.addStyleName("Settings");
         this.setSizeFull();
-        layout.setMargin(false);
 
-        String ls3 = "<p class=MsoNormal><b><span style='font-size:20.0pt;line-height:107%;\n" +
-                "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
-                "minor-bidi;mso-bidi-theme-font:minor-bidi;color:#2F5597;mso-themecolor:accent1;\n" +
-                "mso-themeshade:191;mso-style-textfill-fill-color:#2F5597;mso-style-textfill-fill-themecolor:\n" +
-                "accent1;mso-style-textfill-fill-alpha:100.0%;mso-style-textfill-fill-colortransforms:\n" +
-                "lumm=75000'>Settings<o:p></o:p></span></b></p>";
+        GridLayout formGrid = new GridLayout(1, 4);
+        formGrid.addStyleName("einstellungen");
+        formGrid.setMargin(true);
 
         TopPanelUser topPanelUser = new TopPanelUser();
-        Label ls = new Label(ls3, ContentMode.HTML);
+        topPanelUser.addStyleName("toppanel");
+
+
+
+
+        Label ls = new Label(String.format("<font size = \"5\" color=\"white\"> Settings" ), ContentMode.HTML);
         //Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
 
 
@@ -43,27 +49,28 @@ public class Settings extends VerticalLayout implements View {
 
         Label line = new Label("<hr>",ContentMode.HTML);
 
-        layout.addComponent(topPanelUser);
+        this.addComponent(topPanelUser,0,0,9,1);
+        this.addComponent(formGrid, 2,2,7,2);
 
-        layout.addComponent(ls);
-        layout.setComponentAlignment(ls, Alignment.MIDDLE_CENTER);
+        this.addComponent(ls, 1,1,9,1);
+        this.setComponentAlignment(ls, Alignment.MIDDLE_CENTER);
 
-        layout.addComponent(label1);
-        layout.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
+        formGrid.addComponent(label1);
+        formGrid.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
 
-        layout.addComponent(label3);
-        layout.setComponentAlignment(label3, Alignment.MIDDLE_CENTER);
+        formGrid.addComponent(label3);
+        formGrid.setComponentAlignment(label3, Alignment.MIDDLE_CENTER);
 
-        layout.addComponent(loeschen);
-        layout.setComponentAlignment(loeschen, Alignment.MIDDLE_CENTER);
+        formGrid.addComponent(loeschen);
+        formGrid.setComponentAlignment(loeschen, Alignment.MIDDLE_CENTER);
 
-        layout.addComponent(line);
-        layout.setComponentAlignment(line, Alignment.MIDDLE_CENTER);
+        formGrid.addComponent(line);
+        formGrid.setComponentAlignment(line, Alignment.MIDDLE_CENTER);
 
         loeschen.setEnabled(true);
 
 
-        this.addComponent(layout);
+        this.setComponentAlignment(formGrid, Alignment.MIDDLE_CENTER);
         this.setMargin(false);
 
 
