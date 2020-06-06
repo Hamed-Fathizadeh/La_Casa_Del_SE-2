@@ -5,6 +5,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.TopPanel;
+import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenbeschreibungConfirmation;
 import org.bonn.se.model.dao.ContainerAnzDAO;
@@ -23,7 +24,7 @@ public class Stellenbeschreibung extends GridLayout implements View {
         this.setColumns(10);
         this.setRows(10);
         this.addStyleName("anzeige");
-        TopPanel topPanel =  new TopPanel("Für Unternehmen");
+        TopPanelUser topPanel =  new TopPanelUser();
         topPanel.addStyleName("toppanel");
 
 
