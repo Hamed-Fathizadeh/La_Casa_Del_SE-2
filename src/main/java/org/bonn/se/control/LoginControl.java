@@ -98,6 +98,7 @@ public class LoginControl {
         VaadinSession vaadinSession = MyUI.getCurrent().getSession();
         vaadinSession.setAttribute(Roles.Student,null);
         vaadinSession.setAttribute(Roles.Unternehmen,null);
+
         UI.getCurrent().getNavigator().navigateTo(Views.MainView);
     }
 
