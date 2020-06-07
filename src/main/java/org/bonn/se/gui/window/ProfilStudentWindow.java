@@ -6,9 +6,11 @@ import com.vaadin.data.ValidationException;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileResource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.*;
+import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
@@ -60,7 +62,6 @@ public class ProfilStudentWindow extends Window {
         Upload upload = new Upload("", receiver);
         upload.addSucceededListener(receiver);
         upload.setButtonCaption("Profilbild hochladen");
-
         image.setSource(new FileResource(new File("src/main/webapp/image/Unknown.png")));
 
         upload.addStartedListener(new Upload.StartedListener() {

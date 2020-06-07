@@ -1,17 +1,17 @@
 package org.bonn.se.gui.views;
 
 
+import com.vaadin.client.ui.Icon;
 import com.vaadin.data.Binder;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.server.UserError;
-import com.vaadin.server.VaadinSession;
+import com.vaadin.server.*;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.bonn.se.control.UserSearch;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.window.ProfilStudentWindow;
@@ -52,9 +52,11 @@ public class RegisterStudent extends GridLayout implements View {
         form.setMargin(true);
         RegistrationTextField vorname = new RegistrationTextField("Vorname");
         vorname.selectAll();
+        vorname.setValue(VaadinService.getCurrent().getBaseDirectory().toString());
 
-        System.out.println(vorname.getPrimaryStyleName());
-        RegistrationTextField nachname = new RegistrationTextField("Nachname");
+
+        RegistrationTextField nachname = new RegistrationTextField( "Nachname");
+        nachname.setValue(VaadinService.getCurrent().getBaseDirectory().getAbsolutePath().toString());
         RegistrationTextField email = new RegistrationTextField("E-Mail");
         RegistrationPasswordField passwort = new RegistrationPasswordField("Passwort");
       //  RegistrationPasswordField Vnummer = new RegistrationPasswordField("Verifizierungscode");
@@ -216,7 +218,6 @@ public class RegisterStudent extends GridLayout implements View {
                 event -> VnummerButton.setEnabled(binder2.isValid()));
          */
 
-
         Button button = new Button("Test");
 
         this.addComponent(button,9,9);
@@ -224,6 +225,7 @@ public class RegisterStudent extends GridLayout implements View {
         button.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
+                Student student = new Student();
                 Unternehmen unternehmen = new Unternehmen();
                 unternehmen.setLogo(new Image("",new FileResource(new File("src/main/webapp/VAADIN/themes/demo/images/Unknown.png"))));
                 Stellenanzeige stellenanzeige = new Stellenanzeige();
@@ -234,12 +236,13 @@ public class RegisterStudent extends GridLayout implements View {
                 UI.getCurrent().getSession().setAttribute("Unternehmen",Roles.Unternehmen);
                 //StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(stellenanzeige,unternehmen);
 
-               // UI.getCurrent().addWindow(stellenanzeigeWindow);
-                UI.getCurrent().getNavigator().navigateTo(Views.AnzeigeErstellen);
-
-
+                // UI.getCurrent().addWindow(stellenanzeigeWindow);
+                ProfilStudentWindow profilStudentWindow = new ProfilStudentWindow(student);
+                UI.getCurrent().addWindow(profilStudentWindow);
             }
         });
+
+
 
 
     }

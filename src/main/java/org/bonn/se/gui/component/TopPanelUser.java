@@ -1,13 +1,16 @@
 package org.bonn.se.gui.component;
 
+import com.vaadin.event.MouseEvents;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.Views;
 
 public class TopPanelUser extends HorizontalLayout {
 
@@ -23,13 +26,21 @@ public class TopPanelUser extends HorizontalLayout {
         ThemeResource resource = new ThemeResource("img/RegisterStudent/logo.png");
         Image logo = new Image(null,resource);
 
+
         logo.setSizeUndefined();
         logo.addStyleName("logo");
         Topgrid.addComponent(logo,0,0,0,0);
         Topgrid.setComponentAlignment(logo, Alignment.BOTTOM_LEFT);
-
-//add image
-
+        logo.addClickListener(new MouseEvents.ClickListener() {
+            @Override
+            public void click(MouseEvents.ClickEvent event) {
+                if(MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+                    MyUI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+                } else if (MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+                    MyUI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+                }
+            }
+        });
 
 
         Image profilbild = null;
