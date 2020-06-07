@@ -219,7 +219,6 @@ public class RegisterStudent extends GridLayout implements View {
                 event -> VnummerButton.setEnabled(binder2.isValid()));
          */
 
-
         Button button = new Button("Test");
 
         this.addComponent(button,9,9);
@@ -227,6 +226,7 @@ public class RegisterStudent extends GridLayout implements View {
         button.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
+                Student student = new Student();
                 Unternehmen unternehmen = new Unternehmen();
                 unternehmen.setLogo(new Image("",new FileResource(new File("src/main/webapp/VAADIN/themes/demo/images/Unknown.png"))));
                 Stellenanzeige stellenanzeige = new Stellenanzeige();
@@ -237,12 +237,13 @@ public class RegisterStudent extends GridLayout implements View {
                 UI.getCurrent().getSession().setAttribute("Unternehmen",Roles.Unternehmen);
                 //StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(stellenanzeige,unternehmen);
 
-               // UI.getCurrent().addWindow(stellenanzeigeWindow);
-                UI.getCurrent().getNavigator().navigateTo(Views.AnzeigeErstellen);
-
-
+                // UI.getCurrent().addWindow(stellenanzeigeWindow);
+                ProfilStudentWindow profilStudentWindow = new ProfilStudentWindow(student);
+                UI.getCurrent().addWindow(profilStudentWindow);
             }
         });
+
+
 
 
     }
