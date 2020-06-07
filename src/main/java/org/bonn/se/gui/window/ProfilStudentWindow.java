@@ -62,8 +62,6 @@ public class ProfilStudentWindow extends Window {
         Upload upload = new Upload("", receiver);
         upload.addSucceededListener(receiver);
         upload.setButtonCaption("Profilbild hochladen");
-        Notification.show(VaadinService.getCurrent().getBaseDirectory().toString());
-        Notification.show(VaadinService.getCurrent().getBaseDirectory().getAbsolutePath().toString());
         image.setSource(new FileResource(new File("src/main/webapp/image/Unknown.png")));
 
         upload.addStartedListener(new Upload.StartedListener() {

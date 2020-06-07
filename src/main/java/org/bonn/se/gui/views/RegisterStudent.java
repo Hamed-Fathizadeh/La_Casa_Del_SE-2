@@ -8,10 +8,7 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.server.UserError;
-import com.vaadin.server.VaadinSession;
+import com.vaadin.server.*;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -55,9 +52,11 @@ public class RegisterStudent extends GridLayout implements View {
         form.setMargin(true);
         RegistrationTextField vorname = new RegistrationTextField("Vorname");
         vorname.selectAll();
+        vorname.setValue(VaadinService.getCurrent().getBaseDirectory().toString());
 
 
         RegistrationTextField nachname = new RegistrationTextField( "Nachname");
+        nachname.setValue(VaadinService.getCurrent().getBaseDirectory().getAbsolutePath().toString());
         RegistrationTextField email = new RegistrationTextField("E-Mail");
         RegistrationPasswordField passwort = new RegistrationPasswordField("Passwort");
       //  RegistrationPasswordField Vnummer = new RegistrationPasswordField("Verifizierungscode");
