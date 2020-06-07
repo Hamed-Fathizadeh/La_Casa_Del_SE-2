@@ -33,9 +33,18 @@ public class Settings extends GridLayout implements View {
         topPanelUser.addStyleName("toppanel");
 
 
+//spruch oben Settings
 
+        String ls3 = "<p class=MsoNormal><b><span style='font-size:28.0pt;line-height:107%;\n" +
+                "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
+                "minor-bidi;mso-bidi-theme-font:minor-bidi;color:#ffffff;mso-themecolor:accent1;\n" +
+                "mso-themeshade:191;mso-style-textfill-fill-color:#ffffff;mso-style-textfill-fill-themecolor:\n" +
+                "accent1;mso-style-textfill-fill-alpha:100.0%;mso-style-textfill-fill-colortransforms:\n" +
+                "lumm=75000'>Settings<o:p></o:p></span></b></p>";
 
-        Label ls = new Label(String.format("<font size = \"5\" color=\"white\"> Settings" ), ContentMode.HTML);
+        Label lSpruch = new Label(ls3, ContentMode.HTML);
+
+      //  Label ls = new Label(String.format("<font size = \"5\" color=\"white\"> Settings" ), ContentMode.HTML);
         //Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
 
 
@@ -52,8 +61,8 @@ public class Settings extends GridLayout implements View {
         this.addComponent(topPanelUser,0,0,9,1);
         this.addComponent(formGrid, 2,2,7,2);
 
-        this.addComponent(ls, 1,1,9,1);
-        this.setComponentAlignment(ls, Alignment.MIDDLE_CENTER);
+        this.addComponent(lSpruch, 1,1,9,1);
+        this.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
 
         formGrid.addComponent(label1);
         formGrid.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
@@ -84,16 +93,6 @@ public class Settings extends GridLayout implements View {
 
     }
 
-   // @Override
-   // public void enter(ViewChangeListener.ViewChangeEvent event) {
-     //   User user = ((MyUI) UI.getCurrent()).getUser();
-    //    if( user != null) {
-      //      this.setUp();
-        //} else {
-          //  UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
-    //    }
-  //  }
-
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -101,10 +100,9 @@ public class Settings extends GridLayout implements View {
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.setUp();
-           // UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             this.setUp();
-            //UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
 
         } else {
           UI.getCurrent().getNavigator().getCurrentNavigationState();
