@@ -51,8 +51,8 @@ public class Settings extends GridLayout implements View {
         Label label1 = new Label("<h2>Benutzerkonto löschen</h2>", ContentMode.HTML);
 
         Label label3 = new Label("<h3>Hier können Sie Ihr Benutzerkonto löschen. Bitte beachten Sie, dass wenn " +
-                "Sie Ihr Benutzerkonto löschen \n" + "all Ihre Daten endgültig gelöscht werden und Ihre Email aus dem " +
-                "System entfernt wird. Sollten Sie sich erneut" + " bei Lacolsco anmelden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
+                "Sie Ihr Benutzerkonto löschen<br>all Ihre Daten endgültig gelöscht werden und Ihre Email aus dem " +
+                "System entfernt wird. Sollten Sie sich erneut<br>bei Lacolsco anmelden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
 
         Button loeschen = new Button("Konto löschen");
 
