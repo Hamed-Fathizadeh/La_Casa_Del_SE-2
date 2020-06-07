@@ -10,6 +10,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import org.bonn.se.gui.views.*;
+import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.User;
 
 import javax.servlet.annotation.WebServlet;
@@ -52,7 +53,7 @@ public class MyUI extends UI {
         navi.addView(StudentHomeView, StudentHomeView.class);
         navi.addView(UnternehmenHomeView, org.bonn.se.gui.views.UnternehmenHomeView.class);
         navi.addView(AnzeigeErstellen, org.bonn.se.gui.views.AnzeigeErstellen.class);
-        navi.addView(Stellenbeschreibung, org.bonn.se.gui.views.Stellenbeschreibung.class);
+        navi.addView(Stellenbeschreibung,  org.bonn.se.gui.views.Stellenbeschreibung.class);
         navi.addView(ProfilVerwaltenStudent, org.bonn.se.gui.views.ProfilVerwaltenStudent.class);
         navi.addView(AlleBewerbungenView, org.bonn.se.gui.views.AlleBewerbungenView.class);
 
