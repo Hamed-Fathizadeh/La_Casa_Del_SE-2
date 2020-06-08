@@ -7,7 +7,6 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.TopPanelUser;
-import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.*;
 import org.bonn.se.services.util.Roles;

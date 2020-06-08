@@ -3,7 +3,6 @@ package org.bonn.se.gui.component;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.gui.ui.MyUI;

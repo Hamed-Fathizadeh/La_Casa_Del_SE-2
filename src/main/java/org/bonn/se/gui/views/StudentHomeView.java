@@ -164,7 +164,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         Label lNeuigkeit = new Label(ls2, ContentMode.HTML);
 
         // button für bottomGridBewNeu
-        Button alleBewerbungen = new Button("Alle Bewerbungen", FontAwesome.SEARCH);
+        Button alleBewerbungen = new Button("Alle Bewerbungen", VaadinIcons.SEARCH);
 
         alleBewerbungen.addClickListener(new Button.ClickListener() {
             @Override
@@ -174,9 +174,9 @@ public class StudentHomeView extends VerticalLayout implements View {
             }
         });
 
-        Button alleNeuigkeiten = new Button("Alle Neuigkeiten", FontAwesome.SEARCH);
+        Button alleNeuigkeiten = new Button("Alle Neuigkeiten", VaadinIcons.SEARCH);
 
-        Button meineAbos = new Button("Meine Abos", FontAwesome.SEARCH);
+        Button meineAbos = new Button("Meine Abos", VaadinIcons.SEARCH);
 
         Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
 

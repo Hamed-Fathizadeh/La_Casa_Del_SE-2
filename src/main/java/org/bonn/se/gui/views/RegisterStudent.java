@@ -1,17 +1,14 @@
 package org.bonn.se.gui.views;
 
 
-import com.vaadin.client.ui.Icon;
 import com.vaadin.data.Binder;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.bonn.se.control.UserSearch;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.window.ProfilStudentWindow;
@@ -23,9 +20,6 @@ import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
-import org.bonn.se.services.util.Views;
-import org.vaadin.teemu.wizards.Wizard;
-import org.vaadin.teemu.wizards.event.WizardProgressListener;
 
 import java.io.File;
 
