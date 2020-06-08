@@ -407,7 +407,6 @@ public class ProfilDAO extends AbstractDAO{
                 sprachKenntnis.setKenntnis(set.getString("sprache"));
                 sprachKenntnis.setNiveau(set.getString("niveau_sprache"));
 
-
                 byte[] bild = set.getBytes("picture");
                 Image picture = null;
                 if(set.getBytes("picture") == null) {

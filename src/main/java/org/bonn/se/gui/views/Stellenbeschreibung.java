@@ -8,6 +8,7 @@ import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenbeschreibungConfirmation;
 import org.bonn.se.model.dao.ContainerAnzDAO;
+import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
@@ -16,6 +17,10 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 public class Stellenbeschreibung extends GridLayout implements View {
+    StellenanzeigeDTO sa;
+    public Stellenbeschreibung(StellenanzeigeDTO sa){
+        this.sa = sa;
+    }
 
     public void setUp() {
         this.setMargin(false);
