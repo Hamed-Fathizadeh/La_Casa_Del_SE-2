@@ -114,7 +114,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         "and b.ort = '"+ort+"'   \n" +
                         "and b.bundesland = '"+bundesland+"') \n");
             }
-
+/*
             System.out.println("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
                     "      ,a.ort, a.bundesland, a.firmenname, a.hauptsitz, a.suchbegriff, a.art, u.logo \n" +
                     "  FROM lacasa.tab_stellen_anzeige a\n" +
@@ -122,7 +122,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
                     "  join lacasa.tab_unt_hat_branche b\n" +
                     "    on a.firmenname = b.firmenname and a.hauptsitz = b.hauptsitz\n" +
-                    " where status = 1" + sbSuchbeg  + sbOrt + sbBund + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis);
+                    " where status = 1" + sbSuchbeg  + sbOrt + sbBund + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis);*/
 
 
             set = statement.executeQuery("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
