@@ -70,9 +70,9 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             //Bundesland und fachgebiet mussen noch überarbeitet werden
 
-            StringBuilder sbSuchbeg = new StringBuilder(suchbegriff == null ? " " : " and suchbegriff = \'" + suchbegriff + "\' ");
-            StringBuilder sbOrt = new StringBuilder( ort == null ? " " : " and ort =  \'" +  ort + "\' ");
-            StringBuilder sbBund = new StringBuilder(bundesland == null? " " : " and bundesland =  \'" +  bundesland + "\' ");
+            StringBuilder sbSuchbeg = new StringBuilder(suchbegriff == null ? " " : " and a.suchbegriff = \'" + suchbegriff + "\' ");
+            StringBuilder sbOrt = new StringBuilder( ort == null ? " " : " and a.ort =  \'" +  ort + "\' ");
+            StringBuilder sbBund = new StringBuilder(bundesland == null? " " : " and a.bundesland =  \'" +  bundesland + "\' ");
             StringBuilder sBumkreis = new StringBuilder();
             StringBuilder sbEinstellungsart = new StringBuilder(" ");
             StringBuilder sbAb_Datum = new StringBuilder(" ");
@@ -80,8 +80,8 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             if(artSuche.equals("Erweitert")){
 
-                sbEinstellungsart = new StringBuilder(einstellungsart == null ? " " : " and art = \'" + einstellungsart + "\' ");
-                sbAb_Datum = new StringBuilder(ab_Datum == null ? " " : " and datum >= \'" + ab_Datum + "\' ");
+                sbEinstellungsart = new StringBuilder(einstellungsart == null ? " " : " and a.art = \'" + einstellungsart + "\' ");
+                sbAb_Datum = new StringBuilder(ab_Datum == null ? " " : " and a.datum >= \'" + ab_Datum + "\' ");
                 sbBranche = new StringBuilder(branche == null ? " " : " and b.name = \'" + branche + "\' ");
             }
 
@@ -90,7 +90,7 @@ public class ContainerAnzDAO extends AbstractDAO{
             }else{
                 int km = Integer.parseInt(umkreis.substring(0,umkreis.indexOf(' ')));
 
-                sBumkreis.append(" or status = 1 "+ sbSuchbeg +sbEinstellungsart+ sbAb_Datum+sbBranche +" and ort in (SELECT a.ort FROM lacasa.tab_orte a \n" +
+                sBumkreis.append(" or a.status = 1 "+ sbSuchbeg +sbEinstellungsart+ sbAb_Datum+sbBranche +" and a.ort in (SELECT a.ort FROM lacasa.tab_orte a \n" +
                         "  join lacasa.tab_orte b\n" +
                         "    on 1 = 1\n" +
                         "WHERE (\n" +
@@ -102,7 +102,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         "and b.ort = '"+ort+"'   \n" +
                         "and b.bundesland = '"+bundesland+"') \n");
 
-                sBumkreis.append(" and bundesland in (SELECT a.bundesland FROM lacasa.tab_orte a \n" +
+                sBumkreis.append(" and a.bundesland in (SELECT a.bundesland FROM lacasa.tab_orte a \n" +
                         "  join lacasa.tab_orte b\n" +
                         "    on 1 = 1\n" +
                         "WHERE (\n" +
@@ -114,6 +114,16 @@ public class ContainerAnzDAO extends AbstractDAO{
                         "and b.ort = '"+ort+"'   \n" +
                         "and b.bundesland = '"+bundesland+"') \n");
             }
+
+            System.out.println("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
+                    "      ,a.ort, a.bundesland, a.firmenname, a.hauptsitz, a.suchbegriff, a.art, u.logo \n" +
+                    "  FROM lacasa.tab_stellen_anzeige a\n" +
+                    "  join lacasa.tab_unternehmen u\n" +
+                    "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
+                    "  join lacasa.tab_unt_hat_branche b\n" +
+                    "    on a.firmenname = b.firmenname and a.hauptsitz = b.hauptsitz\n" +
+                    " where status = 1" + sbSuchbeg  + sbOrt + sbBund + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis);
+
 
             set = statement.executeQuery("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
                     "      ,a.ort, a.bundesland, a.firmenname, a.hauptsitz, a.suchbegriff, a.art, u.logo \n" +
