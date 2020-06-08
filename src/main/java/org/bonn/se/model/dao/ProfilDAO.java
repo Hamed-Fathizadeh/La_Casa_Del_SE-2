@@ -50,7 +50,6 @@ System.out.println("profildao "+file);
             }else{
                 String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
                 file = new File(basepath + "/VAADIN/themes/demo/images/Unknown.png");
-                System.out.println("prodao"+file.toString());
                 fis = new FileInputStream(file);
             }
             statement.setBinaryStream(5, fis, (int) file.length());
