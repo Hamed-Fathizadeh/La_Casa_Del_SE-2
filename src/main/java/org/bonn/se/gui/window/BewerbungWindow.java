@@ -4,7 +4,9 @@ import com.vaadin.annotations.StyleSheet;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.util.Roles;
 
 import java.io.OutputStream;
 
@@ -30,6 +32,8 @@ public class BewerbungWindow extends Window {
         GridLayout gridLayout = new GridLayout(5, 14);
         gridLayout.setSizeFull();
         gridLayout.setMargin(true);
+        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+        System.out.println(student.toString());
 
         Image logo = unternehmen_data.getLogo();
         Label titel = new Label("<h2><b> Bewerbung auf: " + stellenanzeige.getTitel() + "</font></b></h3>", ContentMode.HTML);

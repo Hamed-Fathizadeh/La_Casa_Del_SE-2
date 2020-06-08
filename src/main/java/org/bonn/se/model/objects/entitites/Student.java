@@ -171,7 +171,25 @@ public class Student extends User {
         public void setNiveau(String niveau) { this.niveau = niveau; }
     }
 
-
+    @Override
+    public String toString() {
+        return "Student{" +
+                "student_id=" + student_id +
+                ", vorname='" + vorname + '\'' +
+                ", nachname='" + nachname + '\'' +
+                ", g_datum=" + g_datum +
+                ", studiengang='" + studiengang + '\'' +
+                ", email='" + email + '\'' +
+                ", image=" + image +
+                ", abschluss='" + abschluss + '\'' +
+                ", mobil_nr='" + mobil_nr + '\'' +
+                ", taetigkeiten=" + taetigkeiten +
+                ", sprachKenntnisList=" + sprachKenntnisList +
+                ", itKenntnisList=" + itKenntnisList +
+                ", ausbildung='" + ausbildung + '\'' +
+                ", adresse=" + adresse +
+                '}';
+    }
 
 
 
