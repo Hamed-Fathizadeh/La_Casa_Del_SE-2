@@ -3,19 +3,17 @@ package org.bonn.se.gui.window;
 import com.github.appreciated.material.MaterialTheme;
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
-import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.*;
-import org.bonn.se.gui.views.RegisterStudent;
+import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
-import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.DatenStudentProfil;
 import org.bonn.se.services.util.ImageUploader;
@@ -31,7 +29,7 @@ import java.util.ArrayList;
 public class RegisterStudentWindow extends Window implements WizardProgressListener {
 
     private Wizard wizard;
-    private final Image image = new Image();
+    private Image image = new Image();
 
 
     public RegisterStudentWindow() {
@@ -43,9 +41,11 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         this.setDraggable(false);
         this.setResizable(false);
         this.setClosable(false);
+        this.setModal(true);
         this.setHeight("80%");
         this.setWidth("80%");
         wizard = new Wizard();
+
         wizard.setUriFragmentEnabled(true);
         wizard.getBackButton().setCaption("Zurück");
         wizard.getFinishButton().setCaption("Fertig");
@@ -53,10 +53,9 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         wizard.getCancelButton().setCaption("Abbrechen");
         wizard.addListener(this);
         wizard.addStep(new RegisterSuccess(), "Erfolreich");
-        wizard.addStep(new IntroStep(), "Daten!");
-        wizard.addStep(new TaetigkeitStep(), "Tätigkeitenn");
+        wizard.addStep(new DatenStep(), "Daten");
+        wizard.addStep(new TaetigkeitStep(), "Tätigkeiten");
         wizard.addStep(new KenntnisseStep(), "Kenntnisse");
-
 
         setContent(wizard);
 
@@ -76,7 +75,9 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
     @Override
     public void wizardCompleted(WizardCompletedEvent wizardCompletedEvent) {
-
+        wizard.setVisible(false);
+        this.close();
+        MyUI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
     }
 
     @Override
@@ -109,7 +110,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         }
     }
 
-    private class IntroStep implements WizardStep {
+    private class DatenStep implements WizardStep {
 
 
         @Override
@@ -123,14 +124,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             GridLayout gridLayout = new GridLayout(2, 3);
             gridLayout.setHeight("100%");
             gridLayout.setWidth("100%");
-
-            RegisterStudentWindow.this.addCloseListener(new CloseListener() {
-                @Override
-                public void windowClose(CloseEvent e) {
-                    UI.getCurrent().getNavigator().navigateTo(Views.MainView);
-                }
-            });
-
 
 
             FormLayout form1 = new FormLayout();
@@ -180,7 +173,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             form2.setMargin(true);
             PlaceHolderField place1 = new PlaceHolderField();
             PopUpTextField strasse = new PopUpTextField("Strasse");
-            // OrtPlzTextField ort = new OrtPlzTextField();
+            OrtPlzTextField ort = new OrtPlzTextField();
 
 
             PlaceHolderField place2 = new PlaceHolderField();
@@ -193,21 +186,20 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             abschluss.setHeight("56px");
             abschluss.setWidth("300px");
 
-            form2.addComponents(place1, strasse /*,ort*/, studiengang, place2, ausbildung, abschluss);
-            User user = new User();
-            user.setEmail("test@123.de");
+            form2.addComponents(place1, strasse,ort, studiengang, place2, ausbildung, abschluss);
 
 
-            /* DATENBANK ABFRAGE
+            Student user = new Student();
+            user.setEmail("test@abc.de");
+
             wizard.getNextButton().addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     String[] sOrt = {"", ""};
-                    /*
+
                     if(ort.equals("")) {
                         sOrt = ort.getBundesland().getValue().toString().split(" - ");
                     }
-
 
                     try {
 
@@ -218,7 +210,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                         e.printStackTrace();
                     }
                     Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-                    student.setImage(ImageUploader.getImage());
+                    student.setImage(image);
                     student.setAbschluss(abschluss.getValue());
                     student.setMobil_nr(mobilnr.getValue());
                     student.setAusbildung(ausbildung.getValue());
@@ -229,10 +221,9 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                     UI.getCurrent().getSession().setAttribute(Roles.Student, student);
                 }
             });
-        */
 
 
-//        gridLayout.addComponent(head, 0, 0, 1, 0);
+
 
             gridLayout.addComponent(form1, 0, 0, 0, 0);
             gridLayout.addComponent(form2, 1, 0, 1, 0);
@@ -398,7 +389,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
 
             binder.addStatusChangeListener(event -> wizard.getNextButton().setEnabled(binder.isValid()));
-    /*
+
             wizard.getNextButton().addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
@@ -422,7 +413,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                 }
             });
 
-     */
 
 
             return gridLayout;
@@ -438,7 +428,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             return true;
         }
     }
-
 
     private class KenntnisseStep implements WizardStep {
         @Override
@@ -696,7 +685,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
 
 
-            wizard.getNextButton().addClickListener(new Button.ClickListener() {
+            wizard.getFinishButton().addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
@@ -735,8 +724,8 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             wizard.getNextButton().setEnabled(false);
 
 
-            binder.addStatusChangeListener(event -> wizard.getNextButton().setEnabled(binder.isValid()));
-            binder1.addStatusChangeListener(event -> wizard.getNextButton().setEnabled(binder.isValid()));
+       //     binder.addStatusChangeListener(event -> wizard.getNextButton().setEnabled(binder.isValid()));
+        //    binder1.addStatusChangeListener(event -> wizard.getNextButton().setEnabled(binder.isValid()));
 
 
             return gridLayout;
@@ -744,12 +733,12 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
         @Override
         public boolean onAdvance() {
-            return false;
+            return true;
         }
 
         @Override
         public boolean onBack() {
-            return false;
+            return true;
         }
     }
 }

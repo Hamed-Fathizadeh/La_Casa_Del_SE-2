@@ -4,7 +4,6 @@ package org.bonn.se.gui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
-import org.bonn.se.gui.component.TopPanel;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenbeschreibungConfirmation;
