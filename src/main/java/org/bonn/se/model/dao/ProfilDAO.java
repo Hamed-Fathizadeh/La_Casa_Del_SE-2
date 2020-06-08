@@ -2,6 +2,7 @@ package org.bonn.se.model.dao;
 
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Image;
 import org.bonn.se.model.objects.entitites.Adresse;
@@ -31,7 +32,7 @@ public class ProfilDAO extends AbstractDAO{
     }
 
     public static void createStudentProfil1(String email, File file, DateField g_datum, String studiengang, String mobilnr, String strasse,String plz, String ort, String bundesland, String ausbildung, String abschluss) throws DatabaseException {
-
+System.out.println("profildao "+file);
         String sql = "UPDATE lacasa.tab_student SET g_datum = ?,"
                 + "studiengang = ?,"
                 + "ausbildung = ?,"
@@ -44,12 +45,15 @@ public class ProfilDAO extends AbstractDAO{
 
         try {
             FileInputStream fis = null;
-            if(file != null) {
+            if(file != null){
                 fis = new FileInputStream(file);
-                statement.setBinaryStream(5, fis, (int)file.length());
-            } else {
-                statement.setNull(5,5);
+            }else{
+                String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+                file = new File(basepath + "/VAADIN/themes/demo/images/Unknown.png");
+                System.out.println("prodao"+file.toString());
+                fis = new FileInputStream(file);
             }
+            statement.setBinaryStream(5, fis, (int) file.length());
 
             if (String.valueOf(g_datum.getValue()).equals("null")) {
                 assert statement != null;
@@ -75,11 +79,13 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(10,ort);
             statement.setString(11,bundesland);
             statement.setString(12,email);
+
             statement.executeUpdate();
+            System.out.println(statement.toString());
         } catch (SQLException | FileNotFoundException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        } catch (IOException e) {
+        } catch (IOException e ) {
             e.printStackTrace();
         } finally {
             JDBCConnection.getInstance().closeConnection();
