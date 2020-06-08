@@ -17,11 +17,8 @@ public class Settings extends GridLayout implements View {
 
 
     public void setUp(){
-        //VerticalLayout layout = new VerticalLayout();
-        //this.setSizeFull();
-        //layout.setMargin(false);
         this.setRows(4);
-        this.setColumns(10);
+        this.setColumns(4);
         this.addStyleName("Settings");
         this.setSizeFull();
 
@@ -34,6 +31,10 @@ public class Settings extends GridLayout implements View {
 
 
 //spruch oben Settings
+        GridLayout bottomGridBewNeu = new GridLayout(1, 1);
+        bottomGridBewNeu.setSizeFull();
+        bottomGridBewNeu.addStyleName("bottomGridBewNeu");
+        bottomGridBewNeu.setMargin(true);
 
         String ls3 = "<p class=MsoNormal><b><span style='font-size:28.0pt;line-height:107%;\n" +
                 "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
@@ -42,10 +43,8 @@ public class Settings extends GridLayout implements View {
                 "accent1;mso-style-textfill-fill-alpha:100.0%;mso-style-textfill-fill-colortransforms:\n" +
                 "lumm=75000'>Settings<o:p></o:p></span></b></p>";
 
-        Label lSpruch = new Label(ls3, ContentMode.HTML);
 
-      //  Label ls = new Label(String.format("<font size = \"5\" color=\"white\"> Settings" ), ContentMode.HTML);
-        //Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
+        Label lSpruch = new Label(ls3, ContentMode.HTML);
 
 
         Label label1 = new Label("<h2>Benutzerkonto löschen</h2>", ContentMode.HTML);
@@ -58,14 +57,22 @@ public class Settings extends GridLayout implements View {
 
         Label line = new Label("<hr>",ContentMode.HTML);
 
-        this.addComponent(topPanelUser,0,0,9,0);
-        this.addComponent(formGrid, 2,2,7,2);
+        this.addComponent(topPanelUser,0,0,3,0);
+        this.setComponentAlignment(topPanelUser, Alignment.TOP_CENTER);
 
-        this.addComponent(lSpruch, 1,1,9,1);
-        this.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
+        this.addComponent(formGrid, 0,2,3,3);
+        this.setComponentAlignment(formGrid, Alignment.MIDDLE_CENTER);
+
+        bottomGridBewNeu.addComponent(lSpruch, 0,0,0,0);
+        bottomGridBewNeu.setComponentAlignment(lSpruch, Alignment.MIDDLE_CENTER);
+
+        this.addComponent(bottomGridBewNeu, 0,1,3,1);
+        this.setComponentAlignment(bottomGridBewNeu, Alignment.BOTTOM_CENTER);
+
+
 
         formGrid.addComponent(label1);
-        formGrid.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
+        formGrid.setComponentAlignment(label1, Alignment.TOP_CENTER);
 
         formGrid.addComponent(label3);
         formGrid.setComponentAlignment(label3, Alignment.MIDDLE_CENTER);
@@ -74,12 +81,12 @@ public class Settings extends GridLayout implements View {
         formGrid.setComponentAlignment(loeschen, Alignment.MIDDLE_CENTER);
 
         formGrid.addComponent(line);
-        formGrid.setComponentAlignment(line, Alignment.MIDDLE_CENTER);
+        formGrid.setComponentAlignment(line, Alignment.BOTTOM_CENTER);
 
         loeschen.setEnabled(true);
 
 
-        this.setComponentAlignment(formGrid, Alignment.MIDDLE_CENTER);
+
         this.setMargin(false);
 
 
