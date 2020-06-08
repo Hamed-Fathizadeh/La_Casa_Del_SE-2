@@ -163,8 +163,7 @@ public class ProfilStudentWindow extends Window {
 
             }
         });
-
-
+        gridLayout.addLayoutClickListener(event -> weiter.setEnabled(true));
 //        gridLayout.addComponent(head, 0, 0, 1, 0);
         gridLayout.addComponent(head, 0, 0, 1, 0);
 

@@ -15,6 +15,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.bonn.se.control.UserSearch;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.window.ProfilStudentWindow;
+import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Stellenanzeige;
 import org.bonn.se.model.objects.entitites.Student;
@@ -23,6 +24,8 @@ import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
+import org.vaadin.teemu.wizards.Wizard;
+import org.vaadin.teemu.wizards.event.WizardProgressListener;
 
 import java.io.File;
 
@@ -161,6 +164,8 @@ public class RegisterStudent extends GridLayout implements View {
                             student.setPasswort(user.getPasswort());
 
                             UI.getCurrent().getSession().setAttribute(Roles.Student,student);
+
+
                             ProfilStudentWindow window = new ProfilStudentWindow(student);
                             UI.getCurrent().addWindow(window);
 
@@ -237,8 +242,8 @@ public class RegisterStudent extends GridLayout implements View {
                 //StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(stellenanzeige,unternehmen);
 
                 // UI.getCurrent().addWindow(stellenanzeigeWindow);
-                ProfilStudentWindow profilStudentWindow = new ProfilStudentWindow(student);
-                UI.getCurrent().addWindow(profilStudentWindow);
+                RegisterStudentWindow registerStudentWindow = new RegisterStudentWindow();
+                UI.getCurrent().addWindow(registerStudentWindow);
             }
         });
 
