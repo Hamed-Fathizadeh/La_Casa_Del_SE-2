@@ -25,6 +25,7 @@ public class Settings extends GridLayout implements View {
         GridLayout formGrid = new GridLayout(1, 4);
         formGrid.addStyleName("einstellungen");
         formGrid.setMargin(true);
+        formGrid.setSizeFull();
 
         TopPanelUser topPanelUser = new TopPanelUser();
         topPanelUser.addStyleName("toppanel");
@@ -68,8 +69,6 @@ public class Settings extends GridLayout implements View {
 
         this.addComponent(bottomGridBewNeu, 0,1,3,1);
         this.setComponentAlignment(bottomGridBewNeu, Alignment.BOTTOM_CENTER);
-
-
 
         formGrid.addComponent(label1);
         formGrid.setComponentAlignment(label1, Alignment.TOP_CENTER);
