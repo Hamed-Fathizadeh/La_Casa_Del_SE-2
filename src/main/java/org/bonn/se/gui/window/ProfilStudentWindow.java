@@ -6,11 +6,9 @@ import com.vaadin.data.ValidationException;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileResource;
-import com.vaadin.server.VaadinService;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.*;
-import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
@@ -163,8 +161,7 @@ public class ProfilStudentWindow extends Window {
 
             }
         });
-
-
+        gridLayout.addLayoutClickListener(event -> weiter.setEnabled(true));
 //        gridLayout.addComponent(head, 0, 0, 1, 0);
         gridLayout.addComponent(head, 0, 0, 1, 0);
 

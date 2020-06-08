@@ -1,20 +1,18 @@
 package org.bonn.se.gui.views;
 
 
-import com.vaadin.client.ui.Icon;
 import com.vaadin.data.Binder;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.*;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.bonn.se.control.UserSearch;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.window.ProfilStudentWindow;
+import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Stellenanzeige;
 import org.bonn.se.model.objects.entitites.Student;
@@ -22,7 +20,6 @@ import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
-import org.bonn.se.services.util.Views;
 
 import java.io.File;
 
@@ -161,6 +158,8 @@ public class RegisterStudent extends GridLayout implements View {
                             student.setPasswort(user.getPasswort());
 
                             UI.getCurrent().getSession().setAttribute(Roles.Student,student);
+
+
                             ProfilStudentWindow window = new ProfilStudentWindow(student);
                             UI.getCurrent().addWindow(window);
 
@@ -237,8 +236,8 @@ public class RegisterStudent extends GridLayout implements View {
                 //StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(stellenanzeige,unternehmen);
 
                 // UI.getCurrent().addWindow(stellenanzeigeWindow);
-                ProfilStudentWindow profilStudentWindow = new ProfilStudentWindow(student);
-                UI.getCurrent().addWindow(profilStudentWindow);
+                RegisterStudentWindow registerStudentWindow = new RegisterStudentWindow();
+                UI.getCurrent().addWindow(registerStudentWindow);
             }
         });
 

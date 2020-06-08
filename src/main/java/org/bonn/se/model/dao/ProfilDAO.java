@@ -2,6 +2,7 @@ package org.bonn.se.model.dao;
 
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Image;
 import org.bonn.se.model.objects.entitites.Adresse;
@@ -31,7 +32,7 @@ public class ProfilDAO extends AbstractDAO{
     }
 
     public static void createStudentProfil1(String email, File file, DateField g_datum, String studiengang, String mobilnr, String strasse,String plz, String ort, String bundesland, String ausbildung, String abschluss) throws DatabaseException {
-
+System.out.println("profildao "+file);
         String sql = "UPDATE lacasa.tab_student SET g_datum = ?,"
                 + "studiengang = ?,"
                 + "ausbildung = ?,"
@@ -43,8 +44,15 @@ public class ProfilDAO extends AbstractDAO{
         PreparedStatement statement = getPreparedStatement(sql);
 
         try {
-            FileInputStream fis = new FileInputStream(file);
-
+            FileInputStream fis = null;
+            if(file != null){
+                fis = new FileInputStream(file);
+            }else{
+                String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+                file = new File(basepath + "/VAADIN/themes/demo/images/Unknown.png");
+                fis = new FileInputStream(file);
+            }
+            statement.setBinaryStream(5, fis, (int) file.length());
 
             if (String.valueOf(g_datum.getValue()).equals("null")) {
                 assert statement != null;
@@ -59,7 +67,6 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(2,studiengang);
             statement.setString(3,ausbildung);
             statement.setString(4,mobilnr);
-            statement.setBinaryStream(5, fis, (int)file.length());
             statement.setString(6,abschluss);
             statement.setString(7,email);
             statement.setString(8,strasse);
@@ -71,11 +78,13 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(10,ort);
             statement.setString(11,bundesland);
             statement.setString(12,email);
+
             statement.executeUpdate();
+            System.out.println(statement.toString());
         } catch (SQLException | FileNotFoundException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        } catch (IOException e) {
+        } catch (IOException e ) {
             e.printStackTrace();
         } finally {
             JDBCConnection.getInstance().closeConnection();
@@ -114,27 +123,28 @@ public class ProfilDAO extends AbstractDAO{
     }
     public static void createStudentProfil3(Student student) throws DatabaseException {
         try {
+            if(student.getItKenntnisList() != null) {
+                for (Student.ITKenntnis itKenntnis : student.getItKenntnisList()) {
 
-            for (Student.ITKenntnis itKenntnis: student.getItKenntnisList() ) {
+                    String sql = "INSERT INTO lacasa.tab_it_kenntnisse (kompetenz_name,niveau_it,student_id) " +
+                            "VALUES(?,?," +
+                            "(SELECT lacasa.tab_student.student_id " +
+                            "FROM lacasa.tab_student" +
+                            " WHERE lacasa.tab_student.email = ?));";
 
-                String sql = "INSERT INTO lacasa.tab_it_kenntnisse (kompetenz_name,niveau_it,student_id) " +
-                        "VALUES(?,?," +
-                        "(SELECT lacasa.tab_student.student_id " +
-                        "FROM lacasa.tab_student" +
-                        " WHERE lacasa.tab_student.email = ?));";
-
-                //String sql = "INSERT INTO lacasa.tab_student VALUES(DEFAULT,?,?,?,DEFAULT,DEFAULT,?,?) WHERE email = \'" + email + "\';         INSERT INTO lacasa.tab_adresse VALUES(DEFAULT,?,?,?,?);"  ;
-                PreparedStatement statement = getPreparedStatement(sql);
-
-
-                assert statement != null;
-                statement.setString(1, itKenntnis.getKenntnis());
-                statement.setString(2, itKenntnis.getNiveau());
-                statement.setString(3, student.getEmail());
+                    //String sql = "INSERT INTO lacasa.tab_student VALUES(DEFAULT,?,?,?,DEFAULT,DEFAULT,?,?) WHERE email = \'" + email + "\';         INSERT INTO lacasa.tab_adresse VALUES(DEFAULT,?,?,?,?);"  ;
+                    PreparedStatement statement = getPreparedStatement(sql);
 
 
-                statement.executeUpdate();
-            }
+                    assert statement != null;
+                    statement.setString(1, itKenntnis.getKenntnis());
+                    statement.setString(2, itKenntnis.getNiveau());
+                    statement.setString(3, student.getEmail());
+
+
+                    statement.executeUpdate();
+                }
+            }else if(student.getSprachKenntnisList() != null){
             for (Student.SprachKenntnis sprachKenntnis: student.getSprachKenntnisList() ) {
 
                 String sql = "INSERT INTO lacasa.tab_sprachen (sprache, niveau_sprache,student_id) " +
@@ -147,7 +157,7 @@ public class ProfilDAO extends AbstractDAO{
                 statement.setString(2, sprachKenntnis.getNiveau());
                 statement.setString(3, student.getEmail());
                 statement.executeUpdate();
-
+            }
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -401,7 +411,6 @@ public class ProfilDAO extends AbstractDAO{
                 Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
                 sprachKenntnis.setKenntnis(set.getString("sprache"));
                 sprachKenntnis.setNiveau(set.getString("niveau_sprache"));
-
 
                 byte[] bild = set.getBytes("picture");
                 Image picture = null;

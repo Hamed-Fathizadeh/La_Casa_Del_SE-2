@@ -7,12 +7,9 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.RegistrationTextField;
-import org.bonn.se.gui.component.TopPanel;
 import org.bonn.se.gui.component.TopPanelUser;
-import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Stellenanzeige;
 import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.util.*;
 
 public class AnzeigeErstellen extends GridLayout implements View {

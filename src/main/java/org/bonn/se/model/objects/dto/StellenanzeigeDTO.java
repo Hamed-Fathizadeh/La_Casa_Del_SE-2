@@ -33,7 +33,7 @@ public class StellenanzeigeDTO {
         this.bundesland = bundesland;
         this.firmenname = firmenname;
         this.hauptsitz = hauptsitz;
-        this.unternehmenLogo =  ConvertByteToImage.getImage(unternehmenLogo);;
+        this.unternehmenLogo =  ConvertByteToImage.getImage(unternehmenLogo);
         this.suchbegriff = suchbegriff;
         this.art = art;
     }
