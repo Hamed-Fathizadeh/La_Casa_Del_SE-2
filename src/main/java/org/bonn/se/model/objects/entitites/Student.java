@@ -16,6 +16,7 @@ public class Student extends User {
     private Image image = null;
     private String abschluss;
     private String mobil_nr;
+    private int benachrichtigung;
     private  ArrayList<Taetigkeit> taetigkeiten;
     private  ArrayList<SprachKenntnis> sprachKenntnisList;
     private  ArrayList<ITKenntnis> itKenntnisList;
@@ -33,9 +34,17 @@ public class Student extends User {
     public void setAusbildung(String ausbildung) {
         this.ausbildung = ausbildung;
     }
+    public int getBenachrichtigung() {
+        return benachrichtigung;
+    }
 
+    public void setBenachrichtigung(int benachrichtigung) {
+        this.benachrichtigung = benachrichtigung;
+    }
     private String ausbildung;
     Adresse adresse;
+
+
 
     public Image getImage() { return image; }
 
@@ -64,6 +73,7 @@ public class Student extends User {
         setStudiengang(studiengang);
         super.setType("S");
         setAdresse(adresse);
+        setBenachrichtigung(benachrichtigung);
         taetigkeiten = new ArrayList<Taetigkeit>();
         itKenntnisList = new ArrayList<ITKenntnis> ();
         sprachKenntnisList = new ArrayList<SprachKenntnis>();

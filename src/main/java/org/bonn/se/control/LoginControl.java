@@ -62,7 +62,7 @@ public class LoginControl {
 
                     } else if(set.getString(5).equals("S")) {
                         Student student = new Student();
-                        student = ProfilDAO.getStudent(user.getEmail());
+                        student = ProfilDAO.getStudent2(user.getEmail());
 
                         UI.getCurrent().getSession().setAttribute("Student",student);
 
