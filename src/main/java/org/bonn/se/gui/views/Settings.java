@@ -61,7 +61,7 @@ public class Settings extends GridLayout implements View {
         this.addComponent(topPanelUser,0,0,3,0);
         this.setComponentAlignment(topPanelUser, Alignment.TOP_CENTER);
 
-        this.addComponent(formGrid, 0,2,3,3);
+        this.addComponent(formGrid, 0,2,3,2);
         this.setComponentAlignment(formGrid, Alignment.MIDDLE_CENTER);
 
         bottomGridBewNeu.addComponent(lSpruch, 0,0,0,0);
