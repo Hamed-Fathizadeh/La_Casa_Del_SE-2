@@ -8,6 +8,7 @@ import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.Views;
 
 public class TopPanelUser extends HorizontalLayout {
 
@@ -83,6 +84,14 @@ public class TopPanelUser extends HorizontalLayout {
                 LoginControl.logoutUser();
             }
         });
+
+        item1.addItem("Settings", VaadinIcons.SEARCH, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem menuItem) {
+                UI.getCurrent().getNavigator().navigateTo(Views.Settings);
+            }
+        });
+
         item1.addSeparator();
         item1.addItem("Logout", VaadinIcons.SIGN_OUT, new MenuBar.Command() {
             @Override

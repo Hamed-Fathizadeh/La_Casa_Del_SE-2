@@ -58,7 +58,7 @@ public class Settings extends GridLayout implements View {
 
         Label line = new Label("<hr>",ContentMode.HTML);
 
-        this.addComponent(topPanelUser,0,0,9,1);
+        this.addComponent(topPanelUser,0,0,9,0);
         this.addComponent(formGrid, 2,2,7,2);
 
         this.addComponent(lSpruch, 1,1,9,1);
