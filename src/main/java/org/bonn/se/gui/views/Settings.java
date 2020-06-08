@@ -18,7 +18,7 @@ public class Settings extends GridLayout implements View {
 
     public void setUp(){
         this.setRows(4);
-        this.setColumns(4);
+        this.setColumns(10);
         this.addStyleName("Settings");
         this.setSizeFull();
 
@@ -58,16 +58,16 @@ public class Settings extends GridLayout implements View {
 
         Label line = new Label("<hr>",ContentMode.HTML);
 
-        this.addComponent(topPanelUser,0,0,3,0);
+        this.addComponent(topPanelUser,0,0,9,0);
         this.setComponentAlignment(topPanelUser, Alignment.TOP_CENTER);
 
-        this.addComponent(formGrid, 0,2,3,2);
+        this.addComponent(formGrid, 2,2,7,2);
         this.setComponentAlignment(formGrid, Alignment.MIDDLE_CENTER);
 
         bottomGridBewNeu.addComponent(lSpruch, 0,0,0,0);
         bottomGridBewNeu.setComponentAlignment(lSpruch, Alignment.MIDDLE_CENTER);
 
-        this.addComponent(bottomGridBewNeu, 0,1,3,1);
+        this.addComponent(bottomGridBewNeu, 0,1,9,1);
         this.setComponentAlignment(bottomGridBewNeu, Alignment.BOTTOM_CENTER);
 
         formGrid.addComponent(label1);
