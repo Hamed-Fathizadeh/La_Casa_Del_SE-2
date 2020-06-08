@@ -6,54 +6,88 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.User;
+import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 
-public class Settings extends VerticalLayout implements View {
+public class Settings extends GridLayout implements View {
 
 
 
     public void setUp(){
-        VerticalLayout layout = new VerticalLayout();
+        this.setRows(4);
+        this.setColumns(10);
+        this.addStyleName("Settings");
         this.setSizeFull();
-        //layout.setMargin(false);
 
-        String ls3 = "<p class=MsoNormal><b><span style='font-size:20.0pt;line-height:107%;\n" +
+        GridLayout formGrid = new GridLayout(1, 4);
+        formGrid.addStyleName("einstellungen");
+        formGrid.setMargin(true);
+        formGrid.setSizeFull();
+
+        TopPanelUser topPanelUser = new TopPanelUser();
+        topPanelUser.addStyleName("toppanel");
+
+
+//spruch oben Settings
+        GridLayout bottomGridBewNeu = new GridLayout(1, 1);
+        bottomGridBewNeu.setSizeFull();
+        bottomGridBewNeu.addStyleName("bottomGridBewNeu");
+        bottomGridBewNeu.setMargin(true);
+
+        String ls3 = "<p class=MsoNormal><b><span style='font-size:28.0pt;line-height:107%;\n" +
                 "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
-                "minor-bidi;mso-bidi-theme-font:minor-bidi;color:#2F5597;mso-themecolor:accent1;\n" +
-                "mso-themeshade:191;mso-style-textfill-fill-color:#2F5597;mso-style-textfill-fill-themecolor:\n" +
+                "minor-bidi;mso-bidi-theme-font:minor-bidi;color:#ffffff;mso-themecolor:accent1;\n" +
+                "mso-themeshade:191;mso-style-textfill-fill-color:#ffffff;mso-style-textfill-fill-themecolor:\n" +
                 "accent1;mso-style-textfill-fill-alpha:100.0%;mso-style-textfill-fill-colortransforms:\n" +
                 "lumm=75000'>Settings<o:p></o:p></span></b></p>";
 
-        TopPanelUser topPanelUser = new TopPanelUser();
-        Label ls = new Label(ls3, ContentMode.HTML);
+
+        Label lSpruch = new Label(ls3, ContentMode.HTML);
 
 
         Label label1 = new Label("<h2>Benutzerkonto löschen</h2>", ContentMode.HTML);
 
-        Label label3 = new Label("<h3>Hier klnnen Sie Ihr Benutzerkonto löschen.Bitte beachten Sie, dass wenn" +
-                "Sie Ihr Benutzerkonto löschen all Ihre Daten endgültig gelöscht werden und Ihre Email aus dem " +
-                "System entfernt wird. Sollten Sie sich erneut bei Lacolsco anmekden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
+        Label label3 = new Label("<h3>Hier können Sie Ihr Benutzerkonto löschen. Bitte beachten Sie, dass wenn " +
+                "Sie Ihr Benutzerkonto löschen<br>all Ihre Daten endgültig gelöscht werden und Ihre Email aus dem " +
+                "System entfernt wird. Sollten Sie sich erneut<br>bei Lacolsco anmelden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
 
         Button loeschen = new Button("Konto löschen");
 
-        layout.addComponent(ls);
-        layout.setComponentAlignment(ls, Alignment.MIDDLE_CENTER);
+        Label line = new Label("<hr>",ContentMode.HTML);
 
-        layout.addComponent(label1);
-        layout.setComponentAlignment(label1, Alignment.MIDDLE_CENTER);
+        this.addComponent(topPanelUser,0,0,9,0);
+        this.setComponentAlignment(topPanelUser, Alignment.TOP_CENTER);
 
-        layout.addComponent(label3);
-        layout.setComponentAlignment(label3, Alignment.MIDDLE_CENTER);
+        this.addComponent(formGrid, 2,2,7,2);
+        this.setComponentAlignment(formGrid, Alignment.MIDDLE_CENTER);
 
-        layout.addComponent(loeschen);
-        layout.setComponentAlignment(loeschen, Alignment.MIDDLE_CENTER);
+        bottomGridBewNeu.addComponent(lSpruch, 0,0,0,0);
+        bottomGridBewNeu.setComponentAlignment(lSpruch, Alignment.MIDDLE_CENTER);
 
-        loeschen.setEnabled(false);
+        this.addComponent(bottomGridBewNeu, 0,1,9,1);
+        this.setComponentAlignment(bottomGridBewNeu, Alignment.BOTTOM_CENTER);
 
-        this.addComponent(layout);
-        this.setSizeFull();
+        formGrid.addComponent(label1);
+        formGrid.setComponentAlignment(label1, Alignment.TOP_CENTER);
+
+        formGrid.addComponent(label3);
+        formGrid.setComponentAlignment(label3, Alignment.MIDDLE_CENTER);
+
+        formGrid.addComponent(loeschen);
+        formGrid.setComponentAlignment(loeschen, Alignment.MIDDLE_CENTER);
+
+        formGrid.addComponent(line);
+        formGrid.setComponentAlignment(line, Alignment.BOTTOM_CENTER);
+
+        loeschen.setEnabled(true);
+
+
+
+        this.setMargin(false);
+
 
         loeschen.addClickListener(new Button.ClickListener() {
             @Override
@@ -65,15 +99,19 @@ public class Settings extends VerticalLayout implements View {
 
     }
 
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        User user = ((MyUI) UI.getCurrent()).getUser();
-        if( user != null) {
+
+
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.setUp();
+
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            this.setUp();
+
         } else {
-
-            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
-
+          UI.getCurrent().getNavigator().getCurrentNavigationState();
         }
     }
 }

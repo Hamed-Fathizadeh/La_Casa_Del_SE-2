@@ -11,6 +11,6 @@ public class Views {
     public static final String Stellenbeschreibung = "Stellenbeschreibung";
     public static final String ProfilVerwaltenStudent = "ProfilVerwaltenStudent";
     public static final String AlleBewerbungenView = "AlleBewerbungenView";
-
+    public static final String Settings = "Settings";
 
 }
