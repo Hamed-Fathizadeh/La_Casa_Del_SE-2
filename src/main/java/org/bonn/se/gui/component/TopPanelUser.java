@@ -67,7 +67,7 @@ public class TopPanelUser extends HorizontalLayout {
         item1.addItem("Mein Profil", VaadinIcons.SEARCH, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem menuItem) {
-                LoginControl.logoutUser();
+                MyUI.getCurrent().getNavigator().navigateTo(Views.ProfilVerwaltenStudent);
             }
         });
 
