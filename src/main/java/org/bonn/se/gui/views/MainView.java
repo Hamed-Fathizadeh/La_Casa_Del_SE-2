@@ -158,14 +158,11 @@ public class MainView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        User user = null;
-         if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-             user = (User) UI.getCurrent().getSession().getAttribute(Roles.Student);
-             UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-             user = (User) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
-             UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
 
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
          } else {
             this.setUp();
         }

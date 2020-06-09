@@ -12,10 +12,37 @@ public class Student extends User {
     private String nachname;
     private LocalDate g_datum;
     private String studiengang;
-    private String email;
-    private Image image = null;
+    private Image picture = null;
     private String abschluss;
-    private String mobil_nr;
+    private String kontakt_nr;
+    private String strasse;
+    private String ort;
+    private String plz;
+
+    public String getStrasse() {
+        return strasse;
+    }
+
+    public void setStrasse(String strasse) {
+        this.strasse = strasse;
+    }
+
+    public String getOrt() {
+        return ort;
+    }
+
+    public void setOrt(String ort) {
+        this.ort = ort;
+    }
+
+    public String getPlz() {
+        return plz;
+    }
+
+    public void setPlz(String plz) {
+        this.plz = plz;
+    }
+
     private int benachrichtigung;
     private  ArrayList<Taetigkeit> taetigkeiten;
     private  ArrayList<SprachKenntnis> sprachKenntnisList;
@@ -44,19 +71,25 @@ public class Student extends User {
     private String ausbildung;
     Adresse adresse;
 
+    public Image getPicture() {
+        return picture;
+    }
 
-
-    public Image getImage() { return image; }
-
-    public void setImage(Image image) { this.image = image; }
+    public void setPicture(Image picture) {
+        this.picture = picture;
+    }
 
     public String getAbschluss() { return abschluss; }
 
     public void setAbschluss(String abschluss) { this.abschluss = abschluss; }
 
-    public String getMobil_nr() { return mobil_nr; }
+    public String getKontakt_nr() {
+        return kontakt_nr;
+    }
 
-    public void setMobil_nr(String mobil_nr) { this.mobil_nr = mobil_nr; }
+    public void setKontakt_nr(String kontakt_nr) {
+        this.kontakt_nr = kontakt_nr;
+    }
 
     public Adresse getAdresse() { return adresse; }
 
@@ -66,7 +99,6 @@ public class Student extends User {
 
     public Student() {
         super();
-        setStudent_id(student_id);
         setVorname(vorname);
         setNachname(nachname);
         setG_datum(g_datum);
@@ -74,25 +106,12 @@ public class Student extends User {
         super.setType("S");
         setAdresse(adresse);
         setBenachrichtigung(benachrichtigung);
-        taetigkeiten = new ArrayList<Taetigkeit>();
-        itKenntnisList = new ArrayList<ITKenntnis> ();
-        sprachKenntnisList = new ArrayList<SprachKenntnis>();
 
+        setTaetigkeitenListe(taetigkeiten);
+        setItKenntnisList(itKenntnisList);
+        setSprachKenntnisList(sprachKenntnisList);
     }
-    public int getStudent_id(){
-        return student_id;
-    }
-    public void setStudent_id(int student_id){
-        int length = String.valueOf(student_id).length();
-        if(length<=0) {
-            throw new IllegalException(" student_id field is leer");
-        }
-        if(length>5){
-            throw  new IllegalException("Illegale student_id");
-        }
-        else
-            this.student_id=student_id;
-    }
+
 
     public String getVorname(){
         return vorname;
@@ -189,10 +208,10 @@ public class Student extends User {
                 ", nachname='" + nachname + '\'' +
                 ", g_datum=" + g_datum +
                 ", studiengang='" + studiengang + '\'' +
-                ", email='" + email + '\'' +
-                ", image=" + image +
+                ", email='" + super.getEmail() + '\'' +
+                ", image=" + picture +
                 ", abschluss='" + abschluss + '\'' +
-                ", mobil_nr='" + mobil_nr + '\'' +
+                ", mobil_nr='" + kontakt_nr + '\'' +
                 ", taetigkeiten=" + taetigkeiten +
                 ", sprachKenntnisList=" + sprachKenntnisList +
                 ", itKenntnisList=" + itKenntnisList +

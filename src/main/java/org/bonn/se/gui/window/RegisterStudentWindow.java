@@ -10,6 +10,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
@@ -19,17 +20,19 @@ import org.bonn.se.services.util.DatenStudentProfil;
 import org.bonn.se.services.util.ImageUploader;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.WizardStep;
 import org.vaadin.teemu.wizards.event.*;
-
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 
 public class RegisterStudentWindow extends Window implements WizardProgressListener {
 
     private Wizard wizard;
-    private Image image = new Image();
+    private final Image image = new Image();
+    private Image image1;
 
 
     public RegisterStudentWindow() {
@@ -52,10 +55,15 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         wizard.getNextButton().setCaption("Weiter");
         wizard.getCancelButton().setCaption("Abbrechen");
         wizard.addListener(this);
-        wizard.addStep(new RegisterSuccess(), "Erfolreich");
+        wizard.addStep(new RegisterSuccess(), "Erfolgreich");
         wizard.addStep(new DatenStep(), "Daten");
         wizard.addStep(new TaetigkeitStep(), "Tätigkeiten");
         wizard.addStep(new KenntnisseStep(), "Kenntnisse");
+        wizard.addStep(new FertigStep(),"Fertig");
+        wizard.getBackButton().setVisible(false);
+
+
+
 
         setContent(wizard);
 
@@ -77,11 +85,33 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
     public void wizardCompleted(WizardCompletedEvent wizardCompletedEvent) {
         wizard.setVisible(false);
         this.close();
+
         MyUI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
     }
 
     @Override
     public void wizardCancelled(WizardCancelledEvent wizardCancelledEvent) {
+        ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
+
+            @Override
+            public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
+                return super.create("Beenden", message, "Ja", "Nein", notOkCaption);
+            }
+        } ;
+
+        ConfirmDialog.setFactory(df);
+        ConfirmDialog.show(MyUI.getCurrent(), "Profilvervollständigung wirklich abbrechen und zum Login?",
+                new ConfirmDialog.Listener() {
+
+                    public void onClose(ConfirmDialog dialog) {
+                        if (dialog.isConfirmed()) {
+                            wizard.setVisible(false);
+                            RegisterStudentWindow.this.close();
+                            MyUI.getCurrent().getSession().setAttribute(Roles.Student,null);
+                            MyUI.getCurrent().getNavigator().navigateTo(Views.MainView);
+                        }
+                    }
+                });
 
     }
 
@@ -112,6 +142,15 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
     private class DatenStep implements WizardStep {
 
+        OrtPlzTextField ort;
+        PopUpTextField strasse;
+        ComboBox<String> abschluss;
+        DateField g_datum;
+        PopUpTextField studiengang;
+        PopUpTextField ausbildung;
+        NumeralField mobilnr;
+        Student user;
+
 
         @Override
         public String getCaption() {
@@ -138,11 +177,12 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                 @Override
                 public void uploadStarted(Upload.StartedEvent event) {
                     form1.removeComponent(image);
-                    Image image = ImageUploader.getImage();
-                    image.setHeight(150, Unit.PIXELS);
-                    image.setWidth(150, Unit.PIXELS);
-                    form1.addComponent(image, 0);
-                    form1.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
+                    image1 = ImageUploader.getImage();
+                    image1.setHeight(150, Unit.PIXELS);
+                    image1.setWidth(150, Unit.PIXELS);
+                    form1.addComponent(image1, 0);
+                    form1.setComponentAlignment(image1, Alignment.MIDDLE_CENTER);
+
 
                 }
             });
@@ -152,12 +192,12 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             form1.setMargin(true);
 
             //Geburtsdatum
-            DateField g_datum = new DateField();
+            g_datum = new DateField();
             g_datum.setHeight("56px");
             g_datum.setWidth("300px");
             g_datum.setPlaceholder("Geburtsdatum dd.mm.yyyy");
 
-            NumeralField mobilnr = new NumeralField("Kontaktnummer");
+            mobilnr = new NumeralField("Kontaktnummer");
 
 
             image.setHeight("170px");
@@ -171,57 +211,26 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             form2.setWidth("300px");
             form2.setMargin(true);
             PlaceHolderField place1 = new PlaceHolderField();
-            PopUpTextField strasse = new PopUpTextField("Strasse");
-            OrtPlzTextField ort = new OrtPlzTextField();
+            strasse = new PopUpTextField("Strasse");
+            ort = new OrtPlzTextField();
 
 
             PlaceHolderField place2 = new PlaceHolderField();
-            PopUpTextField studiengang = new PopUpTextField("Studiengang");
-            PopUpTextField ausbildung = new PopUpTextField("Ausbildung (optional)");
+            studiengang = new PopUpTextField("Studiengang");
+            ausbildung = new PopUpTextField("Ausbildung (optional)");
 
 
-            ComboBox<String> abschluss = new ComboBox<>("", DatenStudentProfil.collection);
+            abschluss = new ComboBox<>("", DatenStudentProfil.collection);
             abschluss.setPlaceholder("Wähle den höchsten Abschluss...");
             abschluss.setHeight("56px");
             abschluss.setWidth("300px");
 
-            form2.addComponents(place1, strasse,ort, studiengang, place2, ausbildung, abschluss);
+            form2.addComponents(place1, strasse, ort, studiengang, place2, ausbildung, abschluss);
 
 
-            Student user = new Student();
-            user.setEmail("test@abc.de");
-
-            wizard.getNextButton().addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    String[] sOrt = {"", ""};
-
-                    if(ort.equals("")) {
-                        sOrt = ort.getBundesland().getValue().toString().split(" - ");
-                    }
-
-                    try {
-
-                        ProfilDAO.createStudentProfil1(user.getEmail(), ImageUploader.getFile(), g_datum, studiengang.getValue(), mobilnr.getValue()
-                                , strasse.getValue(),ort.getPlz().getValue(), sOrt[0], sOrt[1], ausbildung.getValue(), abschluss.getValue());
-
-                    } catch (DatabaseException e) {
-                        e.printStackTrace();
-                    }
-                    Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-                    student.setImage(image);
-                    student.setAbschluss(abschluss.getValue());
-                    student.setMobil_nr(mobilnr.getValue());
-                    student.setAusbildung(ausbildung.getValue());
-                    student.setStudiengang(studiengang.getValue());
-                    student.setG_datum(g_datum.getValue());
-                    Adresse adresse = new Adresse(strasse.getValue(),ort.getPlz().getValue(), sOrt[0]);
-                    student.setAdresse(adresse);
-                    UI.getCurrent().getSession().setAttribute(Roles.Student, student);
-                }
-            });
-
-
+            user = new Student();
+            user.setEmail("400@test40.de");
+            MyUI.getCurrent().getSession().setAttribute(Roles.Student, user);
 
 
             gridLayout.addComponent(form1, 0, 0, 0, 0);
@@ -235,8 +244,46 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             return gridLayout;
         }
 
+
         @Override
         public boolean onAdvance() {
+                String[] sOrt = {"",""};
+
+                if(ort.getBundesland().getValue() != null) {
+                    sOrt = ort.getBundesland().getValue().toString().split(" - ");
+                }
+                Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
+                if(image1 != null) {
+                    student.setPicture(image1);
+                } else {
+                    student.setPicture(image);
+                }
+                student.setAbschluss(abschluss.getValue());
+                student.setKontakt_nr(mobilnr.getValue());
+                student.setAusbildung(ausbildung.getValue());
+                student.setStudiengang(studiengang.getValue());
+                student.setG_datum(g_datum.getValue());
+                Adresse adresse = new Adresse();
+                if(!(strasse.getValue().equals("") || ort.getPlz().getValue().equals("") || ort.equals("") )) {
+                    adresse.setStrasse(strasse.getValue());
+                    adresse.setPlz(ort.getPlz().getValue());
+                    adresse.setOrt(sOrt[0]);
+                    student.setAdresse(adresse);
+                }
+
+
+
+
+                try {
+                    ProfilDAO.createStudentProfil1(user.getEmail(), ImageUploader.getFile(), g_datum, studiengang.getValue(), mobilnr.getValue()
+                            , strasse.getValue(),ort.getPlz().getValue(), sOrt[0], sOrt[1], ausbildung.getValue(), abschluss.getValue());
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
+                student.setVorname("Test");
+                UI.getCurrent().getSession().setAttribute(Roles.Student, student);
+
+
 
             return true;
         }
@@ -249,6 +296,10 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
     }
 
     private class TaetigkeitStep implements WizardStep {
+
+        ArrayList<Taetigkeit> taetigkeitArrayList = new ArrayList<>();
+        Binder<Taetigkeit> binder = new Binder<>(Taetigkeit.class);
+        Button plus;
 
         @Override
         public String getCaption() {
@@ -263,18 +314,16 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
 
 
-            ArrayList<Taetigkeit> taetigkeitArrayList = new ArrayList<>();
             RegistrationTextField taetigkeit1 = new RegistrationTextField("Tätigkeit (Optional)");
             StudentDateField t1_beginn = new StudentDateField("Beginn");
             StudentDateField t1_ende = new StudentDateField("Ende");
 
-            Button plus = new Button(VaadinIcons.PLUS);
+            plus = new Button(VaadinIcons.PLUS);
             plus.addStyleName(MaterialTheme.BUTTON_FLOATING_ACTION);
 
             Button minus = new Button(VaadinIcons.MINUS);
             minus.addStyleNames(MaterialTheme.BUTTON_DANGER,MaterialTheme.BUTTON_FLOATING_ACTION);
 
-            Binder<Taetigkeit> binder = new Binder<>(Taetigkeit.class);
 
             binder.forField(taetigkeit1)
                     .asRequired("Bitte ausfüllen")
@@ -389,15 +438,17 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
             binder.addStatusChangeListener(event -> wizard.getNextButton().setEnabled(binder.isValid()));
 
-            wizard.getNextButton().addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
+
+
+
+            return gridLayout;
+        }
+
+        @Override
+        public boolean onAdvance() {
+
                     Taetigkeit taetigkeit = new Taetigkeit();
-                    try {
-                        binder.writeBean(taetigkeit);
-                    } catch (ValidationException e) {
-                        e.printStackTrace();
-                    }
+                    binder.writeBeanIfValid(taetigkeit);
                     taetigkeitArrayList.add(taetigkeit);
 
                     ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setTaetigkeitenListe(taetigkeitArrayList);
@@ -409,16 +460,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                     }
 
 
-                }
-            });
-
-
-
-            return gridLayout;
-        }
-
-        @Override
-        public boolean onAdvance() {
             return true;
         }
 
@@ -429,6 +470,12 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
     }
 
     private class KenntnisseStep implements WizardStep {
+
+        ArrayList<Student.SprachKenntnis> sprachKenntnisArrayList;
+        Binder<Student.SprachKenntnis> binder1;
+        Binder<Student.ITKenntnis> binder;
+        ArrayList<Student.ITKenntnis> itKenntnisArrayList;
+
         @Override
         public String getCaption() {
             return "Kenntnisse";
@@ -448,7 +495,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             gridLayout.addComponent(label2,0,1,1,1);
             gridLayout.setComponentAlignment(label2,Alignment.MIDDLE_CENTER);
 
-            ArrayList<Student.ITKenntnis> itKenntnisArrayList = new ArrayList<>();
+            itKenntnisArrayList = new ArrayList<>();
             PopUpTextField itKenntnis1 = new PopUpTextField("Bsp. MS-Office");
             itKenntnis1.setWidth("200px");
             ComboBoxNiveau niveau1 = new ComboBoxNiveau("",DatenStudentProfil.collection3);
@@ -461,7 +508,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             Button minus = new Button(VaadinIcons.MINUS);
             minus.addStyleNames(MaterialTheme.BUTTON_DANGER,MaterialTheme.BUTTON_FLOATING_ACTION);
 
-            Binder<Student.ITKenntnis> binder = new Binder<>(Student.ITKenntnis.class);
+            binder = new Binder<>(Student.ITKenntnis.class);
 
 
             binder.forField(itKenntnis1)
@@ -568,7 +615,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             PopUpTextField sprachKenntnis1 = new PopUpTextField("Bsp. Englisch");
             sprachKenntnis1.setWidth("200px");
 
-            ArrayList<Student.SprachKenntnis> sprachKenntnisArrayList = new ArrayList<>();
+            sprachKenntnisArrayList = new ArrayList<>();
 
             ComboBoxNiveau niveau21 = new ComboBoxNiveau("",DatenStudentProfil.collection2);
 
@@ -581,7 +628,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             Button minus1 = new Button(VaadinIcons.MINUS);
             minus1.addStyleNames(MaterialTheme.BUTTON_DANGER,MaterialTheme.BUTTON_FLOATING_ACTION);
 
-            Binder<Student.SprachKenntnis> binder1 = new Binder<>(Student.SprachKenntnis.class);
+            binder1 = new Binder<>(Student.SprachKenntnis.class);
 
 
             binder1.forField(sprachKenntnis1)
@@ -676,50 +723,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             });
 
 
-
-
-
-
-
-
-
-
-            wizard.getFinishButton().addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
-                    Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
-                    try {
-                        if(binder.isValid()) {
-                            binder.writeBean(itKenntnis);
-                            itKenntnisArrayList.add(itKenntnis);
-                            ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setItKenntnisList(itKenntnisArrayList);
-
-                        }
-                        if (binder1.isValid()) {
-                            binder1.writeBean(sprachKenntnis);
-                            sprachKenntnisArrayList.add(sprachKenntnis);
-                            ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setSprachKenntnisList(sprachKenntnisArrayList);
-
-                        }
-                    } catch (ValidationException e) {
-                        e.printStackTrace();
-                    }
-
-
-
-
-                    try {
-                        ProfilDAO.createStudentProfil3((Student) UI.getCurrent().getSession().getAttribute(Roles.Student));
-                    } catch (DatabaseException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-                }
-            });
-
             wizard.getNextButton().setEnabled(false);
 
 
@@ -732,6 +735,31 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
         @Override
         public boolean onAdvance() {
+                Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
+                Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
+                try {
+                    if(binder.isValid()) {
+                        binder.writeBean(itKenntnis);
+                        itKenntnisArrayList.add(itKenntnis);
+                        ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setItKenntnisList(itKenntnisArrayList);
+
+                    }
+                    if (binder1.isValid()) {
+                        binder1.writeBean(sprachKenntnis);
+                        sprachKenntnisArrayList.add(sprachKenntnis);
+                        ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setSprachKenntnisList(sprachKenntnisArrayList);
+
+                    }
+                } catch (ValidationException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    ProfilDAO.createStudentProfil3((Student) UI.getCurrent().getSession().getAttribute(Roles.Student));
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
+
             return true;
         }
 
@@ -740,4 +768,30 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             return true;
         }
     }
+
+    private class FertigStep implements WizardStep {
+
+        @Override
+        public String getCaption() {
+            return "Fertig";
+        }
+
+        @Override
+        public Component getContent() {
+            Label message = new Label("Sehr gut sie können sich nun einloggen.....");
+            return message;
+        }
+
+        @Override
+        public boolean onAdvance() {
+            return true;
+        }
+
+        @Override
+        public boolean onBack() {
+            return false;
+        }
+
+    }
+
 }

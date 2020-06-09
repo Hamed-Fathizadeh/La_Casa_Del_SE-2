@@ -10,6 +10,12 @@ public class Adresse {
     private String ort;
     private String email;
 
+    public Adresse(){
+        setStrasse(strasse);
+        setPlz(plz);
+        setOrt(ort);
+    }
+
     public Adresse(String strasse, String plz, String ort) {
         this.strasse = strasse;
         this.plz = plz;

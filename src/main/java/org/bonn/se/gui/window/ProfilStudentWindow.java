@@ -136,18 +136,23 @@ public class ProfilStudentWindow extends Window {
                 if(ort.equals("")) {
                      sOrt = ort.getBundesland().getValue().toString().split(" - ");
                 }
+                /*
                 try {
 
                     ProfilDAO.createStudentProfil1(user.getEmail(), ImageUploader.getFile(), g_datum,studiengang.getValue(), mobilnr.getValue()
                             ,strasse.getValue(),ort.getPlz().getValue(),sOrt[0], sOrt[1],ausbildung.getValue(),abschluss.getValue());
 
+
+
                 } catch (DatabaseException e) {
                     e.printStackTrace();
                 }
+
+ */
                 Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-                student.setImage(ImageUploader.getImage());
+                student.setPicture(ImageUploader.getImage());
                 student.setAbschluss(abschluss.getValue());
-                student.setMobil_nr(mobilnr.getValue());
+                student.setKontakt_nr(mobilnr.getValue());
                 student.setAusbildung(ausbildung.getValue());
                 student.setStudiengang(studiengang.getValue());
                 student.setG_datum(g_datum.getValue());
