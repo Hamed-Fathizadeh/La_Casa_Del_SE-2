@@ -469,7 +469,7 @@ public class ProfilDAO extends AbstractDAO{
                 student.setVorname(set.getString("vorname"));
                 student.setNachname(set.getString("nachname"));
                 student.setEmail(set.getString("email"));
-                student.setMobil_nr(set.getString("kontakt_nr"));
+                student.setKontakt_nr(set.getString("kontakt_nr"));
                 student.setStudiengang(set.getString("studiengang"));
                 LocalDate localDate = set.getDate("g_datum") == null ? null : set.getDate("g_datum").toLocalDate();
                 student.setG_datum(localDate);
@@ -497,7 +497,7 @@ public class ProfilDAO extends AbstractDAO{
                             null, new StreamResource(
                             streamSource, "streamedSourceFromByteArray"));
                 }
-                student.setImage(picture);
+                student.setPicture(picture);
 
 
 

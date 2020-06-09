@@ -43,7 +43,6 @@ public class Student extends User {
         this.plz = plz;
     }
 
-    private String mobil_nr;
     private int benachrichtigung;
     private  ArrayList<Taetigkeit> taetigkeiten;
     private  ArrayList<SprachKenntnis> sprachKenntnisList;
@@ -100,7 +99,6 @@ public class Student extends User {
 
     public Student() {
         super();
-        setStudent_id(student_id);
         setVorname(vorname);
         setNachname(nachname);
         setG_datum(g_datum);
@@ -108,9 +106,6 @@ public class Student extends User {
         super.setType("S");
         setAdresse(adresse);
         setBenachrichtigung(benachrichtigung);
-        taetigkeiten = new ArrayList<Taetigkeit>();
-        itKenntnisList = new ArrayList<ITKenntnis> ();
-        sprachKenntnisList = new ArrayList<SprachKenntnis>();
 
         setTaetigkeitenListe(taetigkeiten);
         setItKenntnisList(itKenntnisList);
@@ -213,10 +208,10 @@ public class Student extends User {
                 ", nachname='" + nachname + '\'' +
                 ", g_datum=" + g_datum +
                 ", studiengang='" + studiengang + '\'' +
-                ", email='" + email + '\'' +
-                ", image=" + image +
+                ", email='" + super.getEmail() + '\'' +
+                ", image=" + picture +
                 ", abschluss='" + abschluss + '\'' +
-                ", mobil_nr='" + mobil_nr + '\'' +
+                ", mobil_nr='" + kontakt_nr + '\'' +
                 ", taetigkeiten=" + taetigkeiten +
                 ", sprachKenntnisList=" + sprachKenntnisList +
                 ", itKenntnisList=" + itKenntnisList +
