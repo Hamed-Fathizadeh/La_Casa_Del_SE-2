@@ -2,7 +2,6 @@ package org.bonn.se.model.dao;
 
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
-import com.vaadin.server.VaadinService;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Image;
 import org.bonn.se.model.objects.entitites.Adresse;
@@ -32,7 +31,7 @@ public class ProfilDAO extends AbstractDAO{
     }
 
     public static void createStudentProfil1(String email, File file, DateField g_datum, String studiengang, String mobilnr, String strasse,String plz, String ort, String bundesland, String ausbildung, String abschluss) throws DatabaseException {
-System.out.println("profildao "+file);
+
         String sql = "UPDATE lacasa.tab_student SET g_datum = ?,"
                 + "studiengang = ?,"
                 + "ausbildung = ?,"
@@ -42,17 +41,14 @@ System.out.println("profildao "+file);
                 + "WHERE email = ?;" +
                 "INSERT INTO lacasa.tab_adresse VALUES(DEFAULT,?,?,?,?,?);";
         PreparedStatement statement = getPreparedStatement(sql);
-
         try {
             FileInputStream fis = null;
-            if(file != null){
+            if(file != null) {
                 fis = new FileInputStream(file);
-            }else{
-                String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-                file = new File(basepath + "/VAADIN/themes/demo/images/Unknown.png");
-                fis = new FileInputStream(file);
+                statement.setBinaryStream(5, fis, (int)file.length());
+            } else {
+                statement.setNull(5, Types.BINARY);
             }
-            statement.setBinaryStream(5, fis, (int) file.length());
 
             if (String.valueOf(g_datum.getValue()).equals("null")) {
                 assert statement != null;
@@ -75,16 +71,19 @@ System.out.println("profildao "+file);
             } else {
                 statement.setBigDecimal(9,null);
             }
-            statement.setString(10,ort);
-            statement.setString(11,bundesland);
+            if(!ort.equals("") || !bundesland.equals("")) {
+                statement.setString(10, ort);
+                statement.setString(11,bundesland);
+            } else {
+                statement.setNull(10, Types.VARCHAR);
+                statement.setNull(11, Types.VARCHAR);
+            }
             statement.setString(12,email);
-
             statement.executeUpdate();
-            System.out.println(statement.toString());
         } catch (SQLException | FileNotFoundException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        } catch (IOException e ) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
             JDBCConnection.getInstance().closeConnection();
@@ -99,13 +98,14 @@ System.out.println("profildao "+file);
 
                 String sql = "INSERT INTO lacasa.tab_taetigkeiten VALUES(DEFAULT,?,?,?,(Select tab_student.student_id FROM lacasa.tab_student WHERE email = \'"+ student.getEmail() +"\'));";
 
-
+                Date begin = null;
+                Date ende = null;
                 //String sql = "INSERT INTO lacasa.tab_student VALUES(DEFAULT,?,?,?,DEFAULT,DEFAULT,?,?) WHERE email = \'" + email + "\';         INSERT INTO lacasa.tab_adresse VALUES(DEFAULT,?,?,?,?);"  ;
                 PreparedStatement statement = getPreparedStatement(sql);
-
-                Date begin = Date.valueOf(taetigkeit.getBeginn());
-                Date ende = Date.valueOf(taetigkeit.getEnde());
-
+                if(taetigkeit.getBeginn() != null || taetigkeit.getEnde() != null ) {
+                    begin = Date.valueOf(taetigkeit.getBeginn());
+                    ende = Date.valueOf(taetigkeit.getEnde());
+                }
                 assert statement != null;
                 statement.setString(1, taetigkeit.getTaetigkeitName());
                 statement.setDate(2, begin);
@@ -285,7 +285,7 @@ System.out.println("profildao "+file);
                 student.setG_datum(localDate);
                 student.setStudiengang(set.getString("studiengang"));//getInt, get
                 student.setAusbildung(set.getString("ausbildung"));
-                student.setMobil_nr(set.getString("kontakt_nr"));
+                student.setKontakt_nr(set.getString("kontakt_nr"));
                 student.setAbschluss("hoechster_abschluss");
                 byte[] bild = set.getBytes("picture"); //Bild nehmen bisschen kompliziert an Tobi hammed
 
@@ -300,7 +300,7 @@ System.out.println("profildao "+file);
                 Image profilbild = new Image(
                         null, new StreamResource(
                         streamSource, "streamedSourceFromByteArray"));
-                student.setImage(profilbild);
+                student.setPicture(profilbild);
 
 
                 return student;
@@ -386,7 +386,7 @@ System.out.println("profildao "+file);
                 student.setVorname(set.getString("vorname"));
                 student.setNachname(set.getString("nachname"));
                 student.setEmail(set.getString("email"));
-                student.setMobil_nr(set.getString("kontakt_nr"));
+                student.setKontakt_nr(set.getString("kontakt_nr"));
                 student.setStudiengang(set.getString("studiengang"));
                 LocalDate localDate = set.getDate("g_datum") == null? null: set.getDate("g_datum").toLocalDate() ;
                 student.setG_datum(localDate);
@@ -429,7 +429,7 @@ System.out.println("profildao "+file);
                             null, new StreamResource(
                             streamSource, "streamedSourceFromByteArray"));
                 }
-                student.setImage(picture);
+                student.setPicture(picture);
 
 
                 return student;
@@ -470,7 +470,7 @@ System.out.println("profildao "+file);
                 student.setVorname(set.getString("vorname"));
                 student.setNachname(set.getString("nachname"));
                 student.setEmail(set.getString("email"));
-                student.setMobil_nr(set.getString("kontakt_nr"));
+                student.setKontakt_nr(set.getString("kontakt_nr"));
                 student.setStudiengang(set.getString("studiengang"));
                 LocalDate localDate = set.getDate("g_datum") == null ? null : set.getDate("g_datum").toLocalDate();
                 student.setG_datum(localDate);
@@ -498,7 +498,7 @@ System.out.println("profildao "+file);
                             null, new StreamResource(
                             streamSource, "streamedSourceFromByteArray"));
                 }
-                student.setImage(picture);
+                student.setPicture(picture);
 
 
 

@@ -43,7 +43,7 @@ public class BewerbungWindow extends Window {
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
         System.out.println(student.toString());
 
-        Image profilbild = student.getImage();
+        Image profilbild = student.getPicture();
         Label titel = new Label("<h2><b> Bewerbung auf: " + stellenanzeige.getTitel() + "</font></b></h2>", ContentMode.HTML);
         Label vor_nachname = new Label("Vor und Nachname: ");
         Label vor_nachname_data = new Label(student.getVorname()+" "+student.getNachname());
@@ -54,7 +54,7 @@ public class BewerbungWindow extends Window {
         Label plzOrt = new Label("PLZ Ort: ");
         Label plzOrt_data = new Label(student.getAdresse().getPlz()+" "+student.getAdresse().getOrt());
         Label rufnummer = new Label("Rufnummer: ");
-        Label rufnummer_data = new Label(student.getMobil_nr());
+        Label rufnummer_data = new Label(student.getKontakt_nr());
         Label email = new Label("Email: ");
         Label email_data = new Label(student.getEmail());
         Label abschluss = new Label("Abschluss: ");

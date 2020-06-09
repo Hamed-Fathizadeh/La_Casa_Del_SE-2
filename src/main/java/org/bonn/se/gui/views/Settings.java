@@ -4,12 +4,16 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.bonn.se.control.LoginControl;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 
 public class Settings extends GridLayout implements View {
@@ -47,12 +51,11 @@ public class Settings extends GridLayout implements View {
 
         Label lSpruch = new Label(ls3, ContentMode.HTML);
 
-
         Label label1 = new Label("<h2>Benutzerkonto löschen</h2>", ContentMode.HTML);
 
         Label label3 = new Label("<h3>Hier können Sie Ihr Benutzerkonto löschen. Bitte beachten Sie, dass wenn " +
                 "Sie Ihr Benutzerkonto löschen<br>all Ihre Daten endgültig gelöscht werden und Ihre Email aus dem " +
-                "System entfernt wird. Sollten Sie sich erneut<br>bei Lacolsco anmelden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
+                "System entfernt wird. Sollten Sie sich erneut<br>bei LaColSco anmelden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
 
         Button loeschen = new Button("Konto löschen");
 
@@ -61,7 +64,7 @@ public class Settings extends GridLayout implements View {
         this.addComponent(topPanelUser,0,0,9,0);
         this.setComponentAlignment(topPanelUser, Alignment.TOP_CENTER);
 
-        this.addComponent(formGrid, 2,2,7,2);
+        this.addComponent(formGrid, 2,2,6,3);
         this.setComponentAlignment(formGrid, Alignment.MIDDLE_CENTER);
 
         bottomGridBewNeu.addComponent(lSpruch, 0,0,0,0);
@@ -82,6 +85,7 @@ public class Settings extends GridLayout implements View {
         formGrid.addComponent(line);
         formGrid.setComponentAlignment(line, Alignment.BOTTOM_CENTER);
 
+
         loeschen.setEnabled(true);
 
 
@@ -92,7 +96,26 @@ public class Settings extends GridLayout implements View {
         loeschen.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
 
+                    @Override
+                    public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
+                        return super.create("Benutzerkonto löschen", message, "Ja", "Abbrechen", notOkCaption);
+                    }
+                } ;
+
+                ConfirmDialog.setFactory(df);
+                ConfirmDialog.show(MyUI.getCurrent(), "Möchten Sie ihr Konto wirklich löschen?",
+                        new ConfirmDialog.Listener() {
+
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    //SQL-BEFEHL
+
+                                    LoginControl.logoutUser();
+                                }
+                            }
+                        });
             }
         });
 

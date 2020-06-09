@@ -160,8 +160,8 @@ public class RegisterStudent extends GridLayout implements View {
                             UI.getCurrent().getSession().setAttribute(Roles.Student,student);
 
 
-                            ProfilStudentWindow window = new ProfilStudentWindow(student);
-                            UI.getCurrent().addWindow(window);
+                            RegisterStudentWindow registerStudentWindow = new RegisterStudentWindow();
+                            UI.getCurrent().addWindow(registerStudentWindow);
 
                         }
 
@@ -232,10 +232,10 @@ public class RegisterStudent extends GridLayout implements View {
                 stellenanzeige.setFirmenname("Test");
                 stellenanzeige.setTitel("Test");
                 stellenanzeige.setId(42);
-                UI.getCurrent().getSession().setAttribute("Unternehmen",Roles.Unternehmen);
                 //StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(stellenanzeige,unternehmen);
 
                 // UI.getCurrent().addWindow(stellenanzeigeWindow);
+
                 RegisterStudentWindow registerStudentWindow = new RegisterStudentWindow();
                 UI.getCurrent().addWindow(registerStudentWindow);
             }
@@ -248,9 +248,7 @@ public class RegisterStudent extends GridLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-
             this.setUp();
-
     }
 
   /*  String vnummer;
