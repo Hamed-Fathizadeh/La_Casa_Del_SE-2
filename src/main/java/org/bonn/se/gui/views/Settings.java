@@ -47,12 +47,11 @@ public class Settings extends GridLayout implements View {
 
         Label lSpruch = new Label(ls3, ContentMode.HTML);
 
-
         Label label1 = new Label("<h2>Benutzerkonto löschen</h2>", ContentMode.HTML);
 
         Label label3 = new Label("<h3>Hier können Sie Ihr Benutzerkonto löschen. Bitte beachten Sie, dass wenn " +
                 "Sie Ihr Benutzerkonto löschen<br>all Ihre Daten endgültig gelöscht werden und Ihre Email aus dem " +
-                "System entfernt wird. Sollten Sie sich erneut<br>bei Lacolsco anmelden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
+                "System entfernt wird. Sollten Sie sich erneut<br>bei LaColSco anmelden wollen, müssen Sie sich neu registrieren.</h3>", ContentMode.HTML);
 
         Button loeschen = new Button("Konto löschen");
 
@@ -61,7 +60,7 @@ public class Settings extends GridLayout implements View {
         this.addComponent(topPanelUser,0,0,9,0);
         this.setComponentAlignment(topPanelUser, Alignment.TOP_CENTER);
 
-        this.addComponent(formGrid, 2,2,7,2);
+        this.addComponent(formGrid, 2,2,6,3);
         this.setComponentAlignment(formGrid, Alignment.MIDDLE_CENTER);
 
         bottomGridBewNeu.addComponent(lSpruch, 0,0,0,0);
@@ -81,6 +80,7 @@ public class Settings extends GridLayout implements View {
 
         formGrid.addComponent(line);
         formGrid.setComponentAlignment(line, Alignment.BOTTOM_CENTER);
+
 
         loeschen.setEnabled(true);
 
