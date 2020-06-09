@@ -1,6 +1,5 @@
 package org.bonn.se.model.dao;
 
-import com.vaadin.server.FileResource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.DateField;
@@ -13,7 +12,6 @@ import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
 import java.io.*;
-import java.lang.reflect.Field;
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -82,7 +80,6 @@ public class ProfilDAO extends AbstractDAO{
             }
             statement.setString(12,email);
             statement.executeUpdate();
-            //statement.executeUpdate();
         } catch (SQLException | FileNotFoundException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
@@ -93,9 +90,6 @@ public class ProfilDAO extends AbstractDAO{
 
         }
     }
-
-
-
     public static void createStudentProfil2(Student student) throws DatabaseException {
         try {
 
@@ -442,6 +436,149 @@ public class ProfilDAO extends AbstractDAO{
             }
 
 
+        } catch (SQLException  throwables) {
+            throwables.printStackTrace();
+        } finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+        return null;
+    }
+
+    public static Student getStudent2(String email) throws DatabaseException {
+        ResultSet set;
+        ResultSet set2;
+        ResultSet set3;
+        ResultSet set4;
+        System.out.println("profDAO hier2");
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("SELECT s.*, a.strasse, a.plz, a.ort, a.bundesland, u.vorname, u.nachname, u.benutzertyp\n" +
+                    "  FROM lacasa.tab_student s\n" +
+                    "  join lacasa.tab_user u\n" +
+                    "    on  s.email = u.email\n" +
+                    "  left outer join lacasa.tab_adresse a\n" +
+                    "    on s.email = a.email WHERE s.email = \'"+ email + "\'");
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+        Student student = new Student();
+        try {
+            System.out.println("profDAO hier2.2");
+            while (set.next()) {
+                student.setVorname(set.getString("vorname"));
+                student.setNachname(set.getString("nachname"));
+                student.setEmail(set.getString("email"));
+                student.setMobil_nr(set.getString("kontakt_nr"));
+                student.setStudiengang(set.getString("studiengang"));
+                LocalDate localDate = set.getDate("g_datum") == null ? null : set.getDate("g_datum").toLocalDate();
+                student.setG_datum(localDate);
+                student.setAusbildung(set.getString("ausbildung"));
+                student.setAbschluss(set.getString("hoester_abschluss"));
+                student.setBenachrichtigung(set.getInt("benachrichtigung"));
+                student.setType(set.getString("benutzertyp"));
+                Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"));
+                student.setAdresse(adresse);
+
+                byte[] bild = set.getBytes("picture");
+                Image picture = null;
+                if (set.getBytes("picture") == null) {
+                    ThemeResource unknownPic = new ThemeResource("images/Unknown.png");
+                    picture = new Image("", unknownPic);
+                } else {
+                    StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
+                        public InputStream getStream() {
+                            return (bild == null) ? null : new ByteArrayInputStream(
+                                    bild);
+                        }
+                    };
+
+                    picture = new Image(
+                            null, new StreamResource(
+                            streamSource, "streamedSourceFromByteArray"));
+                }
+                student.setImage(picture);
+
+
+
+            }
+        } catch (SQLException  throwables) {
+            throwables.printStackTrace();
+        }
+        System.out.println("profDAO hier3.3");
+        try {
+            System.out.println("profDAO hier3");
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set2 = statement.executeQuery("SELECT t.art, t.beginn_datum, t.end_datum\n" +
+                    "  FROM lacasa.tab_taetigkeiten t\n" +
+                    "  join lacasa.tab_student s\n" +
+                    "    on s.student_id = t.student_id\n" +
+                    "WHERE s.email  = \'"+ email + "\'");
+
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+        try{
+
+            while (set2.next()) {
+                Taetigkeit taetigkeit = new Taetigkeit();
+                taetigkeit.setTaetigkeitName(set2.getString("art"));
+                LocalDate beginn = set2.getDate("beginn_datum") == null ? null : set2.getDate("beginn_datum").toLocalDate();
+                LocalDate ende = set2.getDate("end_datum") == null ? null : set2.getDate("end_datum").toLocalDate();
+                System.out.println("profDAO "+taetigkeit.getTaetigkeitName());
+                taetigkeit.setBeginn(beginn);
+                taetigkeit.setEnde(ende);
+                student.setTaetigkeit(taetigkeit);
+            }
+        } catch (SQLException  throwables) {
+            throwables.printStackTrace();
+        }
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set3 = statement.executeQuery("SELECT k.kompetenz_name, k.niveau_it \n" +
+                    "  FROM lacasa.tab_it_kenntnisse k\n" +
+                    "  join lacasa.tab_student s\n" +
+                    "    on s.student_id = k.student_id\n" +
+                    "WHERE s.email  = \'"+ email + "\'");
+
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+
+        try{
+            while (set3.next()) {
+
+                Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
+                itKenntnis.setKenntnis(set3.getString("kompetenz_name"));
+                itKenntnis.setNiveau(set3.getString("niveau_it"));
+                if (itKenntnis.getKenntnis() != null) {
+                    student.setITKenntnis(itKenntnis);
+                }
+            }
+         } catch (SQLException  throwables) {
+                throwables.printStackTrace();
+         }
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set4 = statement.executeQuery("SELECT sp.sprache, sp.niveau_sprache\n" +
+                    "  FROM lacasa.tab_sprachen sp\n" +
+                    "  join lacasa.tab_student s\n" +
+                    "    on s.student_id = sp.student_id\n" +
+                    "WHERE s.email  = \'"+ email + "\'");
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+         try{
+            while (set4.next()) {
+                Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
+                sprachKenntnis.setKenntnis(set4.getString("sprache"));
+                sprachKenntnis.setNiveau(set4.getString("niveau_sprache"));
+                student.setSprachKenntnis(sprachKenntnis);
+                return student;
+            }
         } catch (SQLException  throwables) {
             throwables.printStackTrace();
         } finally {

@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Student extends User {
+    private int student_id;
     private String vorname;
     private String nachname;
     private LocalDate g_datum;
@@ -42,6 +43,8 @@ public class Student extends User {
         this.plz = plz;
     }
 
+    private String mobil_nr;
+    private int benachrichtigung;
     private  ArrayList<Taetigkeit> taetigkeiten;
     private  ArrayList<SprachKenntnis> sprachKenntnisList;
     private  ArrayList<ITKenntnis> itKenntnisList;
@@ -59,7 +62,13 @@ public class Student extends User {
     public void setAusbildung(String ausbildung) {
         this.ausbildung = ausbildung;
     }
+    public int getBenachrichtigung() {
+        return benachrichtigung;
+    }
 
+    public void setBenachrichtigung(int benachrichtigung) {
+        this.benachrichtigung = benachrichtigung;
+    }
     private String ausbildung;
     Adresse adresse;
 
@@ -91,16 +100,18 @@ public class Student extends User {
 
     public Student() {
         super();
-//        setStudent_id(student_id);
+        setStudent_id(student_id);
         setVorname(vorname);
         setNachname(nachname);
         setG_datum(g_datum);
         setStudiengang(studiengang);
         super.setType("S");
-        setStrasse(strasse);
-        setOrt(ort);
-        setPlz(plz);
         setAdresse(adresse);
+        setBenachrichtigung(benachrichtigung);
+        taetigkeiten = new ArrayList<Taetigkeit>();
+        itKenntnisList = new ArrayList<ITKenntnis> ();
+        sprachKenntnisList = new ArrayList<SprachKenntnis>();
+
         setTaetigkeitenListe(taetigkeiten);
         setItKenntnisList(itKenntnisList);
         setSprachKenntnisList(sprachKenntnisList);
@@ -194,7 +205,25 @@ public class Student extends User {
         public void setNiveau(String niveau) { this.niveau = niveau; }
     }
 
-
+    @Override
+    public String toString() {
+        return "Student{" +
+                "student_id=" + student_id +
+                ", vorname='" + vorname + '\'' +
+                ", nachname='" + nachname + '\'' +
+                ", g_datum=" + g_datum +
+                ", studiengang='" + studiengang + '\'' +
+                ", email='" + email + '\'' +
+                ", image=" + image +
+                ", abschluss='" + abschluss + '\'' +
+                ", mobil_nr='" + mobil_nr + '\'' +
+                ", taetigkeiten=" + taetigkeiten +
+                ", sprachKenntnisList=" + sprachKenntnisList +
+                ", itKenntnisList=" + itKenntnisList +
+                ", ausbildung='" + ausbildung + '\'' +
+                ", adresse=" + adresse +
+                '}';
+    }
 
 
 

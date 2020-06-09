@@ -203,7 +203,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             image.setHeight("170px");
             image.setWidth("150px");
 
-
             form1.addComponents(image, upload, g_datum, mobilnr);
             form1.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
 

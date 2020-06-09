@@ -4,7 +4,10 @@ import com.vaadin.annotations.StyleSheet;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.util.Roles;
 
 import java.io.OutputStream;
 
@@ -27,23 +30,94 @@ public class BewerbungWindow extends Window {
         panel.setWidthFull();
 
 
-        GridLayout gridLayout = new GridLayout(5, 14);
-        gridLayout.setSizeFull();
-        gridLayout.setMargin(true);
+        GridLayout mainGridLayout = new GridLayout(6, 14);
+        mainGridLayout.setSizeFull();
+        mainGridLayout.setMargin(true);
+        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+        System.out.println(student.toString());
 
-        Image logo = unternehmen_data.getLogo();
-        Label titel = new Label("<h2><b> Bewerbung auf: " + stellenanzeige.getTitel() + "</font></b></h3>", ContentMode.HTML);
+        Image profilbild = student.getImage();
+        Label titel = new Label("<h2><b> Bewerbung auf: " + stellenanzeige.getTitel() + "</font></b></h2>", ContentMode.HTML);
+        Label vor_nachname = new Label("<h2><b>" +student.getVorname()+" "+student.getNachname()+ "</font></b></h2>", ContentMode.HTML);
+        Label geb_datum = new Label("Geb Datum: ");
+        Label geb_datum_data = new Label(""+student.getG_datum());
+        Label adresse = new Label("Adresse: ");
+        Label adresse_data = new Label(student.getAdresse().getStrasse()+" "+student.getAdresse().getHaus_nr());
+        Label plzOrt = new Label("PLZ Ort: ");
+        Label plzOrt_data = new Label(student.getAdresse().getPlz()+" "+student.getAdresse().getOrt());
+        Label rufnummer = new Label("Rufnummer: ");
+        Label rufnummer_data = new Label(student.getMobil_nr());
+        Label email = new Label("Email: ");
+        Label email_data = new Label(student.getEmail());
+        Label abschluss = new Label("Abschluss: ");
+        Label abschluss_data = new Label(student.getAbschluss());
+        Label studiengang = new Label("Studiengang: ");
+        Label studiengang_data = new Label(student.getStudiengang());
+        Label ausbildung = new Label("Ausbildung: ");
+        Label ausbildung_data = new Label(student.getAusbildung());
+
+        Label line = new Label("<h1><color: black h1>", ContentMode.HTML);
+
+        FormLayout form1 = new FormLayout();
+        form1.setMargin(false);
+        form1.addComponent(new Label("<h1>Berufstätigkeiten: <h1>", ContentMode.HTML));
+        System.out.println(student.getTaetigkeiten().size());
+        for(Taetigkeit te: student.getTaetigkeiten()){
+            form1.addComponent(new Label(te.getTaetigkeitName()));
+            form1.addComponent(new Label(te.getBeginn()+" - " +te.getEnde()));
+        }
+
+        FormLayout form2 = new FormLayout();
+        form2.setMargin(true);
+        form2.addComponent(new Label("<h1>IT-Kenntnisse: <h1>", ContentMode.HTML));
+        for(Student.ITKenntnis itK: student.getItKenntnisList()){
+            form2.addComponent(new Label(itK.getKenntnis()+"  "+itK.getNiveau()));
+        }
+
+        FormLayout form3 = new FormLayout();
+        form3.setMargin(true);
+        form3.addComponent(new Label("<h1>Sprachkenntnisse: <h1>", ContentMode.HTML));
+        for(Student.SprachKenntnis sp: student.getSprachKenntnisList()){
+            form3.addComponent(new Label(sp.getKenntnis()+"  "+sp.getNiveau()));
+        }
 
 
-        gridLayout.addComponent(logo, 1, 1);
-        gridLayout.addComponent(titel, 1, 2, 4, 2);
 
+        mainGridLayout.addComponent(titel, 0, 1, 5, 1);
+        mainGridLayout.addComponent(profilbild, 0, 2,0,7);
+        mainGridLayout.addComponent(vor_nachname, 1, 2,1,2);
+        mainGridLayout.addComponent(geb_datum, 1, 3,1,3);mainGridLayout.addComponent(geb_datum_data, 2, 3,2,3);
+        mainGridLayout.addComponent(adresse, 1, 4,1,4); mainGridLayout.addComponent(adresse_data, 2, 4,2,4);
+        mainGridLayout.addComponent(plzOrt, 1, 5,1,5);mainGridLayout.addComponent(plzOrt_data, 2, 5,2,5);
+        mainGridLayout.addComponent(rufnummer, 1, 6,1,6);mainGridLayout.addComponent(rufnummer_data, 2, 6,2,6);
+        mainGridLayout.addComponent(email, 1, 7,1,7); mainGridLayout.addComponent(email_data, 2, 7,2,7);
+
+        mainGridLayout.addComponent(abschluss, 3, 3,3,3); mainGridLayout.addComponent(abschluss_data, 4, 3,4,3);
+        mainGridLayout.addComponent(studiengang, 3, 4,3,4);  mainGridLayout.addComponent(studiengang_data, 4, 4,4,4);
+        mainGridLayout.addComponent(ausbildung, 3, 5,3,5); mainGridLayout.addComponent(ausbildung_data, 4, 5,4,5);
+
+        mainGridLayout.addComponent(line, 0, 8,4,8);
+
+        mainGridLayout.addComponent(form1, 0, 9,1,9);
+        mainGridLayout.addComponent(form2, 2, 9,3,9);
+        mainGridLayout.addComponent(form3, 4, 9,5,9);
+
+
+
+        mainGridLayout.setComponentAlignment(titel, Alignment.TOP_CENTER);
+        mainGridLayout.setComponentAlignment(profilbild, Alignment.MIDDLE_CENTER);
+        mainGridLayout.setComponentAlignment(vor_nachname, Alignment.TOP_CENTER);
+
+        mainGridLayout.setComponentAlignment(line, Alignment.TOP_CENTER);
+        mainGridLayout.setComponentAlignment(form1, Alignment.TOP_CENTER);
+        mainGridLayout.setComponentAlignment(form2, Alignment.TOP_CENTER);
+        mainGridLayout.setComponentAlignment(form3, Alignment.TOP_CENTER);
 
         Button bewerben = new Button("Bewerben");
         Button back = new Button("Zurück zu Ergebnissen");
 
-        gridLayout.addComponent(bewerben, 4, 13, 4, 13);
-        gridLayout.addComponent(back, 4, 0, 4, 0);
+        mainGridLayout.addComponent(bewerben, 4, 13, 4, 13);
+        mainGridLayout.addComponent(back, 4, 0, 4, 0);
 
 
         back.addClickListener(new Button.ClickListener() {
@@ -62,8 +136,8 @@ public class BewerbungWindow extends Window {
         sample.setImmediateMode(false);
         sample.setButtonCaption("Upload File");
 
-        gridLayout.addComponent(sample, 3, 13);
-        panel.setContent(gridLayout);
+        mainGridLayout.addComponent(sample, 3, 13);
+        panel.setContent(mainGridLayout);
         this.setContent(panel);
 
         UploadInfoWindow  uploadInfoWindow = new UploadInfoWindow(sample, lineBreakCounter);

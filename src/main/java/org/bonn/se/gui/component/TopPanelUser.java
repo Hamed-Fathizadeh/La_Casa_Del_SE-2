@@ -1,6 +1,5 @@
 package org.bonn.se.gui.component;
 
-import com.vaadin.event.MouseEvents;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
@@ -25,21 +24,13 @@ public class TopPanelUser extends HorizontalLayout {
         ThemeResource resource = new ThemeResource("img/RegisterStudent/logo.png");
         Image logo = new Image(null,resource);
 
-
         logo.setSizeUndefined();
         logo.addStyleName("logo");
         Topgrid.addComponent(logo,0,0,0,0);
         Topgrid.setComponentAlignment(logo, Alignment.BOTTOM_LEFT);
-        logo.addClickListener(new MouseEvents.ClickListener() {
-            @Override
-            public void click(MouseEvents.ClickEvent event) {
-                if(MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-                    MyUI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
-                } else if (MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-                    MyUI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-                }
-            }
-        });
+
+//add image
+
 
 
         Image profilbild = null;
@@ -76,7 +67,7 @@ public class TopPanelUser extends HorizontalLayout {
         item1.addItem("Mein Profil", VaadinIcons.SEARCH, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem menuItem) {
-                LoginControl.logoutUser();
+                MyUI.getCurrent().getNavigator().navigateTo(Views.ProfilVerwaltenStudent);
             }
         });
 
@@ -93,6 +84,14 @@ public class TopPanelUser extends HorizontalLayout {
                 LoginControl.logoutUser();
             }
         });
+
+        item1.addItem("Settings", VaadinIcons.SEARCH, new MenuBar.Command() {
+            @Override
+            public void menuSelected(MenuBar.MenuItem menuItem) {
+                UI.getCurrent().getNavigator().navigateTo(Views.Settings);
+            }
+        });
+
         item1.addSeparator();
         item1.addItem("Logout", VaadinIcons.SIGN_OUT, new MenuBar.Command() {
             @Override
