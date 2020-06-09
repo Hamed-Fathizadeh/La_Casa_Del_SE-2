@@ -4,12 +4,16 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.bonn.se.control.LoginControl;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 
 public class Settings extends GridLayout implements View {
@@ -92,7 +96,26 @@ public class Settings extends GridLayout implements View {
         loeschen.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
+                ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
 
+                    @Override
+                    public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
+                        return super.create("Benutzerkonto löschen", message, "Ja", "Abbrechen", notOkCaption);
+                    }
+                } ;
+
+                ConfirmDialog.setFactory(df);
+                ConfirmDialog.show(MyUI.getCurrent(), "Möchten Sie ihr Konto wirklich löschen?",
+                        new ConfirmDialog.Listener() {
+
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    //SQL-BEFEHL
+
+                                    LoginControl.logoutUser();
+                                }
+                            }
+                        });
             }
         });
 

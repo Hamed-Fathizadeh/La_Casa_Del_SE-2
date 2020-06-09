@@ -144,7 +144,14 @@ public class Student extends User {
     public ArrayList<Taetigkeit> getTaetigkeitenListe() { return taetigkeiten; }
     public void setTaetigkeitenListe(ArrayList<Taetigkeit> taetigkeiten) { this.taetigkeiten = taetigkeiten; }
     public Taetigkeit getTaetigkeit() { return taetigkeiten.get(taetigkeiten.size()-1); }
-    public void setTaetigkeit(Taetigkeit taetigkeit) { taetigkeiten.add(taetigkeit);}
+    public void setTaetigkeit(Taetigkeit taetigkeit) {
+        if(taetigkeiten == null) {
+            taetigkeiten = new ArrayList<>();
+            taetigkeiten.add(taetigkeit);
+        } else {
+            taetigkeiten.add(taetigkeit);
+        }
+    }
     public SprachKenntnis getSprachKenntnis() { return sprachKenntnisList.get(sprachKenntnisList.size()-1); }
     public void setSprachKenntnis(SprachKenntnis sprachKenntnis) {
         if(!(sprachKenntnis.getKenntnis().equals(""))){
