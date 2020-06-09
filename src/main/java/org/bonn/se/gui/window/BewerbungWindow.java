@@ -7,6 +7,7 @@ import org.bonn.se.control.exception.BewerbungControl;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.model.objects.entitites.Unternehmen;
@@ -157,12 +158,12 @@ public class BewerbungWindow extends Window {
             @Override
             public void buttonClick(Button.ClickEvent event) {
 
-                BewerbungDTO bewerbungDTO = null;
-
+                BewerbungDTO bewerbungDTO = new BewerbungDTO();
                 bewerbungDTO.setDescription(stellenanzeige.getBeschreibung());
                 bewerbungDTO.setLebenslauf(PdfUploader.getByte());
                 bewerbungDTO.setStatus(1);
-                bewerbungDTO.setStatus(student.getStudent_id());
+                System.out.println("BewWindow hier1.2"+student.getStudent_id());
+                bewerbungDTO.setStudentID(student.getStudent_id());
                 bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
 
                 BewerbungControl.bewerben(bewerbungDTO);

@@ -54,6 +54,9 @@ public class BewerbungDTO { private int bewerbungID;
         unternehmenLogo = unternehmenLogo;
     }
 
+    public BewerbungDTO(){
+
+    }
 
     public BewerbungDTO(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
                         String unternehmenName, byte[] unternehmenLogo,String emailStudent, String s_titel, double rating) {

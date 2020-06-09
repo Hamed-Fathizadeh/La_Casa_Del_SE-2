@@ -23,7 +23,7 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
         FileOutputStream fos;
 
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-        file = new File(basepath + "/image/" + filename);
+        file = new File(basepath + "/VAADIN/themes/demo/PDF/" + filename);
 
         try {
             fos = new FileOutputStream(file);
