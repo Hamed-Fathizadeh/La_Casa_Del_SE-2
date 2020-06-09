@@ -60,15 +60,15 @@ public class ProfilStudentWindow extends Window {
         Upload upload = new Upload("", receiver);
         upload.addSucceededListener(receiver);
         upload.setButtonCaption("Profilbild hochladen");
-        image.setSource(new FileResource(new File("src/main/webapp/image/Unknown.png")));
+        image.setSource(new FileResource(new File("src/main/webapp/VAADIN/themes/demo/images/Unknown.png")));
 
         upload.addStartedListener(new Upload.StartedListener() {
             @Override
             public void uploadStarted(Upload.StartedEvent event) {
                 form1.removeComponent(image);
                 Image image = ImageUploader.getImage();
-                image.setHeight(150,Unit.PIXELS);
-                image.setWidth(150,Unit.PIXELS);
+                image.setHeight(500,Unit.PIXELS);
+                image.setWidth(500,Unit.PIXELS);
                 form1.addComponent(image,0);
                 form1.setComponentAlignment(image,Alignment.MIDDLE_CENTER);
 
