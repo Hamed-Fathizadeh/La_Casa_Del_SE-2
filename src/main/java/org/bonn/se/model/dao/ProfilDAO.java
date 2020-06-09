@@ -1,5 +1,6 @@
 package org.bonn.se.model.dao;
 
+import com.vaadin.server.FileResource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.DateField;
@@ -12,6 +13,7 @@ import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -41,14 +43,13 @@ public class ProfilDAO extends AbstractDAO{
                 + "WHERE email = ?;" +
                 "INSERT INTO lacasa.tab_adresse VALUES(DEFAULT,?,?,?,?,?);";
         PreparedStatement statement = getPreparedStatement(sql);
-
         try {
             FileInputStream fis = null;
             if(file != null) {
                 fis = new FileInputStream(file);
                 statement.setBinaryStream(5, fis, (int)file.length());
             } else {
-                statement.setNull(5,5);
+                statement.setNull(5, Types.BINARY);
             }
 
             if (String.valueOf(g_datum.getValue()).equals("null")) {
@@ -72,10 +73,16 @@ public class ProfilDAO extends AbstractDAO{
             } else {
                 statement.setBigDecimal(9,null);
             }
-            statement.setString(10,ort);
-            statement.setString(11,bundesland);
+            if(!ort.equals("") || !bundesland.equals("")) {
+                statement.setString(10, ort);
+                statement.setString(11,bundesland);
+            } else {
+                statement.setNull(10, Types.VARCHAR);
+                statement.setNull(11, Types.VARCHAR);
+            }
             statement.setString(12,email);
             statement.executeUpdate();
+            //statement.executeUpdate();
         } catch (SQLException | FileNotFoundException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
@@ -86,6 +93,9 @@ public class ProfilDAO extends AbstractDAO{
 
         }
     }
+
+
+
     public static void createStudentProfil2(Student student) throws DatabaseException {
         try {
 
@@ -94,13 +104,14 @@ public class ProfilDAO extends AbstractDAO{
 
                 String sql = "INSERT INTO lacasa.tab_taetigkeiten VALUES(DEFAULT,?,?,?,(Select tab_student.student_id FROM lacasa.tab_student WHERE email = \'"+ student.getEmail() +"\'));";
 
-
+                Date begin = null;
+                Date ende = null;
                 //String sql = "INSERT INTO lacasa.tab_student VALUES(DEFAULT,?,?,?,DEFAULT,DEFAULT,?,?) WHERE email = \'" + email + "\';         INSERT INTO lacasa.tab_adresse VALUES(DEFAULT,?,?,?,?);"  ;
                 PreparedStatement statement = getPreparedStatement(sql);
-
-                Date begin = Date.valueOf(taetigkeit.getBeginn());
-                Date ende = Date.valueOf(taetigkeit.getEnde());
-
+                if(taetigkeit.getBeginn() != null || taetigkeit.getEnde() != null ) {
+                    begin = Date.valueOf(taetigkeit.getBeginn());
+                    ende = Date.valueOf(taetigkeit.getEnde());
+                }
                 assert statement != null;
                 statement.setString(1, taetigkeit.getTaetigkeitName());
                 statement.setDate(2, begin);
@@ -280,7 +291,7 @@ public class ProfilDAO extends AbstractDAO{
                 student.setG_datum(localDate);
                 student.setStudiengang(set.getString("studiengang"));//getInt, get
                 student.setAusbildung(set.getString("ausbildung"));
-                student.setMobil_nr(set.getString("kontakt_nr"));
+                student.setKontakt_nr(set.getString("kontakt_nr"));
                 student.setAbschluss("hoechster_abschluss");
                 byte[] bild = set.getBytes("picture"); //Bild nehmen bisschen kompliziert an Tobi hammed
 
@@ -295,7 +306,7 @@ public class ProfilDAO extends AbstractDAO{
                 Image profilbild = new Image(
                         null, new StreamResource(
                         streamSource, "streamedSourceFromByteArray"));
-                student.setImage(profilbild);
+                student.setPicture(profilbild);
 
 
                 return student;
@@ -381,7 +392,7 @@ public class ProfilDAO extends AbstractDAO{
                 student.setVorname(set.getString("vorname"));
                 student.setNachname(set.getString("nachname"));
                 student.setEmail(set.getString("email"));
-                student.setMobil_nr(set.getString("kontakt_nr"));
+                student.setKontakt_nr(set.getString("kontakt_nr"));
                 student.setStudiengang(set.getString("studiengang"));
                 LocalDate localDate = set.getDate("g_datum") == null? null: set.getDate("g_datum").toLocalDate() ;
                 student.setG_datum(localDate);
@@ -424,7 +435,7 @@ public class ProfilDAO extends AbstractDAO{
                             null, new StreamResource(
                             streamSource, "streamedSourceFromByteArray"));
                 }
-                student.setImage(picture);
+                student.setPicture(picture);
 
 
                 return student;

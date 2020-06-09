@@ -51,7 +51,7 @@ public class TopPanelUser extends HorizontalLayout {
         MenuBar.MenuItem item1 = null;
 
         if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            profilbild = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getImage();
+            profilbild = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture();
             profilbild.setHeight(70, Unit.PIXELS);
             profilbild.setWidth(70, Unit.PIXELS);
             // Topgrid.addComponent(profilbild,4,0,4,0);
