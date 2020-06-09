@@ -466,7 +466,6 @@ public class ProfilDAO extends AbstractDAO{
         try {
             System.out.println("profDAO hier2.2");
             while (set.next()) {
-                student.setStudent_id(set.getInt("student_id"));
                 student.setVorname(set.getString("vorname"));
                 student.setNachname(set.getString("nachname"));
                 student.setEmail(set.getString("email"));
@@ -558,9 +557,9 @@ public class ProfilDAO extends AbstractDAO{
                     student.setITKenntnis(itKenntnis);
                 }
             }
-         } catch (SQLException  throwables) {
-                throwables.printStackTrace();
-         }
+        } catch (SQLException  throwables) {
+            throwables.printStackTrace();
+        }
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
             set4 = statement.executeQuery("SELECT sp.sprache, sp.niveau_sprache\n" +
@@ -572,7 +571,7 @@ public class ProfilDAO extends AbstractDAO{
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         }
-         try{
+        try{
             while (set4.next()) {
                 Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
                 sprachKenntnis.setKenntnis(set4.getString("sprache"));
@@ -587,4 +586,5 @@ public class ProfilDAO extends AbstractDAO{
         }
         return null;
     }
+
 }

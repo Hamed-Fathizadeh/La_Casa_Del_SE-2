@@ -136,21 +136,26 @@ public class BewerbungWindow extends Window {
         mainGridLayout.addComponent(bewerben, 5, 13);
 
         PdfUploader receiver = new PdfUploader();
-        // Create the upload with a caption and set receiver later
+
         Upload upload = new Upload("", receiver);
         upload.addSucceededListener(receiver);
         upload.setButtonCaption("PDF hochladen");
+        //upload.setImmediateMode(false);
+         final Label fileName = new Label();
 
 
 
-        mainGridLayout.addComponent(upload, 0, 13,4,13);
+
+
         panel.setContent(mainGridLayout);
         this.setContent(panel);
         final byte[] myByte = null;
         upload.addStartedListener(event -> {
-           event.getFilename();
+            fileName.setValue( event.getFilename());
 
         });
+        mainGridLayout.addComponent(upload, 0, 12,4,12);
+        mainGridLayout.addComponent(fileName, 0, 13,4,13);
 
 
 
@@ -166,159 +171,13 @@ public class BewerbungWindow extends Window {
                 bewerbungDTO.setStudentID(student.getStudent_id());
                 bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
 
-                BewerbungControl.bewerben(bewerbungDTO);
+                BewerbungControl.bewerben(bewerbungDTO,PdfUploader.getPath());
+
             }
         });
 
     }
 
-
-    @StyleSheet("uploadexample.css")
-    private static class UploadInfoWindow extends Window implements
-            Upload.StartedListener, Upload.ProgressListener,
-            Upload.FailedListener, Upload.SucceededListener,
-            Upload.FinishedListener {
-        private final Label state = new Label();
-        private final Label result = new Label();
-        private final Label fileName = new Label();
-        private final Label textualProgress = new Label();
-
-        private final ProgressBar progressBar = new ProgressBar();
-        private final Button cancelButton;
-        private final LineBreakCounter counter;
-
-        private UploadInfoWindow(final Upload upload, final LineBreakCounter lineBreakCounter) {
-            super("Status");
-            this.counter = lineBreakCounter;
-
-            addStyleName("upload-info");
-
-            setResizable(false);
-            setDraggable(false);
-
-            final FormLayout uploadInfoLayout = new FormLayout();
-            setContent(uploadInfoLayout);
-            uploadInfoLayout.setMargin(true);
-
-            final HorizontalLayout stateLayout = new HorizontalLayout();
-            stateLayout.setSpacing(true);
-            stateLayout.addComponent(state);
-
-            cancelButton = new Button("Cancel");
-            cancelButton.addClickListener(event -> upload.interruptUpload());
-            cancelButton.setVisible(false);
-            cancelButton.setStyleName("small");
-            stateLayout.addComponent(cancelButton);
-
-            stateLayout.setCaption("Current state");
-            state.setValue("Idle");
-            uploadInfoLayout.addComponent(stateLayout);
-
-            fileName.setCaption("File name");
-            uploadInfoLayout.addComponent(fileName);
-
-            result.setCaption("Line breaks counted");
-            uploadInfoLayout.addComponent(result);
-
-            progressBar.setCaption("Progress");
-            progressBar.setVisible(false);
-            uploadInfoLayout.addComponent(progressBar);
-
-            textualProgress.setVisible(false);
-            uploadInfoLayout.addComponent(textualProgress);
-
-            upload.addStartedListener(this);
-            upload.addProgressListener(this);
-            upload.addFailedListener(this);
-            upload.addSucceededListener(this);
-            upload.addFinishedListener(this);
-
-        }
-
-        @Override
-        public void uploadFinished(final Upload.FinishedEvent event) {
-            state.setValue("Idle");
-            progressBar.setVisible(false);
-            textualProgress.setVisible(false);
-            cancelButton.setVisible(false);
-        }
-
-        @Override
-        public void uploadStarted(final Upload.StartedEvent event) {
-            // this method gets called immediately after upload is started
-            progressBar.setValue(0f);
-            progressBar.setVisible(true);
-            UI.getCurrent().setPollInterval(500);
-            textualProgress.setVisible(true);
-            // updates to client
-            state.setValue("Uploading");
-            fileName.setValue(event.getFilename());
-
-            cancelButton.setVisible(true);
-           event.getMIMEType();
-        }
-
-        @Override
-        public void updateProgress(final long readBytes, final long contentLength) {
-            // this method gets called several times during the update
-            progressBar.setValue(readBytes / (float) contentLength);
-            textualProgress.setValue("Processed " + readBytes + " bytes of " + contentLength);
-            result.setValue(counter.getLineBreakCount() + " (counting...)");
-        }
-
-        @Override
-        public void uploadSucceeded(final Upload.SucceededEvent event) {
-            result.setValue(counter.getLineBreakCount() + " (total)");
-        }
-
-        @Override
-        public void uploadFailed(final Upload.FailedEvent event) {
-            result.setValue(counter.getLineBreakCount()
-                    + " (counting interrupted at "
-                    + Math.round(100 * progressBar.getValue()) + "%)");
-        }
-    }
-
-    private static class LineBreakCounter implements Upload.Receiver {
-        private int counter;
-        private int total;
-        private boolean sleep;
-
-        /**
-         * return an OutputStream that simply counts lineends
-         */
-        @Override
-        public OutputStream receiveUpload(final String filename, final String MIMEType) {
-            counter = 0;
-            total = 0;
-            return new OutputStream() {
-                private static final int searchedByte = '\n';
-
-                @Override
-                public void write(final int b) {
-                    total++;
-                    if (b == searchedByte) {
-                        counter++;
-                    }
-                    if (sleep && total % 1000 == 0) {
-                        try {
-                            Thread.sleep(100);
-                        } catch (final InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            };
-        }
-
-        private int getLineBreakCount() {
-            return counter;
-        }
-
-        private void setSlow(boolean value) {
-            sleep = value;
-        }
-    }
 
 }
 

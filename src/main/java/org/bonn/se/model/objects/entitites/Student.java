@@ -14,6 +14,15 @@ public class Student extends User {
     private String studiengang;
     private Image picture = null;
     private String abschluss;
+
+    public int getStudent_id() {
+        return student_id;
+    }
+
+    public void setStudent_id(int student_id) {
+        this.student_id = student_id;
+    }
+
     private String kontakt_nr;
     private String strasse;
     private String ort;
@@ -160,8 +169,9 @@ public class Student extends User {
     }
 
     public ITKenntnis getITKenntnis() { return itKenntnisList.get(itKenntnisList.size()-1); }
+
     public void setITKenntnis(ITKenntnis itKenntnis) {
-        if(!(itKenntnis.getKenntnis().equals(null))) {
+        if( !itKenntnis.getKenntnis().equals(null)) {
             itKenntnisList.add(itKenntnis);
         }
     }
