@@ -47,6 +47,7 @@ public class TopPanelUser extends HorizontalLayout {
             profilbild.setHeight(70, Unit.PIXELS);
             profilbild.setWidth(70, Unit.PIXELS);
             // Topgrid.addComponent(profilbild,4,0,4,0);
+            //test
             //   Topgrid.setComponentAlignment(profilbild, Alignment.BOTTOM_RIGHT);
             item1 = bar.addItem(
                     ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getVorname(),
