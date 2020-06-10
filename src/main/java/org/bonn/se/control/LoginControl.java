@@ -52,20 +52,20 @@ public class LoginControl {
 
                 if(set.getString(5).equals("C")) {
                         Unternehmen unternehmen = new Unternehmen();
-                        UI.getCurrent().getSession().setAttribute("Unternehmen",unternehmen);
+                        MyUI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
                         unternehmen.setEmail(user.getEmail());
                         unternehmen.setVorname(user.getVorname());
                         unternehmen.setNachname(user.getNachname());
                         unternehmen = ProfilDAO.getUnternehmenProfil(unternehmen);
 
-                        UI.getCurrent().getSession().setAttribute("Unternehmen",unternehmen);
+                        MyUI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
 
                     } else if(set.getString(5).equals("S")) {
                         Student student = new Student();
                         //student = ProfilDAO.getStudentTest(user.getEmail());
                         student = ProfilDAO.getStudent2(user.getEmail());
 
-                        UI.getCurrent().getSession().setAttribute("Student",student);
+                        MyUI.getCurrent().getSession().setAttribute(Roles.Student,student);
 
 
 

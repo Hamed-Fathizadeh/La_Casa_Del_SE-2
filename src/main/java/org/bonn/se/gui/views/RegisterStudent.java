@@ -11,7 +11,6 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.UserSearch;
 import org.bonn.se.gui.component.*;
-import org.bonn.se.gui.window.ProfilStudentWindow;
 import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Stellenanzeige;
@@ -217,29 +216,6 @@ public class RegisterStudent extends GridLayout implements View {
                 event -> VnummerButton.setEnabled(binder2.isValid()));
          */
 
-        Button button = new Button("Test");
-
-        this.addComponent(button,9,9);
-
-        button.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                Student student = new Student();
-                Unternehmen unternehmen = new Unternehmen();
-                unternehmen.setLogo(new Image("",new FileResource(new File("src/main/webapp/VAADIN/themes/demo/images/Unknown.png"))));
-                Stellenanzeige stellenanzeige = new Stellenanzeige();
-                unternehmen.setHauptsitz("Test");
-                stellenanzeige.setFirmenname("Test");
-                stellenanzeige.setTitel("Test");
-                stellenanzeige.setId(42);
-                //StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(stellenanzeige,unternehmen);
-
-                // UI.getCurrent().addWindow(stellenanzeigeWindow);
-
-                RegisterStudentWindow registerStudentWindow = new RegisterStudentWindow();
-                UI.getCurrent().addWindow(registerStudentWindow);
-            }
-        });
 
 
 

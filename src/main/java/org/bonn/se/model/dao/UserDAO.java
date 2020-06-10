@@ -109,7 +109,7 @@ public class UserDAO  extends AbstractDAO {
         if (user.getType().equals("S")) {
              sql = "INSERT INTO lacasa.tab_user VALUES(?,?,?,?,?); INSERT INTO lacasa.tab_student (email) VALUES(?);";
         } else{
-            sql = "INSERT INTO lacasa.tab_user  VALUES(?,?,?,?,?); INSERT INTO lacasa.tab_unternehmen (firmenname,hauptsitz,bundesland,email) VALUES(?,?,?,?);";
+            sql = "INSERT INTO lacasa.tab_user VALUES(?,?,?,?,?); INSERT INTO lacasa.tab_unternehmen (firmenname,hauptsitz,bundesland,email) VALUES(?,?,?,?);";
         }
         PreparedStatement statement = AbstractDAO.getPreparedStatement(sql);
 
@@ -130,7 +130,6 @@ public class UserDAO  extends AbstractDAO {
                 statement.setString(9, user.getEmail());
             } else {
                 statement.setString(6, user.getEmail());
-
             }
             statement.executeUpdate();
         } catch (SQLException throwables) {

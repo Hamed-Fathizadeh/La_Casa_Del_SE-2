@@ -15,6 +15,7 @@ import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanel;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.ProfilUnternehmerWindow;
+import org.bonn.se.gui.window.RegisterUnternehmenWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
@@ -142,18 +143,22 @@ public class RegisterUnternehmer extends GridLayout implements View {
                             UserDAO.registerUser(user);
 
                             // UserDAO.registerStudent(student.getEmail(),student.getPasswort(),student.getVorname(),student.getNachname() ,'s');
+                            String[] sOrt = {"",""};
+
+                            sOrt = hauptsitz.getValue().toString().split(" - ");
+
                             registerButton.setEnabled(false);
                             Unternehmen unternehmen = new Unternehmen();
                             unternehmen.setEmail(user.getEmail());
                             unternehmen.setVorname(user.getVorname());
                             unternehmen.setNachname(user.getNachname());
                             unternehmen.setPasswort(user.getPasswort());
-                            unternehmen.setHauptsitz(user.getHauptsitz());
+                            unternehmen.setHauptsitz(sOrt[0]);
                             unternehmen.setCname(user.getCname());
 
                             UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
-                            ProfilUnternehmerWindow window = new ProfilUnternehmerWindow(unternehmen);
-                            UI.getCurrent().addWindow(window);
+                            RegisterUnternehmenWindow registerUnternehmenWindow = new RegisterUnternehmenWindow();
+                            UI.getCurrent().addWindow(registerUnternehmenWindow);
                         }
 
                     } catch(DatabaseException e){
@@ -223,8 +228,9 @@ public class RegisterUnternehmer extends GridLayout implements View {
             public void buttonClick(Button.ClickEvent event) {
                 Unternehmen unternehmen = new Unternehmen();
                 unternehmen.setVorname("TEst");
-                ProfilUnternehmerWindow window = new ProfilUnternehmerWindow(unternehmen);
-                UI.getCurrent().addWindow(window);
+
+                RegisterUnternehmenWindow registerUnternehmenWindow = new RegisterUnternehmenWindow();
+                UI.getCurrent().addWindow(registerUnternehmenWindow);
             }
         });
 
@@ -235,14 +241,8 @@ public class RegisterUnternehmer extends GridLayout implements View {
         //if (user != null) {
         //  UI.getCurrent().getNavigator().navigateTo(Views.MainView);
         // } else {
-
-        User user = ((MyUI) UI.getCurrent()).getUser();
-        if( user != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
-        } else {
-
             this.setUp();
-        }
+
     }
 /*
     String vnummer;

@@ -244,7 +244,6 @@ public class StellenanzeigeWindow extends Window {
                         gridLayout.replaceComponent(save,delete);
                         gridLayout.replaceComponent(titel_bearbeiten,titel);
                         gridLayout.addComponent(back, 4, 0, 4, 0);
-
                     }
                 });
 

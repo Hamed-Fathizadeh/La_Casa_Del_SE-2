@@ -168,37 +168,48 @@ public class ProfilDAO extends AbstractDAO{
 
     }
 
-    public static void createUnternehmenProfil1(String email,File file, String kon1, String kon2, String strasse, String plz, String ort,String bundesland, String br1,String br2,String br3, String cname, String hauptsitz) throws DatabaseException {
-        String sql = "INSERT INTO lacasa.tab_adresse  VALUES(DEFAULT,?,?,?,?,?);"
-        +"INSERT INTO lacasa.tab_kontakte Values(DEFAULT,?,?,(SELECT lacasa.tab_unternehmen.hauptsitz FROM lacasa.tab_unternehmen WHERE lacasa.tab_unternehmen.email = ?)); " +
-                "UPDATE lacasa.tab_unternehmen SET logo = ? WHERE lacasa.tab_unternehmen.email = ?;";
+    public static void createUnternehmenProfil1(String email,File file, String kon1, String strasse, String plz, String ort,String bundesland, String br1, String cname, String hauptsitz) throws DatabaseException {
+        String sql = "INSERT INTO lacasa.tab_adresse (strasse,plz,ort,bundesland,email) VALUES(?,?,?,?,?);"
+        +"INSERT INTO lacasa.tab_kontakte (nummer,firmenname,hauptsitz) Values(?,?, (SELECT lacasa.tab_unternehmen.hauptsitz FROM lacasa.tab_unternehmen WHERE lacasa.tab_unternehmen.email = ?)); " +
+                "UPDATE lacasa.tab_unternehmen SET logo = ? WHERE lacasa.tab_unternehmen.email = ?;" +
+                "INSERT INTO lacasa.tab_unt_hat_branche (firmenname,hauptsitz,name) VALUES (?,?,?);";
 
         PreparedStatement statement = getPreparedStatement(sql);
 
         try {
-            FileInputStream fis = new FileInputStream(file);
-
-//            statement.setString(3, email);
             statement.setString(1, strasse);
-            statement.setString(5, email);
-            statement.setString(6, kon1);
-          //  statement.setString(3, kon2);
-//            statement.setString(2, br1);
-         //   statement.setString(6, br2);
-         //   statement.setString(7, br3);
-            //statement.setBinaryStream(1, fil, (int) file.length());
             if (!plz.isEmpty()) {
                 statement.setInt(2, Integer.parseInt(plz));
             } else {
                 statement.setBigDecimal(2, null);
             }
-            statement.setString(3, ort);
-            statement.setString(4, bundesland);
+            if(!ort.equals("") || !bundesland.equals("")) {
+                statement.setString(3, ort);
+                statement.setString(4,bundesland);
+            } else {
+                statement.setNull(3, Types.VARCHAR);
+                statement.setNull(4, Types.VARCHAR);
+            }
+            statement.setString(5,email);
+            statement.setString(6, kon1);
             statement.setString(7,cname);
-            statement.setString(8,email);
-            statement.setBinaryStream(9, fis, (int)file.length());
+            statement.setString(8, email);
+            FileInputStream fis = null;
+            if(file != null) {
+                fis = new FileInputStream(file);
+                statement.setBinaryStream(9, fis, (int)file.length());
+            } else {
+                statement.setNull(9, Types.BINARY);
+            }
             statement.setString(10, email);
-
+            statement.setString(11,cname);
+            statement.setString(12,hauptsitz);
+            statement.setString(13,br1);
+            //  statement.setString(3, kon2);
+//            statement.setString(2, br1);
+         //   statement.setString(6, br2);
+         //   statement.setString(7, br3);
+            //statement.setBinaryStream(1, fil, (int) file.length());
 
             statement.executeUpdate();
 
@@ -250,7 +261,7 @@ public class ProfilDAO extends AbstractDAO{
         }
     }*/
     public static void  createUnternehmenProfil3(Unternehmen unternehmen) throws DatabaseException {
-        String sql = "INSERT INTO lacasa.tab_unternehmen VALUES(?,?,?,?,?,description,?,?,reichweite,?)"+
+        String sql = "UPDATE lacasa.tab_unternehmen SET description(?,?,?,?,?,description,?,?,reichweite,?)"+
                 "VALUES(?,?,?,?,?,?,?,?,(select lacasa.tab_reichweite.reichweite+" +
                 "from lacasa.tab_reichweite"+
                 "where lacasa.tab_reichweite.reichweite=?));";
@@ -447,80 +458,6 @@ public class ProfilDAO extends AbstractDAO{
         return null;
     }
 
-    public static Student getStudentTest(String email) throws DatabaseException {
-        Student student;
-
-        try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
-            String sql = "SELECT * FROM lacasa.tab_student WHERE lacasa.tab_student.email = \'" + email + "\'; " +
-                    "SELECT * FROM lacasa.tab_user WHERE lacasa.tab_user.email = \'" + email + "\'; " +
-                    "SELECT * FROM lacasa.tab_taetigkeiten WHERE lacasa.tab_taetigkeiten.student_id = " +
-                    "(SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE tab_student.email =\'" + email + "\'); " +
-                    "SELECT * FROM lacasa.tab_bewerbung WHERE lacasa.tab_bewerbung.student_id = " +
-                    "(SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE tab_student.email = \'" + email + "\'); " +
-                    "SELECT * FROM lacasa.tab_adresse WHERE lacasa.tab_adresse.email = \'" + email + "\'; " +
-                    "SELECT * FROM lacasa.tab_it_kenntnisse WHERE lacasa.tab_it_kenntnisse.student_id = " +
-                    "(SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE tab_student.email = \'" + email + "\'); " +
-                    "SELECT * FROM lacasa.tab_sprachen WHERE lacasa.tab_sprachen.student_id = " +
-                    "(SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE tab_student.email =\'" + email + "\');";
-
-            boolean hasMoreResultSets = statement.execute(sql);
-            student = new Student();
-            while (hasMoreResultSets || statement.getUpdateCount() != -1) {
-                if (hasMoreResultSets) {
-                    ResultSet set = statement.getResultSet();
-                    // handle your rs here
-
-                    student.setKontakt_nr(set.getString("kontakt_nr"));
-                    student.setStudiengang(set.getString("studiengang"));
-                    LocalDate localDate = set.getDate("g_datum") == null ? null : set.getDate("g_datum").toLocalDate();
-                    student.setG_datum(localDate);
-                    student.setAusbildung(set.getString("ausbildung"));
-                    student.setAbschluss(set.getString("hoester_abschluss"));
-                    student.setType(set.getString("benutzertyp"));
-                    student.setVorname(set.getString("vorname"));
-                    student.setNachname(set.getString("nachname"));
-                    student.setEmail(set.getString("email"));
-                    Taetigkeit taetigkeit = new Taetigkeit();
-                    taetigkeit.setTaetigkeitName(set.getString("art"));
-                    LocalDate beginn = set.getDate("beginn_datum") == null ? null : set.getDate("beginn_datum").toLocalDate();
-                    LocalDate ende = set.getDate("end_datum") == null ? null : set.getDate("end_datum").toLocalDate();
-
-                    taetigkeit.setBeginn(beginn);
-                    taetigkeit.setEnde(ende);
-                    student.setTaetigkeit(taetigkeit);
-                    Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"));
-                    student.setAdresse(adresse);
-                    Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
-                    itKenntnis.setKenntnis(set.getString("kompetenz_name"));
-                    itKenntnis.setNiveau(set.getString("niveau_it"));
-                    if (itKenntnis.getKenntnis() != null) {
-                        student.setITKenntnis(itKenntnis);
-                    }
-                    Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
-                    sprachKenntnis.setKenntnis(set.getString("sprache"));
-                    sprachKenntnis.setNiveau(set.getString("niveau_sprache"));
-                    student.setSprachKenntnis(sprachKenntnis);
-                } // if has rs
-                else { // if ddl/dml/...
-                    int queryResult = statement.getUpdateCount();
-                    if (queryResult == -1) { // no more queries processed
-                        break;
-                    } // no more queries processed
-                    // handle success, failure, generated keys, etc here
-                } // if ddl/dml/...
-
-                // check to continue in the loop
-                hasMoreResultSets = statement.getMoreResults();
-            } // while results
-
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-        return student;
-
-    }
 
 
 
@@ -665,7 +602,7 @@ public class ProfilDAO extends AbstractDAO{
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
-        return null;
+        return student;
     }
 
 }
