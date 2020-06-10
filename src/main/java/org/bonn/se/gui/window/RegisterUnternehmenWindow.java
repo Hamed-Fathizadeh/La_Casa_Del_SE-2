@@ -5,6 +5,7 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.bonn.se.control.UnternehmenDescriptionControl;
 import org.bonn.se.gui.component.OrtPlzTextField;
 import org.bonn.se.gui.component.PlaceHolderField;
 import org.bonn.se.gui.component.PopUpTextField;
@@ -18,6 +19,8 @@ import org.bonn.se.services.util.DatenUnternehmenProfil;
 import org.bonn.se.services.util.ImageUploader;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.WizardStep;
 import org.vaadin.teemu.wizards.event.*;
@@ -29,6 +32,7 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
     private Wizard wizard;
     private final Image image = new Image();
     private Image image1;
+    Unternehmen unternehmen =(Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
 
     public RegisterUnternehmenWindow() {
         setUp();
@@ -73,12 +77,34 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
 
     @Override
     public void wizardCompleted(WizardCompletedEvent wizardCompletedEvent) {
-
+        wizard.setVisible(false);
+        this.close();
+        MyUI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
     }
 
     @Override
     public void wizardCancelled(WizardCancelledEvent wizardCancelledEvent) {
+        ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
 
+            @Override
+            public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
+                return super.create("Beenden", message, "Ja", "Nein", notOkCaption);
+            }
+        } ;
+
+        ConfirmDialog.setFactory(df);
+        ConfirmDialog.show(MyUI.getCurrent(), "Profilvervollständigung wirklich abbrechen und zum Login?",
+                new ConfirmDialog.Listener() {
+
+                    public void onClose(ConfirmDialog dialog) {
+                        if (dialog.isConfirmed()) {
+                            wizard.setVisible(false);
+                            RegisterUnternehmenWindow.this.close();
+                            MyUI.getCurrent().getSession().setAttribute(Roles.Unternehmen,null);
+                            MyUI.getCurrent().getNavigator().navigateTo(Views.MainView);
+                        }
+                    }
+                });
     }
 
 
@@ -88,7 +114,6 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
         PopUpTextField strasse;
         OrtPlzTextField ort;
         ComboBox<String> branche;
-        Unternehmen unternehmen = (Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
 
         @Override
         public String getCaption() {
@@ -176,11 +201,6 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
             if(ort.getBundesland().getValue() != null) {
                 sOrt = ort.getBundesland().getValue().toString().split(" - ");
             }
-           // Unternehmen unternehmen =(Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
-            Unternehmen unternehmen = new Unternehmen();
-            unternehmen.setEmail("test@c.de");
-            unternehmen.setCname("Firma");
-            unternehmen.setHauptsitz("Bonn");
             try {
                 ProfilDAO.createUnternehmenProfil1(unternehmen.getEmail(),ImageUploader.getFile(),kontaktnummer.getValue(),
                         strasse.getValue(),ort.getPlz().getValue(),sOrt[0],sOrt[1],branche.getValue(),unternehmen.getCname(),unternehmen.getHauptsitz());
@@ -292,62 +312,43 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
     */
 
     private class BeschreibungStep implements WizardStep {
-
+        private RichTextArea richTextArea;
 
         @Override
         public String getCaption() {
-            return null;
+            return "Unternehmensbeschreibung";
         }
 
         @Override
         public Component getContent() {
 
-            GridLayout gridLayout = new GridLayout(3, 3);
-            gridLayout.setHeight("100%");
-            gridLayout.setWidth("100%");
+            VerticalLayout verticalLayout = new VerticalLayout();
+            verticalLayout.setSizeFull();
+            verticalLayout.setMargin(false);
 
+            richTextArea = new RichTextArea();
+            richTextArea.setWidthFull();
+            richTextArea.setValue("Schreiben Sie etwas hier über Ihr Unternehmen");
 
-            Label head = new Label("<h1><p><font color=\"blue\"> Schreiben Sie etwas zu Ihrem Unternehmen !!\n</font></p></h1>", ContentMode.HTML);
-            head.setHeight("70px");
-            FormLayout form1= new FormLayout();
-            form1.setWidth("300px");
-            form1.setMargin(true);
-            form1.addComponent(head);
-
-            FormLayout form2= new FormLayout();
-            final RichTextArea sample = new RichTextArea();
-            sample.setWidthFull();
-            ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setDescription(sample.getValue());
-            sample.setValue("The quick brown fox jumps over the lazy dog.");
-            sample.setSizeFull();
-
-            sample.addValueChangeListener(event -> Notification.show("Value changed:",
-                    String.valueOf(event.getValue()), Notification.Type.TRAY_NOTIFICATION));
-
-            form2.addComponent(sample);
-
-
-            gridLayout.addComponent(head,0,0,0,0);
-            gridLayout.addComponent(form2,0,1,0,1);
-
-
-            gridLayout.setComponentAlignment(head,Alignment.TOP_CENTER);
-            gridLayout.setComponentAlignment(form2,Alignment.MIDDLE_CENTER);
+            richTextArea.setSizeFull();
+            verticalLayout.addComponent(richTextArea);
+            verticalLayout.setComponentAlignment(richTextArea,Alignment.MIDDLE_CENTER);
 
 
 
-            return gridLayout;
+            return verticalLayout;
         }
 
         @Override
         public boolean onAdvance() {
 
+            UnternehmenDescriptionControl unternehmenDescriptionControl = UnternehmenDescriptionControl.getInstance();
             try {
-                ProfilDAO.createUnternehmenProfil3((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
+                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setDescription(richTextArea.getValue());
+                unternehmenDescriptionControl.setDescription();
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
-
             return true;
         }
 
