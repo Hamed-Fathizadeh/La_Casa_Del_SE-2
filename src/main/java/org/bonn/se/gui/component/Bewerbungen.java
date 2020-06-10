@@ -5,6 +5,7 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.AbstractDAO;
+import org.bonn.se.model.dao.BewertungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.Student;
@@ -50,8 +51,8 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             // Put some components in it
            // subContent.addComponent(new Label("Bewerten"));
 
-            selection.getValue().getUnternehmenName();
-            selection.getValue().getUnternehmenHauptsitz();
+            //selection.getValue().getUnternehmenName();
+            //selection.getValue().getUnternehmenHauptsitz();
 
             RatingStars rating = new RatingStars();
 
@@ -72,7 +73,47 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 bewerten.addClickListener(new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
+                        ResultSet set = null;
+                        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+                        try {
+                            Statement statement = JDBCConnection.getInstance().getStatement();
+                            set = statement.executeQuery("SELECT * "
+                                    + "FROM lacasa.tab_bewertung"
+                                    + "WHERE lacasa.tab_bewertung.firmenname NOT EXISTS"
+                                    + "  ( SELECT *  "
+                                    + "FROM laca.tab.bewertung"
+                                    + "WHERE lacasa.tab.hauptsitz IS NOT NULL "
+                                    + " AND lacasa.tab.bewertung.student_id = '" + student.getStudent_id() + "')");
+                        } catch (SQLException | DatabaseException throwables) {
+                            throwables.printStackTrace();
+                           //throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
 
+                        }
+                        try {
+
+
+                            if (set.next()) {
+                                BewertungDAO.bewertung(selection.getValue());
+
+                            } else {
+                                Window subWindow = new Window("Bewertung");
+                                VerticalLayout subContent = new VerticalLayout();
+                                subWindow.setContent(subContent);
+                                subContent.addComponent(new Label("Sie haben bereits eine Bewertung abgegeben! Eine neue Bewertung ist nicht möglich!"));
+                                subWindow.center();
+
+                                // Open it in the UI
+                                UI.getCurrent().addWindow(subWindow);
+                            }
+                        } catch (SQLException | DatabaseException throwables) {
+                            throwables.printStackTrace();
+                        } finally {
+                            try {
+                                JDBCConnection.getInstance().closeConnection();
+                            } catch (DatabaseException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
                     }
                 });
