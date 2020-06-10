@@ -1,9 +1,11 @@
+package junit;
+
 import org.bonn.se.model.dao.UserDAO;
-import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
+
+import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
 
 public class TestDAOs {
