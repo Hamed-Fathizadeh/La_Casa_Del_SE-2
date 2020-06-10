@@ -8,14 +8,23 @@ import java.sql.Date;
 public class BewerbungDTO { private int bewerbungID;
     private Date datum;
     private String description;
-    private byte[] lebenslauf;
+        private byte[] lebenslauf;
     private int status;
     private int studentID;
     private String unternehmenName;
+    private String unternehmenHauptsitz;
     private Image unternehmenLogo;
     private String s_titel;
     private double rating;
     private String emailStudent;
+
+    public String getUnternehmenHauptsitz() {
+        return unternehmenHauptsitz;
+    }
+
+    public void setUnternehmenHauptsitz(String unternehmenHauptsitz) {
+        this.unternehmenHauptsitz = unternehmenHauptsitz;
+    }
 
     public String getEmailStudent() {
         return emailStudent;
@@ -59,7 +68,7 @@ public class BewerbungDTO { private int bewerbungID;
     }
 
     public BewerbungDTO(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
-                        String unternehmenName, byte[] unternehmenLogo,String emailStudent, String s_titel, double rating) {
+                        String unternehmenName,String unternehmenHauptsitz, byte[] unternehmenLogo,String emailStudent, String s_titel, double rating) {
         this.bewerbungID = bewerbungID;
         this.datum = datum;
         this.description = description;
@@ -72,6 +81,7 @@ public class BewerbungDTO { private int bewerbungID;
         this.s_titel = s_titel;
         this.rating = rating;
         this.emailStudent = emailStudent;
+        this.unternehmenHauptsitz = unternehmenHauptsitz;
 
     }
 

@@ -50,6 +50,9 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             // Put some components in it
            // subContent.addComponent(new Label("Bewerten"));
 
+            selection.getValue().getUnternehmenName();
+            selection.getValue().getUnternehmenHauptsitz();
+
             RatingStars rating = new RatingStars();
 
                 rating.setMaxValue(5);
@@ -69,43 +72,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 bewerten.addClickListener(new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
-                        ResultSet set;
-                        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-
-
-                        try {
-                            Statement statement = JDBCConnection.getInstance().getStatement();
-                            set = statement.executeQuery("SELECT * "
-                                    + "FROM lacasa.tab_bewertung"
-                                    + "WHERE lacasa.tab_bewertung.firmenname NOT EXISTS"
-                                    + "  ( SELECT *  "
-                                            + "FROM laca.tab.bewertung"
-                                            + "WHERE lacasa.tab.hauptsitz IS NOT NULL "
-                                             + " AND lacasa.tab.bewertung.student_id = '" + student.getStudent_id() + "')");
-                        } catch (SQLException | DatabaseException throwables) {
-                            throwables.printStackTrace();
-                        }
-                        //if(set.next()){
-
-                        String sql = "INSERT INTO lacasa.tab_bewertung (datum,anzahl_sterne, firmenname, hauptsitz  ,  student_id) " +
-                                "VALUES(?,?,?,?," +
-                                "(SELECT lacasa.tab_student.student_id " +
-                                "FROM lacasa.tab_student" +
-                                " WHERE lacasa.tab_student.email = ?));";
-
-                        //PreparedStatement statement = getPreparedStatement(sql);
-
-
-                        //assert statement != null;
-                        // statement.setDate(1, Date.valueOf(LocalDate.now()));
-                        //statement.setDouble(2, rating.getValue() );
-                        // statement.setString(3, container.getListe().);
-                        // statement.setString(4, );
-
-                        // statement.setString(5, student.getEmail());
-
-
-                        //statement.executeUpdate();
 
 
                     }
