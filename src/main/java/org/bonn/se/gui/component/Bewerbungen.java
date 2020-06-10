@@ -85,38 +85,33 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                         } catch (SQLException | DatabaseException throwables) {
                             throwables.printStackTrace();
                         }
-                        try{
-                            if(set.next()){
+                        //if(set.next()){
 
-                                String sql = "INSERT INTO lacasa.tab_bewertung (datum,anzahl_sterne, firmenname, hauptsitz  ,  student_id) " +
-                                        "VALUES(?,?,?,?," +
-                                        "(SELECT lacasa.tab_student.student_id " +
-                                        "FROM lacasa.tab_student" +
-                                        " WHERE lacasa.tab_student.email = ?));";
+                        String sql = "INSERT INTO lacasa.tab_bewertung (datum,anzahl_sterne, firmenname, hauptsitz  ,  student_id) " +
+                                "VALUES(?,?,?,?," +
+                                "(SELECT lacasa.tab_student.student_id " +
+                                "FROM lacasa.tab_student" +
+                                " WHERE lacasa.tab_student.email = ?));";
 
-                              PreparedStatement statement = getPreparedStatement(sql);
-
-
-                                assert statement != null;
-                                statement.setDate(1, Date.valueOf(LocalDate.now()));
-                                statement.setDouble(2, rating.getValue() );
-                                statement.setString(3, container.getListe().);
-                                statement.setString(4, );
-
-                                statement.setString(5, student.getEmail());
+                        //PreparedStatement statement = getPreparedStatement(sql);
 
 
-                                statement.executeUpdate();
+                        //assert statement != null;
+                        // statement.setDate(1, Date.valueOf(LocalDate.now()));
+                        //statement.setDouble(2, rating.getValue() );
+                        // statement.setString(3, container.getListe().);
+                        // statement.setString(4, );
+
+                        // statement.setString(5, student.getEmail());
 
 
-                            }
-                        } catch (SQLException throwables) {
-                            throwables.printStackTrace();
-                        }
+                        //statement.executeUpdate();
+
+
                     }
                 });
 
-r
+
 
 
             // Center it in the browser window
