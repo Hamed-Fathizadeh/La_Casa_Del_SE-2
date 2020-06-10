@@ -8,7 +8,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanelUser;
-import org.bonn.se.model.objects.entitites.Stellenanzeige;
+import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.util.*;
 
@@ -113,30 +113,30 @@ public class AnzeigeErstellen extends GridLayout implements View {
         });
 
 
-        Binder<Stellenanzeige> binder = new Binder<>(Stellenanzeige.class);
+        Binder<StellenanzeigeDTO> binder = new Binder<>(StellenanzeigeDTO.class);
         binder.forField(titel)
                 .asRequired("Titel muss vergeben werden!")
-                .bind(Stellenanzeige::getTitel,Stellenanzeige::setTitel);
+                .bind(StellenanzeigeDTO::getTitel,StellenanzeigeDTO::setTitel);
 
         binder.forField(stellenbeschreibung)
                 .asRequired("Bitte wählen Sie eine Stellenbeschreibung aus!")
-                .bind(Stellenanzeige::getBeschreibung,Stellenanzeige::setBeschreibung);
+                .bind(StellenanzeigeDTO::getBeschreibung,StellenanzeigeDTO::setBeschreibung);
 
         binder.forField(ort)
                 .asRequired("Bitte geben Sie einen Standort ein!")
-                .bind(Stellenanzeige::getStandort,Stellenanzeige::setStandort);
+                .bind(StellenanzeigeDTO::getStandort,StellenanzeigeDTO::setStandort);
 
         binder.forField(beginn)
                 .asRequired("Bitte Einstellungsdatum eingeben!")
-                .bind(Stellenanzeige::getDatum,Stellenanzeige::setDatum);
+                .bind(StellenanzeigeDTO::getDatum,StellenanzeigeDTO::setDatum);
 
         binder.forField(art)
                 .asRequired("Bitte Art der Einstellung festlegen!")
-                .bind(Stellenanzeige::getArt,Stellenanzeige::setArt);
+                .bind(StellenanzeigeDTO::getArt,StellenanzeigeDTO::setArt);
 
-        Stellenanzeige stellenanzeige = new Stellenanzeige();
+        StellenanzeigeDTO stellenanzeigeDTO = new StellenanzeigeDTO();
 
-        binder.setBean(stellenanzeige);
+        binder.setBean(stellenanzeigeDTO);
 
 
         binder.addStatusChangeListener(
@@ -146,11 +146,11 @@ public class AnzeigeErstellen extends GridLayout implements View {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
-                    stellenanzeige.setFirmenname(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname());
-                    stellenanzeige.setHauptsitz(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getHauptsitz());
+                    stellenanzeigeDTO.setFirmenname(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname());
+                    stellenanzeigeDTO.setHauptsitz(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getHauptsitz());
 
 
-                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeige(stellenanzeige);
+                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeige(stellenanzeigeDTO);
                 }
 
                 UI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);

@@ -163,8 +163,8 @@ public class StellenanzeigeWindow extends Window {
             Button delete = new Button("Löschen");
 
             gridLayout.addComponent(back, 4, 0, 4, 0);
-            gridLayout.addComponent(bearbeiten, 2, 12, 2, 12);
-            gridLayout.addComponent(delete, 3, 12, 3, 12);
+            gridLayout.addComponent(bearbeiten, 2, 0, 2, 0);
+            gridLayout.addComponent(delete, 3, 0, 3, 0);
 
             onOffSwitch.setCaption("Status");
             if(stellenanzeige.getStatus() == 1) {

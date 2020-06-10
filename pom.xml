@@ -125,7 +125,6 @@
 			<version>2.0.1</version>
 		</dependency>
 		<!--Werfen eine Exception beim Complilieren
-
 		 <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-surefire-provider</artifactId>

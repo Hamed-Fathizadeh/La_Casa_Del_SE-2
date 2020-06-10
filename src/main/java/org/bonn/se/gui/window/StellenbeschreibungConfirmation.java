@@ -3,17 +3,17 @@ package org.bonn.se.gui.window;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.model.objects.entitites.Stellenanzeige;
+import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.util.Views;
 
 public class StellenbeschreibungConfirmation extends Window {
 
 
-    public StellenbeschreibungConfirmation(Stellenanzeige stellenanzeige){
-        setWindow(stellenanzeige);
+    public StellenbeschreibungConfirmation(StellenanzeigeDTO stellenanzeigeDTO){
+        setWindow(stellenanzeigeDTO);
     }
 
-    public void setWindow(Stellenanzeige stellenanzeige) {
+    public void setWindow(StellenanzeigeDTO stellenanzeige) {
         center();
 
         this.setHeight("60%");
