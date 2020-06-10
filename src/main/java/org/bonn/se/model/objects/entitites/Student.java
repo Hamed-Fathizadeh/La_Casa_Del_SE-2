@@ -15,14 +15,6 @@ public class Student extends User {
     private Image picture = null;
     private String abschluss;
     private String kontakt_nr;
-    private String strasse;
-    private String ort;
-
-    public int getStudent_id() {
-        return student_id;
-    }
-
-    private String plz;
 
     public int getStudent_id() {
         return student_id;
@@ -32,29 +24,6 @@ public class Student extends User {
         this.student_id = student_id;
     }
 
-    public String getStrasse() {
-        return strasse;
-    }
-
-    public void setStrasse(String strasse) {
-        this.strasse = strasse;
-    }
-
-    public String getOrt() {
-        return ort;
-    }
-
-    public void setOrt(String ort) {
-        this.ort = ort;
-    }
-
-    public String getPlz() {
-        return plz;
-    }
-
-    public void setPlz(String plz) {
-        this.plz = plz;
-    }
 
     private int benachrichtigung;
     private  ArrayList<Taetigkeit> taetigkeiten;

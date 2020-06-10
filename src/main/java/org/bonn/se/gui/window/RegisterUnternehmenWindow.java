@@ -58,10 +58,7 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
         wizard.getBackButton().setVisible(false);
 
 
-
-
         setContent(wizard);
-
     }
 
     @Override
@@ -319,6 +316,7 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
 
             FormLayout form2= new FormLayout();
             final RichTextArea sample = new RichTextArea();
+            sample.setWidthFull();
             ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setDescription(sample.getValue());
             sample.setValue("The quick brown fox jumps over the lazy dog.");
             sample.setSizeFull();
