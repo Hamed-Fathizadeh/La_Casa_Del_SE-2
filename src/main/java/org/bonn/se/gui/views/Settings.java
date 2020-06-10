@@ -107,22 +107,48 @@ public class Settings  extends VerticalLayout implements View {
         this.setMargin(false);
         this.addStyleName("backSeite");
 
+        loeschen.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
+
+                    @Override
+                    public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
+                        return super.create("Benutzerkonto löschen", message, "Ja", "Abbrechen", notOkCaption);
+                    }
+                } ;
+
+                ConfirmDialog.setFactory(df);
+                ConfirmDialog.show(MyUI.getCurrent(), "Möchten Sie ihr Konto wirklich löschen?",
+                        new ConfirmDialog.Listener() {
+
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    //SQL-BEFEHL
+
+                                    LoginControl.logoutUser();
+                                }
+                            }
+                        });
+            }
+        });
+
+
     }
+
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        User user = null;
-        if( UI.getCurrent().getSession().getAttribute(Roles.Student) == null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            this.setUp();
+
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            this.setUp();
 
         } else {
-
-            this.setUp();
+            UI.getCurrent().getNavigator().getCurrentNavigationState();
         }
-
     }
-
 }
-
