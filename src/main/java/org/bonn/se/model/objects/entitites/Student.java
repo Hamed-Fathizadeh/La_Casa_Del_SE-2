@@ -17,6 +17,11 @@ public class Student extends User {
     private String kontakt_nr;
     private String strasse;
     private String ort;
+
+    public int getStudent_id() {
+        return student_id;
+    }
+
     private String plz;
 
     public int getStudent_id() {

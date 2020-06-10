@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 public class BewerbungControl {
 
-    public static void bewerben (BewerbungDTO bewerbung){
+    public static void bewerben (BewerbungDTO bewerbung,String path){
         try {
-            BewerbungDAO.bewerben(bewerbung);
+            BewerbungDAO.bewerben(bewerbung,  path);
         } catch (DatabaseException e) {
             e.printStackTrace();
         } catch (SQLException throwables) {

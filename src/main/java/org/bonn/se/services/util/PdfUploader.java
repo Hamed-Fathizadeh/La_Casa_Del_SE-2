@@ -3,13 +3,26 @@ package org.bonn.se.services.util;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
+import org.bonn.se.model.objects.entitites.Student;
 
 import java.io.*;
 
 public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     static File file ;
     static byte[] myByte;
+    static String path;
+
+    public static String getPath() {
+        return path;
+    }
+
+    public static void setPath(String path) {
+        PdfUploader.path = path;
+    }
+
+    Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
 
 
 
@@ -23,7 +36,8 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
         FileOutputStream fos;
 
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-        file = new File(basepath + "/VAADIN/themes/demo/PDF/" + filename);
+        file = new File(basepath + "/VAADIN/themes/demo/PDF/" + student.getEmail()+filename);
+        setPath(basepath + "/VAADIN/themes/demo/PDF/" + student.getEmail()+filename);
 
         try {
             fos = new FileOutputStream(file);
