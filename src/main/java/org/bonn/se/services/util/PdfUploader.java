@@ -5,15 +5,11 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Upload;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
-public class ImageUploader implements Upload.Receiver, Upload.SucceededListener {
+public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     static File file ;
-
-    final static Image image = new Image();
+    static byte[] myByte;
 
 
 
@@ -27,7 +23,7 @@ public class ImageUploader implements Upload.Receiver, Upload.SucceededListener 
         FileOutputStream fos;
 
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-        file = new File(basepath + "/images/" + filename);
+        file = new File(basepath + "/VAADIN/themes/demo/PDF/" + filename);
 
         try {
             fos = new FileOutputStream(file);
@@ -40,16 +36,30 @@ public class ImageUploader implements Upload.Receiver, Upload.SucceededListener 
 
     @Override
     public void uploadSucceeded(Upload.SucceededEvent event) {
+        myByte = readFileToByteArray(file);
 
-        image.setSource(new FileResource(file));
     }
 
 
 
-    public static Image getImage() {
-        return image;
+    public static byte[] getByte() {
+        return myByte;
     }
+    private static byte[] readFileToByteArray(File file){
+        FileInputStream fis = null;
+        // Creating a byte array using the length of the file
+        // file.length returns long which is cast to int
+        byte[] bArray = new byte[(int) file.length()];
+        try{
+            fis = new FileInputStream(file);
+            fis.read(bArray);
+            fis.close();
 
+        }catch(IOException ioExp){
+            ioExp.printStackTrace();
+        }
+        return bArray;
+    }
 
 
 

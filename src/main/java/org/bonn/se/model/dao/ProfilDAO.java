@@ -547,6 +547,7 @@ public class ProfilDAO extends AbstractDAO{
         try {
             System.out.println("profDAO hier2.2");
             while (set.next()) {
+                student.setStudent_id(set.getInt("student_id"));
                 student.setVorname(set.getString("vorname"));
                 student.setNachname(set.getString("nachname"));
                 student.setEmail(set.getString("email"));
