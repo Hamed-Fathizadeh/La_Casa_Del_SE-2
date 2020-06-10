@@ -33,7 +33,7 @@ public class BewerbungDAO extends AbstractDAO{
 
         PreparedStatement statement = getPreparedStatement(sql);
         try {
-            System.out.println("BewerbDAO hier1"+ bewerbung.getLebenslauf());
+
             statement.setDate(1, Date.valueOf(LocalDate.now()));
             statement.setString(2, bewerbung.getDescription());
             statement.setBytes(3, bewerbung.getLebenslauf());

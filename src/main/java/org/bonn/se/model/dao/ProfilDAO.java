@@ -485,6 +485,7 @@ public class ProfilDAO extends AbstractDAO{
         try {
             System.out.println("profDAO hier2.2");
             while (set.next()) {
+                student.setStudent_id(set.getInt("student_id"));
                 student.setVorname(set.getString("vorname"));
                 student.setNachname(set.getString("nachname"));
                 student.setEmail(set.getString("email"));
@@ -502,7 +503,7 @@ public class ProfilDAO extends AbstractDAO{
                 byte[] bild = set.getBytes("picture");
                 Image picture = null;
                 if (set.getBytes("picture") == null) {
-                    ThemeResource unknownPic = new ThemeResource("images/Unknown.png");
+                    ThemeResource unknownPic = new ThemeResource("VAADIN/themes/demo/images/Unknown.png");
                     picture = new Image("", unknownPic);
                 } else {
                     StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
