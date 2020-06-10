@@ -10,10 +10,9 @@ import org.bonn.se.services.util.JavaMailUtil;
 import org.bonn.se.services.util.Roles;
 
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ContainerAnzDAO extends AbstractDAO{
 
@@ -257,6 +256,19 @@ public class ContainerAnzDAO extends AbstractDAO{
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
+
+        Collections.sort(liste, new Comparator<StellenanzeigeDTO>() {
+            @Override
+            public int compare(StellenanzeigeDTO o1, StellenanzeigeDTO o2) {
+                if (o1.getId() < o2.getId()) {
+                    return -1;
+                } else if (o1.getId() == o2.getId()) {
+                    return 0;
+                }
+                return 1;
+            }
+        });
+
         ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList)liste);
 
         return liste;

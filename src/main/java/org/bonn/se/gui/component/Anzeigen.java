@@ -97,8 +97,6 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
             this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status");
         }
-
     }
-
  }
 
