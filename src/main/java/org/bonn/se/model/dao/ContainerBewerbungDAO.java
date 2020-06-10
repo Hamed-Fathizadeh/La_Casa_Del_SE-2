@@ -52,8 +52,8 @@ public class ContainerBewerbungDAO {
             while (set.next()) {
                 BewerbungDTO bewerbung = new BewerbungDTO(set.getInt(1),set.getDate(2),set.getString(3),
                                                           set.getBytes(4),set.getInt(5),set.getInt(6),
-                                                          set.getInt(7),set.getString(8),set.getBytes(9),
-                                                          set.getString(10),set.getString(11),set.getDouble(12)
+                                                          set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
+                                                          set.getString(11),set.getString(12),set.getDouble(13)
                                                          );
                 liste.add(bewerbung);
 
