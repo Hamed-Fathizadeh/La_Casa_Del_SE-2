@@ -411,12 +411,13 @@ public class ProfilDAO extends AbstractDAO{
                 Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
                 sprachKenntnis.setKenntnis(set.getString("sprache"));
                 sprachKenntnis.setNiveau(set.getString("niveau_sprache"));
-
+                student.setSprachKenntnis(sprachKenntnis);
+                /*
                 byte[] bild = set.getBytes("picture");
                 Image picture = null;
-                if(set.getBytes("picture") == null) {
+                if (set.getBytes("picture") == null) {
                     ThemeResource unknownPic = new ThemeResource("images/Unknown.png");
-                     picture =  new Image("",unknownPic);
+                    picture = new Image("", unknownPic);
                 } else {
                     StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
                         public InputStream getStream() {
@@ -425,12 +426,14 @@ public class ProfilDAO extends AbstractDAO{
                         }
                     };
 
-                     picture = new Image(
+                    picture = new Image(
                             null, new StreamResource(
                             streamSource, "streamedSourceFromByteArray"));
                 }
                 student.setPicture(picture);
 
+                 */
+                student.setPicture(UserDAO.getInstance().getImage(email));
 
                 return student;
             }
@@ -443,6 +446,84 @@ public class ProfilDAO extends AbstractDAO{
         }
         return null;
     }
+
+    public static Student getStudentTest(String email) throws DatabaseException {
+        Student student;
+
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            String sql = "SELECT * FROM lacasa.tab_student WHERE lacasa.tab_student.email = \'" + email + "\'; " +
+                    "SELECT * FROM lacasa.tab_user WHERE lacasa.tab_user.email = \'" + email + "\'; " +
+                    "SELECT * FROM lacasa.tab_taetigkeiten WHERE lacasa.tab_taetigkeiten.student_id = " +
+                    "(SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE tab_student.email =\'" + email + "\'); " +
+                    "SELECT * FROM lacasa.tab_bewerbung WHERE lacasa.tab_bewerbung.student_id = " +
+                    "(SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE tab_student.email = \'" + email + "\'); " +
+                    "SELECT * FROM lacasa.tab_adresse WHERE lacasa.tab_adresse.email = \'" + email + "\'; " +
+                    "SELECT * FROM lacasa.tab_it_kenntnisse WHERE lacasa.tab_it_kenntnisse.student_id = " +
+                    "(SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE tab_student.email = \'" + email + "\'); " +
+                    "SELECT * FROM lacasa.tab_sprachen WHERE lacasa.tab_sprachen.student_id = " +
+                    "(SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE tab_student.email =\'" + email + "\');";
+
+            boolean hasMoreResultSets = statement.execute(sql);
+            student = new Student();
+            while (hasMoreResultSets || statement.getUpdateCount() != -1) {
+                if (hasMoreResultSets) {
+                    ResultSet set = statement.getResultSet();
+                    // handle your rs here
+
+                    student.setKontakt_nr(set.getString("kontakt_nr"));
+                    student.setStudiengang(set.getString("studiengang"));
+                    LocalDate localDate = set.getDate("g_datum") == null ? null : set.getDate("g_datum").toLocalDate();
+                    student.setG_datum(localDate);
+                    student.setAusbildung(set.getString("ausbildung"));
+                    student.setAbschluss(set.getString("hoester_abschluss"));
+                    student.setType(set.getString("benutzertyp"));
+                    student.setVorname(set.getString("vorname"));
+                    student.setNachname(set.getString("nachname"));
+                    student.setEmail(set.getString("email"));
+                    Taetigkeit taetigkeit = new Taetigkeit();
+                    taetigkeit.setTaetigkeitName(set.getString("art"));
+                    LocalDate beginn = set.getDate("beginn_datum") == null ? null : set.getDate("beginn_datum").toLocalDate();
+                    LocalDate ende = set.getDate("end_datum") == null ? null : set.getDate("end_datum").toLocalDate();
+
+                    taetigkeit.setBeginn(beginn);
+                    taetigkeit.setEnde(ende);
+                    student.setTaetigkeit(taetigkeit);
+                    Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"));
+                    student.setAdresse(adresse);
+                    Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
+                    itKenntnis.setKenntnis(set.getString("kompetenz_name"));
+                    itKenntnis.setNiveau(set.getString("niveau_it"));
+                    if (itKenntnis.getKenntnis() != null) {
+                        student.setITKenntnis(itKenntnis);
+                    }
+                    Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
+                    sprachKenntnis.setKenntnis(set.getString("sprache"));
+                    sprachKenntnis.setNiveau(set.getString("niveau_sprache"));
+                    student.setSprachKenntnis(sprachKenntnis);
+                } // if has rs
+                else { // if ddl/dml/...
+                    int queryResult = statement.getUpdateCount();
+                    if (queryResult == -1) { // no more queries processed
+                        break;
+                    } // no more queries processed
+                    // handle success, failure, generated keys, etc here
+                } // if ddl/dml/...
+
+                // check to continue in the loop
+                hasMoreResultSets = statement.getMoreResults();
+            } // while results
+
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+        return student;
+
+    }
+
+
+
 
     public static Student getStudent2(String email) throws DatabaseException {
         ResultSet set;
