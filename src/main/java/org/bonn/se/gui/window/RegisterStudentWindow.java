@@ -10,7 +10,6 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;

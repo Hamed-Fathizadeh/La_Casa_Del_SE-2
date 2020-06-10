@@ -3,11 +3,15 @@ package org.bonn.se.gui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.LoginControl;
+import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.RegisterStudentWindow;
+import org.bonn.se.model.objects.dto.BewerbungDTO;
+import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.util.Roles;
@@ -16,30 +20,22 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 
-public class Settings extends GridLayout implements View {
+public class Settings  extends VerticalLayout implements View {
+    static GridLayout Maingrid = new GridLayout(2, 5);
+    public void setUp() {
 
-
-
-    public void setUp(){
-        this.setRows(4);
-        this.setColumns(10);
-        this.addStyleName("Settings");
+        Maingrid = new GridLayout(1, 5);
+        Maingrid.setSizeFull();
+        TopPanelUser topPanel = new TopPanelUser();
         this.setSizeFull();
 
+// spruch oben
+
+
         GridLayout formGrid = new GridLayout(1, 4);
-        formGrid.addStyleName("einstellungen");
+        formGrid.addStyleName("AnzeigeUnternehmen");
         formGrid.setMargin(true);
-        formGrid.setSizeFull();
-
-        TopPanelUser topPanelUser = new TopPanelUser();
-        topPanelUser.addStyleName("toppanel");
-
-
-//spruch oben Settings
-        GridLayout bottomGridBewNeu = new GridLayout(1, 1);
-        bottomGridBewNeu.setSizeFull();
-        bottomGridBewNeu.addStyleName("bottomGridBewNeu");
-        bottomGridBewNeu.setMargin(true);
+        formGrid.setWidth("1000px");
 
         String ls3 = "<p class=MsoNormal><b><span style='font-size:28.0pt;line-height:107%;\n" +
                 "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
@@ -62,18 +58,6 @@ public class Settings extends GridLayout implements View {
 
         Label line = new Label("<hr>",ContentMode.HTML);
 
-        this.addComponent(topPanelUser,0,0,9,0);
-        this.setComponentAlignment(topPanelUser, Alignment.TOP_CENTER);
-
-        this.addComponent(formGrid, 2,2,7,2);
-        this.setComponentAlignment(formGrid, Alignment.MIDDLE_CENTER);
-
-        bottomGridBewNeu.addComponent(lSpruch, 0,0,0,0);
-        bottomGridBewNeu.setComponentAlignment(lSpruch, Alignment.MIDDLE_CENTER);
-
-        this.addComponent(bottomGridBewNeu, 0,1,9,1);
-        this.setComponentAlignment(bottomGridBewNeu, Alignment.BOTTOM_CENTER);
-
         formGrid.addComponent(label1);
         formGrid.setComponentAlignment(label1, Alignment.TOP_CENTER);
 
@@ -86,55 +70,50 @@ public class Settings extends GridLayout implements View {
         formGrid.addComponent(line);
         formGrid.setComponentAlignment(line, Alignment.BOTTOM_CENTER);
 
-        loeschen.setEnabled(true);
+
+        GridLayout bottomGridBewNeu = new GridLayout(1, 1);
+        bottomGridBewNeu.setSizeFull();
+        //bottomGridBewNeu.setHeight("700px");
+        bottomGridBewNeu.addStyleName("bottomGridBewNeu");
+        bottomGridBewNeu.setMargin(true);
+        bottomGridBewNeu.setColumnExpandRatio(0,22);
 
 
+        bottomGridBewNeu.addComponent(formGrid,0,0);
 
+        bottomGridBewNeu.setComponentAlignment(formGrid,Alignment.TOP_CENTER);
+
+
+        Maingrid.addComponent(topPanel, 0, 0);
+        Maingrid.addComponent(lSpruch, 0, 1);
+        Maingrid.addComponent(bottomGridBewNeu, 0, 2);
+
+        Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
+        Maingrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
+        Maingrid.setComponentAlignment(bottomGridBewNeu, Alignment.TOP_CENTER);
+
+
+        this.addComponent(Maingrid);
+        this.setComponentAlignment(Maingrid, Alignment.TOP_CENTER);
         this.setMargin(false);
-
-
-        loeschen.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
-
-                    @Override
-                    public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
-                        return super.create("Benutzerkonto löschen", message, "Ja", "Abbrechen", notOkCaption);
-                    }
-                } ;
-
-                ConfirmDialog.setFactory(df);
-                ConfirmDialog.show(MyUI.getCurrent(), "Möchten Sie ihr Konto wirklich löschen?",
-                        new ConfirmDialog.Listener() {
-
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    //SQL-BEFEHL
-
-                                    LoginControl.logoutUser();
-                                }
-                            }
-                        });
-            }
-        });
-
+        this.addStyleName("grid");
 
     }
-
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            this.setUp();
-
-        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            this.setUp();
+        User user = null;
+        if( UI.getCurrent().getSession().getAttribute(Roles.Student) == null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
 
         } else {
-          UI.getCurrent().getNavigator().getCurrentNavigationState();
+
+            this.setUp();
         }
+
     }
+
 }
+
