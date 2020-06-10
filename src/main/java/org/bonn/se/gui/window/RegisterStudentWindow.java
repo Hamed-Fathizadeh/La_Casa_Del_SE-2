@@ -10,7 +10,6 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
@@ -149,7 +148,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         PopUpTextField studiengang;
         PopUpTextField ausbildung;
         NumeralField mobilnr;
-        Student user;
+        Student user = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
 
 
         @Override
@@ -228,8 +227,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             form2.addComponents(place1, strasse, ort, studiengang, place2, ausbildung, abschluss);
 
 
-            user = new Student();
-            user.setEmail("400@test40.de");
+
             MyUI.getCurrent().getSession().setAttribute(Roles.Student, user);
 
 
@@ -270,7 +268,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                     adresse.setOrt(sOrt[0]);
                     student.setAdresse(adresse);
                 }
-
 
 
 

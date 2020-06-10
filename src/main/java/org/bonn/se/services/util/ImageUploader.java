@@ -12,6 +12,7 @@ import java.io.OutputStream;
 
 public class ImageUploader implements Upload.Receiver, Upload.SucceededListener {
     static File file ;
+
     final static Image image = new Image();
 
 

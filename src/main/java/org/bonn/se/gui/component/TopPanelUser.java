@@ -19,7 +19,8 @@ public class TopPanelUser extends HorizontalLayout {
 
         GridLayout Topgrid = new GridLayout(6, 1);
         Topgrid.setMargin(true);
-        Topgrid.setSizeFull();
+        Topgrid.setWidthFull();
+        Topgrid.setHeight("180px");
 
         ThemeResource resource = new ThemeResource("img/RegisterStudent/logo.png");
         Image logo = new Image(null,resource);
