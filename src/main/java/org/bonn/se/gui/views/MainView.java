@@ -13,6 +13,7 @@ import org.bonn.se.control.LoginControl;
 import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
+import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
@@ -159,10 +160,10 @@ public class MainView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+        if (MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            MyUI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+         } else if(MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            MyUI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
          } else {
             this.setUp();
         }

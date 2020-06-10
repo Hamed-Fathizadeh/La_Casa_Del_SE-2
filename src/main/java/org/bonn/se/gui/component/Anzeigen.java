@@ -49,7 +49,7 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
-            if(sa.getStatus() == 3 || sa.getStatus() == 0) {
+            if(sa.getStatus() == 3) {
                 ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigeDTO(sa);
                 MyUI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
             } else {

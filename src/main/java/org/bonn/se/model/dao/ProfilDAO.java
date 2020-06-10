@@ -602,7 +602,7 @@ public class ProfilDAO extends AbstractDAO{
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
-        return null;
+        return student;
     }
 
 }
