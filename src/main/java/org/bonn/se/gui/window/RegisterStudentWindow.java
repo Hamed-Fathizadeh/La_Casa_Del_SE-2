@@ -54,11 +54,11 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         wizard.getNextButton().setCaption("Weiter");
         wizard.getCancelButton().setCaption("Abbrechen");
         wizard.addListener(this);
-        wizard.addStep(new RegisterSuccess(), "Erfolgreich");
+        wizard.addStep(new WizardStepRegisterSuccess(), "Erfolgreich");
         wizard.addStep(new DatenStep(), "Daten");
         wizard.addStep(new TaetigkeitStep(), "Tätigkeiten");
         wizard.addStep(new KenntnisseStep(), "Kenntnisse");
-        wizard.addStep(new FertigStep(),"Fertig");
+        wizard.addStep(new WizardStepFertig(),"Fertig");
         wizard.getBackButton().setVisible(false);
 
 
@@ -114,30 +114,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
     }
 
-    private class RegisterSuccess implements WizardStep {
-
-        @Override
-        public String getCaption() {
-            return "Erfolgreich";
-        }
-
-        @Override
-        public Component getContent() {
-            Label message = new Label("Vielen Dank für ihre Registrierung!");
-
-            return message;
-        }
-
-        @Override
-        public boolean onAdvance() {
-            return true;
-        }
-
-        @Override
-        public boolean onBack() {
-            return true;
-        }
-    }
 
     private class DatenStep implements WizardStep {
 
@@ -764,31 +740,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         public boolean onBack() {
             return true;
         }
-    }
-
-    private class FertigStep implements WizardStep {
-
-        @Override
-        public String getCaption() {
-            return "Fertig";
-        }
-
-        @Override
-        public Component getContent() {
-            Label message = new Label("Sehr gut sie können sich nun einloggen.....");
-            return message;
-        }
-
-        @Override
-        public boolean onAdvance() {
-            return true;
-        }
-
-        @Override
-        public boolean onBack() {
-            return false;
-        }
-
     }
 
 }
