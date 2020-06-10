@@ -49,8 +49,8 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
         bottomGridBewNeu.setComponentAlignment(bewerbungen,Alignment.TOP_CENTER);
 
 
-                Maingrid.addComponent(topPanel, 0, 0);
-                 Maingrid.addComponent(lSpruch, 0, 1);
+        Maingrid.addComponent(topPanel, 0, 0);
+        Maingrid.addComponent(lSpruch, 0, 1);
         Maingrid.addComponent(bottomGridBewNeu, 0, 2);
 
         Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
