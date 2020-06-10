@@ -171,7 +171,8 @@ public class ProfilDAO extends AbstractDAO{
     public static void createUnternehmenProfil1(String email,File file, String kon1, String strasse, String plz, String ort,String bundesland, String br1, String cname, String hauptsitz) throws DatabaseException {
         String sql = "INSERT INTO lacasa.tab_adresse (strasse,plz,ort,bundesland,email) VALUES(?,?,?,?,?);"
         +"INSERT INTO lacasa.tab_kontakte (nummer,firmenname,hauptsitz) Values(?,?, (SELECT lacasa.tab_unternehmen.hauptsitz FROM lacasa.tab_unternehmen WHERE lacasa.tab_unternehmen.email = ?)); " +
-                "UPDATE lacasa.tab_unternehmen SET logo = ? WHERE lacasa.tab_unternehmen.email = ?;";
+                "UPDATE lacasa.tab_unternehmen SET logo = ? WHERE lacasa.tab_unternehmen.email = ?;" +
+                "INSERT INTO lacasa.tab_unt_hat_branche (firmenname,hauptsitz,name) VALUES (?,?,?);";
 
         PreparedStatement statement = getPreparedStatement(sql);
 
@@ -201,7 +202,9 @@ public class ProfilDAO extends AbstractDAO{
                 statement.setNull(9, Types.BINARY);
             }
             statement.setString(10, email);
-
+            statement.setString(11,cname);
+            statement.setString(12,hauptsitz);
+            statement.setString(13,br1);
             //  statement.setString(3, kon2);
 //            statement.setString(2, br1);
          //   statement.setString(6, br2);
@@ -258,7 +261,7 @@ public class ProfilDAO extends AbstractDAO{
         }
     }*/
     public static void  createUnternehmenProfil3(Unternehmen unternehmen) throws DatabaseException {
-        String sql = "INSERT INTO lacasa.tab_unternehmen VALUES(?,?,?,?,?,description,?,?,reichweite,?)"+
+        String sql = "UPDATE lacasa.tab_unternehmen SET description(?,?,?,?,?,description,?,?,reichweite,?)"+
                 "VALUES(?,?,?,?,?,?,?,?,(select lacasa.tab_reichweite.reichweite+" +
                 "from lacasa.tab_reichweite"+
                 "where lacasa.tab_reichweite.reichweite=?));";
