@@ -174,6 +174,7 @@ public class Student extends User {
         if( !itKenntnis.getKenntnis().equals(null)) {
             itKenntnisList.add(itKenntnis);
         }
+
     }
 
 
