@@ -3,15 +3,27 @@ package org.bonn.se.gui.component;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
+import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.dao.AbstractDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
+import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.JDBCConnection;
+import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.Roles;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
+
+
+import static org.bonn.se.model.dao.AbstractDAO.getPreparedStatement;
 
 //import org.vaadin.teemu.ratingstars.RatingStars;
 
-public class Bewerbungen<T extends BewerbungDTO> extends Grid<T> {
+public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
     public Bewerbungen(ContainerLetztenBewerbungen container){
         super();
@@ -31,13 +43,76 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T> {
         this.addSelectionListener(event -> {
 
             // Create a sub-window and set the content
-            Window subWindow = new Window("Test");
+            Window subWindow = new Window("Bewertung");
             VerticalLayout subContent = new VerticalLayout();
             subWindow.setContent(subContent);
 
             // Put some components in it
-            subContent.addComponent(new Label("Bewerten"));
-            subContent.addComponent(new Button("TestButton"));
+           // subContent.addComponent(new Label("Bewerten"));
+
+            RatingStars rating = new RatingStars();
+
+                rating.setMaxValue(5);
+                rating.setAnimated(true);
+
+                rating.setValue(rating.getValue());
+
+                rating.setReadOnly(false);
+
+                subContent.addComponent(rating);
+
+                subContent.addComponent(new Label("Bitte beachten Sie, dass sie jedes Unternehmen nur einmal bewerten können"));
+
+                Button bewerten = new Button("Bewertung abgeben");
+                subContent.addComponent(bewerten);
+
+                bewerten.addClickListener(new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
+                        ResultSet set;
+                        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+
+
+                        try {
+                            Statement statement = JDBCConnection.getInstance().getStatement();
+                            set = statement.executeQuery("SELECT * "
+                                    + "FROM lacasa.tab_bewertung"
+                                    + "WHERE lacasa.tab_bewertung.firmenname NOT EXISTS"
+                                    + "  ( SELECT *  "
+                                            + "FROM laca.tab.bewertung"
+                                            + "WHERE lacasa.tab.hauptsitz IS NOT NULL "
+                                             + " AND lacasa.tab.bewertung.student_id = '" + student.getStudent_id() + "')");
+                        } catch (SQLException | DatabaseException throwables) {
+                            throwables.printStackTrace();
+                        }
+                        //if(set.next()){
+
+                        String sql = "INSERT INTO lacasa.tab_bewertung (datum,anzahl_sterne, firmenname, hauptsitz  ,  student_id) " +
+                                "VALUES(?,?,?,?," +
+                                "(SELECT lacasa.tab_student.student_id " +
+                                "FROM lacasa.tab_student" +
+                                " WHERE lacasa.tab_student.email = ?));";
+
+                        //PreparedStatement statement = getPreparedStatement(sql);
+
+
+                        //assert statement != null;
+                        // statement.setDate(1, Date.valueOf(LocalDate.now()));
+                        //statement.setDouble(2, rating.getValue() );
+                        // statement.setString(3, container.getListe().);
+                        // statement.setString(4, );
+
+                        // statement.setString(5, student.getEmail());
+
+
+                        //statement.executeUpdate();
+
+
+                    }
+                });
+
+
+
 
             // Center it in the browser window
             subWindow.center();
