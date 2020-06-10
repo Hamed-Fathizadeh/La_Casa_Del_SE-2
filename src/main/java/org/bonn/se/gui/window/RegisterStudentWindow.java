@@ -149,7 +149,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         PopUpTextField studiengang;
         PopUpTextField ausbildung;
         NumeralField mobilnr;
-        Student user;
+        Student user = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
 
 
         @Override
@@ -228,8 +228,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             form2.addComponents(place1, strasse, ort, studiengang, place2, ausbildung, abschluss);
 
 
-            user = new Student();
-            user.setEmail("400@test40.de");
+
             MyUI.getCurrent().getSession().setAttribute(Roles.Student, user);
 
 
@@ -270,7 +269,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                     adresse.setOrt(sOrt[0]);
                     student.setAdresse(adresse);
                 }
-
 
 
 

@@ -154,15 +154,25 @@ public class Student extends User {
     }
     public SprachKenntnis getSprachKenntnis() { return sprachKenntnisList.get(sprachKenntnisList.size()-1); }
     public void setSprachKenntnis(SprachKenntnis sprachKenntnis) {
-        if(!(sprachKenntnis.getKenntnis().equals(""))){
-            sprachKenntnisList.add(sprachKenntnis);
+        if(!(sprachKenntnis.getKenntnis() == null)){
+            if(sprachKenntnisList == null) {
+                sprachKenntnisList = new ArrayList<>();
+                sprachKenntnisList.add(sprachKenntnis);
+            } else {
+                sprachKenntnisList.add(sprachKenntnis);
+            }
         }
     }
 
     public ITKenntnis getITKenntnis() { return itKenntnisList.get(itKenntnisList.size()-1); }
     public void setITKenntnis(ITKenntnis itKenntnis) {
         if(!(itKenntnis.getKenntnis().equals(null))) {
-            itKenntnisList.add(itKenntnis);
+            if(itKenntnisList == null) {
+                itKenntnisList = new ArrayList<>();
+                itKenntnisList.add(itKenntnis);
+            } else {
+                itKenntnisList.add(itKenntnis);
+            }
         }
     }
 
