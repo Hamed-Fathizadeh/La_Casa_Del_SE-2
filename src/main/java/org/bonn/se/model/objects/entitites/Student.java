@@ -164,8 +164,8 @@ public class Student extends User {
         private String niveau;
 
         public ITKenntnis() {
-         setKenntnis(kenntnis);
-         setNiveau(niveau);
+            setKenntnis(kenntnis);
+            setNiveau(niveau);
         }
 
         public ITKenntnis(String kenntnis, String niveau) {
