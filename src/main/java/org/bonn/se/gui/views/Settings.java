@@ -112,14 +112,15 @@ public class Settings  extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
+        if( UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+           this.setUp();
 
-        User user = null;
-        if( UI.getCurrent().getSession().getAttribute(Roles.Student) == null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
-
-        } else {
-
+        } else  if( UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             this.setUp();
+        }
+        else{
+
+         UI.getCurrent().getNavigator().getCurrentNavigationState();
         }
 
     }
