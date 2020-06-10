@@ -21,21 +21,15 @@ import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 
 public class Settings  extends VerticalLayout implements View {
+
     static GridLayout Maingrid = new GridLayout(2, 5);
     public void setUp() {
 
         Maingrid = new GridLayout(1, 5);
         Maingrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
-        this.setSizeFull();
 
 // spruch oben
-
-
-        GridLayout formGrid = new GridLayout(1, 4);
-        formGrid.addStyleName("AnzeigeUnternehmen");
-        formGrid.setMargin(true);
-        formGrid.setWidth("1000px");
 
         String ls3 = "<p class=MsoNormal><b><span style='font-size:28.0pt;line-height:107%;\n" +
                 "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
@@ -46,6 +40,21 @@ public class Settings  extends VerticalLayout implements View {
 
 
         Label lSpruch = new Label(ls3, ContentMode.HTML);
+        lSpruch.setHeight("200px");
+        lSpruch.setWidth("200px");
+        GridLayout vLayoutSpruch = new GridLayout(1,1);
+        vLayoutSpruch.addComponent(lSpruch,0,0);
+        vLayoutSpruch.addStyleName("grid");
+        vLayoutSpruch.setMargin(true);
+        vLayoutSpruch.setSizeFull();
+        vLayoutSpruch.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
+
+
+        GridLayout formGrid = new GridLayout(1, 4);
+        formGrid.addStyleName("AnzeigeUnternehmen");
+        formGrid.setMargin(true);
+        formGrid.setWidth("1000px");
+        formGrid.setHeight("300px");
 
 
         Label label1 = new Label("<h2>Benutzerkonto löschen</h2>", ContentMode.HTML);
@@ -72,7 +81,7 @@ public class Settings  extends VerticalLayout implements View {
 
 
         GridLayout bottomGridBewNeu = new GridLayout(1, 1);
-        bottomGridBewNeu.setSizeFull();
+
         //bottomGridBewNeu.setHeight("700px");
         bottomGridBewNeu.addStyleName("bottomGridBewNeu");
         bottomGridBewNeu.setMargin(true);
@@ -82,21 +91,21 @@ public class Settings  extends VerticalLayout implements View {
         bottomGridBewNeu.addComponent(formGrid,0,0);
 
         bottomGridBewNeu.setComponentAlignment(formGrid,Alignment.TOP_CENTER);
-
+        bottomGridBewNeu.setHeight("500px");
 
         Maingrid.addComponent(topPanel, 0, 0);
-        Maingrid.addComponent(lSpruch, 0, 1);
+       Maingrid.addComponent(vLayoutSpruch, 0, 1);
         Maingrid.addComponent(bottomGridBewNeu, 0, 2);
 
         Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
-        Maingrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
+       Maingrid.setComponentAlignment(vLayoutSpruch, Alignment.TOP_CENTER);
         Maingrid.setComponentAlignment(bottomGridBewNeu, Alignment.TOP_CENTER);
 
 
         this.addComponent(Maingrid);
         this.setComponentAlignment(Maingrid, Alignment.TOP_CENTER);
         this.setMargin(false);
-        this.addStyleName("grid");
+        this.addStyleName("backSeite");
 
     }
 
