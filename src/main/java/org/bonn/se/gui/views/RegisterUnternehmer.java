@@ -15,6 +15,7 @@ import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanel;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.ProfilUnternehmerWindow;
+import org.bonn.se.gui.window.RegisterUnternehmenWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
@@ -223,8 +224,9 @@ public class RegisterUnternehmer extends GridLayout implements View {
             public void buttonClick(Button.ClickEvent event) {
                 Unternehmen unternehmen = new Unternehmen();
                 unternehmen.setVorname("TEst");
-                ProfilUnternehmerWindow window = new ProfilUnternehmerWindow(unternehmen);
-                UI.getCurrent().addWindow(window);
+
+                RegisterUnternehmenWindow registerUnternehmenWindow = new RegisterUnternehmenWindow();
+                UI.getCurrent().addWindow(registerUnternehmenWindow);
             }
         });
 

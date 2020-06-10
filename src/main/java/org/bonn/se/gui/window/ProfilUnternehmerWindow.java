@@ -137,8 +137,8 @@ public class ProfilUnternehmerWindow extends Window {
             public void buttonClick(Button.ClickEvent event) {
                 String[] sOrt = ort.getBundesland().getValue().toString().split(" - ");
                 try {
-                    ProfilDAO.createUnternehmenProfil1(user.getEmail(),ImageUploader.getFile(),Kontaktnummer.getValue(), Kontaktnummer2.getValue()
-                            ,strasse.getValue(),ort.getPlz().getValue(),sOrt[0],sOrt[1],branche1.getValue(),branche2.getValue(),branche3.getValue(),
+                    ProfilDAO.createUnternehmenProfil1(user.getEmail(),ImageUploader.getFile(),Kontaktnummer.getValue()
+                            ,strasse.getValue(),ort.getPlz().getValue(),sOrt[0],sOrt[1],branche1.getValue(),
                             user.getCname(),user.getHauptsitz());
                 } catch (DatabaseException e) {
                     e.printStackTrace();
