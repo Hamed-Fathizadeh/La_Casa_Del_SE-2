@@ -19,7 +19,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-import static org.bonn.se.model.dao.AbstractDAO.getPreparedStatement;
+//import static org.bonn.se.model.dao.AbstractDAO.getPreparedStatement;
 
 //import org.vaadin.teemu.ratingstars.RatingStars;
 
