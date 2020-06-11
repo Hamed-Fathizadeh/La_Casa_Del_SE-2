@@ -16,6 +16,8 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
@@ -50,6 +52,18 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
                 e.printStackTrace();
             }
             if(sa.getStatus() == 3) {
+                Iterator it =((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().iterator();
+                while (it.hasNext()) {
+                    StellenanzeigeDTO temp = ((StellenanzeigeDTO)it.next());
+                    if(temp.getId() == sa.getId() ){
+                        Collections.swap(((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO(),
+                                ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().indexOf(temp),
+                                ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().size()-1);
+                                break;
+
+                    }
+
+                }
                 ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigeDTO(sa);
                 MyUI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
             } else {
@@ -83,8 +97,6 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
             this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status");
         }
-
     }
-
  }
 

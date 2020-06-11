@@ -13,12 +13,11 @@ public class AnzStatusControl {
 
         public static void changeStatus (StellenanzeigeDTO stellenanzeige) throws DatabaseException {
 
-            ResultSet set;
 
             try {
                 Statement statement = JDBCConnection.getInstance().getStatement();
 
-                set = statement.executeQuery("UPDATE lacasa.tab_stellen_anzeige " +
+                statement.executeUpdate("UPDATE lacasa.tab_stellen_anzeige " +
                         "SET status = \'"+stellenanzeige.getStatus()+"' WHERE s_anzeige_id = \'"+stellenanzeige.getId()+"\'");
             } catch (SQLException | DatabaseException throwables) {
                 throwables.printStackTrace();

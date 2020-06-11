@@ -4,6 +4,7 @@ package org.bonn.se.gui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import org.bonn.se.control.AnzStatusControl;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenbeschreibungConfirmation;
@@ -18,9 +19,7 @@ import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 public class Stellenbeschreibung extends GridLayout implements View {
     StellenanzeigeDTO sa;
-    public Stellenbeschreibung(StellenanzeigeDTO sa){
-        this.sa = sa;
-    }
+
 
     public void setUp() {
         this.setMargin(false);
@@ -36,14 +35,9 @@ public class Stellenbeschreibung extends GridLayout implements View {
         final RichTextArea richTextArea = new RichTextArea();
         richTextArea.setSizeFull();
 
-        if( ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigeDTO() != null) {
-         richTextArea.setValue( ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigeDTO().getBeschreibung());
-         ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigeDTO(null);
 
-        } else {
-            richTextArea.setValue("<h1>Hallo</h1>\n" +
-                    "<p>Hier können Sie ihre Stellenbeschreibung verfassen.</p>");
-        }
+        richTextArea.setValue("<h1>Hallo</h1>\n" + "<p>Hier können Sie ihre Stellenbeschreibung verfassen.</p>");
+
         Button abbrechen = new Button("Abbrechen");
 
         abbrechen.addClickListener(new Button.ClickListener() {
@@ -69,31 +63,47 @@ public class Stellenbeschreibung extends GridLayout implements View {
                         new ConfirmDialog.Listener() {
 
                             public void onClose(ConfirmDialog dialog) {
+                                StellenanzeigeDTO stellenanzeigeDTO = ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                                        .getStellenanzeigeDTO();
+                                stellenanzeigeDTO.setBeschreibung(richTextArea.getValue());
                                 if (dialog.isConfirmed()) {
-                                    if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
-
+                                    if (stellenanzeigeDTO.getStatus() == 3) {
+                                        try {
+                                            stellenanzeigeDTO.setStatus(1);
+                                            AnzStatusControl.changeStatus(stellenanzeigeDTO);
+                                            ContainerAnzDAO.updateAnzeige(stellenanzeigeDTO);
+                                        } catch (DatabaseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
                                         ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
-                                                .getStellenanzeige().setBeschreibung(richTextArea.getValue());
-                                        ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
-                                                .getStellenanzeige().setStatus(1);
+                                                .getStellenanzeigeDTO().setStatus(1);
                                     }
+                                } else {
+                                    if (stellenanzeigeDTO.getStatus() == 3) {
+                                        try {
+                                            stellenanzeigeDTO.setStatus(2);
+                                            AnzStatusControl.changeStatus(stellenanzeigeDTO);
+                                            ContainerAnzDAO.updateAnzeige(stellenanzeigeDTO);
+                                        } catch (DatabaseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
+                                        ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                                                .getStellenanzeigeDTO().setStatus(2);
 
-                                } else{
-                                    if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
-                                        ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
-                                                .getStellenanzeige().setBeschreibung(richTextArea.getValue());
-                                        ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
-                                                .getStellenanzeige().setStatus(2);
+
+                                        try {
+                                            ContainerAnzDAO.setAnzeige();
+
+                                        } catch (DatabaseException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
-                                try {
-                                    ContainerAnzDAO.setAnzeige();
-
-                                } catch (DatabaseException e) {
-                                    e.printStackTrace();
-                                }
-                                StellenbeschreibungConfirmation stellenbeschreibungConfirmation = new StellenbeschreibungConfirmation(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
-                                        .getStellenanzeige());
+                                StellenbeschreibungConfirmation stellenbeschreibungConfirmation
+                                        = new StellenbeschreibungConfirmation(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                                        .getStellenanzeigeDTO());
                                 MyUI.getCurrent().addWindow(stellenbeschreibungConfirmation);
                             }
                         });
@@ -110,22 +120,33 @@ public class Stellenbeschreibung extends GridLayout implements View {
         entwurf.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
+                StellenanzeigeDTO stellenanzeigeDTO = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                        .getStellenanzeigeDTO();
+                stellenanzeigeDTO.setBeschreibung(richTextArea.getValue());
+                if( stellenanzeigeDTO.getStatus() == 3) {
+                    try {
+                        ContainerAnzDAO.updateAnzeige(stellenanzeigeDTO);
+                    } catch (DatabaseException e) {
+                        e.printStackTrace();
+                    }
+                } else {
 
-                if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
-                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
-                            .getStellenanzeige().setBeschreibung(richTextArea.getValue());
-                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
-                            .getStellenanzeige().setStatus(3);
-                }
-                try {
-                    ContainerAnzDAO.setAnzeige();
+                    if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
+                        ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                                .getStellenanzeigeDTO().setStatus(3);
+                    }
 
-                } catch (DatabaseException e) {
-                    e.printStackTrace();
+                    try {
+
+                        ContainerAnzDAO.setAnzeige();
+
+                    } catch (DatabaseException e) {
+                        e.printStackTrace();
+                    }
                 }
-                StellenbeschreibungConfirmation stellenbeschreibungConfirmation = new StellenbeschreibungConfirmation(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
-                        .getStellenanzeige());
-                MyUI.getCurrent().addWindow(stellenbeschreibungConfirmation);
+                    StellenbeschreibungConfirmation stellenbeschreibungConfirmation =
+                            new StellenbeschreibungConfirmation(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigeDTO());
+                    MyUI.getCurrent().addWindow(stellenbeschreibungConfirmation);
 
 
             }

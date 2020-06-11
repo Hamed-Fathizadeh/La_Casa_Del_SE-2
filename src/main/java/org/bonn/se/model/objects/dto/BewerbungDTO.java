@@ -5,10 +5,11 @@ import org.bonn.se.services.util.ConvertByteToImage;
 
 import java.sql.Date;
 
-public class BewerbungDTO { private int bewerbungID;
+public class BewerbungDTO {
+    private int bewerbungID;
     private Date datum;
     private String description;
-        private byte[] lebenslauf;
+    private byte[] lebenslauf;
     private int status;
     private int studentID;
     private String unternehmenName;

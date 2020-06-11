@@ -1,6 +1,7 @@
 package org.bonn.se.model.dao;
 
 import com.vaadin.ui.UI;
+import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.JDBCConnection;
@@ -9,10 +10,9 @@ import org.bonn.se.services.util.JavaMailUtil;
 import org.bonn.se.services.util.Roles;
 
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class ContainerAnzDAO extends AbstractDAO{
 
@@ -43,7 +43,8 @@ public class ContainerAnzDAO extends AbstractDAO{
             while (set.next()) {
 
                 StellenanzeigeDTO sa = new StellenanzeigeDTO(
-                        set.getInt(1),set.getDate(2),set.getDate(3),
+                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate()
+                        ,set.getDate(3),
                         set.getString(4), set.getString(5), set.getInt(6),
                         set.getString(7), set.getString(8), set.getString(9),
                         set.getString(10),set.getString(11),set.getString(12),
@@ -59,6 +60,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
+
         return liste;
     }
 
@@ -143,7 +145,8 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             while (set.next()) {
                 StellenanzeigeDTO sa = new StellenanzeigeDTO(
-                        set.getInt(1),set.getDate(2),set.getDate(3),
+                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate()
+                        ,set.getDate(3),
                         set.getString(4), set.getString(5), set.getInt(6),
                         set.getString(7), set.getString(8), set.getString(9),
                         set.getString(10),set.getString(11),set.getString(12),
@@ -190,7 +193,8 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             while (set.next()) {
                 StellenanzeigeDTO sa = new StellenanzeigeDTO(
-                        set.getInt(1),set.getDate(2),set.getDate(3),
+                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
+                        set.getDate(3),
                         set.getString(4), set.getString(5), set.getInt(6),
                         set.getString(7), set.getString(8), set.getString(9),
                         set.getString(10),set.getString(11),set.getString(12),
@@ -207,6 +211,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
+
         return liste;
 
     }
@@ -232,11 +237,13 @@ public class ContainerAnzDAO extends AbstractDAO{
         try {
 
             while (set.next()) {
+
                 StellenanzeigeDTO sa = new StellenanzeigeDTO(
-                        set.getInt(1),set.getDate(2),set.getDate(3),
-                        set.getString(4), set.getString(5), set.getInt(6),
-                        set.getString(7), set.getString(8), set.getString(9),
-                        set.getString(10),set.getString(11),set.getString(12)
+                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
+                        set.getDate(3), set.getString(4), set.getString(5),
+                        set.getInt(6), set.getString(7), set.getString(8),
+                        set.getString(9), set.getString(10),set.getString(11),
+                        set.getString(12)
                 );
 
                 liste.add(sa);
@@ -249,6 +256,21 @@ public class ContainerAnzDAO extends AbstractDAO{
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
+
+        Collections.sort(liste, new Comparator<StellenanzeigeDTO>() {
+            @Override
+            public int compare(StellenanzeigeDTO o1, StellenanzeigeDTO o2) {
+                if (o1.getId() < o2.getId()) {
+                    return -1;
+                } else if (o1.getId() == o2.getId()) {
+                    return 0;
+                }
+                return 1;
+            }
+        });
+
+        ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList)liste);
+
         return liste;
     }
 
@@ -262,21 +284,21 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             try {
                 Unternehmen user = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
-                String[] sOrt = user.getStellenanzeige().getStandort().toString().split(" - ");
+                String[] sOrt = user.getStellenanzeigeDTO().getStandort().toString().split(" - ");
 
 
                 assert statement != null;
-                    statement.setDate(1, Date.valueOf(user.getStellenanzeige().getDatum()));
+                    statement.setDate(1, Date.valueOf(String.valueOf(user.getStellenanzeigeDTO().getDatum())));
                     statement.setDate(2, Date.valueOf(LocalDate.now()));
-                    statement.setString(3, user.getStellenanzeige().getTitel());
-                    statement.setString(4, user.getStellenanzeige().getBeschreibung());
-                    statement.setInt(5, user.getStellenanzeige().getStatus());
+                    statement.setString(3, user.getStellenanzeigeDTO().getTitel());
+                    statement.setString(4, user.getStellenanzeigeDTO().getBeschreibung());
+                    statement.setInt(5, user.getStellenanzeigeDTO().getStatus());
                     statement.setString(6, sOrt[0]);
                     statement.setString(7, sOrt[1]);
-                    statement.setString(8, user.getStellenanzeige().getFirmenname());
-                    statement.setString(9, user.getStellenanzeige().getHauptsitz());
-                    statement.setString(10, user.getStellenanzeige().getSuchbegriff());
-                    statement.setString(11, user.getStellenanzeige().getArt());
+                    statement.setString(8, user.getStellenanzeigeDTO().getFirmenname());
+                    statement.setString(9, user.getStellenanzeigeDTO().getHauptsitz());
+                    statement.setString(10, user.getStellenanzeigeDTO().getSuchbegriff());
+                    statement.setString(11, user.getStellenanzeigeDTO().getArt());
                     //statement.setString(8,user.getCname());
                     //statement.setString(9,user.getHauptsitz());
 

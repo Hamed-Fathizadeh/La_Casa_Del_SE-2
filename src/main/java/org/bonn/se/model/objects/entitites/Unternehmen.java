@@ -10,7 +10,7 @@ public class Unternehmen extends User {
        private String name;
        private String ansprechpartner;
        private String hauptsitz;
-       private final ArrayList<Stellenanzeige> stellenanzeigen;
+       private ArrayList<StellenanzeigeDTO> stellenanzeigenDTOliste;
        private Image logo;
        private int mitarbeiteranzahl;
        private int gruendungsjahr;
@@ -22,9 +22,13 @@ public class Unternehmen extends User {
        private Adresse adresse;
        private StellenanzeigeDTO stellenanzeigeDTO;
 
-    public StellenanzeigeDTO getStellenanzeigeDTO() {
-        return stellenanzeigeDTO;
+
+    public ArrayList<StellenanzeigeDTO> getStellenanzeigenDTOliste() {
+        return stellenanzeigenDTOliste;
     }
+
+    public StellenanzeigeDTO getStellenanzeigeDTO() { return stellenanzeigenDTOliste.get(stellenanzeigenDTOliste.size()-1); }
+
 
     public void setStellenanzeigeDTO(StellenanzeigeDTO stellenanzeigeDTO) {
         this.stellenanzeigeDTO = stellenanzeigeDTO;
@@ -56,8 +60,8 @@ public class Unternehmen extends User {
         this.mitarbeiteranzahl = mitarbeiteranzahl;
     }
 
-    public ArrayList<Stellenanzeige> getStellenanzeigen() {
-        return stellenanzeigen;
+    public ArrayList<StellenanzeigeDTO> getStellenanzeigenDTO() {
+        return stellenanzeigenDTOliste;
     }
 
     public Image getLogo() {
@@ -69,8 +73,11 @@ public class Unternehmen extends User {
     }
 
 
+    public void setStellenanzeigenDTOliste(ArrayList<StellenanzeigeDTO> stellenanzeigenDTOliste) {
+        this.stellenanzeigenDTOliste = stellenanzeigenDTOliste;
+    }
 
-       public Unternehmen() {
+    public Unternehmen() {
            super();
            setUnt_id(unt_id);
            setName(name);
@@ -83,7 +90,7 @@ public class Unternehmen extends User {
            setReichweite(reichweite);
            setLogo(logo);
            super.setType("C");
-           stellenanzeigen = new ArrayList<>();
+           setStellenanzeigenDTOliste(stellenanzeigenDTOliste);
        }
        public int getUnt_id(){
            return unt_id;
@@ -151,6 +158,12 @@ public class Unternehmen extends User {
        }
        public String getHauptsitz() {   return hauptsitz; }
        public void setHauptsitz(String hauptsitz) { this.hauptsitz = hauptsitz; }
-       public Stellenanzeige getStellenanzeige() { return stellenanzeigen.get(stellenanzeigen.size()-1); }
-       public void setStellenanzeige(Stellenanzeige stellenanzeige) { stellenanzeigen.add(stellenanzeige);}
-   }
+       public void setStellenanzeige(StellenanzeigeDTO stellenanzeigeDTO) {
+        if (stellenanzeigenDTOliste == null ) {
+            stellenanzeigenDTOliste = new ArrayList<>();
+            stellenanzeigenDTOliste.add(stellenanzeigeDTO);
+        } else {
+        stellenanzeigenDTOliste.add(stellenanzeigeDTO);
+        }
+    }
+}

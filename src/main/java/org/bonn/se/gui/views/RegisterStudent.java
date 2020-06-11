@@ -13,14 +13,10 @@ import org.bonn.se.control.UserSearch;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.dao.UserDAO;
-import org.bonn.se.model.objects.entitites.Stellenanzeige;
 import org.bonn.se.model.objects.entitites.Student;
-import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
-
-import java.io.File;
 
 
 public class RegisterStudent extends GridLayout implements View {

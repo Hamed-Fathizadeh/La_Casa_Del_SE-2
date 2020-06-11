@@ -121,6 +121,7 @@ public class ProfilDAO extends AbstractDAO{
         }
 
     }
+
     public static void createStudentProfil3(Student student) throws DatabaseException {
         try {
             if(student.getItKenntnisList() != null) {

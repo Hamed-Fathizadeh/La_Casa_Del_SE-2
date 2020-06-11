@@ -10,14 +10,13 @@ import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
-import org.bonn.se.model.objects.entitites.Stellenanzeige;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 
 public class UnternehmenHomeView extends VerticalLayout implements View {
-    private  Stellenanzeige selected = null;
+    private  StellenanzeigeDTO selected = null;
     private  int anzahl = 0;
     public void setUp() {
 

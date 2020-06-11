@@ -148,7 +148,7 @@ public class UserDAO  extends AbstractDAO {
                     + "WHERE lacasa.tab_user.email = '" + email + "'");
 
             if( set.next()){
-                return set.getString(6);
+                return set.getString("benutzertyp");
             }
         } catch (SQLException | DatabaseException ex) {
             Logger.getLogger(LoginControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -157,7 +157,7 @@ public class UserDAO  extends AbstractDAO {
     }
     public static void deleteUser(String email) throws DatabaseException {
         String sql;
-        if(Objects.requireNonNull(UserDAO.getUserType(email)).equals("S")) {
+        if(UserDAO.getUserType(email).equals("S")) {
             sql = "DELETE FROM lacasa.tab_student WHERE email = '" + email + "'; DELETE FROM lacasa.tab_user WHERE email = '" + email + "'";
         } else {
             sql = "DELETE FROM lacasa.tab_unternehmen WHERE email = '" + email + "'; DELETE FROM lacasa.tab_user WHERE email = '" + email + "'";

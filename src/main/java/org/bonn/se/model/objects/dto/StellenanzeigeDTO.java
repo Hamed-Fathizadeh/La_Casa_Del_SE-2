@@ -4,11 +4,12 @@ import com.vaadin.ui.Image;
 import org.bonn.se.services.util.ConvertByteToImage;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class StellenanzeigeDTO {
 
     private int id;
-    private Date datum;
+    private LocalDate datum;
     private Date zeitstempel;
     private String titel;
     private String beschreibung;
@@ -20,7 +21,23 @@ public class StellenanzeigeDTO {
     private Image unternehmenLogo;
     private double bewertung;
 
-    public StellenanzeigeDTO(int id, Date datum, Date zeitstempel, String titel, String beschreibung,
+
+    public StellenanzeigeDTO() {
+        setId(id);
+        setDatum(datum);
+        setZeitstempel(zeitstempel);
+        setTitel(titel);
+        setBeschreibung(beschreibung);
+        setStatus(status);
+        setStandort(standort);
+        setBundesland(bundesland);
+        setFirmenname(firmenname);
+        setHauptsitz(hauptsitz);
+        setSuchbegriff(suchbegriff);
+        setArt(art);
+    }
+
+    public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
                              int status, String standort, String bundesland, String firmenname, String hauptsitz,
                              String suchbegriff, String art, byte[] unternehmenLogo) {
         this.id = id;
@@ -38,7 +55,7 @@ public class StellenanzeigeDTO {
         this.art = art;
     }
 
-    public StellenanzeigeDTO(int id, Date datum, Date zeitstempel, String titel, String beschreibung,
+    public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
                              int status, String standort, String bundesland, String firmenname, String hauptsitz,
                              String suchbegriff, String art) {
         this.id = id;
@@ -101,11 +118,11 @@ public class StellenanzeigeDTO {
         this.id = id;
     }
 
-    public Date getDatum() {
+    public LocalDate getDatum() {
         return datum;
     }
 
-    public void setDatum(Date datum) {
+    public void setDatum(LocalDate datum) {
         this.datum = datum;
     }
 
