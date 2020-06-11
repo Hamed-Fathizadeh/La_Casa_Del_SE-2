@@ -169,21 +169,15 @@ public class ContainerAnzDAO extends AbstractDAO{
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
         try {
-            if(str.equals("Alle")){
-
+            String limit ="";
+            if(!str.equals("Alle")) {
+                limit = " LIMIT 5";
+            }
                     Statement statement = JDBCConnection.getInstance().getStatement();
                     set = statement.executeQuery("select sa.*, u.logo\n" +
                             "  from lacasa.tab_stellen_anzeige sa\n" +
                             "  join lacasa.tab_unternehmen u\n" +
-                            "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz");
-
-            }else{
-                Statement statement = JDBCConnection.getInstance().getStatement();
-                set = statement.executeQuery("select sa.*, u.logo\n" +
-                        "  from lacasa.tab_stellen_anzeige sa\n" +
-                        "  join lacasa.tab_unternehmen u\n" +
-                        "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz LIMIT 5");
-            }
+                            "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz order by sa.zeitstempel desc "+limit);
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");

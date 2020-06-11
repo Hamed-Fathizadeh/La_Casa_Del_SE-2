@@ -40,7 +40,7 @@ public class ContainerBewerbungDAO {
               }
                  Statement statement = JDBCConnection.getInstance().getStatement();
                  set = statement.executeQuery("select * from lacasa.view_bewerbung \n" +
-                                                  "where email ='"+student.getEmail()+" and status = 1 '\n" +limit
+                                                  "where email ='"+student.getEmail()+"' and status = 1 order by datum desc \n" +limit
                                              );
 
         } catch (SQLException | DatabaseException throwables) {

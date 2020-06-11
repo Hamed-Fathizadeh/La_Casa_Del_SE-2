@@ -597,8 +597,8 @@ public class ProfilDAO extends AbstractDAO{
                 sprachKenntnis.setKenntnis(set4.getString("sprache"));
                 sprachKenntnis.setNiveau(set4.getString("niveau_sprache"));
                 student.setSprachKenntnis(sprachKenntnis);
-                return student;
             }
+            return student;
         } catch (SQLException  throwables) {
             throwables.printStackTrace();
         } finally {
