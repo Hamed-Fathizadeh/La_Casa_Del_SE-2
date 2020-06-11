@@ -16,7 +16,7 @@
 	<properties>
 		<vaadin.version>8.10.4</vaadin.version>
 		<vaadin.plugin.version>8.10.4</vaadin.plugin.version>
-		<jetty.plugin.version>9.3.9.v20160517</jetty.plugin.version>
+		<jetty.plugin.version>9.4.29.v20200521</jetty.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
@@ -113,29 +113,40 @@
 			<artifactId>vaadin-onoffswitch</artifactId>
 			<version>1.1.0</version>
 		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>RELEASE</version>
-			<scope>test</scope>
-		</dependency>
+
 		<dependency>
 			<groupId>org.vaadin.addons</groupId>
 			<artifactId>wizards-for-vaadin</artifactId>
 			<version>2.0.1</version>
 		</dependency>
-		<!--Werfen eine Exception beim Complilieren
-		 <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-surefire-provider</artifactId>
-            <version>1.2.0-M1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.2.0-M1</version>
-        </dependency>
-		-->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-surefire-provider</artifactId>
+			<version>1.2.0-M1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.2.0-M1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		<groupId>org.seleniumhq.selenium</groupId>
+		<artifactId>selenium-java</artifactId>
+		<version>3.141.59</version>
+	</dependency>
+
 	</dependencies>
 
 	<build>
