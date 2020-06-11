@@ -161,10 +161,12 @@ public class StellenanzeigeWindow extends Window {
             Button back = new Button("Zurück zu Anzeigen");
             Button bearbeiten = new Button("Bearbeiten");
             Button delete = new Button("Löschen");
+            Button bewerbungen = new Button("Zum Bewerbungen");
 
             gridLayout.addComponent(back, 4, 0, 4, 0);
             gridLayout.addComponent(bearbeiten, 2, 0, 2, 0);
             gridLayout.addComponent(delete, 3, 0, 3, 0);
+            gridLayout.addComponent(bewerbungen, 1, 0, 1, 0);
 
             onOffSwitch.setCaption("Status");
             if(stellenanzeige.getStatus() == 1) {
@@ -212,6 +214,14 @@ public class StellenanzeigeWindow extends Window {
                 UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
 
             });
+
+            bewerbungen.addClickListener(event -> {
+                this.close();
+                StellenanzeigeBewerbungenWindow stellenanzeigeBewerbungenWindow = new StellenanzeigeBewerbungenWindow(stellenanzeige);
+                UI.getCurrent().addWindow(stellenanzeigeBewerbungenWindow);
+
+            });
+
             bearbeiten.addClickListener(event -> {
                 Button cancel = new Button("Abbrechen");
                 Button save = new Button("Speichern");

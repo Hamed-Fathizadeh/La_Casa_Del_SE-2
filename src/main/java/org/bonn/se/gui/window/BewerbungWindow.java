@@ -23,8 +23,7 @@ public class BewerbungWindow extends Window {
     }
 
     public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) {
-        center();
-
+        this.center();
         this.setWidth("80%");
         this.setHeight("90%");
         this.setModal(true);
@@ -49,7 +48,7 @@ public class BewerbungWindow extends Window {
         mainGridLayout.setSizeFull();
         mainGridLayout.setMargin(true);
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-        System.out.println(student.toString());
+
 
         Image profilbild = student.getPicture();
         Label titel = new Label("<h2><b> Bewerbung auf: " + stellenanzeige.getTitel() + "</font></b></h2>", ContentMode.HTML);
@@ -148,8 +147,7 @@ public class BewerbungWindow extends Window {
         //upload.setImmediateMode(false);
          final Label fileName = new Label();
 
-        panel.setContent(mainGridLayout);
-        this.setContent(panel);
+
         final byte[] myByte = null;
         upload.addStartedListener(event -> {
             fileName.setValue( event.getFilename());
@@ -174,6 +172,8 @@ public class BewerbungWindow extends Window {
         mainGridLayout.setComponentAlignment(richTextArea, Alignment.BOTTOM_CENTER);
         mainGridLayout.setComponentAlignment(bewerben, Alignment.BOTTOM_RIGHT);
 
+        panel.setContent(mainGridLayout);
+        this.setContent(panel);
 
 
 
