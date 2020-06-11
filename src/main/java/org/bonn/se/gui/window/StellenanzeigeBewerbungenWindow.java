@@ -25,7 +25,7 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         this.setHeight("90%");
         this.setModal(true);
         this.setResizable(false);
-        //this.setClosable(false);
+        this.setClosable(true);
 
         Panel panel = new Panel();
         panel.setWidthFull();
