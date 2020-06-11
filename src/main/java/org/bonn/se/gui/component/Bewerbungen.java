@@ -4,7 +4,7 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.model.dao.AbstractDAO;
+
 import org.bonn.se.model.dao.BewertungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
@@ -16,13 +16,13 @@ import org.bonn.se.services.util.Roles;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.sql.*;
-import java.time.LocalDate;
+
 import java.util.List;
 
 
-//import static org.bonn.se.model.dao.AbstractDAO.getPreparedStatement;
 
-//import org.vaadin.teemu.ratingstars.RatingStars;
+
+
 
 public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
@@ -78,32 +78,20 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                         try {
                             Statement statement = JDBCConnection.getInstance().getStatement();
                             set = statement.executeQuery("SELECT * "
-                                    + "FROM lacasa.tab_bewertung"
-                                    + "WHERE lacasa.tab_bewertung.firmenname NOT EXISTS"
-                                    + "  ( SELECT *  "
-                                    + "FROM laca.tab.bewertung"
-                                    + "WHERE lacasa.tab.hauptsitz IS NOT NULL "
-                                    + " AND lacasa.tab.bewertung.student_id = '" + student.getStudent_id() + "')");
+                                    + "FROM lacasa.tab_bewertung "
+                                    + "WHERE upper(lacasa.tab_bewertung.firmenname) != '" + selection.getValue().getUnternehmenName().toUpperCase()  + "'"
+                                    + "AND upper(lacasa.tab_bewertung.hauptsitz) != '" + selection.getValue().getUnternehmenHauptsitz().toUpperCase() + "'"
+                                    + "AND lacasa.tab_bewertung.student_id !=  '" + student.getStudent_id() + "'" );
                         } catch (SQLException | DatabaseException throwables) {
                             throwables.printStackTrace();
                            //throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
 
                         }
                         try {
+                            while (set.next()) {
+                                BewerbungDTO bw = selection.getValue();
+                                BewertungDAO.bewertung(bw);
 
-
-                            if (set.next()) {
-                                BewertungDAO.bewertung(selection.getValue());
-
-                            } else {
-                                Window subWindow = new Window("Bewertung");
-                                VerticalLayout subContent = new VerticalLayout();
-                                subWindow.setContent(subContent);
-                                subContent.addComponent(new Label("Sie haben bereits eine Bewertung abgegeben! Eine neue Bewertung ist nicht möglich!"));
-                                subWindow.center();
-
-                                // Open it in the UI
-                                UI.getCurrent().addWindow(subWindow);
                             }
                         } catch (SQLException | DatabaseException throwables) {
                             throwables.printStackTrace();
@@ -114,7 +102,14 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                                 e.printStackTrace();
                             }
                         }
+                        Window subWindow = new Window("Bewertung");
+                        VerticalLayout subContent = new VerticalLayout();
+                        subWindow.setContent(subContent);
+                        subContent.addComponent(new Label("Sie haben bereits eine Bewertung abgegeben! Eine neue Bewertung ist nicht möglich!"));
+                        subWindow.center();
 
+                        // Open it in the UI
+                        UI.getCurrent().addWindow(subWindow);
                     }
                 });
 
