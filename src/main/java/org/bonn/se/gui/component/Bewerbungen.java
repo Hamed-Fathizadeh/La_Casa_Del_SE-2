@@ -75,40 +75,16 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 bewerten.addClickListener(new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
-                        ResultSet set = null;
-                        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
                         try {
-                            Statement statement = JDBCConnection.getInstance().getStatement();
-                            set = statement.executeQuery("SELECT * "
-                                    + "FROM lacasa.tab_bewertung "
-                                    + "WHERE upper(lacasa.tab_bewertung.firmenname) != '" + selection.getValue().getUnternehmenName().toUpperCase()  + "'"
-                                    + "AND upper(lacasa.tab_bewertung.hauptsitz) != '" + selection.getValue().getUnternehmenHauptsitz().toUpperCase() + "'"
-                                    + "AND lacasa.tab_bewertung.student_id !=  '" + student.getStudent_id() + "'" );
-                        } catch (SQLException | DatabaseException throwables) {
-                            throwables.printStackTrace();
-                           //throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+                              BewerbungDTO bw = selection.getValue();
+                              BewertungDAO.bewertung(bw);
 
-                        }
-                        try {
-                            while (set.next()) {
-                                BewerbungDTO bw = selection.getValue();
-                                BewertungDAO.bewertung(bw);
-
-                            }
-                        } catch (SQLException | DatabaseException throwables) {
-                            throwables.printStackTrace();
-                        } finally {
-                            try {
-                                JDBCConnection.getInstance().closeConnection();
                             } catch (DatabaseException e) {
-                                e.printStackTrace();
-                            }
+                            e.printStackTrace();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
-                        Window subWindow = new Window("Bewertung");
-                        VerticalLayout subContent = new VerticalLayout();
-                        subWindow.setContent(subContent);
-                        subContent.addComponent(new Label("Sie haben bereits eine Bewertung abgegeben! Eine neue Bewertung ist nicht möglich!"));
-                        subWindow.center();
+
 
                         // Open it in the UI
                         UI.getCurrent().addWindow(subWindow);
