@@ -21,7 +21,7 @@ public class BewerbungDTO {
     private Date student_g_datum;
     private String student_studiengang;
     private String student_ausbildung;
-    private int  student_kontakt_nr;
+    private String  student_kontakt_nr;
     private int student_benachrichtigung;
     private Image student_picture;
     private String student_hoester_abschluss;
@@ -52,11 +52,11 @@ public class BewerbungDTO {
         this.student_ausbildung = student_ausbildung;
     }
 
-    public int getStudent_kontakt_nr() {
+    public String getStudent_kontakt_nr() {
         return student_kontakt_nr;
     }
 
-    public void setStudent_kontakt_nr(int student_kontakt_nr) {
+    public void setStudent_kontakt_nr(String student_kontakt_nr) {
         this.student_kontakt_nr = student_kontakt_nr;
     }
 
@@ -151,7 +151,7 @@ public class BewerbungDTO {
 
     public BewerbungDTO(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
                         String unternehmenName,String unternehmenHauptsitz, byte[] unternehmenLogo,String emailStudent, String s_titel,
-                        Date student_g_datum,String student_studiengang, String student_ausbildung,int  student_kontakt_nr,int student_benachrichtigung,
+                        Date student_g_datum,String student_studiengang, String student_ausbildung,String  student_kontakt_nr,int student_benachrichtigung,
                         byte[] student_picture,String student_hoester_abschluss,String student_vorname,String student_nachname,double rating
                        ) {
         this.bewerbungID = bewerbungID;

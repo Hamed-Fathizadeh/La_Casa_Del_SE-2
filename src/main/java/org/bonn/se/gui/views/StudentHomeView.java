@@ -43,6 +43,7 @@ public class StudentHomeView extends VerticalLayout implements View {
     }
 
 
+
     public void setUp() {
 
         Maingrid = new GridLayout(2, 5);

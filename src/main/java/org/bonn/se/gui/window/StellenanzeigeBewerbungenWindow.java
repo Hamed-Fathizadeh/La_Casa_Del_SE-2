@@ -1,10 +1,8 @@
 package org.bonn.se.gui.window;
 
 import com.vaadin.shared.ui.grid.HeightMode;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.Window;
+import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
@@ -27,20 +25,6 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         this.setResizable(false);
         this.setClosable(true);
 
-        Panel panel = new Panel();
-        panel.setWidthFull();
-        Button back = new Button("Zurück");
-
-        back.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                StellenanzeigeBewerbungenWindow.this.close();
-                if(PdfUploader.getPath()!= null) {
-                    DeletFile.delete(PdfUploader.getPath());
-                }
-            }
-        });
-
         GridLayout mainGridLayout = new GridLayout(1, 4);
         mainGridLayout.setSizeFull();
         mainGridLayout.setMargin(true);
@@ -49,9 +33,29 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         containerBewerbungen.loadByStellenAnzeigeID("Alle",stellenanzeige.getId());
         Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"Unternehmen");
         bewerbungen.setHeightMode(HeightMode.UNDEFINED);
+        bewerbungen.setWidthFull();
 
-        mainGridLayout.addComponent(bewerbungen,0,1);
 
+        ContainerLetztenBewerbungen containerBewerbungenMakiert  = ContainerLetztenBewerbungen.getInstance();
+        containerBewerbungenMakiert.loadByStellenAnzeigeID("Makiert",stellenanzeige.getId());
+        Bewerbungen<BewerbungDTO> bewerbungenMakiert = new Bewerbungen(containerBewerbungen,"Unternehmen");
+        bewerbungenMakiert.setHeightMode(HeightMode.UNDEFINED);
+        bewerbungenMakiert.setWidthFull();
+
+ //add TabSheet
+        TabSheet tabSheet = new TabSheet();
+        tabSheet.setHeight("700px");
+        tabSheet.setWidth("1500px");
+        tabSheet.addStyleName(ValoTheme.TABSHEET_FRAMED);
+        tabSheet.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
+
+        tabSheet.addTab(bewerbungen,"Alle");
+        tabSheet.addTab(bewerbungenMakiert,"Markierte");
+
+
+        mainGridLayout.addComponent(tabSheet,0,1);
+
+        mainGridLayout.setComponentAlignment(tabSheet, Alignment.TOP_CENTER);
 
 
         this.setContent(mainGridLayout);

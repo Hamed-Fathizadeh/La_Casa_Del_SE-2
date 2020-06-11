@@ -4,6 +4,7 @@ import com.vaadin.annotations.StyleSheet;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.exception.BewerbungControl;
+import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
@@ -38,9 +39,7 @@ public class BewerbungWindow extends Window {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 BewerbungWindow.this.close();
-                if(PdfUploader.getPath()!= null) {
-                    DeletFile.delete(PdfUploader.getPath());
-                }
+
             }
         });
 
@@ -139,20 +138,7 @@ public class BewerbungWindow extends Window {
 
 
 
-        PdfUploader receiver = new PdfUploader();
 
-        Upload upload = new Upload("", receiver);
-        upload.addSucceededListener(receiver);
-        upload.setButtonCaption("PDF hochladen");
-        //upload.setImmediateMode(false);
-         final Label fileName = new Label();
-
-
-        final byte[] myByte = null;
-        upload.addStartedListener(event -> {
-            fileName.setValue( event.getFilename());
-
-        });
 
         final RichTextArea richTextArea = new RichTextArea();
         richTextArea.setWidthFull();
@@ -160,15 +146,12 @@ public class BewerbungWindow extends Window {
 
         richTextArea.setValue("<h1>Schreiben Sie hier Ihre Anschreiben!</h1>");
 
-        mainGridLayout.addComponent(upload, 0, 10,0,10);
-        mainGridLayout.addComponent(fileName, 0, 11,0,11);
+
         mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 12,0,12);
         mainGridLayout.addComponent(richTextArea, 0, 13,5,13);
         mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 14,5,14);
         mainGridLayout.addComponent(bewerben, 5, 15);
 
-        mainGridLayout.setComponentAlignment(upload, Alignment.TOP_LEFT);
-        mainGridLayout.setComponentAlignment(fileName, Alignment.TOP_LEFT);
         mainGridLayout.setComponentAlignment(richTextArea, Alignment.BOTTOM_CENTER);
         mainGridLayout.setComponentAlignment(bewerben, Alignment.BOTTOM_RIGHT);
 
@@ -190,12 +173,13 @@ public class BewerbungWindow extends Window {
                 bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
                 BewerbungWindow.this.close();
                     try {
-                        BewerbungControl.bewerben(bewerbungDTO, PdfUploader.getPath());
+                        BewerbungControl.bewerben(bewerbungDTO);
                     } catch (DatabaseException e) {
                         e.printStackTrace();
                         Notification.show("DB-Fehler", e.getReason(), Notification.Type.ERROR_MESSAGE);
                     }
                 UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben sich erfolgreich beworben!"));
+                UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
             }
         });
 

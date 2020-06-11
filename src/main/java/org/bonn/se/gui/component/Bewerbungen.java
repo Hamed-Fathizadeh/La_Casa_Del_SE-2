@@ -113,6 +113,10 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         ThemeResource resource3 = new ThemeResource("img/Anzeigen/orange.png");
         Image orange = new Image(null, resource3);
         orange.setDescription("Entwurf");
+        ThemeResource resource4 = new ThemeResource("img/Anzeigen/makierung.png");
+        Image makierung = new Image(null, resource3);
+        makierung.setDescription("Makiert");
+
         RatingStars ratingStars = new RatingStars();
         ratingStars.setMaxValue(5);
 
@@ -134,7 +138,25 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             this.addColumn(BewerbungDTO::getStudent_nachname).setCaption("Nachname");
             this.addColumn(BewerbungDTO::getStudent_studiengang).setCaption("Studiengang");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
-            this.setSizeFull();
+            this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
+            this.addComponentColumn(Bew -> (Bew.getStatus() == 3 ? new Image(null, resource4): null));
+
+
+                    /*ThemeResource resource3 = new ThemeResource("img/Anzeigen/orange.png");
+        Image orange = new Image(null, resource3);
+        orange.setDescription("Entwurf");
+
+        if(str.equals("Student")) {
+            this.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Unternehmen");
+        }
+        this.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
+        this.addColumn(StellenanzeigeDTO::getStandort).setCaption("Ort");
+        this.addColumn(StellenanzeigeDTO::getDatum).setCaption("Beginn");
+
+        if(!str.equals("Student")) {
+            this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
+            this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status");
+        }*/
         }
     }
 

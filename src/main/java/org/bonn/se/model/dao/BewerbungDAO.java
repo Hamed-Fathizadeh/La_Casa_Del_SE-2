@@ -27,7 +27,7 @@ public class BewerbungDAO extends AbstractDAO{
         return dao;
     }
 
-    public static void bewerben(BewerbungDTO bewerbung, String path) throws DatabaseException, SQLException {
+    public static void bewerben(BewerbungDTO bewerbung) throws DatabaseException, SQLException {
         String sql = "INSERT INTO lacasa.tab_bewerbung (datum, description, lebenslauf, status, student_id, s_anzeige_id)"+
                 "VALUES(?,?,?,?,?,?)";
 
@@ -47,7 +47,6 @@ public class BewerbungDAO extends AbstractDAO{
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
-        DeletFile.delete(path);
 
 
 

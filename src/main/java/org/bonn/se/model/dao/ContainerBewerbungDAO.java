@@ -74,10 +74,11 @@ public class ContainerBewerbungDAO {
         ResultSet set;
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
         try {
+            System.out.println("contabewDAO"+saID);
             if(str.equals("Makiert")) {
                 Statement statement = JDBCConnection.getInstance().getStatement();
                 set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
-                        " where s_anzeige_id = " +saID+" and status = 4 "+
+                        " where s_anzeige_id = " +saID+" and status = 3 "+
                         " order by datum desc");
             }else{
                 Statement statement = JDBCConnection.getInstance().getStatement();
@@ -95,14 +96,15 @@ public class ContainerBewerbungDAO {
         try {
 
             while (set.next()) {
-                BewerbungDTO bewerbung = new BewerbungDTO(set.getInt(1),set.getDate(2),set.getString(3),
-                        set.getBytes(4),set.getInt(5),set.getInt(6),
-                        set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
-                        set.getString(11),set.getString(12),set.getDate(13),set.getString(14),
-                        set.getString(15),set.getInt(16),set.getInt(17), set.getBytes(18),
-                        set.getString(19),set.getString(20),set.getString(21),
-                        set.getDouble(22)
-                );
+                BewerbungDTO bewerbung = new BewerbungDTO(
+                                                            set.getInt(1),set.getDate(2),set.getString(3),
+                                                            set.getBytes(4),set.getInt(5),set.getInt(6),
+                                                            set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
+                                                            set.getString(11),set.getString(12),set.getDate(13),set.getString(14),
+                                                            set.getString(15),set.getString(16),set.getInt(17), set.getBytes(18),
+                                                            set.getString(19),set.getString(20),set.getString(21),
+                                                            set.getDouble(22)
+                                                        );
                 liste.add(bewerbung);
 
 
