@@ -12,10 +12,7 @@ import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.ImageUploader;
-import org.bonn.se.services.util.PdfUploader;
-import org.bonn.se.services.util.Roles;
-import org.bonn.se.services.util.Views;
+import org.bonn.se.services.util.*;
 
 import java.io.OutputStream;
 
@@ -32,12 +29,23 @@ public class BewerbungWindow extends Window {
         this.setHeight("90%");
         this.setModal(true);
         this.setResizable(false);
+        this.setClosable(false);
 
         Panel panel = new Panel();
         panel.setWidthFull();
+        Button back = new Button("Zurück");
 
+        back.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                BewerbungWindow.this.close();
+                if(PdfUploader.getPath()!= null) {
+                    DeletFile.delete(PdfUploader.getPath());
+                }
+            }
+        });
 
-        GridLayout mainGridLayout = new GridLayout(6, 15);
+        GridLayout mainGridLayout = new GridLayout(6, 16);
         mainGridLayout.setSizeFull();
         mainGridLayout.setMargin(true);
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
@@ -67,35 +75,38 @@ public class BewerbungWindow extends Window {
         Label line = new Label("<h1><color: black h1>", ContentMode.HTML);
 
         GridLayout grid1 = new GridLayout(2, student.getTaetigkeiten().size()+1);
+        grid1.setMargin(false);
         grid1.addComponent( new Label("<h1>Berufstätigkeiten<h1>", ContentMode.HTML),0,0,1,0);
         int i = 1;
         for(Taetigkeit te: student.getTaetigkeiten()){
             grid1.addComponent(new Label(te.getTaetigkeitName()+":  "),0,i);
-            grid1.addComponent(new Label(te.getBeginn()+" - " +te.getEnde()),1,i);
+            grid1.addComponent(new Label(" "+te.getBeginn()+" - " +te.getEnde()),1,i);
             i++;
         }
 
         GridLayout grid2 = new GridLayout(2, student.getItKenntnisList().size()+1);
+        grid2.setMargin(false);
         grid2.addComponent( new Label("<h1>IT-Kenntnisse<h1>", ContentMode.HTML),0,0,1,0);
         i=1;
         for(Student.ITKenntnis itK: student.getItKenntnisList()){
             grid2.addComponent(new Label(itK.getKenntnis()+":  "),0,i);
-            grid2.addComponent(new Label(itK.getNiveau()),1,i);
+            grid2.addComponent(new Label(" "+itK.getNiveau()),1,i);
             i++;
         }
 
         GridLayout grid3 = new GridLayout(2, student.getSprachKenntnisList().size()+1);
+        grid3.setMargin(false);
         grid3.addComponent( new Label("<h1>IT-Sprachkenntnisse<h1>", ContentMode.HTML),0,0,1,0);
         i=1;
 
         for(Student.SprachKenntnis sp: student.getSprachKenntnisList()){
             grid3.addComponent(new Label(sp.getKenntnis()+":  "),0,i);
-            grid3.addComponent(new Label(sp.getNiveau()),1,i);
+            grid3.addComponent(new Label(" "+sp.getNiveau()),1,i);
             i++;
         }
 
 
-
+        mainGridLayout.addComponent(back, 5, 0);
         mainGridLayout.addComponent(titel, 0, 1, 5, 1);
           mainGridLayout.addComponent(profilbild, 0, 2,0,7);
         mainGridLayout.addComponent(vor_nachname, 1, 2);mainGridLayout.addComponent(vor_nachname_data, 2, 2);
@@ -116,7 +127,7 @@ public class BewerbungWindow extends Window {
         mainGridLayout.addComponent(grid3, 4, 9,5,9);
 
 
-
+        mainGridLayout.setComponentAlignment(back, Alignment.TOP_RIGHT);
         mainGridLayout.setComponentAlignment(titel, Alignment.TOP_CENTER);
         mainGridLayout.setComponentAlignment(profilbild, Alignment.MIDDLE_CENTER);
 
@@ -127,7 +138,7 @@ public class BewerbungWindow extends Window {
 
         Button bewerben = new Button("Bewerben");
 
-        mainGridLayout.addComponent(bewerben, 5, 13);
+
 
         PdfUploader receiver = new PdfUploader();
 
@@ -145,24 +156,23 @@ public class BewerbungWindow extends Window {
 
         });
 
-        Label platzhalter = new Label("<&nbsp>", ContentMode.HTML);
-
         final RichTextArea richTextArea = new RichTextArea();
         richTextArea.setWidthFull();
         richTextArea.setHeight("600px");
 
-
-
-        richTextArea.setValue("<h1>Hallo</h1>\n" + "<p>Schreiben Sie hier Ihre Anschreiben!</p>");
+        richTextArea.setValue("<h1>Schreiben Sie hier Ihre Anschreiben!</h1>");
 
         mainGridLayout.addComponent(upload, 0, 10,0,10);
         mainGridLayout.addComponent(fileName, 0, 11,0,11);
-        mainGridLayout.addComponent(platzhalter, 0, 12,0,12);
-        mainGridLayout.addComponent(richTextArea, 0, 13,4,13);
+        mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 12,0,12);
+        mainGridLayout.addComponent(richTextArea, 0, 13,5,13);
+        mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 14,5,14);
+        mainGridLayout.addComponent(bewerben, 5, 15);
 
         mainGridLayout.setComponentAlignment(upload, Alignment.TOP_LEFT);
         mainGridLayout.setComponentAlignment(fileName, Alignment.TOP_LEFT);
         mainGridLayout.setComponentAlignment(richTextArea, Alignment.BOTTOM_CENTER);
+        mainGridLayout.setComponentAlignment(bewerben, Alignment.BOTTOM_RIGHT);
 
 
 
