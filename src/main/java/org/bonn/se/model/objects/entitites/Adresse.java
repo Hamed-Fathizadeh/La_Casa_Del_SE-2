@@ -9,11 +9,22 @@ public class Adresse {
     private String plz;
     private String ort;
     private String email;
+    private String bundesland;
+
+    public String getBundesland() {
+        return bundesland;
+    }
+
+    public void setBundesland(String bundesland) {
+        this.bundesland = bundesland;
+    }
 
     public Adresse(){
         setStrasse(strasse);
         setPlz(plz);
         setOrt(ort);
+        setBundesland(bundesland);
+
     }
 
     public Adresse(String strasse, String plz, String ort) {

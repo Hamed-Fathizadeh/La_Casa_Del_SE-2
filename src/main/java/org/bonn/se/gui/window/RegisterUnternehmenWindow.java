@@ -1,5 +1,6 @@
 package org.bonn.se.gui.window;
 
+import com.vaadin.data.HasValue;
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.ThemeResource;
@@ -15,12 +16,10 @@ import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.DatenUnternehmenProfil;
-import org.bonn.se.services.util.ImageUploader;
-import org.bonn.se.services.util.Roles;
-import org.bonn.se.services.util.Views;
+import org.bonn.se.services.util.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
+import org.vaadin.easyuploads.UploadField;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.WizardStep;
 import org.vaadin.teemu.wizards.event.*;
@@ -30,8 +29,6 @@ import java.io.File;
 public class RegisterUnternehmenWindow extends Window implements WizardProgressListener {
 
     private Wizard wizard;
-    private final Image image = new Image();
-    private Image image1;
     Unternehmen unternehmen =(Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
 
     public RegisterUnternehmenWindow() {
@@ -114,6 +111,8 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
         PopUpTextField strasse;
         OrtPlzTextField ort;
         ComboBox<String> branche;
+        UploadField uploadField;
+        Image image = ImageConverter.getUnknownProfilImage();
 
         @Override
         public String getCaption() {
@@ -128,34 +127,28 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
             gridLayout.setWidth("100%");
 
             FormLayout form1 = new FormLayout();
-
-            ImageUploader receiver = new ImageUploader();
-            // Create the upload with a caption and set receiver later
-            Upload upload = new Upload("", receiver);
-            upload.addSucceededListener(receiver);
-            upload.setButtonCaption("Profilbild hochladen");
-
-            image.setSource(new FileResource(new File("src/main/webapp/VAADIN/themes/demo/images/Unknown.png")));
-
-            upload.addStartedListener(new Upload.StartedListener() {
-                @Override
-                public void uploadStarted(Upload.StartedEvent event) {
-                    form1.removeComponent(image);
-                    Image image = ImageUploader.getImage();
-                    image.setHeight(150,Unit.PIXELS);
-                    image.setWidth(150,Unit.PIXELS);
-                    form1.addComponent(image,0);
-
-
-                }
-            });
             form1.setWidth("300px");
             form1.setMargin(true);
+
+            uploadField = new UploadField();
+            uploadField.setDisplayUpload(false);
+            uploadField.setButtonCaption("Profilbild hochladen");
+            uploadField.setClearButtonVisible(false);
+            uploadField.setAcceptFilter("image/*");
+
+
+            uploadField.addValueChangeListener((HasValue.ValueChangeEvent<byte[]> event) -> {
+                form1.removeComponent(image);
+                byte[] bild = uploadField.getValue();
+                image = ImageConverter.convertImagetoProfil(bild);
+                form1.addComponent(image,0);
+            });
+
 
 
             kontaktnummer = new PopUpTextField("Kontaktnummer");
 
-            form1.addComponents( image,upload,kontaktnummer);
+            form1.addComponents( image,uploadField,kontaktnummer);
             form1.setComponentAlignment(image, Alignment.TOP_LEFT);
 
             FormLayout form2 = new FormLayout();
@@ -177,15 +170,8 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
             form2.addComponents(place1, strasse, ort, place2, branche);
 
 
-
-
-
-
-
-
             gridLayout.addComponent(form1, 0, 1, 0, 1);
             gridLayout.addComponent(form2, 1, 1, 1, 1);
-
             gridLayout.setComponentAlignment(form1, Alignment.TOP_LEFT);
             gridLayout.setComponentAlignment(form2, Alignment.TOP_LEFT);
 
@@ -201,21 +187,9 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
             if(ort.getBundesland().getValue() != null) {
                 sOrt = ort.getBundesland().getValue().toString().split(" - ");
             }
-            try {
-                ProfilDAO.createUnternehmenProfil1(unternehmen.getEmail(),ImageUploader.getFile(),kontaktnummer.getValue(),
-                        strasse.getValue(),ort.getPlz().getValue(),sOrt[0],sOrt[1],branche.getValue(),unternehmen.getCname(),unternehmen.getHauptsitz());
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
 
-            unternehmen.setLogo(image);
-            if(image != null) {
-                unternehmen.setLogo(image);
-            }else{
-                ThemeResource resource = new ThemeResource("img/RegisterStudent/Unknown.png");
-                Image UnknowenPic = new Image(null,resource);
-                unternehmen.setLogo(UnknowenPic);
-            }
+            unternehmen.setLogo(uploadField.getValue());
+            uploadField.clear();
             unternehmen.setKontaktnummer(kontaktnummer.getValue());
             unternehmen.setBranche(branche.getValue());
 
@@ -225,8 +199,25 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
                 adresse.setStrasse(strasse.getValue());
                 adresse.setPlz(ort.getPlz().getValue());
                 adresse.setOrt(sOrt[0]);
-                unternehmen.setAdresse(adresse);
             }
+            unternehmen.setAdresse(adresse);
+
+            try {
+                ProfilDAO.createUnternehmenProfil1_New(unternehmen);
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            }
+
+/*
+            try {
+                ProfilDAO.createUnternehmenProfil1(unternehmen.getEmail(),ImageUploader.getFile(),kontaktnummer.getValue(),
+                        strasse.getValue(),ort.getPlz().getValue(),sOrt[0],sOrt[1],branche.getValue(),unternehmen.getCname(),unternehmen.getHauptsitz());
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            }
+
+ */
+
             UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
 
             return true;

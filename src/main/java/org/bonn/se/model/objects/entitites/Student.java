@@ -1,8 +1,5 @@
 package org.bonn.se.model.objects.entitites;
 
-import com.vaadin.ui.Image;
-import org.bonn.se.services.util.IllegalException;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -12,7 +9,7 @@ public class Student extends User {
     private String nachname;
     private LocalDate g_datum;
     private String studiengang;
-    private Image picture = null;
+    private byte[] picture = null;
     private String abschluss;
     private String kontakt_nr;
 
@@ -53,11 +50,11 @@ public class Student extends User {
     private String ausbildung;
     Adresse adresse;
 
-    public Image getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(Image picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 

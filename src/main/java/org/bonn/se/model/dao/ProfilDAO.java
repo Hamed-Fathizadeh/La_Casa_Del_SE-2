@@ -1,5 +1,7 @@
 package org.bonn.se.model.dao;
 
+import com.vaadin.server.FileResource;
+import com.vaadin.server.Resource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.DateField;
@@ -28,6 +30,60 @@ public class ProfilDAO extends AbstractDAO{
             dao = new ProfilDAO();
         }
         return dao;
+    }
+    public static void createStudentProfil1New(Student student) throws DatabaseException {
+
+        String sql = "UPDATE lacasa.tab_student SET g_datum = ?,"
+                + "studiengang = ?,"
+                + "ausbildung = ?,"
+                + "kontakt_nr = ?,"
+                + "picture = ?,"
+                + "hoester_abschluss = ?"
+                + "WHERE email = ?;" +
+                "INSERT INTO lacasa.tab_adresse VALUES(DEFAULT,?,?,?,?,?);";
+        PreparedStatement statement = getPreparedStatement(sql);
+        try {
+
+            statement.setBytes(5,student.getPicture());
+
+            if (String.valueOf(student.getG_datum()).equals("null")) {
+                assert statement != null;
+                statement.setDate(1,null);
+
+            } else{
+                Date geburtsdatum = Date.valueOf(student.getG_datum());
+                assert statement != null;
+                statement.setDate(1,geburtsdatum);
+            }
+
+            statement.setString(2,student.getStudiengang());
+            statement.setString(3,student.getAusbildung());
+            statement.setString(4,student.getKontakt_nr());
+            statement.setString(6,student.getAbschluss());
+            statement.setString(7,student.getEmail());
+            statement.setString(8,student.getAdresse().getStrasse());
+            if(!(student.getAdresse().getPlz() == null)) {
+                statement.setInt(9, Integer.parseInt(student.getAdresse().getPlz()));
+            } else {
+                statement.setBigDecimal(9,null);
+            }
+            if(!(student.getAdresse().getOrt() == null) || !(student.getAdresse().getBundesland() == null)) {
+                statement.setString(10, student.getAdresse().getOrt());
+                statement.setString(11,student.getAdresse().getBundesland());
+            } else {
+                statement.setNull(10, Types.VARCHAR);
+                statement.setNull(11, Types.VARCHAR);
+            }
+            statement.setString(12,student.getEmail());
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+
+        } finally {
+            JDBCConnection.getInstance().closeConnection();
+
+        }
     }
 
     public static void createStudentProfil1(String email, File file, DateField g_datum, String studiengang, String mobilnr, String strasse,String plz, String ort, String bundesland, String ausbildung, String abschluss) throws DatabaseException {
@@ -224,6 +280,56 @@ public class ProfilDAO extends AbstractDAO{
             JDBCConnection.getInstance().closeConnection();
         }
     }
+    public static void createUnternehmenProfil1_New(Unternehmen unternehmen) throws DatabaseException {
+        String sql = "INSERT INTO lacasa.tab_adresse (strasse,plz,ort,bundesland,email) VALUES(?,?,?,?,?);" +
+                "UPDATE lacasa.tab_unternehmen SET logo = ?, kontakt_nr = ? WHERE lacasa.tab_unternehmen.email = ?;" +
+                "INSERT INTO lacasa.tab_unt_hat_branche (firmenname,hauptsitz,name) VALUES (?,?,?);";
+
+        PreparedStatement statement = getPreparedStatement(sql);
+
+        try {
+            statement.setString(1, unternehmen.getAdresse().getStrasse());
+            if (!(unternehmen.getAdresse().getPlz() == null)) {
+                statement.setInt(2, Integer.parseInt(unternehmen.getAdresse().getPlz()));
+            } else {
+                statement.setBigDecimal(2, null);
+            }
+            if(!(unternehmen.getAdresse().getOrt() == null) || !(unternehmen.getAdresse().getBundesland() == null) ) {
+                statement.setString(3, unternehmen.getAdresse().getOrt());
+                statement.setString(4,unternehmen.getAdresse().getBundesland());
+            } else {
+                statement.setNull(3, Types.VARCHAR);
+                statement.setNull(4, Types.VARCHAR);
+            }
+            statement.setString(5, unternehmen.getEmail());
+            statement.setBytes(6,unternehmen.getLogo());
+            statement.setString(7, unternehmen.getKontaktnummer());
+
+            statement.setString(8, unternehmen.getEmail());
+
+            statement.setString(9, unternehmen.getCname());
+            String[] sOrt = {"",""};
+
+            sOrt = unternehmen.getHauptsitz().split(" - ");
+
+            statement.setString(10,sOrt[0]);
+            statement.setString(11,unternehmen.getBranche());
+            //  statement.setString(3, kon2);
+//            statement.setString(2, br1);
+            //   statement.setString(6, br2);
+            //   statement.setString(7, br3);
+            //statement.setBinaryStream(1, fil, (int) file.length());
+
+            statement.executeUpdate();
+
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");
+        }finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+    }
+
 
     public static void  createUnternehmenProfil2(Unternehmen unternehmen) throws DatabaseException {
         String sql = "INSERT INTO lacasa.tab_unternehmen VALUES(?,?,?,mitarbeiteranzahl,gruendungsjahr,?,?,?,reichweite,?)"+
@@ -312,7 +418,7 @@ public class ProfilDAO extends AbstractDAO{
                 Image profilbild = new Image(
                         null, new StreamResource(
                         streamSource, "streamedSourceFromByteArray"));
-                student.setPicture(profilbild);
+               // student.setPicture(profilbild);
 
 
                 return student;
@@ -348,19 +454,7 @@ public class ProfilDAO extends AbstractDAO{
                 unternehmen.setReichweite(set.getString("reichweite"));
 
                 byte[] bild = set.getBytes("logo");
-
-                StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
-                    public InputStream getStream()
-                    {
-                        return (bild == null) ? null : new ByteArrayInputStream(
-                                bild);
-                    }
-                };
-
-                Image logo = new Image(
-                        null, new StreamResource(
-                        streamSource, "streamedSourceFromByteArray"));
-                unternehmen.setLogo(logo);
+                unternehmen.setLogo(bild);
 
 
                 return unternehmen;
@@ -445,7 +539,7 @@ public class ProfilDAO extends AbstractDAO{
                 student.setPicture(picture);
 
                  */
-                student.setPicture(UserDAO.getInstance().getImage(email));
+             //   student.setPicture(UserDAO.getInstance().getImage(email));
 
                 return student;
             }
@@ -500,26 +594,7 @@ public class ProfilDAO extends AbstractDAO{
                 Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"));
                 student.setAdresse(adresse);
 
-                byte[] bild = set.getBytes("picture");
-                Image picture = null;
-                if (set.getBytes("picture") == null) {
-                    ThemeResource unknownPic = new ThemeResource("VAADIN/themes/demo/images/Unknown.png");
-                    picture = new Image("", unknownPic);
-                } else {
-                    StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
-                        public InputStream getStream() {
-                            return (bild == null) ? null : new ByteArrayInputStream(
-                                    bild);
-                        }
-                    };
-
-                    picture = new Image(
-                            null, new StreamResource(
-                            streamSource, "streamedSourceFromByteArray"));
-                }
-                student.setPicture(picture);
-
-
+                student.setPicture(set.getBytes("picture"));
 
             }
         } catch (SQLException  throwables) {

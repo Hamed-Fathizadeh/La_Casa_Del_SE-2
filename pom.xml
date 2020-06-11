@@ -146,7 +146,16 @@
 		<artifactId>selenium-java</artifactId>
 		<version>3.141.59</version>
 	</dependency>
-
+		<dependency>
+			<groupId>org.vaadin.addon</groupId>
+			<artifactId>easyuploads</artifactId>
+			<version>9.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>eu.maxschuster</groupId>
+			<artifactId>vaadin-autocompletetextfield</artifactId>
+			<version>3.0-alpha-2</version>
+		</dependency>
 	</dependencies>
 
 	<build>

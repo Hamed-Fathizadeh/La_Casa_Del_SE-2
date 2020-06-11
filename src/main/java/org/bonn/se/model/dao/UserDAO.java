@@ -122,7 +122,9 @@ public class UserDAO  extends AbstractDAO {
             statement.setString(4, user.getNachname());
             statement.setString(5, user.getType());
             if(user.getType().equals("C")) {
-                String[] sOrt = user.getHauptsitz().toString().split(" - ");
+                String[] sOrt = {"",""};
+
+                sOrt = user.getHauptsitz().split(" - ");
 
                 statement.setString(6, user.getCname());
                 statement.setString(7, sOrt[0]);
@@ -239,17 +241,8 @@ public class UserDAO  extends AbstractDAO {
                 unternehmen.setCname(set.getString("firmenname"));
                 unternehmen.setHauptsitz(set.getString("hauptsitz"));
 
-                byte[] bild = set.getBytes("logo");
-                StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
-                    public InputStream getStream()
-                    {
-                        return (bild == null) ? null : new ByteArrayInputStream(
-                                bild);
-                    }
-                };
-                unternehmen.setLogo(new Image(
-                        null, new StreamResource(
-                        streamSource, "streamedSourceFromByteArray")));
+                unternehmen.setLogo(set.getBytes("logo"));
+
                 unternehmen.setMitarbeiteranzahl(set.getInt("mitarbeiterzahl"));
                 unternehmen.setGruendungsjahr(set.getInt("gruendungsjahr"));
                 unternehmen.setDescription(set.getString("description"));

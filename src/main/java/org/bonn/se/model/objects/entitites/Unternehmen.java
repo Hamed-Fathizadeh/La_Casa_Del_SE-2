@@ -11,7 +11,7 @@ public class Unternehmen extends User {
        private String ansprechpartner;
        private String hauptsitz;
        private ArrayList<StellenanzeigeDTO> stellenanzeigenDTOliste;
-       private Image logo;
+       private byte[] logo;
        private int mitarbeiteranzahl;
        private int gruendungsjahr;
        private String description;
@@ -64,11 +64,12 @@ public class Unternehmen extends User {
         return stellenanzeigenDTOliste;
     }
 
-    public Image getLogo() {
+    public byte[] getLogo() {
+
         return logo;
     }
 
-    public void setLogo(Image logo) {
+    public void setLogo(byte[] logo) {
         this.logo = logo;
     }
 

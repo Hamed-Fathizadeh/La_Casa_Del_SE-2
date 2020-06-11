@@ -61,6 +61,7 @@ public class MainView extends VerticalLayout implements View {
 //Textfeld Login
         RegistrationTextField userLogin = new RegistrationTextField("E-Mail");
         userLogin.setWidth("310px");
+        userLogin.selectAll();
 
 
 //Textfelt Passwort
