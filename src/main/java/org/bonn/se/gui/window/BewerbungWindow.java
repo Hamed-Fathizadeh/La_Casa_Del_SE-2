@@ -4,6 +4,7 @@ import com.vaadin.annotations.StyleSheet;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.exception.BewerbungControl;
+import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
@@ -23,22 +24,30 @@ public class BewerbungWindow extends Window {
     }
 
     public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) {
-        center();
-
+        this.center();
         this.setWidth("80%");
         this.setHeight("90%");
         this.setModal(true);
         this.setResizable(false);
+        this.setClosable(false);
 
         Panel panel = new Panel();
         panel.setWidthFull();
+        Button back = new Button("Zurück");
 
+        back.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                BewerbungWindow.this.close();
 
-        GridLayout mainGridLayout = new GridLayout(6, 14);
+            }
+        });
+
+        GridLayout mainGridLayout = new GridLayout(6, 16);
         mainGridLayout.setSizeFull();
         mainGridLayout.setMargin(true);
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-        System.out.println(student.toString());
+
 
         Image profilbild = ImageConverter.convertImagetoProfil(student.getPicture());
         Label titel = new Label("<h2><b> Bewerbung auf: " + stellenanzeige.getTitel() + "</font></b></h2>", ContentMode.HTML);
@@ -63,42 +72,39 @@ public class BewerbungWindow extends Window {
 
         Label line = new Label("<h1><color: black h1>", ContentMode.HTML);
 
-        FormLayout form1 = new FormLayout();
-        form1.setMargin(false);
-        form1.addComponent(new Label("<h1>Berufstätigkeiten: <h1>", ContentMode.HTML));
-        System.out.println(student.getTaetigkeiten().size());
-        TextArea tAreaTaet = new TextArea();
-        String text = "";
+        GridLayout grid1 = new GridLayout(2, student.getTaetigkeiten().size()+1);
+        grid1.setMargin(false);
+        grid1.addComponent( new Label("<h1>Berufstätigkeiten<h1>", ContentMode.HTML),0,0,1,0);
+        int i = 1;
         for(Taetigkeit te: student.getTaetigkeiten()){
-            text += te.getTaetigkeitName()+"\n"+te.getBeginn()+" - " +te.getEnde()+"\n";
-            tAreaTaet.setValue(text);
-            form1.addComponent(tAreaTaet);
+            grid1.addComponent(new Label(te.getTaetigkeitName()+":  "),0,i);
+            grid1.addComponent(new Label(" "+te.getBeginn()+" - " +te.getEnde()),1,i);
+            i++;
         }
 
-        FormLayout form2 = new FormLayout();
-        form2.setMargin(true);
-        form2.addComponent(new Label("<h1>IT-Kenntnisse: <h1>", ContentMode.HTML));
-        TextArea tAreaITK = new TextArea();
-        text = "";
+        GridLayout grid2 = new GridLayout(2, student.getItKenntnisList().size()+1);
+        grid2.setMargin(false);
+        grid2.addComponent( new Label("<h1>IT-Kenntnisse<h1>", ContentMode.HTML),0,0,1,0);
+        i=1;
         for(Student.ITKenntnis itK: student.getItKenntnisList()){
-            text+=itK.getKenntnis()+":  "+itK.getNiveau()+"\n";
-            tAreaITK.setValue(text);
-            form2.addComponent(tAreaITK);
+            grid2.addComponent(new Label(itK.getKenntnis()+":  "),0,i);
+            grid2.addComponent(new Label(" "+itK.getNiveau()),1,i);
+            i++;
         }
 
-        FormLayout form3 = new FormLayout();
-        form3.setMargin(true);
-        form3.addComponent(new Label("<h1>Sprachkenntnisse: <h1>", ContentMode.HTML));
-        TextArea tAreaSpr = new TextArea();
-        text = "";
+        GridLayout grid3 = new GridLayout(2, student.getSprachKenntnisList().size()+1);
+        grid3.setMargin(false);
+        grid3.addComponent( new Label("<h1>IT-Sprachkenntnisse<h1>", ContentMode.HTML),0,0,1,0);
+        i=1;
+
         for(Student.SprachKenntnis sp: student.getSprachKenntnisList()){
-            text += sp.getKenntnis()+":  "+sp.getNiveau()+"\n";
-            tAreaSpr.setValue(text);
-            form3.addComponent(tAreaSpr);
+            grid3.addComponent(new Label(sp.getKenntnis()+":  "),0,i);
+            grid3.addComponent(new Label(" "+sp.getNiveau()),1,i);
+            i++;
         }
 
 
-
+        mainGridLayout.addComponent(back, 5, 0);
         mainGridLayout.addComponent(titel, 0, 1, 5, 1);
           mainGridLayout.addComponent(profilbild, 0, 2,0,7);
         mainGridLayout.addComponent(vor_nachname, 1, 2);mainGridLayout.addComponent(vor_nachname_data, 2, 2);
@@ -114,45 +120,43 @@ public class BewerbungWindow extends Window {
 
         mainGridLayout.addComponent(line, 0, 8,4,8);
 
-        mainGridLayout.addComponent(form1, 0, 9,1,9);
-        mainGridLayout.addComponent(form2, 2, 9,3,9);
-        mainGridLayout.addComponent(form3, 4, 9,5,9);
+        mainGridLayout.addComponent(grid1, 0, 9,1,9);
+        mainGridLayout.addComponent(grid2, 2, 9,3,9);
+        mainGridLayout.addComponent(grid3, 4, 9,5,9);
 
 
-
+        mainGridLayout.setComponentAlignment(back, Alignment.TOP_RIGHT);
         mainGridLayout.setComponentAlignment(titel, Alignment.TOP_CENTER);
         mainGridLayout.setComponentAlignment(profilbild, Alignment.MIDDLE_CENTER);
 
         mainGridLayout.setComponentAlignment(line, Alignment.TOP_CENTER);
-        mainGridLayout.setComponentAlignment(form1, Alignment.TOP_CENTER);
-        mainGridLayout.setComponentAlignment(form2, Alignment.TOP_CENTER);
-        mainGridLayout.setComponentAlignment(form3, Alignment.TOP_CENTER);
+        mainGridLayout.setComponentAlignment(grid1, Alignment.TOP_CENTER);
+        mainGridLayout.setComponentAlignment(grid2, Alignment.TOP_CENTER);
+        mainGridLayout.setComponentAlignment(grid3, Alignment.TOP_CENTER);
 
         Button bewerben = new Button("Bewerben");
 
-        mainGridLayout.addComponent(bewerben, 5, 13);
-
-        PdfUploader receiver = new PdfUploader();
-
-        Upload upload = new Upload("", receiver);
-        upload.addSucceededListener(receiver);
-        upload.setButtonCaption("PDF hochladen");
-        //upload.setImmediateMode(false);
-         final Label fileName = new Label();
 
 
 
 
+        final RichTextArea richTextArea = new RichTextArea();
+        richTextArea.setWidthFull();
+        richTextArea.setHeight("600px");
+
+        richTextArea.setValue("<h1>Schreiben Sie hier Ihre Anschreiben!</h1>");
+
+
+        mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 12,0,12);
+        mainGridLayout.addComponent(richTextArea, 0, 13,5,13);
+        mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 14,5,14);
+        mainGridLayout.addComponent(bewerben, 5, 15);
+
+        mainGridLayout.setComponentAlignment(richTextArea, Alignment.BOTTOM_CENTER);
+        mainGridLayout.setComponentAlignment(bewerben, Alignment.BOTTOM_RIGHT);
 
         panel.setContent(mainGridLayout);
         this.setContent(panel);
-        final byte[] myByte = null;
-        upload.addStartedListener(event -> {
-            fileName.setValue( event.getFilename());
-
-        });
-        mainGridLayout.addComponent(upload, 0, 12,4,12);
-        mainGridLayout.addComponent(fileName, 0, 13,4,13);
 
 
 
@@ -161,16 +165,21 @@ public class BewerbungWindow extends Window {
             public void buttonClick(Button.ClickEvent event) {
 
                 BewerbungDTO bewerbungDTO = new BewerbungDTO();
-                bewerbungDTO.setDescription(stellenanzeige.getBeschreibung());
+                bewerbungDTO.setDescription(richTextArea.getValue());
                 bewerbungDTO.setLebenslauf(PdfUploader.getByte());
                 bewerbungDTO.setStatus(1);
                 System.out.println("bewWindow "+student.getStudent_id());
                 bewerbungDTO.setStudentID(student.getStudent_id());
                 bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
                 BewerbungWindow.this.close();
-
-                BewerbungControl.bewerben(bewerbungDTO,PdfUploader.getPath());
-
+                    try {
+                        BewerbungControl.bewerben(bewerbungDTO);
+                    } catch (DatabaseException e) {
+                        e.printStackTrace();
+                        Notification.show("DB-Fehler", e.getReason(), Notification.Type.ERROR_MESSAGE);
+                    }
+                UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben sich erfolgreich beworben!"));
+                UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
             }
         });
 

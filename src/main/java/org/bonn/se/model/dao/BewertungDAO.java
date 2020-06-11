@@ -1,9 +1,13 @@
 package org.bonn.se.model.dao;
 
+import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.Bewerbung;
+import org.bonn.se.model.objects.entitites.Bewertung;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
@@ -27,46 +31,70 @@ public class BewertungDAO extends AbstractDAO {
         return dao;
     }
 
-    public static void bewertung(Bewerbungen bewerbung) throws DatabaseException, SQLException {
-        ResultSet set;
+    public static void bewertung(BewerbungDTO bewerbung) throws DatabaseException, SQLException {
+        ResultSet set = null;
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT * "
-                    + "FROM lacasa.tab_bewertung"
-                    + "WHERE lacasa.tab_bewertung.firmenname NOT EXISTS"
-                    + "  ( SELECT *  "
-                    + "FROM laca.tab.bewertung"
-                    + "WHERE lacasa.tab.hauptsitz IS NOT NULL "
-                    + " AND lacasa.tab.bewertung.student_id = '" + student.getStudent_id() + "')");
+                    + "FROM lacasa.tab_bewertung "
+                    + "WHERE EXISTS (SELECT student_id, firmenname, hauptsitz FROM lacasa.tab_student, lacasa.tab_unternehmen"
+                    + "WHERE lacasa.tab_student.student_id = lacasa.tab_bewertung.student.id"
+                    + "AND lacasa.tab_unternehmen.firmenname = lacasa.tab_bewertung.firmenname"
+                    + "AND lacasa.tab_unternehmen.hauptsitz = lacasa.tab.bewertung.hauptsitz"
+                    + "AND upper(lacasa.tab_unternehmen.firmenname) = '" + bewerbung.getUnternehmenName().toUpperCase() + "'"
+                    + "AND upper(lacasa.tab_unternehmen.hauptsitz) = '" + bewerbung.getUnternehmenHauptsitz().toUpperCase() + "'"
+                    + "AND lacasa.tab_student.student_id =  '" + student.getStudent_id() + "' ) ");
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
+            //throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+
         }
-        //if(set.next()){
+        try {
+            if (set == null) {
+                String sql = "INSERT INTO lacasa.tab_bewertung (datum,anzahl_sterne, firmenname, hauptsitz  ,  student_id) " +
+                        "VALUES(?,?,?,?," +
+                        "(SELECT lacasa.tab_student.student_id " +
+                        "FROM lacasa.tab_student" +
+                        " WHERE lacasa.tab_student.email = ?));";
 
-        String sql = "INSERT INTO lacasa.tab_bewertung (datum,anzahl_sterne, firmenname, hauptsitz  ,  student_id) " +
-                "VALUES(?,?,?,?," +
-                "(SELECT lacasa.tab_student.student_id " +
-                "FROM lacasa.tab_student" +
-                " WHERE lacasa.tab_student.email = ?));";
+                PreparedStatement statement = getPreparedStatement(sql);
 
-        PreparedStatement statement = getPreparedStatement(sql);
+                try {
+                    assert statement != null;
+                    statement.setDate(1, Date.valueOf(LocalDate.now()));
+                    statement.setDouble(2, bewerbung.getRating());
+                    statement.setString(3, bewerbung.getUnternehmenName());
+                    statement.setString(4, bewerbung.getUnternehmenHauptsitz());
+                    statement.setString(5, student.getEmail());
+                    statement.executeUpdate();
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                    throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+                } finally {
+                    JDBCConnection.getInstance().closeConnection();
+                }
+            } else{
+                Window subWindow = new Window("Bewertung");
+                VerticalLayout subContent = new VerticalLayout();
+                subWindow.setContent(subContent);
+                subContent.addComponent(new Label("Sie haben bereits eine Bewertung abgegeben! Eine neue Bewertung ist nicht möglich!"));
+                subWindow.center();
+                UI.getCurrent().addWindow(subWindow);
+                }
 
 
-        assert statement != null;
-         statement.setDate(1, Date.valueOf(LocalDate.now()));
-        //statement.setDouble(2, bewerbung.rating.getValue() );
-        // statement.setString(3, container.getListe().);
-        // statement.setString(4, );
-         statement.setString(5, student.getEmail());
-        statement.executeUpdate();
 
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
 
     }
+}
 
 
 
-    }
+
 
 

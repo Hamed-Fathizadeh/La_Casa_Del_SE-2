@@ -23,9 +23,9 @@ public class Student extends User {
 
 
     private int benachrichtigung;
-    private  ArrayList<Taetigkeit> taetigkeiten;
-    private  ArrayList<SprachKenntnis> sprachKenntnisList;
-    private  ArrayList<ITKenntnis> itKenntnisList;
+    private  ArrayList<Taetigkeit> taetigkeiten = new  ArrayList<Taetigkeit>();
+    private  ArrayList<SprachKenntnis> sprachKenntnisList =  new  ArrayList<SprachKenntnis>();
+    private  ArrayList<ITKenntnis> itKenntnisList = new  ArrayList<ITKenntnis>();
 
 
     public ArrayList<Taetigkeit> getTaetigkeiten() { return taetigkeiten; }
@@ -132,6 +132,7 @@ public class Student extends User {
         }
     }
     public SprachKenntnis getSprachKenntnis() { return sprachKenntnisList.get(sprachKenntnisList.size()-1); }
+
     public void setSprachKenntnis(SprachKenntnis sprachKenntnis) {
         if(!(sprachKenntnis.getKenntnis() == null)){
             if(sprachKenntnisList == null) {

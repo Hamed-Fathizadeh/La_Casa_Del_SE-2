@@ -8,11 +8,12 @@ import java.sql.SQLException;
 
 public class BewerbungControl {
 
-    public static void bewerben (BewerbungDTO bewerbung,String path){
+    public static void bewerben (BewerbungDTO bewerbung) throws DatabaseException {
         try {
-            BewerbungDAO.bewerben(bewerbung,  path);
+            BewerbungDAO.bewerben(bewerbung);
         } catch (DatabaseException e) {
             e.printStackTrace();
+            throw new DatabaseException("Die Anzeige wurde gelöscht!.");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

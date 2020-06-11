@@ -10,8 +10,9 @@ public class DeletFile {
 
     public static void delete(String path){
         try
-        {
+        {   if(!path.equals(null)) {
             Files.deleteIfExists(Paths.get(path));
+            }
         }
         catch(NoSuchFileException e)
         {

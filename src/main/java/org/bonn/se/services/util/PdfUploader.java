@@ -12,7 +12,7 @@ import java.io.*;
 public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     static File file ;
     static byte[] myByte;
-    static String path;
+    static String path = null;
 
     public static String getPath() {
         return path;

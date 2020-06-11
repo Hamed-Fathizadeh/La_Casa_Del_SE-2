@@ -116,7 +116,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         "and b.ort = '"+ort+"'   \n" +
                         "and b.bundesland = '"+bundesland+"') \n");
             }
-/*
+
             System.out.println("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
                     "      ,a.ort, a.bundesland, a.firmenname, a.hauptsitz, a.suchbegriff, a.art, u.logo \n" +
                     "  FROM lacasa.tab_stellen_anzeige a\n" +
@@ -124,7 +124,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
                     "  join lacasa.tab_unt_hat_branche b\n" +
                     "    on a.firmenname = b.firmenname and a.hauptsitz = b.hauptsitz\n" +
-                    " where status = 1" + sbSuchbeg  + sbOrt + sbBund + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis);*/
+                    " where status = 1" + sbSuchbeg  + sbOrt + sbBund + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis);
 
 
             set = statement.executeQuery("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
@@ -169,21 +169,15 @@ public class ContainerAnzDAO extends AbstractDAO{
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
         try {
-            if(str.equals("Alle")){
-
+            String limit ="";
+            if(!str.equals("Alle")) {
+                limit = " LIMIT 5";
+            }
                     Statement statement = JDBCConnection.getInstance().getStatement();
                     set = statement.executeQuery("select sa.*, u.logo\n" +
                             "  from lacasa.tab_stellen_anzeige sa\n" +
                             "  join lacasa.tab_unternehmen u\n" +
-                            "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz");
-
-            }else{
-                Statement statement = JDBCConnection.getInstance().getStatement();
-                set = statement.executeQuery("select sa.*, u.logo\n" +
-                        "  from lacasa.tab_stellen_anzeige sa\n" +
-                        "  join lacasa.tab_unternehmen u\n" +
-                        "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz LIMIT 5");
-            }
+                            "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz and sa.status = 1 order by sa.zeitstempel desc "+limit);
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
