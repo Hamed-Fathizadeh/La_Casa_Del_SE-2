@@ -143,7 +143,7 @@ public class StellenanzeigeWindow extends Window {
                 public void buttonClick(Button.ClickEvent event) {
 
                     StellenanzeigeWindow.this.close();
-                    BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige, unternehmen_data);
+                    BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige);
                     UI.getCurrent().addWindow(bewerbungWindow);
                 }
             });

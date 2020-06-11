@@ -6,6 +6,7 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.ui.MyUI;
 
+import org.bonn.se.gui.window.BewerbungWindow;
 import org.bonn.se.model.dao.BewertungDAO;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
@@ -45,53 +46,53 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         // Der Event Listener für den Grid
         this.addSelectionListener(event -> {
 
+            if (userType.equals("Student")) {
+
             // Create a sub-window and set the content
             Window subWindow = new Window("Bewertung");
             VerticalLayout subContent = new VerticalLayout();
             subWindow.setContent(subContent);
 
             // Put some components in it
-           // subContent.addComponent(new Label("Bewerten"));
+            // subContent.addComponent(new Label("Bewerten"));
 
             //selection.getValue().getUnternehmenName();
             //selection.getValue().getUnternehmenHauptsitz();
 
             RatingStars rating = new RatingStars();
 
-                rating.setMaxValue(5);
-                rating.setAnimated(true);
+            rating.setMaxValue(5);
+            rating.setAnimated(true);
 
-                rating.setValue(rating.getValue());
+            rating.setValue(rating.getValue());
 
-                rating.setReadOnly(false);
+            rating.setReadOnly(false);
 
-                subContent.addComponent(rating);
+            subContent.addComponent(rating);
 
-                subContent.addComponent(new Label("Bitte beachten Sie, dass sie jedes Unternehmen nur einmal bewerten können"));
+            subContent.addComponent(new Label("Bitte beachten Sie, dass sie jedes Unternehmen nur einmal bewerten können"));
 
-                Button bewerten = new Button("Bewertung abgeben");
-                subContent.addComponent(bewerten);
+            Button bewerten = new Button("Bewertung abgeben");
+            subContent.addComponent(bewerten);
 
-                bewerten.addClickListener(new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent clickEvent) {
-                        try {
-                              BewerbungDTO bw = selection.getValue();
-                              BewertungDAO.bewertung(bw);
+            bewerten.addClickListener(new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent clickEvent) {
+                    try {
+                        BewerbungDTO bw = selection.getValue();
+                        BewertungDAO.bewertung(bw);
 
-                            } catch (DatabaseException e) {
-                            e.printStackTrace();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-
-
-                        // Open it in the UI
-                        UI.getCurrent().addWindow(subWindow);
+                    } catch (DatabaseException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                });
 
 
+                    // Open it in the UI
+                    UI.getCurrent().addWindow(subWindow);
+                }
+            });
 
 
             // Center it in the browser window
@@ -99,6 +100,10 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
             // Open it in the UI
             UI.getCurrent().addWindow(subWindow);
+        }else{
+                //BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige);
+               // UI.getCurrent().addWindow(bewerbungWindow);
+        }
         });
 
         List<T> liste = (List<T>) container.getListe();
@@ -114,8 +119,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         Image orange = new Image(null, resource3);
         orange.setDescription("Entwurf");
         ThemeResource resource4 = new ThemeResource("img/Anzeigen/makierung.png");
-        Image makierung = new Image(null, resource3);
-        makierung.setDescription("Makiert");
 
         RatingStars ratingStars = new RatingStars();
         ratingStars.setMaxValue(5);
@@ -131,7 +134,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             }).setCaption("Bewertung");
             this.addColumn(BewerbungDTO::getTitel).setCaption("Titel");
             this.addColumn(BewerbungDTO::getDatum).setCaption("Beginn");
-            this.addColumn(Be -> (Be.getStatus() == 1 ? "gesendet" : Be.getStatus() == 2 ? "in Bearbeitung" : Be.getStatus() == 3 ? "Entwurf" : "gelöscht")).setCaption("Status");
+            this.addColumn(Be -> (Be.getStatus() == 1 ? "gesendet" : Be.getStatus() == 2 ? "abgelehnt" :  "gesendet")).setCaption("Status");
         }else{
             this.addComponentColumn(BewerbungDTO::getStudent_picture).setCaption("Bild");
             this.addColumn(BewerbungDTO::getStudent_vorname).setCaption("Vorname");
@@ -139,24 +142,10 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             this.addColumn(BewerbungDTO::getStudent_studiengang).setCaption("Studiengang");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
-            this.addComponentColumn(Bew -> (Bew.getStatus() == 3 ? new Image(null, resource4): null));
+            this.addComponentColumn(Bew -> (Bew.getStatus() == 3 ? new Image(null, resource4) : null)).setCaption("Markiert");
 
 
-                    /*ThemeResource resource3 = new ThemeResource("img/Anzeigen/orange.png");
-        Image orange = new Image(null, resource3);
-        orange.setDescription("Entwurf");
 
-        if(str.equals("Student")) {
-            this.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Unternehmen");
-        }
-        this.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
-        this.addColumn(StellenanzeigeDTO::getStandort).setCaption("Ort");
-        this.addColumn(StellenanzeigeDTO::getDatum).setCaption("Beginn");
-
-        if(!str.equals("Student")) {
-            this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
-            this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status");
-        }*/
         }
     }
 

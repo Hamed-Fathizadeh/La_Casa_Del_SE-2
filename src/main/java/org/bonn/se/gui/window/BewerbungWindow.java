@@ -19,11 +19,11 @@ import java.io.OutputStream;
 
 public class BewerbungWindow extends Window {
 
-    public BewerbungWindow(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data)  {
-        setUp(stellenanzeige,unternehmen_data);
+    public BewerbungWindow(StellenanzeigeDTO stellenanzeige)  {
+        setUp(stellenanzeige);
     }
 
-    public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) {
+    public void setUp(StellenanzeigeDTO stellenanzeige) {
         this.center();
         this.setWidth("80%");
         this.setHeight("90%");
