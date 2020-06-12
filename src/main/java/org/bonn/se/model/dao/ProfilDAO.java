@@ -262,10 +262,11 @@ public class ProfilDAO extends AbstractDAO{
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
-            set = statement.executeQuery(" Select * FROM lacasa.tab_unternehmen" +
-                    " JOIN lacasa.tab_adresse" +
-                    " Using(email)" +
-                    " WHERE email = \'"+unternehmen.getEmail()+"\'");
+            set = statement.executeQuery("Select u.firmenname, u.hauptsitz, u.description, u.bundesland, u.kontakt_nr, u.logo, a.ort, a.strasse, a.plz, a.bundesland as ad_bundesland\n" +
+                    "  FROM lacasa.tab_unternehmen u\n" +
+                    "  left outer JOIN lacasa.tab_adresse a\n" +
+                    "    on u.email = a.email\n" +
+                    " WHERE u.email = \'"+unternehmen.getEmail()+"\'");
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
@@ -280,14 +281,8 @@ public class ProfilDAO extends AbstractDAO{
                 unternehmen.setBundesland(set.getString("bundesland"));
                 unternehmen.setKontaktnummer(String.valueOf(set.getInt("kontakt_nr")));
                 unternehmen.setLogo(set.getBytes("logo"));
-                unternehmen.getAdresse().setOrt(set.getString("ort"));
-                unternehmen.getAdresse().setStrasse(set.getString("strasse"));
-                unternehmen.getAdresse().setPlz(set.getString("plz"));
-                unternehmen.getAdresse().setBundesland(set.getString("bundesland"));
-
-
-
-
+                Adresse adresse = new Adresse(set.getString("strasse"),String.valueOf(set.getInt("plz")),set.getString("ort"),set.getString("ad_bundesland"));
+                unternehmen.setAdresse(adresse);
 
                 return unternehmen;
             }

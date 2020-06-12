@@ -33,6 +33,13 @@ public class Adresse {
         this.ort = ort;
     }
 
+    public Adresse(String strasse, String plz, String ort, String bundesland) {
+        this.strasse = strasse;
+        this.plz = plz;
+        this.ort = ort;
+        this.bundesland = bundesland;
+    }
+
     public int getAdresse_id(){
         return  adresse_id;
     }

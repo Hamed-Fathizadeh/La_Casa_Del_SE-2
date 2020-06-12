@@ -84,7 +84,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
                 sbEinstellungsart = new StringBuilder(einstellungsart == null ? " " : " and a.art = \'" + einstellungsart + "\' ");
                 sbAb_Datum = new StringBuilder(ab_Datum == null ? " " : " and a.datum >= \'" + ab_Datum + "\' ");
-                sbBranche = new StringBuilder(branche == null ? " " : " and b.name = \'" + branche + "\' ");
+                sbBranche = new StringBuilder(branche == null ? " " : " and u.branch_name = \'" + branche + "\' ");
             }
 
             if(umkreis.equals("Ganzer Ort") || ort == null){
@@ -122,8 +122,6 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "  FROM lacasa.tab_stellen_anzeige a\n" +
                     "  join lacasa.tab_unternehmen u\n" +
                     "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
-                    "  join lacasa.tab_unt_hat_branche b\n" +
-                    "    on a.firmenname = b.firmenname and a.hauptsitz = b.hauptsitz\n" +
                     " where status = 1" + sbSuchbeg  + sbOrt + sbBund + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis);
 
 
@@ -132,8 +130,6 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "  FROM lacasa.tab_stellen_anzeige a\n" +
                     "  join lacasa.tab_unternehmen u\n" +
                     "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
-                    "  join lacasa.tab_unt_hat_branche b\n" +
-                    "    on a.firmenname = b.firmenname and a.hauptsitz = b.hauptsitz\n" +
                     " where status = 1" + sbSuchbeg  + sbOrt + sbBund + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis );
 
 

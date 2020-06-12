@@ -36,6 +36,7 @@ public class LoginControl {
                     + "FROM lacasa.tab_user "
                     + "WHERE upper(lacasa.tab_user.email) = '" +login.toUpperCase() + "'"
                     + " AND lacasa.tab_user.passwort = '" + password + "'");
+
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
@@ -51,15 +52,15 @@ public class LoginControl {
                 user.setType(set.getString(5));
 
                 if(set.getString(5).equals("C")) {
+                        logoutUser();
                         Unternehmen unternehmen = new Unternehmen();
                         MyUI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
                         unternehmen.setEmail(user.getEmail());
                         unternehmen.setVorname(user.getVorname());
                         unternehmen.setNachname(user.getNachname());
                         unternehmen = ProfilDAO.getUnternehmenProfil(unternehmen);
-
                         MyUI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
-
+System.out.println("Logincontrol "+unternehmen.getDescription());
                     } else if(set.getString(5).equals("S")) {
                         Student student = new Student();
                         //student = ProfilDAO.getStudentTest(user.getEmail());
@@ -72,7 +73,9 @@ public class LoginControl {
                      } else {
                         throw new NoSuchUserOrPassword();
                      }
-          }
+          }else{
+                throw new DatabaseException("Fehler Passwort oder Email ist falsch!");
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {

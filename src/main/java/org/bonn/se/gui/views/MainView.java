@@ -160,9 +160,11 @@ public class MainView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        if (MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        if (MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
+           System.out.println("mainview hier1");
             MyUI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
          } else if(MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            System.out.println("Mainview hier1");
             MyUI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
          } else {
             this.setUp();
