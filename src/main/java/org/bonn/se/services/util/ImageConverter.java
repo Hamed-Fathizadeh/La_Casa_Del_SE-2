@@ -10,19 +10,19 @@ import java.io.InputStream;
 
 public class ImageConverter {
 
-    private static final File menu = new File("src/main/webapp/VAADIN/themes/demo/images/Unknown_profil.png");
-    private static final File profil = new File("src/main/webapp/VAADIN/themes/demo/images/Unknown.png");
+    //private static final File menu = new File("src/main/resources/Unknown_profil.png");
+    //private static final File profil = new File("src/main/resources/Unknown.png");
+    private static final FileResource menu = new FileResource(new File("src/main/resources/Unknown_profil.png"));
+    private static final FileResource profil = new FileResource(new File("src/main/resources/Unknown.png"));
+
 
     public static Image getUnknownProfilImage() {
-        Image image = null;
-        image.setSource(new FileResource(profil));
-        return image;
+
+        return new Image("",profil);
     }
 
     public static Image getUnknownMenuImage() {
-        Image image = null;
-        image.setSource(new FileResource(menu));
-        return image;
+        return new Image("",menu);
     }
 
 
@@ -40,7 +40,7 @@ public class ImageConverter {
                 null, new StreamResource(
                 streamSource, "streamedSourceFromByteArray"));
         image.setWidth("150px");
-        image.setHeight("170px");
+        image.setHeight("150px");
 
         return image;
     }

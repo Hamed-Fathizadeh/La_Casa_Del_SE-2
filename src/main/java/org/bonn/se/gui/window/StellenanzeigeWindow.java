@@ -30,8 +30,8 @@ public class StellenanzeigeWindow extends Window {
     public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) {
         center();
 
-        this.setWidth("80%");
-        this.setHeight("90%");
+        this.setWidth("1250px");
+        this.setHeight("80%");
         this.setModal(true);
         this.setResizable(false);
         this.setClosable(false);
@@ -65,13 +65,9 @@ public class StellenanzeigeWindow extends Window {
         Label stellenbeschreibung = new Label("<b>Stellenbeschreibung</b>",ContentMode.HTML);
 
 
-        Label titel = new Label("<h2><b>"+stellenanzeige.getTitel()+"</font></b></h3>" +
-                "<p>" + stellenanzeige.getSuchbegriff() + "</b>",ContentMode.HTML);
-        Label unternehmensbeschreibung = new Label("<h3><b><font color=\"blue\">Informationen über das Unternehmen</font></b></h3>",ContentMode.HTML);
-        TextArea textArea = new TextArea();
-        textArea.setValue(unternehmen_data.getDescription());
-        textArea.setSizeFull();
-        textArea.setReadOnly(true);
+        Label titel = new Label("<h2><b>"+stellenanzeige.getTitel()+"</font></b></h3>" ,ContentMode.HTML);
+        Label unternehmensbeschreibung_label = new Label("<h3><b><font color=\"blue\">Informationen über das Unternehmen</font></b></h3>",ContentMode.HTML);
+        Label unternehmensbeschreibung = new Label(unternehmen_data.getDescription(),ContentMode.HTML);
 
         Label firmenname_data = new Label(unternehmen_data.getCname());
         Label branche_data = new Label("Brnache");
@@ -90,8 +86,8 @@ public class StellenanzeigeWindow extends Window {
 
 
         gridLayout.addComponent(logo,0,1);
-        gridLayout.addComponent(unternehmensbeschreibung,0,2);
-        gridLayout.addComponent(textArea,0,3,1,6);
+        gridLayout.addComponent(unternehmensbeschreibung_label,0,2);
+        gridLayout.addComponent(unternehmensbeschreibung,0,3,1,6);
 
         gridLayout.addComponent(art,0,8);
         gridLayout.addComponent(ort,0,9);
