@@ -30,8 +30,8 @@ public class StellenanzeigeWindow extends Window {
     public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) {
         center();
 
-        this.setWidth("1250px");
-        this.setHeight("80%");
+        this.setWidth("80%");
+        this.setHeight("90%");
         this.setModal(true);
         this.setResizable(false);
         this.setClosable(false);
@@ -80,7 +80,10 @@ public class StellenanzeigeWindow extends Window {
         Label email_data = new Label(unternehmen_data.getEmail());
         Label kontaktnummer1_data = new Label("Kontaktnummer 1");
         Label suchbegriff_data = new Label(stellenanzeige.getSuchbegriff());
-        Label beschreibung_data = new Label(stellenanzeige.getBeschreibung());
+        RichTextArea beschreibung_data = new RichTextArea();
+        beschreibung_data.setSizeFull();
+        beschreibung_data.setValue(stellenanzeige.getBeschreibung());
+        beschreibung_data.setReadOnly(true);
 
 
 
@@ -121,7 +124,6 @@ public class StellenanzeigeWindow extends Window {
 
 
 
-        beschreibung_data.setContentMode(ContentMode.HTML);
 
         gridLayout.addComponent(beschreibung_data,0,13,4,13);
 
