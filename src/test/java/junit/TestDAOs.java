@@ -169,6 +169,10 @@ public class TestDAOs {
         Assert.assertEquals(unternehmen.getHauptsitz(),actual.getHauptsitz());
         Assert.assertEquals(unternehmen.getBundesland(),actual.getBundesland());
         Assert.assertEquals(unternehmen.getKontaktnummer(),actual.getKontaktnummer());
+        Assert.assertEquals(unternehmen.getBranche(),actual.getBranche());
+        Assert.assertEquals(unternehmen.getAdresse().getOrt(),unternehmen.getAdresse().getOrt());
+        Assert.assertEquals(unternehmen.getAdresse().getPlz(),unternehmen.getAdresse().getPlz());
+        Assert.assertEquals(unternehmen.getAdresse().getStrasse(),unternehmen.getAdresse().getStrasse());
         Assert.assertTrue(actual.getLogo() == null);
 
         UserDAO.deleteUser(unternehmen.getEmail());

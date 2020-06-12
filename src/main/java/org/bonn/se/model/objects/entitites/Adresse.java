@@ -5,7 +5,6 @@ import org.bonn.se.services.util.IllegalException;
 public class Adresse {
     private int adresse_id;
     private String strasse;
-    private String haus_nr;
     private String plz;
     private String ort;
     private String email;
@@ -55,12 +54,6 @@ public class Adresse {
     }
     public void setStrasse(String strasse){
         this.strasse=strasse;
-    }
-    public String getHaus_nr(){
-        return haus_nr;
-    }
-    public void setHaus_nr(String haus_nr){
-        this.haus_nr=haus_nr;
     }
     public String getPlz(){
         return plz;

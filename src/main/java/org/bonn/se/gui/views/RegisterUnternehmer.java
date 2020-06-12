@@ -235,14 +235,7 @@ public class RegisterUnternehmer extends GridLayout implements View {
 
     }
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
-        //User user = ((MyUI) UI.getCurrent()).getUser();
-        //if (user != null) {
-        //  UI.getCurrent().getNavigator().navigateTo(Views.MainView);
-        // } else {
-            this.setUp();
-
-    }
+    public void enter(ViewChangeListener.ViewChangeEvent event) { this.setUp(); }
 /*
     String vnummer;
     public String getVnummer(){

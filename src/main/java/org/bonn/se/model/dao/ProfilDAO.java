@@ -165,9 +165,7 @@ public class ProfilDAO extends AbstractDAO{
     public static void createUnternehmenProfil(Unternehmen unternehmen) throws DatabaseException {
         String sql = "INSERT INTO lacasa.tab_adresse (strasse,plz,ort,bundesland,email) VALUES(?,?,?,?,?);" +
                 "UPDATE lacasa.tab_unternehmen SET logo = ?, kontakt_nr = ?," +
-                "description = ? WHERE lacasa.tab_unternehmen.email = ?;" +
-                "INSERT INTO lacasa.tab_unt_hat_branche (firmenname,hauptsitz,name) VALUES (?,?,?);";
-
+                "description = ?, branch_name = ? WHERE lacasa.tab_unternehmen.email = ?;";
         PreparedStatement statement = getPreparedStatement(sql);
 
         try {
@@ -189,16 +187,10 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(7, unternehmen.getKontaktnummer());
             statement.setString(8, unternehmen.getDescription());
 
+            statement.setString(9,unternehmen.getBranche());
 
-            statement.setString(9, unternehmen.getEmail());
+            statement.setString(10, unternehmen.getEmail());
 
-            statement.setString(10, unternehmen.getCname());
-            String[] sOrt = {"",""};
-
-            sOrt = unternehmen.getHauptsitz().split(" - ");
-
-            statement.setString(11,sOrt[0]);
-            statement.setString(12,unternehmen.getBranche());
 
             statement.executeUpdate();
 
@@ -262,11 +254,11 @@ public class ProfilDAO extends AbstractDAO{
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
-            set = statement.executeQuery("Select u.firmenname, u.hauptsitz, u.description, u.bundesland, u.kontakt_nr, u.logo, a.ort, a.strasse, a.plz, a.bundesland as ad_bundesland\n" +
-                    "  FROM lacasa.tab_unternehmen u\n" +
-                    "  left outer JOIN lacasa.tab_adresse a\n" +
-                    "    on u.email = a.email\n" +
-                    " WHERE u.email = \'"+unternehmen.getEmail()+"\'");
+            set = statement.executeQuery(" SELECT u.email, u.firmenname, u.hauptsitz, u.logo, u.description ,u.kontakt_nr, " +
+                    "u.branch_name, a.strasse,a.plz,a.ort, a.bundesland AS a_bundesland, u.bundesland AS u_bundesland   " +
+                    "FROM lacasa.tab_unternehmen AS u JOIN lacasa.tab_adresse AS a" +
+                    " ON u.email = a.email\n" +
+                    "WHERE u.email =\'"+unternehmen.getEmail()+"\'");
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
@@ -278,11 +270,19 @@ public class ProfilDAO extends AbstractDAO{
                 unternehmen.setCname(set.getString("firmenname"));
                 unternehmen.setHauptsitz(set.getString("hauptsitz"));
                 unternehmen.setDescription(set.getString("description"));
-                unternehmen.setBundesland(set.getString("bundesland"));
+                unternehmen.setBundesland(set.getString("u_bundesland"));
                 unternehmen.setKontaktnummer(String.valueOf(set.getInt("kontakt_nr")));
                 unternehmen.setLogo(set.getBytes("logo"));
-                Adresse adresse = new Adresse(set.getString("strasse"),String.valueOf(set.getInt("plz")),set.getString("ort"),set.getString("ad_bundesland"));
+                Adresse adresse = new Adresse();
                 unternehmen.setAdresse(adresse);
+                unternehmen.getAdresse().setOrt(set.getString("ort"));
+                unternehmen.getAdresse().setStrasse(set.getString("strasse"));
+                unternehmen.getAdresse().setPlz(set.getString("plz"));
+                unternehmen.getAdresse().setBundesland(set.getString("a_bundesland"));
+
+
+
+
 
                 return unternehmen;
             }

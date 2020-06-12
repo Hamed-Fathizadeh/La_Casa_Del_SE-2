@@ -225,11 +225,12 @@ public class StudentHomeView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-        if( student == null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            this.setUp();
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-            this.setUp();
+            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
         }
     }
 
