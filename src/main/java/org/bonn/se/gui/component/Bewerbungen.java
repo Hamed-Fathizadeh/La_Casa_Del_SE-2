@@ -41,65 +41,63 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
             if (userType.equals("Student")) {
 
-            // Create a sub-window and set the content
-            Window subWindow = new Window("Bewertung");
-            VerticalLayout subContent = new VerticalLayout();
-            subWindow.setContent(subContent);
+                // Create a sub-window and set the content
+                Window subWindow = new Window("Bewertung");
+                VerticalLayout subContent = new VerticalLayout();
+                subWindow.setContent(subContent);
 
-            // Put some components in it
-            // subContent.addComponent(new Label("Bewerten"));
+                // Put some components in it
+                // subContent.addComponent(new Label("Bewerten"));
 
-            //selection.getValue().getUnternehmenName();
-            //selection.getValue().getUnternehmenHauptsitz();
+                //selection.getValue().getUnternehmenName();
+                //selection.getValue().getUnternehmenHauptsitz();
 
-            RatingStars rating = new RatingStars();
+                RatingStars rating = new RatingStars();
 
-            rating.setMaxValue(5);
-            rating.setAnimated(true);
+                rating.setMaxValue(5);
+                rating.setAnimated(true);
 
-            rating.setValue(rating.getValue());
+                rating.setValue(rating.getValue());
 
-            rating.setReadOnly(false);
+                rating.setReadOnly(false);
 
-            subContent.addComponent(rating);
+                subContent.addComponent(rating);
 
-            subContent.addComponent(new Label("Bitte beachten Sie, dass sie jedes Unternehmen nur einmal bewerten können"));
+                subContent.addComponent(new Label("Bitte beachten Sie, dass sie jedes Unternehmen nur einmal bewerten können"));
 
-            Button bewerten = new Button("Bewertung abgeben");
-            subContent.addComponent(bewerten);
+                Button bewerten = new Button("Bewertung abgeben");
+                subContent.addComponent(bewerten);
 
-            bewerten.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                    try {
-                        BewerbungDTO bw = selection.getValue();
-                        BewertungDAO.bewertung(bw);
+                bewerten.addClickListener(new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
+                        try {
+                            BewerbungDTO bw = selection.getValue();
+                            bw.setRating(rating.getValue());
+                            BewertungDAO.bewertung(bw);
 
-                    } catch (DatabaseException e) {
-                        e.printStackTrace();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                        } catch (DatabaseException e) {
+                            e.printStackTrace();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+
+                        // Open it in the UI
+                        //UI.getCurrent().addWindow(subWindow);
                     }
+                });
 
 
-                    // Open it in the UI
-                    UI.getCurrent().addWindow(subWindow);
-                }
-            });
+                // Center it in the browser window
+                subWindow.center();
 
-
-            // Center it in the browser window
-            subWindow.center();
-
-            // Open it in the UI
-            UI.getCurrent().addWindow(subWindow);
-        }else{
-                //BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige);
-               // UI.getCurrent().addWindow(bewerbungWindow);
-        }
+                // Open it in the UI
+                UI.getCurrent().addWindow(subWindow);
+            }
         });
 
-        List<T> liste = (List<T>) container.getListe();
+            List<T> liste = (List<T>) container.getListe();
         this.setItems( liste);
 
         ThemeResource resource = new ThemeResource("img/Anzeigen/rot.png");
