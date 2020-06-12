@@ -13,8 +13,7 @@ public class WizardStepFertig implements WizardStep {
 
         @Override
         public Component getContent() {
-            Label message = new Label("Sehr gut sie können sich nun einloggen.....");
-            return message;
+            return new Label("Sehr gut sie können sich nun einloggen.....");
         }
 
         @Override

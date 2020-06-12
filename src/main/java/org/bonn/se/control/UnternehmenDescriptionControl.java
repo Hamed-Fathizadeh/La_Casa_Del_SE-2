@@ -1,18 +1,14 @@
 package org.bonn.se.control;
 
-import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.AbstractDAO;
-import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class UnternehmenDescriptionControl extends AbstractDAO {
     private UnternehmenDescriptionControl(){}

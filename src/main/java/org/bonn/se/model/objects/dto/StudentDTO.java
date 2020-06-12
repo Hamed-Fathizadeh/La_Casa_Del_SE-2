@@ -24,8 +24,6 @@ public class StudentDTO extends UserDTO {
             studiengang = "";
             g_datum=null;
             Image profilbild = null;
-            tel_nr = this.tel_nr;
-
 
 
         }

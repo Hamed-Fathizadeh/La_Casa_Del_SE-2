@@ -5,9 +5,7 @@ import com.vaadin.data.Binder;
 import com.vaadin.data.HasValue;
 import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
-import com.vaadin.server.StreamResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.*;
@@ -20,17 +18,12 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
-import org.vaadin.easyuploads.ImagePreviewField;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.WizardStep;
 import org.vaadin.teemu.wizards.event.*;
 
-import javax.imageio.ImageIO;
-import java.io.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class RegisterStudentWindow extends Window implements WizardProgressListener {
 
@@ -118,7 +111,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
     }
 
 
-    private class DatenStep implements WizardStep {
+    private static class DatenStep implements WizardStep {
 
         OrtPlzTextField ort;
         PopUpTextField strasse;
@@ -250,7 +243,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                 student.setAdresse(adresse);
 
             try {
-                ProfilDAO.createStudentProfil1New(student);
+                ProfilDAO.createStudentProfil1(student);
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }

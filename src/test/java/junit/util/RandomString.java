@@ -2,7 +2,6 @@ package junit.util;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
@@ -31,8 +30,7 @@ public class RandomString {
         int day  = random.nextInt(30) + 1;
         int month  = random.nextInt(12) + 1;
         int year  = random.nextInt(500) + 1950;
-        LocalDate date = LocalDate.of(year,month,day);
-        return date;
+        return LocalDate.of(year,month,day);
     }
     public int nextInt() {
 

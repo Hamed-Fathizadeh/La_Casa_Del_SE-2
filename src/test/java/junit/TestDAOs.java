@@ -13,7 +13,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import java.lang.reflect.Field;
+import javax.validation.constraints.AssertTrue;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -96,13 +96,17 @@ public class TestDAOs {
     public void checkStudentProfil() throws DatabaseException {
        Student student = userTestFactory.getProfilStudent();
         UserDAO.registerUser(student);
-        ProfilDAO.createStudentProfil1New(student);
+        ProfilDAO.createStudentProfil1(student);
+        UserDAO.deleteUser(student.getEmail());
+
     }
     @Test
     public void checkStudentProfilWithAdresse() throws DatabaseException {
         Student student = userTestFactory.getProfilStudentWithoutAdress();
         UserDAO.registerUser(student);
-        ProfilDAO.createStudentProfil1New(student);
+        ProfilDAO.createStudentProfil1(student);
+        UserDAO.deleteUser(student.getEmail());
+
     }
 
     @Test
@@ -114,17 +118,60 @@ public class TestDAOs {
         UserDAO.deleteUser(unternehmen.getEmail());
         Assert.assertFalse(UserDAO.getUserbyEmail(unternehmen.getEmail()));
     }
+
     @Test
     public void checkUnternehmenProfil() throws DatabaseException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
         UserDAO.registerUser(unternehmen);
-        ProfilDAO.createUnternehmenProfil1_New(unternehmen);
+        ProfilDAO.createUnternehmenProfil(unternehmen);
+        UserDAO.deleteUser(unternehmen.getEmail());
+
     }
 
     @Test
     public void checkUnternehmenProfilWithAdresse() throws DatabaseException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmenWithoutAdresss();
         UserDAO.registerUser(unternehmen);
-        ProfilDAO.createUnternehmenProfil1_New(unternehmen);
+        ProfilDAO.createUnternehmenProfil(unternehmen);
+        UserDAO.deleteUser(unternehmen.getEmail());
+
+    }
+    /*
+    @Test
+    public void checkUnternehmenProfilWithoutBranche() throws DatabaseException {
+        Unternehmen unternehmen = userTestFactory.getProfilUnternehmenWithoutBranche();
+        UserDAO.registerUser(unternehmen);
+        ProfilDAO.createUnternehmenProfil(unternehmen);
+        UserDAO.deleteUser(unternehmen.getEmail());
+    }
+    */
+
+    @Test
+    public void checkUnternehmenProfilWithDescription() throws DatabaseException {
+        Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
+        UserDAO.registerUser(unternehmen);
+        ProfilDAO.createUnternehmenProfil(unternehmen);
+        UserDAO.deleteUser(unternehmen.getEmail());
+
+
+    }
+
+    @Test
+    public void checkandGetUnternehmenProfilWithDescription() throws DatabaseException {
+        Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
+        UserDAO.registerUser(unternehmen);
+        ProfilDAO.createUnternehmenProfil(unternehmen);
+        Unternehmen actual = ProfilDAO.getUnternehmenProfil(unternehmen);
+        Assert.assertEquals(unternehmen.getVorname(),actual.getVorname());
+        Assert.assertEquals(unternehmen.getNachname(),actual.getNachname());
+        Assert.assertEquals(unternehmen.getEmail(),actual.getEmail());
+        Assert.assertEquals(unternehmen.getCname(),actual.getCname());
+        Assert.assertEquals(unternehmen.getHauptsitz(),actual.getHauptsitz());
+        Assert.assertEquals(unternehmen.getBundesland(),actual.getBundesland());
+        Assert.assertEquals(unternehmen.getKontaktnummer(),actual.getKontaktnummer());
+        Assert.assertTrue(actual.getLogo() == null);
+
+        UserDAO.deleteUser(unternehmen.getEmail());
+
     }
 }

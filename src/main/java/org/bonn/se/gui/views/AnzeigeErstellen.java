@@ -3,17 +3,12 @@ package org.bonn.se.gui.views;
 
 import com.github.appreciated.material.MaterialTheme;
 import com.vaadin.data.Binder;
-import com.vaadin.data.HasValue;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.CompositeErrorMessage;
-import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteQuery;
 import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteSuggestionProvider;
 import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
-import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextFieldExtension;
 import eu.maxschuster.vaadin.autocompletetextfield.provider.CollectionSuggestionProvider;
 import eu.maxschuster.vaadin.autocompletetextfield.provider.MatchMode;
 import org.bonn.se.control.JobTitelControl;
@@ -23,11 +18,6 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.*;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 public class AnzeigeErstellen extends GridLayout implements View {
 

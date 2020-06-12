@@ -1,14 +1,11 @@
 package junit.util;
 
-import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 
-import java.io.File;
 import java.security.SecureRandom;
-import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class UserTestFactory {
@@ -94,6 +91,8 @@ public class UserTestFactory {
         adresse.setBundesland("Nordrhein-Westfalen");
         unternehmen.setAdresse(adresse);
         unternehmen.setBranche("Banken");
+        unternehmen.setDescription("Das ist eine Beschreibung");
+        unternehmen.setKontaktnummer(String.valueOf(randomString.nextInt()));
         return unternehmen;
     }
 
@@ -108,6 +107,20 @@ public class UserTestFactory {
         unternehmen.setBranche("Banken");
         return unternehmen;
     }
+
+    public Unternehmen getProfilUnternehmenWithoutBranche() throws DatabaseException {
+        unternehmen = registerUnternehmen();
+        unternehmen.setKontaktnummer(String.valueOf(randomString.nextInt()));
+
+//      Adresse
+        Adresse adresse = new Adresse();
+
+        unternehmen.setAdresse(adresse);
+        return unternehmen;
+    }
+
+
+
 
 
 }

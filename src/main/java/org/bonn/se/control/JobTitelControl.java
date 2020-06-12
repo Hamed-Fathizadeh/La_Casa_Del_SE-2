@@ -1,6 +1,5 @@
 package org.bonn.se.control;
 
-import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
@@ -8,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 public class JobTitelControl {

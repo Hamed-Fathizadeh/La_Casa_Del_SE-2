@@ -1,16 +1,11 @@
 package org.bonn.se.gui.window;
 
 import com.vaadin.data.HasValue;
-import com.vaadin.event.ShortcutAction;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.UnternehmenDescriptionControl;
 import org.bonn.se.gui.component.OrtPlzTextField;
 import org.bonn.se.gui.component.PlaceHolderField;
 import org.bonn.se.gui.component.PopUpTextField;
-import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
@@ -23,8 +18,6 @@ import org.vaadin.easyuploads.UploadField;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.WizardStep;
 import org.vaadin.teemu.wizards.event.*;
-
-import java.io.File;
 
 public class RegisterUnternehmenWindow extends Window implements WizardProgressListener {
 
@@ -203,20 +196,11 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
             unternehmen.setAdresse(adresse);
 
             try {
-                ProfilDAO.createUnternehmenProfil1_New(unternehmen);
+                ProfilDAO.createUnternehmenProfil(unternehmen);
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
 
-/*
-            try {
-                ProfilDAO.createUnternehmenProfil1(unternehmen.getEmail(),ImageUploader.getFile(),kontaktnummer.getValue(),
-                        strasse.getValue(),ort.getPlz().getValue(),sOrt[0],sOrt[1],branche.getValue(),unternehmen.getCname(),unternehmen.getHauptsitz());
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
-
- */
 
             UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
 
@@ -228,81 +212,9 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
             return false;
         }
     }
-    /*
-    private class AllgemeinStep implements WizardStep {
-
-        RegistrationTextField mitarbeiteranzahl;
-        RegistrationTextField gruendungsjahr;
-        ComboBox<String> reichweite;
-
-        @Override
-        public String getCaption() {
-            return "Allgemeine Angaben";
-        }
-
-        @Override
-        public Component getContent() {
-
-            GridLayout gridLayout = new GridLayout(3, 3);
-            gridLayout.setHeight("100%");
-            gridLayout.setWidth("100%");
-
-            FormLayout form2 = new FormLayout();
-            form2.setWidth("300px");
-            form2.setMargin(true);
-            mitarbeiteranzahl = new RegistrationTextField("Mitarbeiteranzahl");
-            gruendungsjahr = new RegistrationTextField("Gründungsjah");
-
-            reichweite = new ComboBox<>("", DatenUnternehmenProfil.reichweite);
-            reichweite.setPlaceholder("Reichweite");
-            reichweite.setHeight("56px");
-            reichweite.setWidth("300px");
-
-            form2.addComponents(mitarbeiteranzahl,gruendungsjahr,reichweite);
 
 
-            gridLayout.addComponent(form2, 0, 1, 0, 1);
-
-            gridLayout.setComponentAlignment(form2, Alignment.TOP_CENTER);
-
-
-
-            return gridLayout;
-        }
-
-        @Override
-        public boolean onAdvance() {
-
-            Unternehmen unternehmen = (Unternehmen)UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
-            if(mitarbeiteranzahl.getValue() != null) {
-                unternehmen.setMitarbeiteranzahl(Integer.valueOf(String.valueOf(mitarbeiteranzahl.getValue())));
-            } else if ( gruendungsjahr.getValue() != null ) {
-                unternehmen.setGruendungsjahr(Integer.parseInt(String.valueOf(gruendungsjahr.getValue())));
-            }
-
-            unternehmen.setReichweite(reichweite.getValue());
-            UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
-
-            try {
-                ProfilDAO.createUnternehmenProfil2((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
-
-
-
-            return true;
-        }
-
-        @Override
-        public boolean onBack() {
-            return false;
-        }
-    }
-
-    */
-
-    private class BeschreibungStep implements WizardStep {
+    private static class BeschreibungStep implements WizardStep {
         private RichTextArea richTextArea;
 
         @Override

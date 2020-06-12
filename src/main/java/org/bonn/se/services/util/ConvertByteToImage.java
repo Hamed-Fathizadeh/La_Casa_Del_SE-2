@@ -23,15 +23,13 @@ public class ConvertByteToImage {
                     imageRes.setWidth("40px");
                     return imageRes;
                 }
-                byte[] bild = bytes;
 
 
-
-                StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
+            StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
                     public InputStream getStream()
                     {
-                        return (bild == null) ? null : new ByteArrayInputStream(
-                                bild);
+                        return (bytes == null) ? null : new ByteArrayInputStream(
+                                bytes);
                     }
                 };
                 imageRes = new Image(

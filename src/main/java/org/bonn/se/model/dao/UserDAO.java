@@ -16,7 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,7 +38,7 @@ public class UserDAO  extends AbstractDAO {
 
     public static User getUser(String email) throws DatabaseException {
 
-        ResultSet set = null;
+        ResultSet set;
 
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
@@ -89,11 +88,7 @@ public class UserDAO  extends AbstractDAO {
         boolean exist;
         try {
             while (set.next()) {
-                if (set.getString(1).equalsIgnoreCase(email)) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return set.getString(1).equalsIgnoreCase(email);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -122,7 +117,7 @@ public class UserDAO  extends AbstractDAO {
             statement.setString(4, user.getNachname());
             statement.setString(5, user.getType());
             if(user.getType().equals("C")) {
-                String[] sOrt = {"",""};
+                String[] sOrt;
 
                 sOrt = user.getHauptsitz().split(" - ");
 
@@ -240,11 +235,7 @@ public class UserDAO  extends AbstractDAO {
                 Unternehmen unternehmen = new Unternehmen();
                 unternehmen.setCname(set.getString("firmenname"));
                 unternehmen.setHauptsitz(set.getString("hauptsitz"));
-
                 unternehmen.setLogo(set.getBytes("logo"));
-
-                unternehmen.setMitarbeiteranzahl(set.getInt("mitarbeiterzahl"));
-                unternehmen.setGruendungsjahr(set.getInt("gruendungsjahr"));
                 unternehmen.setDescription(set.getString("description"));
                 unternehmen.setBundesland(set.getString("bundesland"));
                 unternehmen.setEmail(set.getString("email"));

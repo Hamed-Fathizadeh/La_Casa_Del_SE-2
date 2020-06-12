@@ -4,14 +4,10 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
-import org.bonn.se.model.objects.entitites.Bewerbung;
-import org.bonn.se.model.objects.entitites.Bewertung;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.DeletFile;
 import org.bonn.se.services.util.Roles;
 
 import java.sql.*;

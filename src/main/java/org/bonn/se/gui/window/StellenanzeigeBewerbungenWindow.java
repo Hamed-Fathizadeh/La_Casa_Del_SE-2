@@ -7,9 +7,6 @@ import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
-import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.services.util.DeletFile;
-import org.bonn.se.services.util.PdfUploader;
 
 public class StellenanzeigeBewerbungenWindow extends Window {
 

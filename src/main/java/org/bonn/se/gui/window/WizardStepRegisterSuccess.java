@@ -13,9 +13,8 @@ public class WizardStepRegisterSuccess implements WizardStep {
 
         @Override
         public Component getContent() {
-            Label message = new Label("Vielen Dank für ihre Registrierung!");
 
-            return message;
+            return new Label("Vielen Dank für ihre Registrierung!");
         }
 
         @Override

@@ -13,7 +13,6 @@ import org.bonn.se.control.UserSearch;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.RegisterStudentWindow;
-import org.bonn.se.gui.window.RegisterUnternehmenWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;

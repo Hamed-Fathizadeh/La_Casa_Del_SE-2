@@ -33,8 +33,8 @@ public class TopPanelUser extends GridLayout {
         this.setComponentAlignment(logo, Alignment.MIDDLE_LEFT);
 
 
-        Image profilbild = null;
-        Image firma_logo = null;
+        Image profilbild;
+        Image firma_logo;
 
         MenuBar bar = new MenuBar();
         // MenuBar.MenuItem item1 = bar.addItem("Menü", null);

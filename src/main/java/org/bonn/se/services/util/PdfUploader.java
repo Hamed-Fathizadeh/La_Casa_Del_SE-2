@@ -1,8 +1,6 @@
 package org.bonn.se.services.util;
 
-import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
 import org.bonn.se.model.objects.entitites.Student;
