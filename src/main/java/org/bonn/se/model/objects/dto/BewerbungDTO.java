@@ -27,6 +27,15 @@ public class BewerbungDTO {
     private String student_hoester_abschluss;
     private String student_vorname;
     private String student_nachname;
+    private boolean bewerbung_markiert;
+
+    public boolean isBewerbung_markiert() {
+        return bewerbung_markiert;
+    }
+
+    public void setBewerbung_markiert(boolean bewerbung_markiert) {
+        this.bewerbung_markiert = bewerbung_markiert;
+    }
 
     public Date getStudent_g_datum() {
         return student_g_datum;
@@ -149,7 +158,7 @@ public class BewerbungDTO {
     public BewerbungDTO(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
                         String unternehmenName,String unternehmenHauptsitz, byte[] unternehmenLogo,String emailStudent, String s_titel,
                         Date student_g_datum,String student_studiengang, String student_ausbildung,String  student_kontakt_nr,int student_benachrichtigung,
-                        byte[] student_picture,String student_hoester_abschluss,String student_vorname,String student_nachname,double rating
+                        byte[] student_picture,String student_hoester_abschluss,String student_vorname,String student_nachname,double rating, boolean bewerbung_markiert
                        ) {
         this.bewerbungID = bewerbungID;
         this.datum = datum;
@@ -173,6 +182,7 @@ public class BewerbungDTO {
         this.student_hoester_abschluss = student_hoester_abschluss;
         this.student_vorname = student_vorname;
         this.student_nachname = student_nachname;
+        this.bewerbung_markiert = bewerbung_markiert;
 
 
 

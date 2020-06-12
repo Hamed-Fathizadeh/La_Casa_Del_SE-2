@@ -7,6 +7,7 @@ import com.vaadin.ui.*;
 import org.bonn.se.gui.window.BewerbungWindow;
 import org.bonn.se.model.dao.BewertungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
+import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.vaadin.teemu.ratingstars.RatingStars;
@@ -31,11 +32,11 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         this.setWidth("900px");
         this.setHeight("100%");
 
+
         // Allow column reordering
         this.setColumnReorderingAllowed(true);
 
         SingleSelect<BewerbungDTO> selection = (SingleSelect<BewerbungDTO>) this.asSingleSelect();
-
         // Der Event Listener für den Grid
         this.addSelectionListener(event -> {
 
@@ -81,7 +82,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                         e.printStackTrace();
                     }
 
-
                     // Open it in the UI
                     UI.getCurrent().addWindow(subWindow);
                 }
@@ -94,8 +94,12 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             // Open it in the UI
             UI.getCurrent().addWindow(subWindow);
         }else{
-                //BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige);
-               // UI.getCurrent().addWindow(bewerbungWindow);
+                BewerbungDTO bw = selection.getValue();
+
+                    BewerbungWindow bewerbungWindow = new BewerbungWindow(null, "Unternehmen", bw);
+                    UI.getCurrent().addWindow(bewerbungWindow);
+                    selection.clear();
+
         }
         });
 
@@ -135,7 +139,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             this.addColumn(BewerbungDTO::getStudent_studiengang).setCaption("Studiengang");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
-            this.addComponentColumn(Bew -> (Bew.getStatus() == 3 ? new Image(null, resource4) : null)).setCaption("Markiert");
+            this.addComponentColumn(Bew -> (Bew.isBewerbung_markiert() ? new Image(null, resource4) : null)).setCaption("Markiert");
 
 
 
