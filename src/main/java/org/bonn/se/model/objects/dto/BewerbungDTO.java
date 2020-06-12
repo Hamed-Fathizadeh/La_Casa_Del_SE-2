@@ -73,7 +73,6 @@ public class BewerbungDTO {
     }
 
     public void setStudent_picture(byte[] student_picture) {
-        student_picture = student_picture;
     }
 
     public String getStudent_hoester_abschluss() {
@@ -134,7 +133,6 @@ public class BewerbungDTO {
     }
 
     public void setUnternehmenName(String unternehmenName) {
-        unternehmenName = unternehmenName;
     }
 
     public Image getUnternehmenLogo() {
@@ -142,7 +140,6 @@ public class BewerbungDTO {
     }
 
     public void setUnternehmenLogo(byte[] unternehmenLogo) {
-        unternehmenLogo = unternehmenLogo;
     }
 
     public BewerbungDTO(){

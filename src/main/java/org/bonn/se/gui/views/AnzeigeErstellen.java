@@ -1,20 +1,27 @@
 package org.bonn.se.gui.views;
 
 
+import com.github.appreciated.material.MaterialTheme;
 import com.vaadin.data.Binder;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteSuggestionProvider;
+import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
+import eu.maxschuster.vaadin.autocompletetextfield.provider.CollectionSuggestionProvider;
+import eu.maxschuster.vaadin.autocompletetextfield.provider.MatchMode;
+import org.bonn.se.control.JobTitelControl;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.*;
 
 public class AnzeigeErstellen extends GridLayout implements View {
 
-    public void setUp() {
+    public void setUp() throws DatabaseException {
 
 
         this.setRows(4);
@@ -38,8 +45,26 @@ public class AnzeigeErstellen extends GridLayout implements View {
         RegistrationTextField titel = new RegistrationTextField("Titel der Anzeige");
         titel.setWidth("600px");
 
-        RegistrationTextField stellenbeschreibung = new RegistrationTextField("Stellenbeschreibung");
-        stellenbeschreibung.setWidth("600px");
+
+        AutocompleteSuggestionProvider suggestionProvider = new CollectionSuggestionProvider(JobTitelControl.getJobTitelList(), MatchMode.CONTAINS, true);
+        AutocompleteTextField field = new AutocompleteTextField();
+        field.setHeight("56px");
+        field.setWidth("600px");
+        field.setDelay(150);
+        field.setMinChars(0);
+        field.withTypeSearch(false);
+        field.withPlaceholder("Stellenbeschreibung");
+        field.setSuggestionProvider(suggestionProvider);
+
+
+
+        NativeSelect<String> jobtitel = new NativeSelect<>("Bitte wählen Sie eine Stellenbeschreibung!",JobTitelControl.getJobTitelList());
+        jobtitel.setHeight("56px");
+        jobtitel.setWidth("600px");
+        jobtitel.setEmptySelectionAllowed(false);
+        jobtitel.addStyleName(MaterialTheme.CARD_0);
+
+
 
         ComboBox<String> ort = new ComboBox<>();
         ort.setPlaceholder("Ort");
@@ -77,8 +102,8 @@ public class AnzeigeErstellen extends GridLayout implements View {
         formGrid.addComponent(titel,0,1,1,1);
         formGrid.setComponentAlignment(titel,Alignment.MIDDLE_CENTER);
 
-        formGrid.addComponent(stellenbeschreibung,0,2,1,2);
-        formGrid.setComponentAlignment(stellenbeschreibung,Alignment.MIDDLE_CENTER);
+        formGrid.addComponent(jobtitel,0,2,1,2);
+        formGrid.setComponentAlignment(jobtitel,Alignment.MIDDLE_CENTER);
 
         formGrid.addComponent(ort,0,3,1,3);
         formGrid.setComponentAlignment(ort,Alignment.MIDDLE_LEFT);
@@ -118,7 +143,7 @@ public class AnzeigeErstellen extends GridLayout implements View {
                 .asRequired("Titel muss vergeben werden!")
                 .bind(StellenanzeigeDTO::getTitel,StellenanzeigeDTO::setTitel);
 
-        binder.forField(stellenbeschreibung)
+        binder.forField(jobtitel)
                 .asRequired("Bitte wählen Sie eine Stellenbeschreibung aus!")
                 .bind(StellenanzeigeDTO::getBeschreibung,StellenanzeigeDTO::setBeschreibung);
 
@@ -171,7 +196,11 @@ public class AnzeigeErstellen extends GridLayout implements View {
         if( unternehmen == null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-            this.setUp();
+            try {
+                this.setUp();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            }
         }
     }
 

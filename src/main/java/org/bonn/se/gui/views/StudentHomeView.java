@@ -4,7 +4,6 @@ package org.bonn.se.gui.views;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;

@@ -7,6 +7,7 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.ImageConverter;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -54,7 +55,7 @@ public class Neugkeiten extends GridLayout {
                                "Online seit "+ day
                               );
                txArea.setReadOnly(true);
-               Image Ulogo = unternehmen.getLogo();
+               Image Ulogo = ImageConverter.convertImagetoMenu(unternehmen.getLogo());
               // Ulogo.setHeight("130px");
                Ulogo.addStyleName("whiteBackground");
                glayout.addComponent(txArea,1,0,1,0);

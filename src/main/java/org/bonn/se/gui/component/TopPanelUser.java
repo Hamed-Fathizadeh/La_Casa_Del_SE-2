@@ -7,35 +7,34 @@ import org.bonn.se.control.LoginControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
-public class TopPanelUser extends HorizontalLayout {
+public class TopPanelUser extends GridLayout {
 
     public TopPanelUser(){
 
-        this.setSizeFull();
+        this.setRows(1);
+        this.setColumns(10);
         this.setStyleName("toppanel");
 
-        GridLayout Topgrid = new GridLayout(6, 1);
-        Topgrid.setMargin(true);
-        Topgrid.setWidthFull();
-        Topgrid.setHeight("180px");
+
+        this.setMargin(false);
+        this.setWidthFull();
+        this.setHeightUndefined();
 
         ThemeResource resource = new ThemeResource("img/RegisterStudent/logo.png");
         Image logo = new Image(null,resource);
 
         logo.setSizeUndefined();
         logo.addStyleName("logo");
-        Topgrid.addComponent(logo,0,0,0,0);
-        Topgrid.setComponentAlignment(logo, Alignment.BOTTOM_LEFT);
-
-//add image
+        this.addComponent(logo,0,0,0,0);
+        this.setComponentAlignment(logo, Alignment.MIDDLE_LEFT);
 
 
-
-        Image profilbild = null;
-        Image firma_logo = null;
+        Image profilbild;
+        Image firma_logo;
 
         MenuBar bar = new MenuBar();
         // MenuBar.MenuItem item1 = bar.addItem("Menü", null);
@@ -43,20 +42,16 @@ public class TopPanelUser extends HorizontalLayout {
         MenuBar.MenuItem item1 = null;
 
         if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            profilbild = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture();
-            profilbild.setHeight(70, Unit.PIXELS);
-            profilbild.setWidth(70, Unit.PIXELS);
+            profilbild = ImageConverter.convertImagetoMenu(((Student)MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture());
             // Topgrid.addComponent(profilbild,4,0,4,0);
             //test
             //   Topgrid.setComponentAlignment(profilbild, Alignment.BOTTOM_RIGHT);
             item1 = bar.addItem(
-                    ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getVorname(),
-                    profilbild.getSource(),
+                    ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getVorname()
+                    ,profilbild.getSource(),
                     null);
         } else if(MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            firma_logo = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo();
-            firma_logo.setHeight(70, Unit.PIXELS);
-            firma_logo.setWidth(70, Unit.PIXELS);
+            firma_logo = ImageConverter.convertImagetoMenu(((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo());
             item1 = bar.addItem(
                     ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname(),
                     firma_logo.getSource(),
@@ -101,13 +96,7 @@ public class TopPanelUser extends HorizontalLayout {
                 LoginControl.logoutUser();
             }
         });
-
-        Topgrid.addComponent(bar,5,0,5,0);
-        Topgrid.setComponentAlignment(bar, Alignment.BOTTOM_CENTER);
-
-        this.addComponent(Topgrid);
-        this.setComponentAlignment(Topgrid, Alignment.TOP_CENTER);
-
+        this.addComponent(bar,9,0,9,0);
+        this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
     }
-
 }

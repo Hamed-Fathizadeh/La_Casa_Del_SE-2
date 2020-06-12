@@ -1,21 +1,15 @@
 package org.bonn.se.gui.window;
 
-import com.vaadin.annotations.StyleSheet;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.exception.BewerbungControl;
-import org.bonn.se.gui.views.StudentHomeView;
-import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
-import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.*;
-
-import java.io.OutputStream;
 
 public class BewerbungWindow extends Window {
 
@@ -49,7 +43,7 @@ public class BewerbungWindow extends Window {
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
 
 
-        Image profilbild = student.getPicture();
+        Image profilbild = ImageConverter.convertImagetoProfil(student.getPicture());
         Label titel = new Label("<h2><b> Bewerbung auf: " + stellenanzeige.getTitel() + "</font></b></h2>", ContentMode.HTML);
         Label vor_nachname = new Label("Vor und Nachname: ");
         Label vor_nachname_data = new Label(student.getVorname()+" "+student.getNachname());

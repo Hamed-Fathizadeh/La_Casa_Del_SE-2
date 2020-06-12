@@ -4,7 +4,6 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 

@@ -1,13 +1,9 @@
 package org.bonn.se.model.dao;
 
 import org.bonn.se.model.objects.dto.BewerbungDTO;
-import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.DeletFile;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

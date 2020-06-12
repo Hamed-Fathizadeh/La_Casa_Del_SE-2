@@ -2,9 +2,9 @@ package org.bonn.se.gui.window;
 
 import com.github.appreciated.material.MaterialTheme;
 import com.vaadin.data.Binder;
+import com.vaadin.data.HasValue;
 import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.FileResource;
 import com.vaadin.server.Page;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
@@ -15,23 +15,19 @@ import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.DatenStudentProfil;
-import org.bonn.se.services.util.ImageUploader;
-import org.bonn.se.services.util.Roles;
-import org.bonn.se.services.util.Views;
+import org.bonn.se.services.util.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
+import org.vaadin.easyuploads.UploadField;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.WizardStep;
 import org.vaadin.teemu.wizards.event.*;
-import java.io.*;
+
 import java.util.ArrayList;
 
 public class RegisterStudentWindow extends Window implements WizardProgressListener {
 
     private Wizard wizard;
-    private final Image image = new Image();
-    private Image image1;
 
 
     public RegisterStudentWindow() {
@@ -115,7 +111,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
     }
 
 
-    private class DatenStep implements WizardStep {
+    private static class DatenStep implements WizardStep {
 
         OrtPlzTextField ort;
         PopUpTextField strasse;
@@ -125,6 +121,8 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         PopUpTextField ausbildung;
         NumeralField mobilnr;
         Student user = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
+        UploadField  uploadField;
+        Image image = ImageConverter.getUnknownProfilImage();
 
 
         @Override
@@ -141,26 +139,28 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
 
             FormLayout form1 = new FormLayout();
-            ImageUploader receiver = new ImageUploader();
-            // Create the upload with a caption and set receiver later
-            Upload upload = new Upload("", receiver);
-            upload.addSucceededListener(receiver);
-            upload.setButtonCaption("Profilbild hochladen");
-            image.setSource(new FileResource(new File("src/main/webapp/VAADIN/themes/demo/images/Unknown.png")));
 
-            upload.addStartedListener(new Upload.StartedListener() {
-                @Override
-                public void uploadStarted(Upload.StartedEvent event) {
+
+            uploadField = new UploadField();
+            uploadField.setDisplayUpload(false);
+            uploadField.setButtonCaption("Profilbild hochladen");
+            uploadField.setClearButtonVisible(false);
+            uploadField.setAcceptFilter("image/*");
+
+
+            uploadField.addValueChangeListener((HasValue.ValueChangeEvent<byte[]> event) -> {
                     form1.removeComponent(image);
-                    image1 = ImageUploader.getImage();
-                    image1.setHeight(150, Unit.PIXELS);
-                    image1.setWidth(150, Unit.PIXELS);
-                    form1.addComponent(image1, 0);
-                    form1.setComponentAlignment(image1, Alignment.MIDDLE_CENTER);
-
-
-                }
+                    byte[] bild = uploadField.getValue();
+                    image = ImageConverter.convertImagetoProfil(bild);
+                    form1.addComponent(image,0);
             });
+
+
+
+
+
+
+
 
 
             form1.setWidth("300px");
@@ -178,8 +178,8 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             image.setHeight("170px");
             image.setWidth("150px");
 
-            form1.addComponents(image, upload, g_datum, mobilnr);
-            form1.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
+            form1.addComponents(image,uploadField, g_datum, mobilnr);
+            //form1.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
 
 
             FormLayout form2 = new FormLayout();
@@ -227,11 +227,8 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                     sOrt = ort.getBundesland().getValue().toString().split(" - ");
                 }
                 Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
-                if(image1 != null) {
-                    student.setPicture(image1);
-                } else {
-                    student.setPicture(image);
-                }
+                student.setPicture(uploadField.getValue());
+                uploadField.clear();
                 student.setAbschluss(abschluss.getValue());
                 student.setKontakt_nr(mobilnr.getValue());
                 student.setAusbildung(ausbildung.getValue());
@@ -242,17 +239,15 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                     adresse.setStrasse(strasse.getValue());
                     adresse.setPlz(ort.getPlz().getValue());
                     adresse.setOrt(sOrt[0]);
-                    student.setAdresse(adresse);
                 }
+                student.setAdresse(adresse);
 
+            try {
+                ProfilDAO.createStudentProfil1(student);
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            }
 
-
-                try {
-                    ProfilDAO.createStudentProfil1(user.getEmail(), ImageUploader.getFile(), g_datum, studiengang.getValue(), mobilnr.getValue()
-                            , strasse.getValue(),ort.getPlz().getValue(), sOrt[0], sOrt[1], ausbildung.getValue(), abschluss.getValue());
-                } catch (DatabaseException e) {
-                    e.printStackTrace();
-                }
                 student.setVorname("Test");
                 UI.getCurrent().getSession().setAttribute(Roles.Student, student);
 

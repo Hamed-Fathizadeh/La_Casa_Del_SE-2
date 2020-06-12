@@ -33,7 +33,8 @@ public class Stellenbeschreibung extends GridLayout implements View {
 
 
         final RichTextArea richTextArea = new RichTextArea();
-        richTextArea.setSizeFull();
+        richTextArea.setWidth("940px");
+        richTextArea.setHeightFull();
 
 
         richTextArea.setValue("<h1>Hallo</h1>\n" + "<p>Hier können Sie ihre Stellenbeschreibung verfassen.</p>");
@@ -78,6 +79,12 @@ public class Stellenbeschreibung extends GridLayout implements View {
                                     } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
                                         ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
                                                 .getStellenanzeigeDTO().setStatus(1);
+                                        try {
+                                            ContainerAnzDAO.setAnzeige();
+                                        } catch (DatabaseException e) {
+                                            e.printStackTrace();
+                                        }
+
                                     }
                                 } else {
                                     if (stellenanzeigeDTO.getStatus() == 3) {
@@ -92,13 +99,11 @@ public class Stellenbeschreibung extends GridLayout implements View {
                                         ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
                                                 .getStellenanzeigeDTO().setStatus(2);
 
-
-                                        try {
-                                            ContainerAnzDAO.setAnzeige();
-
-                                        } catch (DatabaseException e) {
-                                            e.printStackTrace();
-                                        }
+                                            try {
+                                                ContainerAnzDAO.setAnzeige();
+                                            } catch (DatabaseException e) {
+                                                e.printStackTrace();
+                                            }
                                     }
                                 }
                                 StellenbeschreibungConfirmation stellenbeschreibungConfirmation

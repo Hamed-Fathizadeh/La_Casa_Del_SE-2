@@ -14,7 +14,6 @@ import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
@@ -61,6 +60,7 @@ public class MainView extends VerticalLayout implements View {
 //Textfeld Login
         RegistrationTextField userLogin = new RegistrationTextField("E-Mail");
         userLogin.setWidth("310px");
+        userLogin.selectAll();
 
 
 //Textfelt Passwort

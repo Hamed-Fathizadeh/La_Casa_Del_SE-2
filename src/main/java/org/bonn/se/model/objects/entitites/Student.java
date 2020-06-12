@@ -1,10 +1,8 @@
 package org.bonn.se.model.objects.entitites;
 
-import com.vaadin.ui.Image;
-import org.bonn.se.services.util.IllegalException;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Student extends User {
     private int student_id;
@@ -12,7 +10,7 @@ public class Student extends User {
     private String nachname;
     private LocalDate g_datum;
     private String studiengang;
-    private Image picture = null;
+    private byte[] picture = null;
     private String abschluss;
     private String kontakt_nr;
 
@@ -53,11 +51,11 @@ public class Student extends User {
     private String ausbildung;
     Adresse adresse;
 
-    public Image getPicture() {
+    public byte[] getPicture() {
         return picture;
     }
 
-    public void setPicture(Image picture) {
+    public void setPicture(byte[] picture) {
         this.picture = picture;
     }
 
@@ -140,10 +138,8 @@ public class Student extends User {
         if(!(sprachKenntnis.getKenntnis() == null)){
             if(sprachKenntnisList == null) {
                 sprachKenntnisList = new ArrayList<>();
-                sprachKenntnisList.add(sprachKenntnis);
-            } else {
-                sprachKenntnisList.add(sprachKenntnis);
             }
+            sprachKenntnisList.add(sprachKenntnis);
         }
     }
 
@@ -152,10 +148,8 @@ public class Student extends User {
         if(!(itKenntnis.getKenntnis().equals(null))) {
             if(itKenntnisList == null) {
                 itKenntnisList = new ArrayList<>();
-                itKenntnisList.add(itKenntnis);
-            } else {
-                itKenntnisList.add(itKenntnis);
             }
+            itKenntnisList.add(itKenntnis);
         }
     }
 
@@ -209,7 +203,7 @@ public class Student extends User {
                 ", g_datum=" + g_datum +
                 ", studiengang='" + studiengang + '\'' +
                 ", email='" + super.getEmail() + '\'' +
-                ", image=" + picture +
+                ", image=" + Arrays.toString(picture) +
                 ", abschluss='" + abschluss + '\'' +
                 ", mobil_nr='" + kontakt_nr + '\'' +
                 ", taetigkeiten=" + taetigkeiten +

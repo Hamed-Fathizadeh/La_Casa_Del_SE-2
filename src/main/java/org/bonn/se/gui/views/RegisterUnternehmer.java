@@ -13,8 +13,6 @@ import org.bonn.se.control.UserSearch;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanel;
-import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.gui.window.ProfilUnternehmerWindow;
 import org.bonn.se.gui.window.RegisterUnternehmenWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
@@ -22,7 +20,6 @@ import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.OrtService;
 import org.bonn.se.services.util.Roles;
-import org.bonn.se.services.util.Views;
 
 
 public class RegisterUnternehmer extends GridLayout implements View {
@@ -108,8 +105,7 @@ public class RegisterUnternehmer extends GridLayout implements View {
         test.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                ProfilUnternehmerWindow window = new ProfilUnternehmerWindow(null);
-                UI.getCurrent().addWindow(window);
+
             }
         });
         ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
@@ -140,12 +136,11 @@ public class RegisterUnternehmer extends GridLayout implements View {
                         } else {
                             user.setType("C");
 
-                            UserDAO.registerUser(user);
 
                             // UserDAO.registerStudent(student.getEmail(),student.getPasswort(),student.getVorname(),student.getNachname() ,'s');
                             String[] sOrt = {"",""};
 
-                            sOrt = hauptsitz.getValue().toString().split(" - ");
+                            sOrt = hauptsitz.getValue().split(" - ");
 
                             registerButton.setEnabled(false);
                             Unternehmen unternehmen = new Unternehmen();
@@ -154,7 +149,11 @@ public class RegisterUnternehmer extends GridLayout implements View {
                             unternehmen.setNachname(user.getNachname());
                             unternehmen.setPasswort(user.getPasswort());
                             unternehmen.setHauptsitz(sOrt[0]);
+                            unternehmen.setBundesland(sOrt[1]);
                             unternehmen.setCname(user.getCname());
+
+                            UserDAO.registerUser(user);
+
 
                             UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
                             RegisterUnternehmenWindow registerUnternehmenWindow = new RegisterUnternehmenWindow();

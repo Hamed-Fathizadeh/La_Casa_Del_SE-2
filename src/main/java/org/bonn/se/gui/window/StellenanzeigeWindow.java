@@ -10,6 +10,7 @@ import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -20,7 +21,7 @@ public class StellenanzeigeWindow extends Window {
 
 
     private OnOffSwitch onOffSwitch = new OnOffSwitch();
-
+    private Image logo = null;
 
     public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data)  {
         setUp(stellenanzeige,unternehmen_data);
@@ -39,13 +40,17 @@ public class StellenanzeigeWindow extends Window {
         panel.setWidthFull();
 
 
-        GridLayout gridLayout = new GridLayout(5,15);
+        GridLayout gridLayout = new GridLayout(5, 15);
         gridLayout.setSizeFull();
         gridLayout.setMargin(true);
 
-        Image logo = unternehmen_data.getLogo();
+        if (unternehmen_data.getLogo() == null) {
+            logo = ImageConverter.getUnknownProfilImage();
+        } else {
+            logo = ImageConverter.convertImagetoProfil(unternehmen_data.getLogo());
+        }
 
-        Label firmenname = new Label("<b>Firmenname</b>",ContentMode.HTML);
+        Label firmenname = new Label("<b>Unternehmensname</b>",ContentMode.HTML);
         Label branche = new Label("<b>Branche</b>",ContentMode.HTML);
         Label art = new Label("<b>Art der Einstellung:</b>",ContentMode.HTML);
         Label ort= new Label("<b>Ort</b>",ContentMode.HTML);
@@ -54,17 +59,16 @@ public class StellenanzeigeWindow extends Window {
         Label kontakt = new Label("<h3><b><font color=\"blue\">Kontakt</font></b></h3>",ContentMode.HTML);
         Label beginn= new Label("<b>Beginn</b>",ContentMode.HTML);
         Label hauptsitz= new Label("<b>Hauptsitz</b>",ContentMode.HTML);
-        Label gruendungsjahr= new Label("<b>Gründungsjahr</b>",ContentMode.HTML);
-        Label reicheweite = new Label("<b>Reichweite</b>",ContentMode.HTML);
-        Label anzMitarbeiter = new Label("<b>Anzahl der Mitarbeiter</b>",ContentMode.HTML);
         Label ansprechpartner = new Label("<b>Ansprechpartner/in</b>",ContentMode.HTML);
         Label email = new Label("<b>E-Mail</b>",ContentMode.HTML);
         Label kontaktnummer1 = new Label("<b>Kontaktnummer 1</b>",ContentMode.HTML);
-        Label kontaktnummer2 = new Label("<b>Kontaktnummer 2</b>",ContentMode.HTML);
         Label stellenbeschreibung = new Label("<b>Stellenbeschreibung</b>",ContentMode.HTML);
 
 
-        Label titel = new Label("<h2><b>"+stellenanzeige.getTitel()+"</font></b></h3>",ContentMode.HTML);
+        Label titel = new Label("<h2><b>"+stellenanzeige.getTitel()+"</font></b></h3>" ,ContentMode.HTML);
+        Label unternehmensbeschreibung_label = new Label("<h3><b><font color=\"blue\">Informationen über das Unternehmen</font></b></h3>",ContentMode.HTML);
+        Label unternehmensbeschreibung = new Label(unternehmen_data.getDescription(),ContentMode.HTML);
+
         Label firmenname_data = new Label(unternehmen_data.getCname());
         Label branche_data = new Label("Brnache");
         Label art_data = new Label(stellenanzeige.getSuchbegriff());
@@ -72,23 +76,22 @@ public class StellenanzeigeWindow extends Window {
         Label bundesland_data = new Label(stellenanzeige.getBundesland());
         Label beginn_data = new Label(String.valueOf(stellenanzeige.getDatum()));
         Label hauptsitz_data = new Label(stellenanzeige.getHauptsitz());
-        Label gruendungsjahr_data = new Label(String.valueOf(unternehmen_data.getGruendungsjahr()));
-        Label reicheweite_data = new Label(String.valueOf(unternehmen_data.getReichweite()));
-        Label anzMitarbeiter_data = new Label(String.valueOf(unternehmen_data.getMitarbeiteranzahl()));
         Label ansprechpartner_data = new Label(unternehmen_data.getVorname() + " " + unternehmen_data.getNachname());
         Label email_data = new Label(unternehmen_data.getEmail());
         Label kontaktnummer1_data = new Label("Kontaktnummer 1");
-        Label kontaktnummer2_data = new Label("Kontaktnummer 2");
         Label suchbegriff_data = new Label(stellenanzeige.getSuchbegriff());
-        Label beschreibung_data = new Label(stellenanzeige.getBeschreibung());
+        RichTextArea beschreibung_data = new RichTextArea();
+        beschreibung_data.setSizeFull();
+        beschreibung_data.setValue(stellenanzeige.getBeschreibung());
+        beschreibung_data.setReadOnly(true);
 
 
 
 
         gridLayout.addComponent(logo,0,1);
-        gridLayout.addComponent(stellenbeschreibung,0,3);
-        gridLayout.addComponent(firmenname,0,4);
-        gridLayout.addComponent(branche,0,5);
+        gridLayout.addComponent(unternehmensbeschreibung_label,0,2);
+        gridLayout.addComponent(unternehmensbeschreibung,0,3,1,6);
+
         gridLayout.addComponent(art,0,8);
         gridLayout.addComponent(ort,0,9);
         gridLayout.addComponent(bundesland,0,10);
@@ -96,38 +99,31 @@ public class StellenanzeigeWindow extends Window {
 
         gridLayout.addComponent(titel,1,1,4,1);
         gridLayout.addComponent(information,3,2,4,2);
-        gridLayout.addComponent(hauptsitz,3,3);
-        gridLayout.addComponent(gruendungsjahr,3,4);
-        gridLayout.addComponent(reicheweite,3,5);
-        gridLayout.addComponent(anzMitarbeiter,3,6);
+        gridLayout.addComponent(firmenname,3,3);
+        gridLayout.addComponent(branche,3,4);
+        gridLayout.addComponent(hauptsitz,3,5);
         gridLayout.addComponent(kontakt,3,7,4,7);
         gridLayout.addComponent(ansprechpartner,3,8);
         gridLayout.addComponent(email,3,9);
         gridLayout.addComponent(kontaktnummer1,3,10);
-        gridLayout.addComponent(kontaktnummer2,3,11);
 
 
 
-        gridLayout.addComponent(suchbegriff_data,1,3);
-        gridLayout.addComponent(firmenname_data,1,4);
-        gridLayout.addComponent(branche_data,1,5);
+
+
         gridLayout.addComponent(art_data,1,8);
         gridLayout.addComponent(ort_data,1,9);
         gridLayout.addComponent(bundesland_data,1,10);
         gridLayout.addComponent(beginn_data,1,11);
-
-        gridLayout.addComponent(hauptsitz_data,4,3);
-        gridLayout.addComponent(gruendungsjahr_data,4,4);
-        gridLayout.addComponent(reicheweite_data,4,5);
-        gridLayout.addComponent(anzMitarbeiter_data,4,6);
+        gridLayout.addComponent(firmenname_data,4,3);
+        gridLayout.addComponent(branche_data,4,4);
+        gridLayout.addComponent(hauptsitz_data,4,5);
         gridLayout.addComponent(ansprechpartner_data,4,8);
         gridLayout.addComponent(email_data,4,9);
         gridLayout.addComponent(kontaktnummer1_data,4,10);
-        gridLayout.addComponent(kontaktnummer2_data,4,11);
 
 
 
-        beschreibung_data.setContentMode(ContentMode.HTML);
 
         gridLayout.addComponent(beschreibung_data,0,13,4,13);
 

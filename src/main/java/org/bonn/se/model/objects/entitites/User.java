@@ -10,14 +10,25 @@ public class User implements Serializable {
     private String cname;
     private String hauptsitz;
     private String type;
+    private String bundesland;
+
+    public String getBundesland() {
+        return bundesland;
+    }
+
+    public void setBundesland(String bundesland) {
+        this.bundesland = bundesland;
+    }
 
     public String getHauptsitz() {
         return hauptsitz;
     }
 
     public void setHauptsitz(String hauptsitz) {
-        this.hauptsitz = hauptsitz;
+            this.hauptsitz = hauptsitz;
     }
+
+
 
     public String getType() {
         return type;
@@ -73,5 +84,6 @@ public class User implements Serializable {
     public String getNachname() { return nachname; }
 
     public void setNachname(String nachname) { this.nachname = nachname; }
+
 
 }
