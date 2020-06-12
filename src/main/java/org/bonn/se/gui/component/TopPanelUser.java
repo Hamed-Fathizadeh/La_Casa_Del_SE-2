@@ -12,8 +12,6 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 public class TopPanelUser extends GridLayout {
-    Image profilbild;
-    Image firma_logo;
 
     public TopPanelUser(){
 
@@ -43,7 +41,7 @@ public class TopPanelUser extends GridLayout {
         MenuBar.MenuItem item1 = null;
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            profilbild = ImageConverter.convertImagetoMenu(((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture());
+           Image profilbild = ImageConverter.convertImagetoMenu(((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture());
             // Topgrid.addComponent(profilbild,4,0,4,0);
             //test
             //   Topgrid.setComponentAlignment(profilbild, Alignment.BOTTOM_RIGHT);
@@ -52,7 +50,7 @@ public class TopPanelUser extends GridLayout {
                     ,profilbild.getSource(),
                     null);
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            firma_logo = ImageConverter.convertImagetoMenu(((Unternehmen)UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo());
+            Image firma_logo = ImageConverter.convertImagetoMenu(((Unternehmen)UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo());
             item1 = bar.addItem(
                     ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname(),
                     firma_logo.getSource(),

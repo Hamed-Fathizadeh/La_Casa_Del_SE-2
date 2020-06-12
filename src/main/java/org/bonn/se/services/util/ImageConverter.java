@@ -3,6 +3,7 @@ package org.bonn.se.services.util;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.UI;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -41,7 +42,7 @@ public class ImageConverter {
 
         image = new Image(
                 null, new StreamResource(
-                streamSource, "streamedSourceFromByteArray"));
+                streamSource, bild.toString()));
         image.setWidth("150px");
         image.setHeight("150px");
 
@@ -53,6 +54,7 @@ public class ImageConverter {
         if(bild == null ) {
             return getUnknownMenuImage();
         }
+        new Image();
         Image image;
 
         StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
@@ -64,7 +66,7 @@ public class ImageConverter {
 
         image = new Image(
                 null, new StreamResource(
-                streamSource, "streamedSourceFromByteArray"));
+                streamSource, bild.toString()));
         image.setWidth("30px");
         image.setHeight("30px");
 
