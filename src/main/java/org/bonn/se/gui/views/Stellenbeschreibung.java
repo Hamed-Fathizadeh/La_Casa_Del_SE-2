@@ -180,12 +180,15 @@ public class Stellenbeschreibung extends GridLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        if( ( MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)!= null )) {
+
+        if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             this.setUp();
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            UI.getCurrent().getNavigator().getCurrentNavigationState();
+
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.RegisterUnternehmen);
+            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
         }
     }
-
 
 }

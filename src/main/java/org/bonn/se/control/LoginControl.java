@@ -47,27 +47,27 @@ public class LoginControl {
             if ( set.next()) {
 
                 user = new User();
+                user.setVorname(set.getString("vorname"));
+                user.setNachname(set.getString("nachname"));
                 user.setEmail((set.getString(1)));
                 user.setPasswort(set.getString(2));
                 user.setType(set.getString(5));
 
                 if(set.getString(5).equals("C")) {
-                        logoutUser();
                         Unternehmen unternehmen = new Unternehmen();
                         MyUI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
                         unternehmen.setEmail(user.getEmail());
                         unternehmen.setVorname(user.getVorname());
                         unternehmen.setNachname(user.getNachname());
                         unternehmen = ProfilDAO.getUnternehmenProfil(unternehmen);
-                        MyUI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
-System.out.println("Logincontrol "+unternehmen.getDescription());
+
+                        UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
+
                     } else if(set.getString(5).equals("S")) {
-                        Student student = new Student();
-                        //student = ProfilDAO.getStudentTest(user.getEmail());
+                        Student student;
                         student = ProfilDAO.getStudent2(user.getEmail());
 
-                        MyUI.getCurrent().getSession().setAttribute(Roles.Student,student);
-
+                        UI.getCurrent().getSession().setAttribute(Roles.Student,student);
 
 
                      } else {
@@ -99,10 +99,10 @@ System.out.println("Logincontrol "+unternehmen.getDescription());
     }
 
     public static void logoutUser() {
-        VaadinSession vaadinSession = MyUI.getCurrent().getSession();
+        VaadinSession vaadinSession = UI.getCurrent().getSession();
+
         vaadinSession.setAttribute(Roles.Student,null);
         vaadinSession.setAttribute(Roles.Unternehmen,null);
-
         UI.getCurrent().getNavigator().navigateTo(Views.MainView);
     }
 

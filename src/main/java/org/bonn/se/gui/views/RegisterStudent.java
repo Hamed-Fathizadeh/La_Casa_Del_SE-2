@@ -241,11 +241,4 @@ public class RegisterStudent extends GridLayout implements View {
             this.setUp();
     }
 
-  /*  String vnummer;
-    public String getVnummer(){
-        vnummer = new VerifikationNummer().getRandNummer();
-        return vnummer;
-    }
-
-   */
 }

@@ -241,8 +241,13 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
     }
         @Override
         public void enter (ViewChangeListener.ViewChangeEvent event){
-            setUp();
-
+            if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+                this.setUp();
+            } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+                UI.getCurrent().getNavigator().getCurrentNavigationState();
+            } else {
+                UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+            }
         }
 
 }

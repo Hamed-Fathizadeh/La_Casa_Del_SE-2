@@ -10,8 +10,7 @@ import java.io.InputStream;
 
 public class ImageConverter {
 
-    //private static final File menu = new File("src/main/resources/Unknown_profil.png");
-    //private static final File profil = new File("src/main/resources/Unknown.png");
+
     private static final FileResource menu = new FileResource(new File("src/main/resources/Unknown_profil.png"));
     private static final FileResource profil = new FileResource(new File("src/main/resources/Unknown.png"));
 
@@ -27,6 +26,10 @@ public class ImageConverter {
 
 
     public static Image convertImagetoProfil(byte[] bild) {
+
+        if(bild == null ) {
+            return getUnknownProfilImage();
+        }
         Image image;
 
         StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
@@ -46,6 +49,10 @@ public class ImageConverter {
     }
 
     public static Image convertImagetoMenu(byte[] bild) {
+
+        if(bild == null ) {
+            return getUnknownMenuImage();
+        }
         Image image;
 
         StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {

@@ -1,12 +1,12 @@
 package org.bonn.se.gui.window;
 
 import com.vaadin.data.HasValue;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.bonn.se.control.UnternehmenDescriptionControl;
 import org.bonn.se.gui.component.OrtPlzTextField;
 import org.bonn.se.gui.component.PlaceHolderField;
 import org.bonn.se.gui.component.PopUpTextField;
-import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Unternehmen;
@@ -22,7 +22,6 @@ import org.vaadin.teemu.wizards.event.*;
 public class RegisterUnternehmenWindow extends Window implements WizardProgressListener {
 
     private Wizard wizard;
-    Unternehmen unternehmen =(Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
 
     public RegisterUnternehmenWindow() {
         setUp();
@@ -46,7 +45,6 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
         wizard.addListener(this);
         wizard.addStep(new WizardStepRegisterSuccess(), "Erfolgreich");
         wizard.addStep(new DatenStep(), "Daten");
-       // wizard.addStep(new AllgemeinStep(), "Allgemeine Daten");
         wizard.addStep(new BeschreibungStep(), "Beschreibung");
         wizard.addStep(new WizardStepFertig(),"Fertig");
         wizard.getBackButton().setVisible(false);
@@ -69,7 +67,8 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
     public void wizardCompleted(WizardCompletedEvent wizardCompletedEvent) {
         wizard.setVisible(false);
         this.close();
-        MyUI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+        UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,null);
+        UI.getCurrent().getNavigator().navigateTo(Views.MainView);
     }
 
     @Override
@@ -83,15 +82,15 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
         } ;
 
         ConfirmDialog.setFactory(df);
-        ConfirmDialog.show(MyUI.getCurrent(), "Profilvervollständigung wirklich abbrechen und zum Login?",
+        ConfirmDialog.show(UI.getCurrent(), "Profilvervollständigung wirklich abbrechen und zum Login?",
                 new ConfirmDialog.Listener() {
 
                     public void onClose(ConfirmDialog dialog) {
                         if (dialog.isConfirmed()) {
                             wizard.setVisible(false);
                             RegisterUnternehmenWindow.this.close();
-                            MyUI.getCurrent().getSession().setAttribute(Roles.Unternehmen,null);
-                            MyUI.getCurrent().getNavigator().navigateTo(Views.MainView);
+                            UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,null);
+                            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
                         }
                     }
                 });
@@ -181,10 +180,10 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
                 sOrt = ort.getBundesland().getValue().toString().split(" - ");
             }
 
-            unternehmen.setLogo(uploadField.getValue());
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setLogo(uploadField.getValue());
             uploadField.clear();
-            unternehmen.setKontaktnummer(kontaktnummer.getValue());
-            unternehmen.setBranche(branche.getValue());
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setKontaktnummer(kontaktnummer.getValue());
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setBranche(branche.getValue());
 
             Adresse adresse = new Adresse();
 
@@ -193,16 +192,14 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
                 adresse.setPlz(ort.getPlz().getValue());
                 adresse.setOrt(sOrt[0]);
             }
-            unternehmen.setAdresse(adresse);
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setAdresse(adresse);
 
             try {
-                ProfilDAO.createUnternehmenProfil(unternehmen);
+                ProfilDAO.createUnternehmenProfil( ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)));
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
 
-
-            UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
 
             return true;
         }
@@ -247,7 +244,7 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
 
             UnternehmenDescriptionControl unternehmenDescriptionControl = UnternehmenDescriptionControl.getInstance();
             try {
-                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setDescription(richTextArea.getValue());
+                ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setDescription(richTextArea.getValue());
                 unternehmenDescriptionControl.setDescription();
             } catch (DatabaseException e) {
                 e.printStackTrace();
