@@ -7,6 +7,10 @@ import com.vaadin.ui.*;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.dao.UserDAO;
+import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
@@ -117,6 +121,32 @@ public class Settings  extends VerticalLayout implements View {
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
                                     //SQL-BEFEHL
+                                    if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null){
+                                        Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
+                                        try {
+                                            UserDAO.deleteUser(student.getEmail());
+                                        } catch (DatabaseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    else{
+                                       Unternehmen unternehmen= (Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
+                                        try {
+                                            UserDAO.deleteUser(unternehmen.getEmail());
+                                        } catch (DatabaseException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+
+
+
+                                    Window subWindow = new Window("Löschung Ihres Kontos");
+                                    VerticalLayout subContent = new VerticalLayout();
+                                    subWindow.setContent(subContent);
+                                    subContent.addComponent(new Label("Ihr Konto wurde erfolgreich gelöscht!"));
+                                    subWindow.center();
+                                    UI.getCurrent().addWindow(subWindow);
+
 
                                     LoginControl.logoutUser();
                                 }
