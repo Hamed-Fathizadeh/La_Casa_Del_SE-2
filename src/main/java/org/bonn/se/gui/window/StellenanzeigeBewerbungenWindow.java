@@ -39,8 +39,7 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         mainGridLayout.setSizeFull();
         mainGridLayout.setMargin(true);
 
-        mainGridLayout.addComponent(back,0,0);
-        mainGridLayout.setComponentAlignment(back, Alignment.TOP_RIGHT);
+
 
         this.addFocusListener(new FieldEvents.FocusListener() {
             public void focus(FieldEvents.FocusEvent event) {
@@ -65,7 +64,7 @@ public class StellenanzeigeBewerbungenWindow extends Window {
  //add TabSheet
         TabSheet tabSheet = new TabSheet();
         tabSheet.setHeight("700px");
-        tabSheet.setWidth("1500px");
+        tabSheet.setWidth("1000px");
         tabSheet.addStyleName(ValoTheme.TABSHEET_FRAMED);
         tabSheet.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
 
@@ -76,6 +75,9 @@ public class StellenanzeigeBewerbungenWindow extends Window {
                 mainGridLayout.addComponent(tabSheet,0,1);
 
                 mainGridLayout.setComponentAlignment(tabSheet, Alignment.TOP_CENTER);
+
+                mainGridLayout.addComponent(back,0,0);
+                mainGridLayout.setComponentAlignment(back, Alignment.TOP_RIGHT);
 
             }
         });

@@ -96,10 +96,10 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             UI.getCurrent().addWindow(subWindow);
         }else{
                 BewerbungDTO bw = selection.getValue();
-                if(bw != null) {
+
                     BewerbungWindow bewerbungWindow = new BewerbungWindow(null, "Unternehmen", bw);
                     UI.getCurrent().addWindow(bewerbungWindow);
-                }
+
 
         }
         });
