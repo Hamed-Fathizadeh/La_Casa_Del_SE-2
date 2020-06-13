@@ -39,6 +39,9 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         mainGridLayout.setSizeFull();
         mainGridLayout.setMargin(true);
 
+        mainGridLayout.addComponent(back,0,0);
+        mainGridLayout.setComponentAlignment(back, Alignment.TOP_RIGHT);
+
         this.addFocusListener(new FieldEvents.FocusListener() {
             public void focus(FieldEvents.FocusEvent event) {
 
@@ -69,10 +72,9 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         tabSheet.addTab(bewerbungen,"Alle");
         tabSheet.addTab(bewerbungenMakiert,"Markierte");
                 mainGridLayout.removeAllComponents();
-                mainGridLayout.addComponent(back,0,0);
+
                 mainGridLayout.addComponent(tabSheet,0,1);
 
-                mainGridLayout.setComponentAlignment(back, Alignment.TOP_RIGHT);
                 mainGridLayout.setComponentAlignment(tabSheet, Alignment.TOP_CENTER);
 
             }

@@ -1,6 +1,8 @@
 package org.bonn.se.gui.window;
 
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
@@ -60,8 +62,9 @@ public class BewerbungWindow extends Window {
         profilbild = ImageConverter.convertImagetoProfil(student.getPicture());
         if(userType.equals("Student")) {
             Label titel = new Label("<h2><b> Bewerbung auf: " + stellenanzeige.getTitel() + "</font></b></h2>", ContentMode.HTML);
-            mainGridLayout.setComponentAlignment(titel, Alignment.TOP_CENTER);
+
             mainGridLayout.addComponent(titel, 0, 1, 5, 1);
+            mainGridLayout.setComponentAlignment(titel, Alignment.TOP_CENTER);
         }
         Label vor_nachname = new Label("Vor und Nachname: ");
         Label vor_nachname_data = new Label(student.getVorname()+" "+student.getNachname());
@@ -201,6 +204,7 @@ public class BewerbungWindow extends Window {
             Button downloadLebnslauf = new Button("Lebenslauf Herunterladen");
             Button loeschen = new Button("Bewerbung Löschen");
             Button markieren = new Button("Bewerbung Markieren");
+            markieren.setSizeFull();
 
 
 
@@ -246,6 +250,24 @@ public class BewerbungWindow extends Window {
                     BewerbungWindow.this.close();
 
 
+
+                }
+            });
+
+            if(bewerbung != null) {
+                try {
+
+                    StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID());
+                    FileDownloader fileDownloader = new FileDownloader(myResource);
+                    fileDownloader.extend(downloadLebnslauf);
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            downloadLebnslauf.addClickListener(new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
 
                 }
             });
