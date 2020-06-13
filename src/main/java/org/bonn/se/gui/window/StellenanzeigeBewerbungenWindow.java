@@ -24,6 +24,9 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         this.setResizable(false);
         this.setClosable(false);
 
+        Panel panel = new Panel();
+        panel.setWidthFull();
+
         Button back = new Button("Zurück");
 
         back.addClickListener(new Button.ClickListener() {
@@ -53,13 +56,9 @@ public class StellenanzeigeBewerbungenWindow extends Window {
 
         ContainerLetztenBewerbungen containerBewerbungenMakiert  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungenMakiert.loadByStellenAnzeigeID("Makiert",stellenanzeige.getId());
-        Bewerbungen<BewerbungDTO> bewerbungenMakiert = new Bewerbungen(containerBewerbungen,"Unternehmen");
+        Bewerbungen<BewerbungDTO> bewerbungenMakiert = new Bewerbungen(containerBewerbungenMakiert,"Unternehmen");
         bewerbungenMakiert.setHeightMode(HeightMode.UNDEFINED);
         bewerbungenMakiert.setWidthFull();
-
-
-
-
 
  //add TabSheet
         TabSheet tabSheet = new TabSheet();
@@ -83,7 +82,7 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         });
 
 
-
+        panel.setContent(mainGridLayout);
         this.setContent(mainGridLayout);
 
 

@@ -8,6 +8,7 @@ import org.bonn.se.control.AnzStatusControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
@@ -38,7 +39,6 @@ public class StellenanzeigeWindow extends Window {
 
         Panel panel = new Panel();
         panel.setWidthFull();
-
 
         GridLayout gridLayout = new GridLayout(5, 15);
         gridLayout.setSizeFull();
@@ -128,6 +128,7 @@ public class StellenanzeigeWindow extends Window {
         gridLayout.addComponent(beschreibung_data,0,13,4,13);
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
+
             Button bewerben = new Button("Bewerben");
             Button back = new Button("Zurück zu Ergebnissen");
 
@@ -138,9 +139,13 @@ public class StellenanzeigeWindow extends Window {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
 
-                    StellenanzeigeWindow.this.close();
-                    BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige,"Student", null);
-                    UI.getCurrent().addWindow(bewerbungWindow);
+                    if( ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).hasLebenslauf()) {
+                        StellenanzeigeWindow.this.close();
+                        BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige, "Student", null);
+                        UI.getCurrent().addWindow(bewerbungWindow);
+                    }else{
+                        UI.getCurrent().addWindow(new ConfirmationWindow("Um dich zu bewerben musst du ein Lebenslauf in deine Profil hinterlegen!"));
+                    }
                 }
             });
 

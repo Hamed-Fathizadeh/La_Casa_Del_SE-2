@@ -53,7 +53,6 @@ public class BewerbungWindow extends Window {
             System.out.println("bewWind hier1");
         }else {
             try {
-                System.out.println("bewWind"+bewerbung.getEmailStudent());
                 student = ProfilDAO.getStudent2(bewerbung.getEmailStudent());
             } catch (DatabaseException e) {
                 e.printStackTrace();

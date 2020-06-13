@@ -21,14 +21,6 @@ public class Student extends User {
     private String ausbildung;
     Adresse adresse;
 
-    public byte[] getLebenslauf() {
-        return lebenslauf;
-    }
-
-    public void setLebenslauf(byte[] lebenslauf) {
-        this.lebenslauf = lebenslauf;
-    }
-
     public Student() {
         super();
         setVorname(vorname);
@@ -41,9 +33,24 @@ public class Student extends User {
         setTaetigkeitenListe(taetigkeiten);
         setItKenntnisList(itKenntnisList);
         setSprachKenntnisList(sprachKenntnisList);
+        setLebenslauf(lebenslauf);
     }
 
+    public byte[] getLebenslauf() {
+        return lebenslauf;
+    }
 
+    public void setLebenslauf(byte[] lebenslauf) {
+        this.lebenslauf = lebenslauf;
+    }
+
+    public boolean hasLebenslauf(){
+        if(lebenslauf == null){
+            return false;
+        }else{
+            return true;
+        }
+    }
     public int getStudent_id() {
         return student_id;
     }
@@ -198,6 +205,7 @@ public class Student extends User {
         public void setNiveau(String niveau) { this.niveau = niveau; }
     }
 
+
     @Override
     public String toString() {
         return "Student{" +
@@ -206,10 +214,11 @@ public class Student extends User {
                 ", nachname='" + nachname + '\'' +
                 ", g_datum=" + g_datum +
                 ", studiengang='" + studiengang + '\'' +
-                ", email='" + super.getEmail() + '\'' +
-                ", image=" + Arrays.toString(picture) +
+                ", picture=" + Arrays.toString(picture) +
+                ", lebenslauf=" + Arrays.toString(lebenslauf) +
                 ", abschluss='" + abschluss + '\'' +
-                ", mobil_nr='" + kontakt_nr + '\'' +
+                ", kontakt_nr='" + kontakt_nr + '\'' +
+                ", benachrichtigung=" + benachrichtigung +
                 ", taetigkeiten=" + taetigkeiten +
                 ", sprachKenntnisList=" + sprachKenntnisList +
                 ", itKenntnisList=" + itKenntnisList +
@@ -217,8 +226,4 @@ public class Student extends User {
                 ", adresse=" + adresse +
                 '}';
     }
-
-
-
-
 }

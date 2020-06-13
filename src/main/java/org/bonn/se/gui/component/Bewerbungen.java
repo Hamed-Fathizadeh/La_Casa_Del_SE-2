@@ -95,10 +95,9 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             // Open it in the UI
             UI.getCurrent().addWindow(subWindow);
         }else{
-                BewerbungDTO bw = selection.getValue();
-
-                    BewerbungWindow bewerbungWindow = new BewerbungWindow(null, "Unternehmen", bw);
-                    UI.getCurrent().addWindow(bewerbungWindow);
+                 BewerbungDTO bw = selection.getValue();
+                 BewerbungWindow bewerbungWindow = new BewerbungWindow(null, "Unternehmen", bw);
+                 UI.getCurrent().addWindow(bewerbungWindow);
 
 
         }
