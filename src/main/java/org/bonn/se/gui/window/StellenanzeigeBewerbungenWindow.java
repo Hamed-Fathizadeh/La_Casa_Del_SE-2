@@ -8,6 +8,7 @@ import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
+import org.bonn.se.services.util.Views;
 
 public class StellenanzeigeBewerbungenWindow extends Window {
 
@@ -21,7 +22,18 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         this.setHeight("90%");
         this.setModal(true);
         this.setResizable(false);
-        this.setClosable(true);
+        this.setClosable(false);
+
+        Button back = new Button("Zurück");
+
+        back.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                StellenanzeigeBewerbungenWindow.this.close();
+                UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+
+            }
+        });
 
         GridLayout mainGridLayout = new GridLayout(1, 4);
         mainGridLayout.setSizeFull();
@@ -35,7 +47,6 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"Unternehmen");
         bewerbungen.setHeightMode(HeightMode.UNDEFINED);
         bewerbungen.setWidthFull();
-
 
 
         ContainerLetztenBewerbungen containerBewerbungenMakiert  = ContainerLetztenBewerbungen.getInstance();
@@ -58,8 +69,10 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         tabSheet.addTab(bewerbungen,"Alle");
         tabSheet.addTab(bewerbungenMakiert,"Markierte");
                 mainGridLayout.removeAllComponents();
+                mainGridLayout.addComponent(back,0,0);
                 mainGridLayout.addComponent(tabSheet,0,1);
 
+                mainGridLayout.setComponentAlignment(back, Alignment.TOP_RIGHT);
                 mainGridLayout.setComponentAlignment(tabSheet, Alignment.TOP_CENTER);
 
             }

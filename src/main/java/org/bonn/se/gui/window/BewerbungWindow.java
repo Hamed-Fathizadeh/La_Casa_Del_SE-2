@@ -1,5 +1,6 @@
 package org.bonn.se.gui.window;
 
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
@@ -226,10 +227,11 @@ public class BewerbungWindow extends Window {
 
 
             mainGridLayout.addComponent(downloadLebnslauf, 5, 15);
-            mainGridLayout.addComponent(markieren, 4, 15);
-            mainGridLayout.addComponent(loeschen, 3, 15);
+            mainGridLayout.addComponent(markieren, 4, 0);
+            mainGridLayout.addComponent(loeschen, 4, 15);
             mainGridLayout.addComponent(titel, 0, 1, 5, 1);
             mainGridLayout.setComponentAlignment(titel, Alignment.TOP_CENTER);
+            mainGridLayout.setComponentAlignment(markieren, Alignment.TOP_RIGHT);
 
             markieren.addClickListener(new Button.ClickListener() {
                 @Override
