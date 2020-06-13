@@ -413,7 +413,8 @@ public class ProfilDAO extends AbstractDAO{
                 Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"));
                 student.setAdresse(adresse);
                 student.setPicture(set.getBytes("picture"));
-                //student.setLebenslauf(set.getBytes("lebenslauf"));
+                //nur um zu checken ob der student einen lebenslauf hochgeladen hat
+                student.setHasLebenslauf(set.getBytes("lebenslauf") != null);
 
             }
         } catch (SQLException  throwables) {

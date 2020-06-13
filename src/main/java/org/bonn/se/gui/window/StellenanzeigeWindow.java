@@ -138,7 +138,6 @@ public class StellenanzeigeWindow extends Window {
             bewerben.addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-
                     if( ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).hasLebenslauf()) {
                         StellenanzeigeWindow.this.close();
                         BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige, "Student", null);

@@ -19,6 +19,7 @@ public class Student extends User {
     private  ArrayList<SprachKenntnis> sprachKenntnisList =  new  ArrayList<SprachKenntnis>();
     private  ArrayList<ITKenntnis> itKenntnisList = new  ArrayList<ITKenntnis>();
     private String ausbildung;
+    private boolean hasLebenslauf;
     Adresse adresse;
 
     public Student() {
@@ -45,11 +46,11 @@ public class Student extends User {
     }
 
     public boolean hasLebenslauf(){
-        if(lebenslauf == null){
-            return false;
-        }else{
-            return true;
-        }
+        return hasLebenslauf;
+    }
+
+    public void setHasLebenslauf(boolean hasLebenslauf){
+        this.hasLebenslauf = hasLebenslauf;
     }
     public int getStudent_id() {
         return student_id;
