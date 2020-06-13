@@ -2,10 +2,7 @@ package org.bonn.se.gui.component;
 
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.grid.HeightMode;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.SingleSelect;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenanzeigeWindow;
 import org.bonn.se.model.dao.UserDAO;
@@ -16,6 +13,8 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -28,8 +27,10 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
         this.setHeightMode(HeightMode.UNDEFINED);
         this.addStyleName("AnzeigeUnternehmen");
         this.setSelectionMode(SelectionMode.SINGLE);
+        this.setCaption("Treffer: "+ container.getAnzahl());
+
         if(!str.equals("Student")) {
-            this.setWidth("100%");
+            this.setWidth("150%");
         }else{
             this.setWidth("800px");
         }
@@ -85,9 +86,12 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
         ThemeResource resource3 = new ThemeResource("img/Anzeigen/orange.png");
         Image orange = new Image(null, resource3);
         orange.setDescription("Entwurf");
-
+        String day ="";
+        long div;
         if(str.equals("Student")) {
-            this.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Unternehmen");
+            this.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Logo");
+            this.addColumn(StellenanzeigeDTO::getFirmenname).setCaption("Unternehmen");
+            this.addColumn(StellenanzeigeDTO::getZeitstempel).setCaption("Online seit");
         }
         this.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
         this.addColumn(StellenanzeigeDTO::getStandort).setCaption("Ort");
@@ -97,6 +101,9 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
             this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status");
         }
+
+
+
     }
  }
 

@@ -13,6 +13,8 @@ import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.sql.*;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 
 
@@ -30,6 +32,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         this.setSelectionMode(SelectionMode.SINGLE);
         this.setWidth("900px");
         this.setHeight("100%");
+        this.setCaption("Treffer: "+ container.getAnzahl());
 
 
         // Allow column reordering
@@ -121,7 +124,11 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         ratingStars.setMaxValue(5);
 
         if(userType.equals("Student")) {
-            this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Unternehmen");
+            this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Logo");
+            this.addColumn(BewerbungDTO::getUnternehmenName).setCaption("Unternehmen").setWidth(150);
+            this.addColumn(BewerbungDTO::getTitel).setCaption("Titel");
+            this.addColumn(BewerbungDTO::getDatum).setCaption("Beginn");
+            this.addColumn(Be -> (Be.getStatus() == 1 ? "gesendet" : Be.getStatus() == 2 ? "abgelehnt" :  "gesendet")).setCaption("Status");
             this.addComponentColumn(p -> {
                 RatingStars rating = new RatingStars();
                 rating.setMaxValue(5);
@@ -129,9 +136,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 rating.setReadOnly(true);
                 return rating;
             }).setCaption("Bewertung");
-            this.addColumn(BewerbungDTO::getTitel).setCaption("Titel");
-            this.addColumn(BewerbungDTO::getDatum).setCaption("Beginn");
-            this.addColumn(Be -> (Be.getStatus() == 1 ? "gesendet" : Be.getStatus() == 2 ? "abgelehnt" :  "gesendet")).setCaption("Status");
         }else{
             this.addComponentColumn(BewerbungDTO::getStudent_picture).setCaption("Bild");
             this.addColumn(BewerbungDTO::getStudent_vorname).setCaption("Vorname");
@@ -140,8 +144,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
             this.addComponentColumn(Bew -> (Bew.isBewerbung_markiert() ? new Image(null, resource4) : null)).setCaption("Markiert");
-
-
 
         }
     }

@@ -237,6 +237,7 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",container);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
+        gAnzeigen.setWidth("1000px");
         GridAnzeig = gAnzeigen;
 
     }
