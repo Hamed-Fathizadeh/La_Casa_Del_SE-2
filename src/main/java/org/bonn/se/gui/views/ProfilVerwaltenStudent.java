@@ -194,7 +194,7 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
         this.addComponent(bearbeitenButton,8,2,8,2);
         this.addComponent(fertigButton,9,2,9,2);
 
-        student.getTaetigkeitenListe().size();
+        student.getTaetigkeiten().size();
 
         for (int i = 0; i <= 9; i++) {
             gridLayout.setComponentAlignment(gridLayout.getComponent(0,i),Alignment.MIDDLE_CENTER);

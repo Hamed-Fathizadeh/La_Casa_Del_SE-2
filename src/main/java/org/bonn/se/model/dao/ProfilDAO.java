@@ -34,6 +34,7 @@ public class ProfilDAO extends AbstractDAO{
                 + "ausbildung = ?,"
                 + "kontakt_nr = ?,"
                 + "picture = ?,"
+                + "lebenslauf = ? ,"
                 + "hoester_abschluss = ?"
                 + "WHERE email = ?;" +
                 "INSERT INTO lacasa.tab_adresse VALUES(DEFAULT,?,?,?,?,?);";
@@ -41,7 +42,7 @@ public class ProfilDAO extends AbstractDAO{
         try {
 
             statement.setBytes(5,student.getPicture());
-
+            statement.setBytes(6,student.getLebenslauf());;
             if (String.valueOf(student.getG_datum()).equals("null")) {
                 assert statement != null;
                 statement.setDate(1,null);
@@ -55,22 +56,22 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(2,student.getStudiengang());
             statement.setString(3,student.getAusbildung());
             statement.setString(4,student.getKontakt_nr());
-            statement.setString(6,student.getAbschluss());
-            statement.setString(7,student.getEmail());
-            statement.setString(8,student.getAdresse().getStrasse());
+            statement.setString(7,student.getAbschluss());
+            statement.setString(8,student.getEmail());
+            statement.setString(9,student.getAdresse().getStrasse());
             if(!(student.getAdresse().getPlz() == null)) {
-                statement.setInt(9, Integer.parseInt(student.getAdresse().getPlz()));
+                statement.setInt(10, Integer.parseInt(student.getAdresse().getPlz()));
             } else {
-                statement.setBigDecimal(9,null);
+                statement.setBigDecimal(10,null);
             }
             if(!(student.getAdresse().getOrt() == null) || !(student.getAdresse().getBundesland() == null)) {
-                statement.setString(10, student.getAdresse().getOrt());
-                statement.setString(11,student.getAdresse().getBundesland());
+                statement.setString(11, student.getAdresse().getOrt());
+                statement.setString(12,student.getAdresse().getBundesland());
             } else {
-                statement.setNull(10, Types.VARCHAR);
                 statement.setNull(11, Types.VARCHAR);
+                statement.setNull(12, Types.VARCHAR);
             }
-            statement.setString(12,student.getEmail());
+            statement.setString(13,student.getEmail());
             statement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -86,7 +87,7 @@ public class ProfilDAO extends AbstractDAO{
     public static void createStudentProfil2(Student student) throws DatabaseException {
         try {
 
-            for (Taetigkeit taetigkeit: student.getTaetigkeitenListe()) {
+            for (Taetigkeit taetigkeit: student.getTaetigkeiten()) {
 
 
                 String sql = "INSERT INTO lacasa.tab_taetigkeiten VALUES(DEFAULT,?,?,?,(Select tab_student.student_id FROM lacasa.tab_student WHERE email = \'"+ student.getEmail() +"\'));";

@@ -122,9 +122,9 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         PopUpTextField studiengang;
         PopUpTextField ausbildung;
         NumeralField mobilnr;
-        Student user = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
         UploadField  uploadField;
         Image image = ImageConverter.getUnknownProfilImage();
+        UploadField lebenslauf;
 
 
         @Override
@@ -179,8 +179,11 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
             image.setHeight("170px");
             image.setWidth("150px");
+            lebenslauf = new UploadField();
+            lebenslauf.setButtonCaption("Lebenslauf hochladen");
 
-            form1.addComponents(image,uploadField, g_datum, mobilnr);
+
+            form1.addComponents(image,uploadField, g_datum, mobilnr,lebenslauf);
             //form1.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
 
 
@@ -230,6 +233,8 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                 Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
                 student.setPicture(uploadField.getValue());
                 uploadField.clear();
+                student.setLebenslauf(lebenslauf.getValue());
+                lebenslauf.clear();
                 student.setAbschluss(abschluss.getValue());
                 student.setKontakt_nr(mobilnr.getValue());
                 student.setAusbildung(ausbildung.getValue());
@@ -418,7 +423,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                     binder.writeBeanIfValid(taetigkeit);
                     taetigkeitArrayList.add(taetigkeit);
 
-                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setTaetigkeitenListe(taetigkeitArrayList);
+                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setTaetigkeiten(taetigkeitArrayList);
 
                     try {
                         ProfilDAO.createStudentProfil2((Student) UI.getCurrent().getSession().getAttribute(Roles.Student));

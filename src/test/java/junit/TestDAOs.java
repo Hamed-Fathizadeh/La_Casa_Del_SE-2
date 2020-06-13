@@ -174,8 +174,27 @@ public class TestDAOs {
         Assert.assertEquals(unternehmen.getAdresse().getPlz(),unternehmen.getAdresse().getPlz());
         Assert.assertEquals(unternehmen.getAdresse().getStrasse(),unternehmen.getAdresse().getStrasse());
         Assert.assertTrue(actual.getLogo() == null);
-
         UserDAO.deleteUser(unternehmen.getEmail());
 
     }
+    @Test
+    public void checkStudentProfil2() throws DatabaseException {
+        Student student = userTestFactory.getProfilStudent();
+        UserDAO.registerUser(student);
+        ProfilDAO.createStudentProfil1(student);
+        ProfilDAO.createStudentProfil2(student);
+        Student actual = ProfilDAO.getStudent2(student.getEmail());
+
+        Assert.assertEquals(student.getTaetigkeit().getTaetigkeitName(),actual.getTaetigkeit().getTaetigkeitName());
+        Assert.assertEquals(student.getTaetigkeit().getBeginn(),actual.getTaetigkeit().getBeginn());
+        Assert.assertEquals(student.getTaetigkeit().getEnde(),actual.getTaetigkeit().getEnde());
+
+
+
+
+        UserDAO.deleteUser(student.getEmail());
+
+    }
+
+
 }

@@ -2,6 +2,7 @@ package junit.util;
 
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 
@@ -47,7 +48,13 @@ public class UserTestFactory {
 
         student.setAbschluss("Diplom");
         student.setStudiengang(randomString.nextString());
-
+        for (int i = 0; i < 4; i++) {
+            Taetigkeit taetigkeit = new Taetigkeit();
+            taetigkeit.setTaetigkeitName(randomString.nextString());
+            taetigkeit.setBeginn(randomString.nextDate());
+            taetigkeit.setEnde(randomString.nextDate());
+            student.setTaetigkeit(taetigkeit);
+        }
         System.out.println(student.toString());
 
 
@@ -108,16 +115,7 @@ public class UserTestFactory {
         return unternehmen;
     }
 
-    public Unternehmen getProfilUnternehmenWithoutBranche() throws DatabaseException {
-        unternehmen = registerUnternehmen();
-        unternehmen.setKontaktnummer(String.valueOf(randomString.nextInt()));
 
-//      Adresse
-        Adresse adresse = new Adresse();
-
-        unternehmen.setAdresse(adresse);
-        return unternehmen;
-    }
 
 
 
