@@ -29,6 +29,14 @@ public class BewerbungDTO {
     private String student_nachname;
     private boolean bewerbung_markiert;
 
+    public Image getStudent_picture_klein() {
+        Image res = student_picture;
+        res.setWidth("50%");
+        res.setHeight("50%");
+        return res;
+    }
+
+
     public boolean isBewerbung_markiert() {
         return bewerbung_markiert;
     }
@@ -178,7 +186,7 @@ public class BewerbungDTO {
         this.student_ausbildung = student_ausbildung;
         this.student_kontakt_nr = student_kontakt_nr;
         this.student_benachrichtigung = student_benachrichtigung;
-        this.student_picture = ImageConverter.convertImagetoProfil(student_picture);
+        this.student_picture = ImageConverter.convertImagetoMenu(student_picture);
         this.student_hoester_abschluss = student_hoester_abschluss;
         this.student_vorname = student_vorname;
         this.student_nachname = student_nachname;
