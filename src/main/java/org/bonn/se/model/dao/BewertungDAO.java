@@ -35,15 +35,15 @@ public class BewertungDAO extends AbstractDAO {
             set = statement.executeQuery("SELECT * "
                     + "FROM lacasa.tab_bewertung "
                     + "WHERE EXISTS (SELECT student_id, firmenname, hauptsitz FROM lacasa.tab_student, lacasa.tab_unternehmen"
-                    + "WHERE lacasa.tab_student.student_id = lacasa.tab_bewertung.student.id"
+                    + "WHERE lacasa.tab_student.student_id = lacasa.tab_bewertung.student_id"
                     + "AND lacasa.tab_unternehmen.firmenname = lacasa.tab_bewertung.firmenname"
                     + "AND lacasa.tab_unternehmen.hauptsitz = lacasa.tab.bewertung.hauptsitz"
-                    + "AND upper(lacasa.tab_unternehmen.firmenname) = '" + bewerbung.getUnternehmenName().toUpperCase() + "'"
-                    + "AND upper(lacasa.tab_unternehmen.hauptsitz) = '" + bewerbung.getUnternehmenHauptsitz().toUpperCase() + "'"
-                    + "AND lacasa.tab_student.student_id =  '" + student.getStudent_id() + "' ) ");
+                    + "AND lacasa.tab_unternehmen.firmenname = \'" + bewerbung.getUnternehmenName() + "\'"
+                    + "AND lacasa.tab_unternehmen.hauptsitz = \'" + bewerbung.getUnternehmenHauptsitz() + "\'"
+                    + "AND lacasa.tab_student.student_id =  \'" + student.getStudent_id() + "\' ) ");
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
-            //throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
 
         }
         try {
@@ -71,14 +71,14 @@ public class BewertungDAO extends AbstractDAO {
                 } finally {
                     JDBCConnection.getInstance().closeConnection();
                 }
-            } else{
-                Window subWindow = new Window("Bewertung");
-                VerticalLayout subContent = new VerticalLayout();
-                subWindow.setContent(subContent);
-                subContent.addComponent(new Label("Sie haben bereits eine Bewertung abgegeben! Eine neue Bewertung ist nicht möglich!"));
-                subWindow.center();
-                UI.getCurrent().addWindow(subWindow);
-                }
+            } //else{
+             //   Window subWindow2 = new Window("Bewertung");
+              //  VerticalLayout subContent = new VerticalLayout();
+             //   subWindow2.setContent(subContent);
+             //   subContent.addComponent(new Label("Sie haben bereits eine Bewertung abgegeben! Eine neue Bewertung ist nicht möglich!"));
+              //  subWindow2.center();
+              //  UI.getCurrent().addWindow(subWindow2);
+              //  }
 
 
 

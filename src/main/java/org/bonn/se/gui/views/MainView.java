@@ -7,6 +7,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.LoginControl;
@@ -14,6 +15,8 @@ import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
@@ -158,12 +161,10 @@ public class MainView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-
-
-        if (MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
-            MyUI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-         } else if(MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            MyUI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
          } else {
             this.setUp();
         }

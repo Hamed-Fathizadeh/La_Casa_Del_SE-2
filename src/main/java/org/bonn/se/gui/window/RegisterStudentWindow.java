@@ -6,6 +6,7 @@ import com.vaadin.data.HasValue;
 import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Page;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.*;
@@ -80,8 +81,9 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
     public void wizardCompleted(WizardCompletedEvent wizardCompletedEvent) {
         wizard.setVisible(false);
         this.close();
+        UI.getCurrent().getSession().setAttribute(Roles.Student,null);
 
-        MyUI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+        MyUI.getCurrent().getNavigator().navigateTo(Views.MainView);
     }
 
     @Override
@@ -95,15 +97,15 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         } ;
 
         ConfirmDialog.setFactory(df);
-        ConfirmDialog.show(MyUI.getCurrent(), "Profilvervollständigung wirklich abbrechen und zum Login?",
+        ConfirmDialog.show(UI.getCurrent(), "Profilvervollständigung wirklich abbrechen und zum Login?",
                 new ConfirmDialog.Listener() {
 
                     public void onClose(ConfirmDialog dialog) {
                         if (dialog.isConfirmed()) {
                             wizard.setVisible(false);
                             RegisterStudentWindow.this.close();
-                            MyUI.getCurrent().getSession().setAttribute(Roles.Student,null);
-                            MyUI.getCurrent().getNavigator().navigateTo(Views.MainView);
+                            UI.getCurrent().getSession().setAttribute(Roles.Student,null);
+                            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
                         }
                     }
                 });
@@ -120,7 +122,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         PopUpTextField studiengang;
         PopUpTextField ausbildung;
         NumeralField mobilnr;
-        Student user = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
+        Student user = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
         UploadField  uploadField;
         Image image = ImageConverter.getUnknownProfilImage();
 
@@ -204,7 +206,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
 
 
-            MyUI.getCurrent().getSession().setAttribute(Roles.Student, user);
 
 
             gridLayout.addComponent(form1, 0, 0, 0, 0);
@@ -226,7 +227,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                 if(ort.getBundesland().getValue() != null) {
                     sOrt = ort.getBundesland().getValue().toString().split(" - ");
                 }
-                Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
+                Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
                 student.setPicture(uploadField.getValue());
                 uploadField.clear();
                 student.setAbschluss(abschluss.getValue());
@@ -247,8 +248,6 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
-
-                student.setVorname("Test");
                 UI.getCurrent().getSession().setAttribute(Roles.Student, student);
 
 

@@ -95,12 +95,12 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
-        if( unternehmen == null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            this.setUp();
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-            this.setUp();
+            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
         }
     }
-
 }

@@ -69,13 +69,12 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        User user = null;
-        if( UI.getCurrent().getSession().getAttribute(Roles.Student) == null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
-
-        } else {
-
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.setUp();
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            UI.getCurrent().getNavigator().getCurrentNavigationState();
+        } else {
+            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
         }
 
     }

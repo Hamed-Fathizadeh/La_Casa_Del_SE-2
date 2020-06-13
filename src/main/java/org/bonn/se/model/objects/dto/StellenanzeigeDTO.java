@@ -1,7 +1,7 @@
 package org.bonn.se.model.objects.dto;
 
 import com.vaadin.ui.Image;
-import org.bonn.se.services.util.ConvertByteToImage;
+import org.bonn.se.services.util.ImageConverter;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -50,7 +50,7 @@ public class StellenanzeigeDTO {
         this.bundesland = bundesland;
         this.firmenname = firmenname;
         this.hauptsitz = hauptsitz;
-        this.unternehmenLogo =  ConvertByteToImage.getImage(unternehmenLogo);
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
         this.suchbegriff = suchbegriff;
         this.art = art;
     }
@@ -77,7 +77,7 @@ public class StellenanzeigeDTO {
     }
 
     public void setUnternehmenLogo(byte[] unternehmenLogo) {
-        this.unternehmenLogo = ConvertByteToImage.getImage(unternehmenLogo);
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
     }
 
     public double getBewertung() {

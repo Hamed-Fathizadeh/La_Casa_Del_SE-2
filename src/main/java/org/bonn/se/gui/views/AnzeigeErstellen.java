@@ -192,15 +192,16 @@ public class AnzeigeErstellen extends GridLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
-        if( unternehmen == null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
-        } else {
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             try {
                 this.setUp();
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
+        } else {
+            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
         }
     }
 

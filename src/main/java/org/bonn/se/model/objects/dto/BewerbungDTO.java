@@ -1,7 +1,7 @@
 package org.bonn.se.model.objects.dto;
 
 import com.vaadin.ui.Image;
-import org.bonn.se.services.util.ConvertByteToImage;
+import org.bonn.se.services.util.ImageConverter;
 
 import java.sql.Date;
 
@@ -168,7 +168,7 @@ public class BewerbungDTO {
         this.studentID = studentID;
         this.anzeigeID = anzeigeID;
         this.unternehmenName = unternehmenName;
-        this.unternehmenLogo = ConvertByteToImage.getImage(unternehmenLogo);
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
         this.s_titel = s_titel;
         this.rating = rating;
         this.emailStudent = emailStudent;
@@ -178,7 +178,7 @@ public class BewerbungDTO {
         this.student_ausbildung = student_ausbildung;
         this.student_kontakt_nr = student_kontakt_nr;
         this.student_benachrichtigung = student_benachrichtigung;
-        this.student_picture = ConvertByteToImage.getImage(student_picture);
+        this.student_picture = ImageConverter.convertImagetoProfil(student_picture);
         this.student_hoester_abschluss = student_hoester_abschluss;
         this.student_vorname = student_vorname;
         this.student_nachname = student_nachname;
@@ -198,7 +198,7 @@ public class BewerbungDTO {
         this.studentID = studentID;
         this.anzeigeID = anzeigeID;
         this.unternehmenName = unternehmenName;
-        this.unternehmenLogo = ConvertByteToImage.getImage(unternehmenLogo);
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
         this.s_titel = s_titel;
         this.rating = rating;
         this.emailStudent = emailStudent;
@@ -212,7 +212,7 @@ public class BewerbungDTO {
         this.datum = datum;
         this.status = status;
         this.unternehmenName = unternehmenName;
-        this.unternehmenLogo = ConvertByteToImage.getImage(unternehmenLogo);
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
         this.bewerbungID = bewerbungID;
         this.s_titel = s_titel;
     }

@@ -186,11 +186,12 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(5, unternehmen.getEmail());
             statement.setBytes(6,unternehmen.getLogo());
             statement.setString(7, unternehmen.getKontaktnummer());
-            statement.setString(8,unternehmen.getBranche());
-            statement.setString(9, unternehmen.getDescription());
+            statement.setString(8, unternehmen.getDescription());
 
+            statement.setString(9,unternehmen.getBranche());
 
             statement.setString(10, unternehmen.getEmail());
+
 
             statement.executeUpdate();
 
@@ -254,11 +255,11 @@ public class ProfilDAO extends AbstractDAO{
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
-            set = statement.executeQuery("Select u.firmenname, u.hauptsitz, u.description, u.bundesland, u.kontakt_nr, u.logo, a.ort, a.strasse, a.plz, a.bundesland as ad_bundesland\n" +
-                    "  FROM lacasa.tab_unternehmen u\n" +
-                    "  left outer JOIN lacasa.tab_adresse a\n" +
-                    "    on u.email = a.email\n" +
-                    " WHERE u.email = \'"+unternehmen.getEmail()+"\'");
+            set = statement.executeQuery(" SELECT u.email, u.firmenname, u.hauptsitz, u.logo, u.description ,u.kontakt_nr, " +
+                    "u.branch_name, a.strasse,a.plz,a.ort, a.bundesland AS a_bundesland, u.bundesland AS u_bundesland   " +
+                    "FROM lacasa.tab_unternehmen AS u JOIN lacasa.tab_adresse AS a" +
+                    " ON u.email = a.email\n" +
+                    "WHERE u.email =\'"+unternehmen.getEmail()+"\'");
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
@@ -270,10 +271,10 @@ public class ProfilDAO extends AbstractDAO{
                 unternehmen.setCname(set.getString("firmenname"));
                 unternehmen.setHauptsitz(set.getString("hauptsitz"));
                 unternehmen.setDescription(set.getString("description"));
-                unternehmen.setBundesland(set.getString("bundesland"));
+                unternehmen.setBundesland(set.getString("u_bundesland"));
                 unternehmen.setKontaktnummer(String.valueOf(set.getInt("kontakt_nr")));
                 unternehmen.setLogo(set.getBytes("logo"));
-                Adresse adresse = new Adresse(set.getString("strasse"),String.valueOf(set.getInt("plz")),set.getString("ort"),set.getString("ad_bundesland"));
+                Adresse adresse = new Adresse();
                 unternehmen.setAdresse(adresse);
 
                 return unternehmen;
@@ -378,6 +379,7 @@ public class ProfilDAO extends AbstractDAO{
         ResultSet set2;
         ResultSet set3;
         ResultSet set4;
+        System.out.println("profDAO hier2");
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT s.*, a.strasse, a.plz, a.ort, a.bundesland, u.vorname, u.nachname, u.benutzertyp\n" +
@@ -392,6 +394,7 @@ public class ProfilDAO extends AbstractDAO{
         }
         Student student = new Student();
         try {
+            System.out.println("profDAO hier2.2");
             while (set.next()) {
                 student.setStudent_id(set.getInt("student_id"));
                 student.setVorname(set.getString("vorname"));
@@ -414,7 +417,9 @@ public class ProfilDAO extends AbstractDAO{
         } catch (SQLException  throwables) {
             throwables.printStackTrace();
         }
+        System.out.println("profDAO hier3.3");
         try {
+            System.out.println("profDAO hier3");
             Statement statement = JDBCConnection.getInstance().getStatement();
             set2 = statement.executeQuery("SELECT t.art, t.beginn_datum, t.end_datum\n" +
                     "  FROM lacasa.tab_taetigkeiten t\n" +
@@ -433,6 +438,7 @@ public class ProfilDAO extends AbstractDAO{
                 taetigkeit.setTaetigkeitName(set2.getString("art"));
                 LocalDate beginn = set2.getDate("beginn_datum") == null ? null : set2.getDate("beginn_datum").toLocalDate();
                 LocalDate ende = set2.getDate("end_datum") == null ? null : set2.getDate("end_datum").toLocalDate();
+                System.out.println("profDAO "+taetigkeit.getTaetigkeitName());
                 taetigkeit.setBeginn(beginn);
                 taetigkeit.setEnde(ende);
                 student.setTaetigkeit(taetigkeit);
