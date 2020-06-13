@@ -188,7 +188,10 @@ public class TestDAOs {
         Assert.assertEquals(student.getTaetigkeit().getTaetigkeitName(),actual.getTaetigkeit().getTaetigkeitName());
         Assert.assertEquals(student.getTaetigkeit().getBeginn(),actual.getTaetigkeit().getBeginn());
         Assert.assertEquals(student.getTaetigkeit().getEnde(),actual.getTaetigkeit().getEnde());
-
+        Assert.assertEquals(student.getTaetigkeiten().size(),actual.getTaetigkeiten().size());
+        for (int i = 0; i < student.getTaetigkeiten().size(); i++) {
+            Assert.assertEquals(student.getTaetigkeiten().get(i).getTaetigkeitName(),actual.getTaetigkeiten().get(i).getTaetigkeitName());
+        }
 
 
 

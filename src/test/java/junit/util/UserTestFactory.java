@@ -43,7 +43,7 @@ public class UserTestFactory {
         Adresse adresse = new Adresse();
         adresse.setStrasse(randomString.nextString());
         adresse.setPlz(String.valueOf(randomString.nextInt()));
-        adresse.setOrt("Bonn - Nordrhein-Westfalen");
+        adresse.setOrt("Bonn, Nordrhein-Westfalen");
         student.setAdresse(adresse);
 
         student.setAbschluss("Diplom");
@@ -79,7 +79,7 @@ public class UserTestFactory {
     public Unternehmen registerUnternehmen(){
         unternehmen = new Unternehmen();
         unternehmen.setCname(randomString.nextString());
-        unternehmen.setHauptsitz("Bonn - Nordrhein-Westfalen");
+        unternehmen.setHauptsitz("Bonn, Nordrhein-Westfalen");
         unternehmen.setVorname(randomString.nextString());
         unternehmen.setNachname(randomString.nextString());
         unternehmen.setEmail(randomString.nextEMail());

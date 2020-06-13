@@ -117,13 +117,10 @@ public class UserDAO  extends AbstractDAO {
             statement.setString(4, user.getNachname());
             statement.setString(5, user.getType());
             if(user.getType().equals("C")) {
-                String[] sOrt;
-
-                sOrt = user.getHauptsitz().split(" - ");
 
                 statement.setString(6, user.getCname());
-                statement.setString(7, sOrt[0]);
-                statement.setString(8, sOrt[1]);
+                statement.setString(7, user.getHauptsitz());
+                statement.setString(8, user.getBundesland());
                 statement.setString(9, user.getEmail());
             } else {
                 statement.setString(6, user.getEmail());
@@ -229,7 +226,10 @@ public class UserDAO  extends AbstractDAO {
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
-            set = statement.executeQuery("SELECT * FROM lacasa.tab_unternehmen WHERE firmenname = \'" + stellenanzeige.getFirmenname() + "\'");
+            set = statement.executeQuery("SELECT * FROM lacasa.tab_unternehmen " +
+                    "JOIN lacasa.tab_user " +
+                    "USING(email)" +
+                    "WHERE firmenname = \'" + stellenanzeige.getFirmenname() + "\'");
 
             if( set.next()){
                 Unternehmen unternehmen = new Unternehmen();
@@ -239,8 +239,9 @@ public class UserDAO  extends AbstractDAO {
                 unternehmen.setDescription(set.getString("description"));
                 unternehmen.setBundesland(set.getString("bundesland"));
                 unternehmen.setEmail(set.getString("email"));
-                //REICHWEITE FEHLT HIER NOCH
-
+                unternehmen.setVorname(set.getString("vorname"));
+                unternehmen.setNachname(set.getString("nachname"));
+                unternehmen.setKontaktnummer(set.getString("kontakt_nr"));
 
                 return unternehmen;
             }

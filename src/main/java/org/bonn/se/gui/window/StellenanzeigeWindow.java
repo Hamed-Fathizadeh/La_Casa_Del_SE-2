@@ -61,7 +61,7 @@ public class StellenanzeigeWindow extends Window {
         Label hauptsitz= new Label("<b>Hauptsitz</b>",ContentMode.HTML);
         Label ansprechpartner = new Label("<b>Ansprechpartner/in</b>",ContentMode.HTML);
         Label email = new Label("<b>E-Mail</b>",ContentMode.HTML);
-        Label kontaktnummer1 = new Label("<b>Kontaktnummer 1</b>",ContentMode.HTML);
+        Label kontaktnummer1 = new Label("<b>Kontaktnummer</b>",ContentMode.HTML);
         Label stellenbeschreibung = new Label("<b>Stellenbeschreibung</b>",ContentMode.HTML);
 
 
@@ -78,7 +78,7 @@ public class StellenanzeigeWindow extends Window {
         Label hauptsitz_data = new Label(stellenanzeige.getHauptsitz());
         Label ansprechpartner_data = new Label(unternehmen_data.getVorname() + " " + unternehmen_data.getNachname());
         Label email_data = new Label(unternehmen_data.getEmail());
-        Label kontaktnummer1_data = new Label("Kontaktnummer 1");
+        Label kontaktnummer1_data = new Label(unternehmen_data.getKontaktnummer());
         Label suchbegriff_data = new Label(stellenanzeige.getSuchbegriff());
         RichTextArea beschreibung_data = new RichTextArea();
         beschreibung_data.setSizeFull();

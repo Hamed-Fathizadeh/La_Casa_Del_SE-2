@@ -3,6 +3,7 @@ package org.bonn.se.gui.window;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.services.util.*;
 
@@ -47,10 +48,7 @@ public class ErweiterteSuche extends Window {
 
 
 // add combobox ortBund
-        ComboBox<String> comboOrtBund = new ComboBox<>();
-        comboOrtBund.setPlaceholder("Ort - Bundesland");
-        OrtService Ortservice = new OrtService("Stadt - Bund");
-        comboOrtBund.setDataProvider(Ortservice::fetch, Ortservice::count);
+        OrtField comboOrtBund = new OrtField("Ort");
         comboOrtBund.setHeight("56px");
         comboOrtBund.setWidth("300px");
 
@@ -91,9 +89,8 @@ public class ErweiterteSuche extends Window {
 
         buttonSearch.addClickListener(
                 event -> {
-                            String[]a = {null,null};
-                            String[] ortBund = comboOrtBund.getValue() == null? a: comboOrtBund.getValue().split(" - ");
-                            StudentHomeView.stellenSuchen(comboNachWas.getValue(), ortBund[0], ortBund[1],comboUmkreis.getValue(),"Erweitert",
+
+                            StudentHomeView.stellenSuchen(comboNachWas.getValue(), comboOrtBund.getOrt(), comboOrtBund.getBundesland(),comboUmkreis.getValue(),"Erweitert",
                                                           comboEinstellungsart.getValue(), Date.valueOf(wann_datum.getValue()== null? emptyDate :wann_datum.getValue()), ComboBranche.getValue()
                                                          );
                              ErweiterteSuche.this.close();

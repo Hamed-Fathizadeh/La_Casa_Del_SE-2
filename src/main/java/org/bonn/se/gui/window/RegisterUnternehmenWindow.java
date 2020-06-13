@@ -174,11 +174,6 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
         @Override
         public boolean onAdvance() {
 
-            String[] sOrt = {"",""};
-
-            if(ort.getBundesland().getValue() != null) {
-                sOrt = ort.getBundesland().getValue().toString().split(" - ");
-            }
 
             ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setLogo(uploadField.getValue());
             uploadField.clear();
@@ -187,10 +182,11 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
 
             Adresse adresse = new Adresse();
 
-            if(!(strasse.getValue().equals("") || ort.getPlz().getValue().equals("") || ort.equals("") )) {
+            if(!( ort.getOrt() == null ) || ort.getPlz() == null ) {
                 adresse.setStrasse(strasse.getValue());
-                adresse.setPlz(ort.getPlz().getValue());
-                adresse.setOrt(sOrt[0]);
+                adresse.setPlz(ort.getPlz());
+                adresse.setOrt(ort.getOrt());
+                adresse.setBundesland(ort.getBunesland());
             }
             ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setAdresse(adresse);
 

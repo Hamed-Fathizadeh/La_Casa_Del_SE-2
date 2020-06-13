@@ -9,6 +9,7 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.Bewerbungen;
+import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.window.ErweiterteSuche;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
@@ -79,12 +80,8 @@ public class StudentHomeView extends VerticalLayout implements View {
         comboNachWas.setDataProvider(Sservice::fetch, Sservice::count);
 
 // add combobox ortBund
-        ComboBox<String> comboOrtBund = new ComboBox<>();
-        comboOrtBund.setPlaceholder("Ort - Bundesland");
+        OrtField comboOrtBund = new OrtField("Ort");
         comboOrtBund.setWidth(300.0f, Unit.PIXELS);
-
-        OrtService Ortservice = new OrtService("Stadt - Bund");
-        comboOrtBund.setDataProvider(Ortservice::fetch, Ortservice::count);
 
 
 // add combobox
@@ -98,9 +95,8 @@ public class StudentHomeView extends VerticalLayout implements View {
         buttonSearch.addClickListener(
                 event -> {
                     Maingrid.removeComponent(GridAnzeig);
-                    String[]a = {null,null};
-                    String[] ortBund = comboOrtBund.getValue() == null? a: comboOrtBund.getValue().split(" - ");
-                    stellenSuchen( comboNachWas.getValue(),  ortBund[0], ortBund[1],comboUmkreis.getValue(), "Normal", null, null, null);
+
+                    stellenSuchen( comboNachWas.getValue(), comboOrtBund.getOrt(), comboOrtBund.getBundesland(),comboUmkreis.getValue(), "Normal", null, null, null);
                     Maingrid.addComponent(GridAnzeig, 0, 2, 1, 2);
                     Maingrid.setComponentAlignment(GridAnzeig, Alignment.MIDDLE_CENTER);
                 });
