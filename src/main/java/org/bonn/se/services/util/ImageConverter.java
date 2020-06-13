@@ -67,8 +67,8 @@ public class ImageConverter {
         image = new Image(
                 null, new StreamResource(
                 streamSource, bild.toString()));
-        image.setWidth("30px");
-        image.setHeight("30px");
+        image.setWidth("50px");
+        image.setHeight("50px");
 
         return image;
     }

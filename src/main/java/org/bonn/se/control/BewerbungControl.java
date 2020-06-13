@@ -1,4 +1,4 @@
-package org.bonn.se.control.exception;
+package org.bonn.se.control;
 
 import org.bonn.se.model.dao.BewerbungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
@@ -18,5 +18,9 @@ public class BewerbungControl {
             throwables.printStackTrace();
         }
 
+    }
+
+    public static boolean statusaendern(int bew_id) throws DatabaseException {
+       return BewerbungDAO.statusaendern( bew_id);
     }
 }

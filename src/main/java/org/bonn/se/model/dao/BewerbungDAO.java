@@ -4,9 +4,7 @@ import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 
 public class BewerbungDAO extends AbstractDAO{
@@ -44,8 +42,44 @@ public class BewerbungDAO extends AbstractDAO{
             JDBCConnection.getInstance().closeConnection();
         }
 
+    }
 
+    public static boolean statusaendern(int bew_id) throws DatabaseException{
+        ResultSet set;
+        boolean bMarkierung= false;
 
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("select markiert from lacasa.tab_bewerbung where bewerbung_id = "+bew_id);
+            System.out.println("bewDAO"+set.toString());
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+
+        try {
+            while(set.next()){
+
+            bMarkierung =  set.getBoolean(1);
+            }
+
+        } catch (SQLException  throwables) {
+            throwables.printStackTrace();
+        }
+
+        System.out.println("bewDAO"+bMarkierung );
+        String sql = "update lacasa.tab_bewerbung set markiert ="+ !bMarkierung + " where bewerbung_id = "+bew_id;
+        PreparedStatement statement = getPreparedStatement(sql);
+
+        try {
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+
+        return !bMarkierung;
 
     }
 }

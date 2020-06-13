@@ -165,8 +165,9 @@ public class ProfilDAO extends AbstractDAO{
 
     public static void createUnternehmenProfil(Unternehmen unternehmen) throws DatabaseException {
         String sql = "INSERT INTO lacasa.tab_adresse (strasse,plz,ort,bundesland,email) VALUES(?,?,?,?,?);" +
-                "UPDATE lacasa.tab_unternehmen SET logo = ?, kontakt_nr = ?," +
-                "description = ?, branch_name = ? WHERE lacasa.tab_unternehmen.email = ?;";
+                "UPDATE lacasa.tab_unternehmen SET logo = ?, kontakt_nr = ?, branch_name = ? , " +
+                " description = ? WHERE lacasa.tab_unternehmen.email = ?;";
+
         PreparedStatement statement = getPreparedStatement(sql);
 
         try {
@@ -276,14 +277,6 @@ public class ProfilDAO extends AbstractDAO{
                 unternehmen.setLogo(set.getBytes("logo"));
                 Adresse adresse = new Adresse();
                 unternehmen.setAdresse(adresse);
-                unternehmen.getAdresse().setOrt(set.getString("ort"));
-                unternehmen.getAdresse().setStrasse(set.getString("strasse"));
-                unternehmen.getAdresse().setPlz(set.getString("plz"));
-                unternehmen.getAdresse().setBundesland(set.getString("a_bundesland"));
-
-
-
-
 
                 return unternehmen;
             }

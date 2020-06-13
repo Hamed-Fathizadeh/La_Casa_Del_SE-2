@@ -78,7 +78,7 @@ public class ContainerBewerbungDAO {
             if(str.equals("Makiert")) {
                 Statement statement = JDBCConnection.getInstance().getStatement();
                 set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
-                        " where s_anzeige_id = " +saID+" and status = 3 "+
+                        " where s_anzeige_id = " +saID+" and markiert = true "+
                         " order by datum desc");
             }else{
                 Statement statement = JDBCConnection.getInstance().getStatement();
@@ -103,7 +103,7 @@ public class ContainerBewerbungDAO {
                                                             set.getString(11),set.getString(12),set.getDate(13),set.getString(14),
                                                             set.getString(15),set.getString(16),set.getInt(17), set.getBytes(18),
                                                             set.getString(19),set.getString(20),set.getString(21),
-                                                            set.getDouble(22)
+                                                            set.getDouble(22),set.getBoolean(23)
                                                         );
                 liste.add(bewerbung);
 

@@ -1,5 +1,6 @@
 package org.bonn.se.gui.window;
 
+import com.vaadin.event.FieldEvents;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -26,6 +27,9 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         mainGridLayout.setSizeFull();
         mainGridLayout.setMargin(true);
 
+        this.addFocusListener(new FieldEvents.FocusListener() {
+            public void focus(FieldEvents.FocusEvent event) {
+
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungen.loadByStellenAnzeigeID("Alle",stellenanzeige.getId());
         Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"Unternehmen");
@@ -33,11 +37,16 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         bewerbungen.setWidthFull();
 
 
+
         ContainerLetztenBewerbungen containerBewerbungenMakiert  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungenMakiert.loadByStellenAnzeigeID("Makiert",stellenanzeige.getId());
         Bewerbungen<BewerbungDTO> bewerbungenMakiert = new Bewerbungen(containerBewerbungen,"Unternehmen");
         bewerbungenMakiert.setHeightMode(HeightMode.UNDEFINED);
         bewerbungenMakiert.setWidthFull();
+
+
+
+
 
  //add TabSheet
         TabSheet tabSheet = new TabSheet();
@@ -48,16 +57,21 @@ public class StellenanzeigeBewerbungenWindow extends Window {
 
         tabSheet.addTab(bewerbungen,"Alle");
         tabSheet.addTab(bewerbungenMakiert,"Markierte");
+                mainGridLayout.removeAllComponents();
+                mainGridLayout.addComponent(tabSheet,0,1);
 
+                mainGridLayout.setComponentAlignment(tabSheet, Alignment.TOP_CENTER);
 
-        mainGridLayout.addComponent(tabSheet,0,1);
+            }
+        });
 
-        mainGridLayout.setComponentAlignment(tabSheet, Alignment.TOP_CENTER);
 
 
         this.setContent(mainGridLayout);
 
 
     }
+
+
 
 }
