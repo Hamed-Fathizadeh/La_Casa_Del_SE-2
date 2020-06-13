@@ -283,8 +283,8 @@ public class ContainerAnzDAO extends AbstractDAO{
                     statement.setString(3, user.getStellenanzeigeDTO().getTitel());
                     statement.setString(4, user.getStellenanzeigeDTO().getBeschreibung());
                     statement.setInt(5, user.getStellenanzeigeDTO().getStatus());
-                    statement.setString(6, sOrt[0]);
-                    statement.setString(7, sOrt[1]);
+                    statement.setString(6, user.getStellenanzeigeDTO().getStandort());
+                    statement.setString(7, user.getStellenanzeigeDTO().getBundesland());
                     statement.setString(8, user.getStellenanzeigeDTO().getFirmenname());
                     statement.setString(9, user.getStellenanzeigeDTO().getHauptsitz());
                     statement.setString(10, user.getStellenanzeigeDTO().getSuchbegriff());

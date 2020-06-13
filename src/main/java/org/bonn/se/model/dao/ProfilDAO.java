@@ -187,9 +187,10 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(5, unternehmen.getEmail());
             statement.setBytes(6,unternehmen.getLogo());
             statement.setString(7, unternehmen.getKontaktnummer());
-            statement.setString(8, unternehmen.getDescription());
+            statement.setString(8,unternehmen.getBranche());
 
-            statement.setString(9,unternehmen.getBranche());
+            statement.setString(9, unternehmen.getDescription());
+
 
             statement.setString(10, unternehmen.getEmail());
 

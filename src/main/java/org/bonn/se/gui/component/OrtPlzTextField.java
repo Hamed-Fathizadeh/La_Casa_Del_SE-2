@@ -10,12 +10,8 @@ import org.vaadin.textfieldformatter.NumeralFieldFormatter;
 
 public class OrtPlzTextField extends HorizontalLayout {
 
-    TextField plz = new TextField();
-
-
-    final private ComboBox<String> comboBund = new ComboBox<>();
-
-
+    TextField plz ;
+    OrtField comboBund;
 
     public OrtPlzTextField(){
 
@@ -27,22 +23,30 @@ public class OrtPlzTextField extends HorizontalLayout {
         plz.setWidth("90px");
 
 
-        comboBund.setPlaceholder("Ort");
+        comboBund = new OrtField("Ort");
         comboBund.setWidth(300.0f, Unit.PIXELS);
         comboBund.setHeight("56px");
 
-        OrtService Ortservice = new OrtService("Stadt - Bund");
+        OrtService Ortservice = new OrtService("Stadt, Bund");
         comboBund.setDataProvider(Ortservice::fetch, Ortservice::count);
 
 
         this.addComponents(plz,comboBund);
     }
 
-    public TextField getPlz() {
+    public String getPlz() {
+        return plz.getValue();
+    }
+    public TextField getPlzField() {
         return plz;
     }
+    public OrtField getOrtField(){ return comboBund;}
 
-    public ComboBox getBundesland() {
-        return comboBund;
+    public String getOrt() {
+        return comboBund.getOrt();
     }
+    public String getBunesland() {
+        return comboBund.getBundesland();
+    }
+
 }

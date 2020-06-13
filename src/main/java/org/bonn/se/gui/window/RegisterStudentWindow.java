@@ -225,11 +225,8 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
         @Override
         public boolean onAdvance() {
-                String[] sOrt = {"",""};
 
-                if(ort.getBundesland().getValue() != null) {
-                    sOrt = ort.getBundesland().getValue().toString().split(" - ");
-                }
+
                 Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
                 student.setPicture(uploadField.getValue());
                 uploadField.clear();
@@ -241,10 +238,11 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                 student.setStudiengang(studiengang.getValue());
                 student.setG_datum(g_datum.getValue());
                 Adresse adresse = new Adresse();
-                if(!(strasse.getValue().equals("") || ort.getPlz().getValue().equals("") || ort.equals("") )) {
+                if(!( ort.getOrt() == null ) || ort.getPlz() == null ) {
                     adresse.setStrasse(strasse.getValue());
-                    adresse.setPlz(ort.getPlz().getValue());
-                    adresse.setOrt(sOrt[0]);
+                    adresse.setPlz(ort.getPlz());
+                    adresse.setOrt(ort.getOrt());
+                    adresse.setBundesland(ort.getBunesland());
                 }
                 student.setAdresse(adresse);
 

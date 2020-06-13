@@ -9,11 +9,17 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteSuggestionProvider;
+import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
+import eu.maxschuster.vaadin.autocompletetextfield.provider.CollectionSuggestionProvider;
+import eu.maxschuster.vaadin.autocompletetextfield.provider.MatchMode;
 import org.bonn.se.control.UserSearch;
+import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanel;
 import org.bonn.se.gui.window.RegisterUnternehmenWindow;
+import org.bonn.se.model.dao.OrtDAO;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
@@ -23,7 +29,6 @@ import org.bonn.se.services.util.Roles;
 
 
 public class RegisterUnternehmer extends GridLayout implements View {
-    final private  ComboBox<String> hauptsitz = new ComboBox<>();
 
     public void setUp() {
 
@@ -38,12 +43,9 @@ public class RegisterUnternehmer extends GridLayout implements View {
         this.addStyleName("grid");
 
 
-        hauptsitz.setPlaceholder("Hauptsitz");
-        hauptsitz.setWidth("408px");
-        hauptsitz.setHeight("56px");
+        OrtField hauptsitz = new OrtField("Hauptsitz");
 
-        OrtService Ortservice = new OrtService("Stadt - Bund");
-        hauptsitz.setDataProvider(Ortservice::fetch, Ortservice::count);
+
 
 
         TopPanel topPanel =  new TopPanel("Studenten");
@@ -105,6 +107,8 @@ public class RegisterUnternehmer extends GridLayout implements View {
         test.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
+                System.out.println(hauptsitz.getOrt());
+                System.out.println(hauptsitz.getBundesland());
 
             }
         });
@@ -138,18 +142,18 @@ public class RegisterUnternehmer extends GridLayout implements View {
 
 
                             // UserDAO.registerStudent(student.getEmail(),student.getPasswort(),student.getVorname(),student.getNachname() ,'s');
-                            String[] sOrt = {"",""};
 
-                            sOrt = hauptsitz.getValue().split(" - ");
 
                             registerButton.setEnabled(false);
+                            user.setHauptsitz(hauptsitz.getOrt());
+                            user.setBundesland(hauptsitz.getBundesland());
                             Unternehmen unternehmen = new Unternehmen();
                             unternehmen.setEmail(user.getEmail());
                             unternehmen.setVorname(user.getVorname());
                             unternehmen.setNachname(user.getNachname());
                             unternehmen.setPasswort(user.getPasswort());
-                            unternehmen.setHauptsitz(sOrt[0]);
-                            unternehmen.setBundesland(sOrt[1]);
+                            unternehmen.setHauptsitz(user.getHauptsitz());
+                            unternehmen.setBundesland(user.getBundesland());
                             unternehmen.setCname(user.getCname());
 
                             UserDAO.registerUser(user);
@@ -220,18 +224,9 @@ public class RegisterUnternehmer extends GridLayout implements View {
 
         Button button = new Button("Test");
 
-        this.addComponent(button,9,9);
+        this.addComponent(test,9,9);
 
-        button.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                Unternehmen unternehmen = new Unternehmen();
-                unternehmen.setVorname("TEst");
 
-                RegisterUnternehmenWindow registerUnternehmenWindow = new RegisterUnternehmenWindow();
-                UI.getCurrent().addWindow(registerUnternehmenWindow);
-            }
-        });
 
     }
     @Override
@@ -243,9 +238,7 @@ public class RegisterUnternehmer extends GridLayout implements View {
         return vnummer;
     }
 */
-    public ComboBox getBundesland() {
-        return hauptsitz;
-    }
+
 }
 
 

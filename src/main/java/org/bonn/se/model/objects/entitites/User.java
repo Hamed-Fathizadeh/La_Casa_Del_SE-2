@@ -46,6 +46,7 @@ public class User implements Serializable {
         setCname(this.cname);
         setType(this.type);
         setHauptsitz(this.hauptsitz);
+        setBundesland(bundesland);
     }
 
     public String getEmail() {

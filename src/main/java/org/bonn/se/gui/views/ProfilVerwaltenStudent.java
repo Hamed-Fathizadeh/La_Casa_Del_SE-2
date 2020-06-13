@@ -125,10 +125,10 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
 
         TextField plz = new TextField("PLZ");
         OrtPlzTextField ortPlzTextField = new OrtPlzTextField();
-        ortPlzTextField.getPlz().setCaption("PLZ");
-        ortPlzTextField.getBundesland().setCaption("Ort");
-        ortPlzTextField.getPlz().setHeight("37px");
-        ortPlzTextField.getBundesland().setHeight("37px");
+        ortPlzTextField.getPlzField().setCaption("PLZ");
+        ortPlzTextField.getOrtField().setCaption("Ort");
+        ortPlzTextField.getPlzField().setHeight("37px");
+        ortPlzTextField.getOrtField().setHeight("37px");
 
         ProfilStudentTextField tfemail = new ProfilStudentTextField("Email", "vorname");
         ProfilStudentTextField tfmobilnr = new ProfilStudentTextField("Mobil. Nr", "mobilnr");

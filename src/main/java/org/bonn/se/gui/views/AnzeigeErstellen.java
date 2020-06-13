@@ -12,6 +12,7 @@ import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
 import eu.maxschuster.vaadin.autocompletetextfield.provider.CollectionSuggestionProvider;
 import eu.maxschuster.vaadin.autocompletetextfield.provider.MatchMode;
 import org.bonn.se.control.JobTitelControl;
+import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
@@ -20,6 +21,7 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.*;
 
 public class AnzeigeErstellen extends GridLayout implements View {
+        private OrtField ort;
 
     public void setUp() throws DatabaseException {
 
@@ -46,34 +48,15 @@ public class AnzeigeErstellen extends GridLayout implements View {
         titel.setWidth("600px");
 
 
-        AutocompleteSuggestionProvider suggestionProvider = new CollectionSuggestionProvider(JobTitelControl.getJobTitelList(), MatchMode.CONTAINS, true);
-        AutocompleteTextField field = new AutocompleteTextField();
-        field.setHeight("56px");
-        field.setWidth("600px");
-        field.setDelay(150);
-        field.setMinChars(0);
-        field.withTypeSearch(false);
-        field.withPlaceholder("Stellenbeschreibung");
-        field.setSuggestionProvider(suggestionProvider);
-
-
-
         NativeSelect<String> jobtitel = new NativeSelect<>("Bitte wählen Sie eine Stellenbeschreibung!",JobTitelControl.getJobTitelList());
         jobtitel.setHeight("56px");
         jobtitel.setWidth("600px");
         jobtitel.setEmptySelectionAllowed(false);
-        jobtitel.addStyleName(MaterialTheme.CARD_0);
 
 
-
-        ComboBox<String> ort = new ComboBox<>();
-        ort.setPlaceholder("Ort");
+        ort = new OrtField("Standort");
         ort.setWidth(300.0f, Unit.PIXELS);
         ort.setHeight("56px");
-
-        OrtService Ortservice = new OrtService("Stadt - Bund");
-        ort.setDataProvider(Ortservice::fetch, Ortservice::count);
-
 
         DateField beginn = new DateField();
         beginn.setHeight("56px");
@@ -173,7 +156,9 @@ public class AnzeigeErstellen extends GridLayout implements View {
                 if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
                     stellenanzeigeDTO.setFirmenname(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname());
                     stellenanzeigeDTO.setHauptsitz(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getHauptsitz());
-
+                    stellenanzeigeDTO.setStandort(stellenanzeigeDTO.getStandort());
+                    stellenanzeigeDTO.setStandort(ort.getOrt());
+                    stellenanzeigeDTO.setBundesland(ort.getBundesland());
 
                     ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeige(stellenanzeigeDTO);
                 }

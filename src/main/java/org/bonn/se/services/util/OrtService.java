@@ -12,7 +12,7 @@ public class OrtService {
     private static List<String> listeOrt = new ArrayList<>();
 
     public OrtService( String str) {
-        if(str.equals("Stadt - Bund")) {
+        if(str.equals("Stadt, Bund")) {
             listeOrt = ComponentControl.getInstance().getOrt();
         }else{
             listeOrt = ComponentControl.getInstance().getBund();
