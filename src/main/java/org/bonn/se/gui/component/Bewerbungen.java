@@ -23,8 +23,13 @@ import java.util.List;
 
 public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
-    public Bewerbungen(ContainerLetztenBewerbungen container, String userType){
+    public static ContainerLetztenBewerbungen container;
+    public static String userType;
+
+    public Bewerbungen(ContainerLetztenBewerbungen inCcontainer, String inUserType) {
         super();
+        container = inCcontainer;
+        userType = inUserType;
 
         this.setHeightMode(HeightMode.UNDEFINED);
         this.addStyleName("AnzeigeUnternehmen");
@@ -95,10 +100,10 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             UI.getCurrent().addWindow(subWindow);
         }else{
                 BewerbungDTO bw = selection.getValue();
-
+                if(bw != null) {
                     BewerbungWindow bewerbungWindow = new BewerbungWindow(null, "Unternehmen", bw);
                     UI.getCurrent().addWindow(bewerbungWindow);
-                    selection.clear();
+                }
 
         }
         });
@@ -147,6 +152,9 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
     }
 
 
+    public void setUpBewerbung(ContainerLetztenBewerbungen inCcontainer, String inUserType) {
+        new Bewerbungen( inCcontainer,  inUserType);
 
+    }
 }
 

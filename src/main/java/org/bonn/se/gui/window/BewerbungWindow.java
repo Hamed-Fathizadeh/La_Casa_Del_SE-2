@@ -204,6 +204,7 @@ public class BewerbungWindow extends Window {
 
 
             Image picMarkierung = null;
+            boolean markiert = bewerbung.isBewerbung_markiert();
             if( bewerbung.isBewerbung_markiert()){
                 ThemeResource resource3 = new ThemeResource("img/Anzeigen/makierung.png");
                 picMarkierung = new Image(null, resource3);
@@ -241,6 +242,8 @@ public class BewerbungWindow extends Window {
                     BewerbungWindow bewerbungWindow = new BewerbungWindow(null,"Unternehmen", bewerbung);
                     UI.getCurrent().addWindow(bewerbungWindow);
                     BewerbungWindow.this.close();
+
+
 
                 }
             });
