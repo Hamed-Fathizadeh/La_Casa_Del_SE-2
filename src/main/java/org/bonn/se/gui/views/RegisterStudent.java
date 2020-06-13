@@ -50,7 +50,7 @@ public class RegisterStudent extends GridLayout implements View {
 
 
         RegistrationTextField nachname = new RegistrationTextField( "Nachname");
-        nachname.setValue(VaadinService.getCurrent().getBaseDirectory().getAbsolutePath().toString());
+        nachname.setValue(VaadinService.getCurrent().getBaseDirectory().getAbsolutePath());
         RegistrationTextField email = new RegistrationTextField("E-Mail");
         RegistrationPasswordField passwort = new RegistrationPasswordField("Passwort");
       //  RegistrationPasswordField Vnummer = new RegistrationPasswordField("Verifizierungscode");
@@ -144,7 +144,7 @@ public class RegisterStudent extends GridLayout implements View {
                          */
                         else {
                             user.setType("S");
-                            UserDAO.registerUser(user);
+                            UserDAO.getInstance().registerUser(user);
 
                            // UserDAO.registerStudent(student.getEmail(),student.getPasswort(),student.getVorname(),student.getNachname() ,'s');
                             registerButton.setEnabled(false);

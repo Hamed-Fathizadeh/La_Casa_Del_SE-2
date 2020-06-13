@@ -1,7 +1,6 @@
 package org.bonn.se.gui.window;
 
 import com.vaadin.data.HasValue;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.bonn.se.control.UnternehmenDescriptionControl;
 import org.bonn.se.gui.component.OrtPlzTextField;
@@ -191,7 +190,7 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
             ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setAdresse(adresse);
 
             try {
-                ProfilDAO.createUnternehmenProfil( ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)));
+                ProfilDAO.getInstance().createUnternehmenProfil( ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)));
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }

@@ -15,7 +15,6 @@ import org.bonn.se.gui.window.ErweiterteSuche;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.*;
-import org.bonn.se.services.util.OrtService;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.SuchbegrifService;
 import org.bonn.se.services.util.Views;

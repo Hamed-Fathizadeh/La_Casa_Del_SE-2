@@ -22,7 +22,6 @@ public class StellenanzeigeWindow extends Window {
 
 
     private OnOffSwitch onOffSwitch = new OnOffSwitch();
-    private Image logo = null;
 
     public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data)  {
         setUp(stellenanzeige,unternehmen_data);
@@ -44,6 +43,7 @@ public class StellenanzeigeWindow extends Window {
         gridLayout.setSizeFull();
         gridLayout.setMargin(true);
 
+        Image logo = null;
         if (unternehmen_data.getLogo() == null) {
             logo = ImageConverter.getUnknownProfilImage();
         } else {

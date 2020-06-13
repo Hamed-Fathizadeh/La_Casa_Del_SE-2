@@ -13,8 +13,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import javax.validation.constraints.AssertTrue;
 import java.util.concurrent.ThreadLocalRandom;
+
+import static org.junit.Assert.*;
 
 
 public class TestDAOs {
@@ -41,13 +42,13 @@ public class TestDAOs {
             student.setEmail(i+email);
             student.setPasswort(password);
             student.setType("S");
-            UserDAO.registerUser(student);
-            User student_read = UserDAO.getUser(i+email);
+            UserDAO.getInstance().registerUser(student);
+            User student_read = UserDAO.getInstance().getUser(i+email);
             Assertions.assertEquals(vorname+i,student_read.getVorname());
             Assertions.assertEquals(nachname+i,student_read.getNachname());
             Assertions.assertEquals(i+email,student_read.getEmail());
             Assertions.assertEquals(password,student_read.getPasswort());
-            Assertions.assertTrue(UserDAO.getUserbyEmail(i+email));
+            Assertions.assertTrue(UserDAO.getInstance().getUserbyEmail(i+email));
             System.out.println(student.toString());
 
             UserDAO.deleteUser(i+email);
@@ -66,8 +67,8 @@ public class TestDAOs {
             unternehmen.setHauptsitz(hauptsitz);
             unternehmen.setCname(cname);
 
-            UserDAO.registerUser(unternehmen);
-            User unternehmen_read = UserDAO.getUser(i+email);
+            UserDAO.getInstance().registerUser(unternehmen);
+            User unternehmen_read = UserDAO.getInstance().getUser(i+email);
             Assertions.assertEquals(vorname+i,unternehmen_read.getVorname());
             Assertions.assertEquals(nachname+i,unternehmen_read.getNachname());
             Assertions.assertEquals(i+email,unternehmen_read.getEmail());
@@ -75,7 +76,7 @@ public class TestDAOs {
             Assertions.assertEquals(password,unternehmen_read.getPasswort());
             Assertions.assertEquals(password,unternehmen_read.getPasswort());
 
-            Assertions.assertTrue(UserDAO.getUserbyEmail(i+email));
+            Assertions.assertTrue(UserDAO.getInstance().getUserbyEmail(i+email));
 
             UserDAO.deleteUser(i+email);
         }
@@ -85,26 +86,26 @@ public class TestDAOs {
     @Test
     public void registerStudentWithCheck() throws DatabaseException {
         Student student = userTestFactory.registerStudent();
-        UserDAO.registerUser(student);
-        Assert.assertEquals("S",UserDAO.getUserType(student.getEmail()));
-        Assert.assertTrue(UserDAO.getUserbyEmail(student.getEmail()));
+        UserDAO.getInstance().registerUser(student);
+        assertEquals("S",UserDAO.getInstance().getUserType(student.getEmail()));
+        assertTrue(UserDAO.getInstance().getUserbyEmail(student.getEmail()));
         UserDAO.deleteUser(student.getEmail());
-        Assert.assertFalse(UserDAO.getUserbyEmail(student.getEmail()));
+        assertFalse(UserDAO.getInstance().getUserbyEmail(student.getEmail()));
     }
 
     @Test
     public void checkStudentProfil() throws DatabaseException {
        Student student = userTestFactory.getProfilStudent();
-        UserDAO.registerUser(student);
-        ProfilDAO.createStudentProfil1(student);
+        UserDAO.getInstance().registerUser(student);
+        ProfilDAO.getInstance().createStudentProfil1(student);
         UserDAO.deleteUser(student.getEmail());
 
     }
     @Test
     public void checkStudentProfilWithAdresse() throws DatabaseException {
         Student student = userTestFactory.getProfilStudentWithoutAdress();
-        UserDAO.registerUser(student);
-        ProfilDAO.createStudentProfil1(student);
+        UserDAO.getInstance().registerUser(student);
+        ProfilDAO.getInstance().createStudentProfil1(student);
         UserDAO.deleteUser(student.getEmail());
 
     }
@@ -112,18 +113,18 @@ public class TestDAOs {
     @Test
     public void registerUnternehmenWithCheck() throws DatabaseException {
         Unternehmen unternehmen = userTestFactory.registerUnternehmen();
-        UserDAO.registerUser(unternehmen);
-        Assert.assertEquals("C",UserDAO.getUserType(unternehmen.getEmail()));
-        Assert.assertTrue(UserDAO.getUserbyEmail(unternehmen.getEmail()));
+        UserDAO.getInstance().registerUser(unternehmen);
+        assertEquals("C",UserDAO.getInstance().getUserType(unternehmen.getEmail()));
+        assertTrue(UserDAO.getInstance().getUserbyEmail(unternehmen.getEmail()));
         UserDAO.deleteUser(unternehmen.getEmail());
-        Assert.assertFalse(UserDAO.getUserbyEmail(unternehmen.getEmail()));
+        assertFalse(UserDAO.getInstance().getUserbyEmail(unternehmen.getEmail()));
     }
 
     @Test
     public void checkUnternehmenProfil() throws DatabaseException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
-        UserDAO.registerUser(unternehmen);
-        ProfilDAO.createUnternehmenProfil(unternehmen);
+        UserDAO.getInstance().registerUser(unternehmen);
+        ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
         UserDAO.deleteUser(unternehmen.getEmail());
 
     }
@@ -131,8 +132,8 @@ public class TestDAOs {
     @Test
     public void checkUnternehmenProfilWithAdresse() throws DatabaseException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmenWithoutAdresss();
-        UserDAO.registerUser(unternehmen);
-        ProfilDAO.createUnternehmenProfil(unternehmen);
+        UserDAO.getInstance().registerUser(unternehmen);
+        ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
         UserDAO.deleteUser(unternehmen.getEmail());
 
     }
@@ -149,8 +150,8 @@ public class TestDAOs {
     @Test
     public void checkUnternehmenProfilWithDescription() throws DatabaseException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
-        UserDAO.registerUser(unternehmen);
-        ProfilDAO.createUnternehmenProfil(unternehmen);
+        UserDAO.getInstance().registerUser(unternehmen);
+        ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
         UserDAO.deleteUser(unternehmen.getEmail());
 
 
@@ -159,45 +160,115 @@ public class TestDAOs {
     @Test
     public void checkandGetUnternehmenProfilWithDescription() throws DatabaseException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
-        UserDAO.registerUser(unternehmen);
-        ProfilDAO.createUnternehmenProfil(unternehmen);
-        Unternehmen actual = ProfilDAO.getUnternehmenProfil(unternehmen);
-        Assert.assertEquals(unternehmen.getVorname(),actual.getVorname());
-        Assert.assertEquals(unternehmen.getNachname(),actual.getNachname());
-        Assert.assertEquals(unternehmen.getEmail(),actual.getEmail());
-        Assert.assertEquals(unternehmen.getCname(),actual.getCname());
-        Assert.assertEquals(unternehmen.getHauptsitz(),actual.getHauptsitz());
-        Assert.assertEquals(unternehmen.getBundesland(),actual.getBundesland());
-        Assert.assertEquals(unternehmen.getKontaktnummer(),actual.getKontaktnummer());
-        Assert.assertEquals(unternehmen.getBranche(),actual.getBranche());
-        Assert.assertEquals(unternehmen.getAdresse().getOrt(),unternehmen.getAdresse().getOrt());
-        Assert.assertEquals(unternehmen.getAdresse().getPlz(),unternehmen.getAdresse().getPlz());
-        Assert.assertEquals(unternehmen.getAdresse().getStrasse(),unternehmen.getAdresse().getStrasse());
-        Assert.assertTrue(actual.getLogo() == null);
+        UserDAO.getInstance().registerUser(unternehmen);
+        ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
+        Unternehmen actual = ProfilDAO.getInstance().getUnternehmenProfil(unternehmen);
+        assertEquals(unternehmen.getVorname(),actual.getVorname());
+        assertEquals(unternehmen.getNachname(),actual.getNachname());
+        assertEquals(unternehmen.getEmail(),actual.getEmail());
+        assertEquals(unternehmen.getCname(),actual.getCname());
+        assertEquals(unternehmen.getHauptsitz(),actual.getHauptsitz());
+        assertEquals(unternehmen.getBundesland(),actual.getBundesland());
+        assertEquals(unternehmen.getKontaktnummer(),actual.getKontaktnummer());
+        assertEquals(unternehmen.getBranche(),actual.getBranche());
+        assertEquals(unternehmen.getAdresse().getOrt(),unternehmen.getAdresse().getOrt());
+        assertEquals(unternehmen.getAdresse().getPlz(),unternehmen.getAdresse().getPlz());
+        assertEquals(unternehmen.getAdresse().getStrasse(),unternehmen.getAdresse().getStrasse());
+        assertTrue(actual.getLogo() == null);
         UserDAO.deleteUser(unternehmen.getEmail());
 
     }
     @Test
     public void checkStudentProfil2() throws DatabaseException {
         Student student = userTestFactory.getProfilStudent();
-        UserDAO.registerUser(student);
-        ProfilDAO.createStudentProfil1(student);
-        ProfilDAO.createStudentProfil2(student);
-        Student actual = ProfilDAO.getStudent2(student.getEmail());
+        UserDAO.getInstance().registerUser(student);
+        ProfilDAO.getInstance().createStudentProfil1(student);
+        ProfilDAO.getInstance().createStudentProfil2(student);
+        Student actual = ProfilDAO.getInstance().getStudent(student.getEmail());
 
-        Assert.assertEquals(student.getTaetigkeit().getTaetigkeitName(),actual.getTaetigkeit().getTaetigkeitName());
-        Assert.assertEquals(student.getTaetigkeit().getBeginn(),actual.getTaetigkeit().getBeginn());
-        Assert.assertEquals(student.getTaetigkeit().getEnde(),actual.getTaetigkeit().getEnde());
-        Assert.assertEquals(student.getTaetigkeiten().size(),actual.getTaetigkeiten().size());
+        assertEquals(student.getTaetigkeit().getTaetigkeitName(),actual.getTaetigkeit().getTaetigkeitName());
+        assertEquals(student.getTaetigkeit().getBeginn(),actual.getTaetigkeit().getBeginn());
+        assertEquals(student.getTaetigkeit().getEnde(),actual.getTaetigkeit().getEnde());
+        assertEquals(student.getTaetigkeiten().size(),actual.getTaetigkeiten().size());
         for (int i = 0; i < student.getTaetigkeiten().size(); i++) {
-            Assert.assertEquals(student.getTaetigkeiten().get(i).getTaetigkeitName(),actual.getTaetigkeiten().get(i).getTaetigkeitName());
+            assertEquals(student.getTaetigkeiten().get(i).getTaetigkeitName(),actual.getTaetigkeiten().get(i).getTaetigkeitName());
         }
-
-
 
         UserDAO.deleteUser(student.getEmail());
 
     }
+
+    @Test
+    public void checkStudentWithKenntnisse() throws DatabaseException {
+        Student student = userTestFactory.registerStudent();
+        UserDAO.getInstance().registerUser(student);
+
+        for (int i = 0; i < 4; i++) {
+            Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
+            sprachKenntnis.setKenntnis(gen.nextString());
+            sprachKenntnis.setNiveau("A1 - Grundkenntnisse");
+            student.setSprachKenntnis(sprachKenntnis);
+        }
+        for (int i = 0; i < 4; i++) {
+            Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
+            String kenntnis = gen.nextString();
+            String niveau = "Gut";
+            itKenntnis.setKenntnis(kenntnis);
+            itKenntnis.setNiveau(niveau);
+
+            Assert.assertEquals(kenntnis,itKenntnis.getKenntnis());
+            Assert.assertEquals(niveau,itKenntnis.getNiveau());
+
+            student.setITKenntnis(itKenntnis);
+        }
+        ProfilDAO.getInstance().createStudentProfil3(student);
+        Student actual = ProfilDAO.getInstance().getStudent(student.getEmail());
+        assertTrue(actual.getItKenntnisList() != null);
+        assertTrue(actual.getSprachKenntnisList() != null);
+
+        assertEquals(student.getSprachKenntnisList().size(),actual.getSprachKenntnisList().size());
+        assertEquals(student.getSprachKenntnis().getKenntnis(),actual.getSprachKenntnis().getKenntnis());
+        assertEquals(student.getSprachKenntnis().getNiveau(),actual.getSprachKenntnis().getNiveau());
+
+        assertEquals(student.getItKenntnisList().size(),actual.getItKenntnisList().size());
+        assertEquals(student.getITKenntnis().getKenntnis(),actual.getITKenntnis().getKenntnis());
+        assertEquals(student.getITKenntnis().getNiveau(),actual.getITKenntnis().getNiveau());
+
+
+        UserDAO.deleteUser(student.getEmail());
+
+
+
+    }
+/*
+    @Test
+    public void checkRegisterStudentWithBuilder() throws DatabaseException {
+      Student student = new StudentBuilder(gen.nextEMail()).withVorname(gen.nextString()).withNachname(gen.nextString())
+              .withPasswort("12345678").createStudent();
+      UserDAO.registerUser(student);
+      UserDAO.deleteUser(student.getEmail());
+    }
+
+    @Test
+    public void checkStudentKenntnisse() throws DatabaseException {
+        Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
+        itKenntnis.setKenntnis(gen.nextString());
+        itKenntnis.setNiveau("Sehr Gut");
+
+      Student student = new StudentBuilder(gen.nextEMail()).withVorname(gen.nextString()).withNachname(gen.nextString())
+              .withPasswort("12345678").withItKenntnis(itKenntnis).withItKenntnis(itKenntnis).createStudent();
+      UserDAO.registerUser(student);
+      ProfilDAO.createStudentProfil3(student);
+      UserDAO.deleteUser(student.getEmail());
+
+    }
+ */
+
+
+
+
+
+
 
 
 }

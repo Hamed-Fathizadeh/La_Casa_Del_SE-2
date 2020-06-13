@@ -39,7 +39,7 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
         // Allow column reordering
         this.setColumnReorderingAllowed(true);
 
-        SingleSelect<StellenanzeigeDTO> selection = (SingleSelect<StellenanzeigeDTO>) this.asSingleSelect();
+        @SuppressWarnings("unchecked") SingleSelect<StellenanzeigeDTO> selection = (SingleSelect<StellenanzeigeDTO>) this.asSingleSelect();
 
         // Der Event Listener für den Grid
         this.addSelectionListener(event -> {
@@ -73,7 +73,7 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
             }
         });
 
-        List<T> liste = (List<T>) container.getListe();
+        @SuppressWarnings("unchecked") List<T> liste = (List<T>) container.getListe();
         //this.setCaption("Anzahl Anzeigen " + container.getAnzahl());
         this.setItems( liste);
 

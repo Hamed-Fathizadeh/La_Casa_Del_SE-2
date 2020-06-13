@@ -72,9 +72,9 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             //Bundesland und fachgebiet mussen noch überarbeitet werden
 
-            StringBuilder sbSuchbeg = new StringBuilder(suchbegriff == null ? " " : " and a.suchbegriff = \'" + suchbegriff + "\' ");
-            StringBuilder sbOrt = new StringBuilder( ort == null ? " " : " and a.ort =  \'" +  ort + "\' ");
-            StringBuilder sbBund = new StringBuilder(bundesland == null? " " : " and a.bundesland =  \'" +  bundesland + "\' ");
+            StringBuilder sbSuchbeg = new StringBuilder(suchbegriff == null ? " " : " and a.suchbegriff = '" + suchbegriff + "' ");
+            StringBuilder sbOrt = new StringBuilder( ort == null ? " " : " and a.ort =  '" +  ort + "' ");
+            StringBuilder sbBund = new StringBuilder(bundesland == null? " " : " and a.bundesland =  '" +  bundesland + "' ");
             StringBuilder sBumkreis = new StringBuilder();
             StringBuilder sbEinstellungsart = new StringBuilder(" ");
             StringBuilder sbAb_Datum = new StringBuilder(" ");
@@ -82,9 +82,9 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             if(artSuche.equals("Erweitert")){
 
-                sbEinstellungsart = new StringBuilder(einstellungsart == null ? " " : " and a.art = \'" + einstellungsart + "\' ");
-                sbAb_Datum = new StringBuilder(ab_Datum == null ? " " : " and a.datum >= \'" + ab_Datum + "\' ");
-                sbBranche = new StringBuilder(branche == null ? " " : " and u.branch_name = \'" + branche + "\' ");
+                sbEinstellungsart = new StringBuilder(einstellungsart == null ? " " : " and a.art = '" + einstellungsart + "' ");
+                sbAb_Datum = new StringBuilder(ab_Datum == null ? " " : " and a.datum >= '" + ab_Datum + "' ");
+                sbBranche = new StringBuilder(branche == null ? " " : " and u.branch_name = '" + branche + "' ");
             }
 
             if(umkreis.equals("Ganzer Ort") || ort == null){
@@ -217,7 +217,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         "  join lacasa.tab_unternehmen u\n" +
                         "    on u.firmenname = sa.firmenname\n" +
                         "   and u.hauptsitz = sa.hauptsitz\n" +
-                        " where u.email = \'" + email + "\'");
+                        " where u.email = '" + email + "'");
 
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
@@ -259,6 +259,7 @@ public class ContainerAnzDAO extends AbstractDAO{
             }
         });
 
+        //noinspection unchecked,unchecked,unchecked
         ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList)liste);
 
         return liste;
@@ -274,7 +275,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             try {
                 Unternehmen user = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
-                String[] sOrt = user.getStellenanzeigeDTO().getStandort().toString().split(" - ");
+                String[] sOrt = user.getStellenanzeigeDTO().getStandort().split(" - ");
 
 
                 assert statement != null;
@@ -341,8 +342,8 @@ public class ContainerAnzDAO extends AbstractDAO{
     public static void updateAnzeige(StellenanzeigeDTO stellenanzeige) throws DatabaseException {
 
         String sql = "UPDATE lacasa.tab_stellen_anzeige " +
-                "SET titel = \'" + stellenanzeige.getTitel() +"\', s_beschreibung = \'"+stellenanzeige.getBeschreibung()+"\' " +
-                "WHERE s_anzeige_id = \'"+ stellenanzeige.getId()+"\'";
+                "SET titel = '" + stellenanzeige.getTitel() + "', s_beschreibung = '" +stellenanzeige.getBeschreibung()+ "' " +
+                "WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "'";
 
         PreparedStatement statement = getPreparedStatement(sql);
 
@@ -358,7 +359,7 @@ public class ContainerAnzDAO extends AbstractDAO{
     }
     public static void deleteAnzeige(StellenanzeigeDTO stellenanzeige) throws DatabaseException {
 
-        String sql = "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = \'"+ stellenanzeige.getId()+ "\';";
+        String sql = "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
 
         PreparedStatement statement = getPreparedStatement(sql);
 

@@ -39,7 +39,7 @@ public class JobTitelControl {
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
 
-            set = statement.executeQuery("SELECT \'" + string + "\' FROM lacasa.tab_suchbegriff");
+            set = statement.executeQuery("SELECT '" + string + "' FROM lacasa.tab_suchbegriff");
 
             while (set.next()) {
                 result = true;

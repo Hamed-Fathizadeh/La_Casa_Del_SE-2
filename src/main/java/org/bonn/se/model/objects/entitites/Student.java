@@ -20,7 +20,13 @@ public class Student extends User {
     private  ArrayList<ITKenntnis> itKenntnisList = new  ArrayList<ITKenntnis>();
     private String ausbildung;
     private boolean hasLebenslauf;
+    private ITKenntnis itKenntnis;
+    private SprachKenntnis sprachKenntnis;
+
+
+
     Adresse adresse;
+
 
     public Student() {
         super();
@@ -43,6 +49,28 @@ public class Student extends User {
 
     public void setLebenslauf(byte[] lebenslauf) {
         this.lebenslauf = lebenslauf;
+    }
+    public Student(String email,int student_id, String vorname, String nachname, LocalDate g_datum, String studiengang, byte[] picture, byte[] lebenslauf, String abschluss, String kontakt_nr, int benachrichtigung, ArrayList<Taetigkeit> taetigkeiten, ArrayList<SprachKenntnis> sprachKenntnisList, ArrayList<ITKenntnis> itKenntnisList, String ausbildung, Adresse adresse,String passwort, ITKenntnis itKenntnis, SprachKenntnis sprachKenntnis) {
+        super.setEmail(email);
+        this.student_id = student_id;
+        this.vorname = vorname;
+        this.nachname = nachname;
+        this.g_datum = g_datum;
+        this.studiengang = studiengang;
+        this.picture = picture;
+        this.lebenslauf = lebenslauf;
+        this.abschluss = abschluss;
+        this.kontakt_nr = kontakt_nr;
+        this.benachrichtigung = benachrichtigung;
+        this.taetigkeiten = taetigkeiten;
+        this.sprachKenntnisList = sprachKenntnisList;
+        this.itKenntnisList = itKenntnisList;
+        this.ausbildung = ausbildung;
+        this.adresse = adresse;
+        setITKenntnis(itKenntnis);
+        setSprachKenntnis(sprachKenntnis);
+        super.setPasswort(passwort);
+        setType("S");
     }
 
     public boolean hasLebenslauf(){
@@ -137,6 +165,7 @@ public class Student extends User {
 
     public Taetigkeit getTaetigkeit() { return taetigkeiten.get(taetigkeiten.size()-1); }
     public void setTaetigkeit(Taetigkeit taetigkeit) {
+        if(taetigkeit == null ){return;}
         if(taetigkeiten == null) {
             taetigkeiten = new ArrayList<>();
             taetigkeiten.add(taetigkeit);
@@ -146,6 +175,7 @@ public class Student extends User {
     }
     public SprachKenntnis getSprachKenntnis() { return sprachKenntnisList.get(sprachKenntnisList.size()-1); }
     public void setSprachKenntnis(SprachKenntnis sprachKenntnis) {
+        if(sprachKenntnis == null){return;}
         if(!(sprachKenntnis.getKenntnis() == null)){
             if(sprachKenntnisList == null) {
                 sprachKenntnisList = new ArrayList<>();
@@ -156,7 +186,8 @@ public class Student extends User {
 
     public ITKenntnis getITKenntnis() { return itKenntnisList.get(itKenntnisList.size()-1); }
     public void setITKenntnis(ITKenntnis itKenntnis) {
-        if(!(itKenntnis.getKenntnis().equals(null))) {
+        if(itKenntnis == null){return;}
+        if(!(itKenntnis.getKenntnis() == null)) {
             if(itKenntnisList == null) {
                 itKenntnisList = new ArrayList<>();
             }
@@ -191,10 +222,7 @@ public class Student extends User {
         private String kenntnis;
         private String niveau;
 
-        public SprachKenntnis(String kenntnis, String niveau) {
-            this.kenntnis=kenntnis;
-            this.niveau=niveau;
-        }
+
         public SprachKenntnis() {
             setKenntnis(kenntnis);
             setNiveau(niveau);
@@ -205,6 +233,8 @@ public class Student extends User {
         public String getNiveau() { return this.niveau; }
         public void setNiveau(String niveau) { this.niveau = niveau; }
     }
+
+
 
 
     @Override

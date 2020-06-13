@@ -24,7 +24,7 @@ public class BewerbungDAO extends AbstractDAO{
         return dao;
     }
 
-    public static void bewerben(BewerbungDTO bewerbung) throws DatabaseException, SQLException {
+    public static void bewerben(BewerbungDTO bewerbung) throws DatabaseException {
         String sql = "INSERT INTO lacasa.tab_bewerbung (datum, description, lebenslauf, status, student_id, s_anzeige_id)"+
                 "VALUES(?,?,?,?,?,?)";
 

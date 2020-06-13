@@ -18,11 +18,8 @@ public class RandomString {
     }
     public String nextEMail() {
 
-            for (int idx = 0; idx < buf.length / 2; ++idx) {
-                buf[idx] = symbols[random.nextInt(symbols.length)];
-            }
-        String email =  new String(buf);
-            return email + "@Laca.de";
+
+            return nextString() + "@Laca.de";
     }
     public LocalDate nextDate() {
 

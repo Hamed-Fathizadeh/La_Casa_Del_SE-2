@@ -1,10 +1,8 @@
 package org.bonn.se.control;
 
-import com.vaadin.ui.Image;
 import org.bonn.se.model.dao.BrancheDAO;
 import org.bonn.se.model.dao.OrtDAO;
 import org.bonn.se.model.dao.SuchbegriffDAO;
-import org.bonn.se.model.dao.UserDAO;
 
 import java.util.List;
 
@@ -19,10 +17,6 @@ public class ComponentControl {
             search = new ComponentControl();
         }
         return search;
-    }
-
-    public Image getImageProfile (String email )  {
-        return UserDAO.getInstance().getImage(email);
     }
 
     public List<String> getSuchbegriffe () {

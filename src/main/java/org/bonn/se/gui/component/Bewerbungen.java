@@ -38,7 +38,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         // Allow column reordering
         this.setColumnReorderingAllowed(true);
 
-        SingleSelect<BewerbungDTO> selection = (SingleSelect<BewerbungDTO>) this.asSingleSelect();
+        @SuppressWarnings("unchecked") SingleSelect<BewerbungDTO> selection = (SingleSelect<BewerbungDTO>) this.asSingleSelect();
 
         // Der Event Listener für den Grid
         this.addSelectionListener(event -> {
@@ -75,15 +75,8 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             bewerten.addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
-                    try {
                         BewerbungDTO bw = selection.getValue();
                         BewertungDAO.bewertung(bw);
-
-                    } catch (DatabaseException e) {
-                        e.printStackTrace();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
 
 
                     // Open it in the UI

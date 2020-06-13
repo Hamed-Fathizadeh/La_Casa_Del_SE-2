@@ -1,16 +1,12 @@
 package org.bonn.se.gui.views;
 
 
-import com.github.appreciated.material.MaterialTheme;
 import com.vaadin.data.Binder;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteSuggestionProvider;
-import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
-import eu.maxschuster.vaadin.autocompletetextfield.provider.CollectionSuggestionProvider;
-import eu.maxschuster.vaadin.autocompletetextfield.provider.MatchMode;
+
 import org.bonn.se.control.JobTitelControl;
 import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.RegistrationTextField;
