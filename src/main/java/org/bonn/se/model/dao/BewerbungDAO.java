@@ -1,9 +1,12 @@
 package org.bonn.se.model.dao;
 
+import com.vaadin.server.StreamResource;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDate;
 
@@ -82,4 +85,41 @@ public class BewerbungDAO extends AbstractDAO{
         return !bMarkierung;
 
     }
+
+    public static StreamResource downloadLebenslauf(int student_id) throws DatabaseException {
+
+        ResultSet set;
+
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("select lebenslauf from lacasa.tab_student where student_id = " + student_id);
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+        //InputStream targetStream = null;
+        try {
+            while (set.next()) {
+                InputStream   targetStream = new ByteArrayInputStream(set.getBytes(1));
+
+                return  new StreamResource(new StreamResource.StreamSource() {
+                    @Override
+                    public InputStream getStream() {
+
+                        return targetStream;
+                    }
+                }, student_id+" Lebenslauf.pdf");
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+        return null;
+
+
+
+
+    }
+
 }

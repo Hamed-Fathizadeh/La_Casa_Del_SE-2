@@ -212,9 +212,9 @@ public class StellenanzeigeWindow extends Window {
             });
 
             bewerbungen.addClickListener(event -> {
-                this.close();
                 StellenanzeigeBewerbungenWindow stellenanzeigeBewerbungenWindow = new StellenanzeigeBewerbungenWindow(stellenanzeige);
                 UI.getCurrent().addWindow(stellenanzeigeBewerbungenWindow);
+                this.close();
 
             });
 

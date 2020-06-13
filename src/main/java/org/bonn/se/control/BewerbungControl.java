@@ -1,5 +1,6 @@
 package org.bonn.se.control;
 
+import com.vaadin.server.StreamResource;
 import org.bonn.se.model.dao.BewerbungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.services.db.exception.DatabaseException;
@@ -22,5 +23,10 @@ public class BewerbungControl {
 
     public static boolean statusaendern(int bew_id) throws DatabaseException {
        return BewerbungDAO.statusaendern( bew_id);
+    }
+
+
+    public static StreamResource downloadLebenslauf(int student_id) throws DatabaseException {
+        return BewerbungDAO.downloadLebenslauf( student_id);
     }
 }
