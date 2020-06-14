@@ -10,7 +10,7 @@ import java.net.Socket;
 public class CheckSMTP {
 
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         InetAddress[] addresses = InetAddress.getAllByName("www.google.com");
         for (InetAddress address : addresses) {
             if (address.isReachable(10000))

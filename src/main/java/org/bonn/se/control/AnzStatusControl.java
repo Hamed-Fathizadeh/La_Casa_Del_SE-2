@@ -17,7 +17,7 @@ public class AnzStatusControl {
                 Statement statement = JDBCConnection.getInstance().getStatement();
 
                 statement.executeUpdate("UPDATE lacasa.tab_stellen_anzeige " +
-                        "SET status = \'"+stellenanzeige.getStatus()+"' WHERE s_anzeige_id = \'"+stellenanzeige.getId()+"\'");
+                        "SET status = '" +stellenanzeige.getStatus()+ "' WHERE s_anzeige_id = '" +stellenanzeige.getId()+ "'");
             } catch (SQLException | DatabaseException throwables) {
                 throwables.printStackTrace();
                 throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");

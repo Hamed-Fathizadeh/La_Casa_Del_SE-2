@@ -3,7 +3,6 @@ package org.bonn.se.services.util;
 import com.vaadin.server.FileResource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.UI;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

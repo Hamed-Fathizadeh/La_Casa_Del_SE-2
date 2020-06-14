@@ -9,22 +9,17 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteSuggestionProvider;
-import eu.maxschuster.vaadin.autocompletetextfield.AutocompleteTextField;
-import eu.maxschuster.vaadin.autocompletetextfield.provider.CollectionSuggestionProvider;
-import eu.maxschuster.vaadin.autocompletetextfield.provider.MatchMode;
+
 import org.bonn.se.control.UserSearch;
 import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanel;
 import org.bonn.se.gui.window.RegisterUnternehmenWindow;
-import org.bonn.se.model.dao.OrtDAO;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.OrtService;
 import org.bonn.se.services.util.Roles;
 
 
@@ -156,7 +151,7 @@ public class RegisterUnternehmer extends GridLayout implements View {
                             unternehmen.setBundesland(user.getBundesland());
                             unternehmen.setCname(user.getCname());
 
-                            UserDAO.registerUser(user);
+                            UserDAO.getInstance().registerUser(user);
 
 
                             UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);

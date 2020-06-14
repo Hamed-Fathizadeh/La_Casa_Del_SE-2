@@ -15,7 +15,6 @@ public class Unternehmen extends User {
        private String branche;
        private String kontaktnummer;
        private Adresse adresse;
-       private StellenanzeigeDTO stellenanzeigeDTO;
 
 
     public ArrayList<StellenanzeigeDTO> getStellenanzeigenDTOliste() {
@@ -26,7 +25,6 @@ public class Unternehmen extends User {
 
 
     public void setStellenanzeigeDTO(StellenanzeigeDTO stellenanzeigeDTO) {
-        this.stellenanzeigeDTO = stellenanzeigeDTO;
     }
 
 

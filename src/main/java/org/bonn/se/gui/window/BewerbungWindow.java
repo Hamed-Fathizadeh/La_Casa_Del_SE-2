@@ -1,6 +1,5 @@
 package org.bonn.se.gui.window;
 
-import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
@@ -53,7 +52,7 @@ public class BewerbungWindow extends Window {
             System.out.println("bewWind hier1");
         }else {
             try {
-                student = ProfilDAO.getStudent2(bewerbung.getEmailStudent());
+                student = ProfilDAO.getInstance().getStudent(bewerbung.getEmailStudent());
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }

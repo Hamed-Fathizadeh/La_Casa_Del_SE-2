@@ -59,13 +59,13 @@ public class LoginControl {
                         unternehmen.setEmail(user.getEmail());
                         unternehmen.setVorname(user.getVorname());
                         unternehmen.setNachname(user.getNachname());
-                        unternehmen = ProfilDAO.getUnternehmenProfil(unternehmen);
+                        unternehmen = ProfilDAO.getInstance().getUnternehmenProfil(unternehmen);
 
                         UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
 
                     } else if(set.getString(5).equals("S")) {
                         Student student;
-                        student = ProfilDAO.getStudent2(user.getEmail());
+                        student = ProfilDAO.getInstance().getStudent(user.getEmail());
 
                         UI.getCurrent().getSession().setAttribute(Roles.Student,student);
 

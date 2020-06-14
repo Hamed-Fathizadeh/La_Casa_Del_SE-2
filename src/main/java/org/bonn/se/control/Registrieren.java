@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Registrieren {
     //container
-    ArrayList<User> liste;
+    final ArrayList<User> liste;
 
     public Registrieren(ArrayList<User> liste){
         this.liste=liste;

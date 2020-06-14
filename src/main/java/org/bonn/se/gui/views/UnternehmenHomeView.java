@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 
 
 public class UnternehmenHomeView extends VerticalLayout implements View {
-    private  StellenanzeigeDTO selected = null;
-    private  int anzahl = 0;
+    private final StellenanzeigeDTO selected = null;
+    private final int anzahl = 0;
     public void setUp() {
 
         TopPanelUser topPanel = new TopPanelUser();

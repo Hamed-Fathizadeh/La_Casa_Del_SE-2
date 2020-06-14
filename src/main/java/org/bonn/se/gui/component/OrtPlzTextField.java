@@ -1,7 +1,6 @@
 package org.bonn.se.gui.component;
 
 
-import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import org.bonn.se.services.util.OrtService;
@@ -10,8 +9,8 @@ import org.vaadin.textfieldformatter.NumeralFieldFormatter;
 
 public class OrtPlzTextField extends HorizontalLayout {
 
-    TextField plz ;
-    OrtField comboBund;
+    final TextField plz ;
+    final OrtField comboBund;
 
     public OrtPlzTextField(){
 

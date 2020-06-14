@@ -23,7 +23,7 @@ public class ProfilVerwaltenDAO extends AbstractDAO {
     }
 
     //get daten
-    public boolean changeVorname(StudentDTO dto) throws SQLException {
+    public boolean changeVorname(StudentDTO dto) {
         Statement statement = this.getStatement();
         return true;
     }

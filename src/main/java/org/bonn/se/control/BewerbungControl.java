@@ -15,10 +15,7 @@ public class BewerbungControl {
         } catch (DatabaseException e) {
             e.printStackTrace();
             throw new DatabaseException("Die Anzeige wurde gelöscht!.");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
         }
-
     }
 
     public static boolean statusaendern(int bew_id) throws DatabaseException {

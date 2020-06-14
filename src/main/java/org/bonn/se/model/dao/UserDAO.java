@@ -1,8 +1,5 @@
 package org.bonn.se.model.dao;
 
-import com.vaadin.server.StreamResource;
-import com.vaadin.server.ThemeResource;
-import com.vaadin.ui.Image;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
@@ -10,8 +7,6 @@ import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +31,7 @@ public class UserDAO  extends AbstractDAO {
 
 
 
-    public static User getUser(String email) throws DatabaseException {
+    public User getUser(String email) throws DatabaseException {
 
         ResultSet set;
 
@@ -72,7 +67,7 @@ public class UserDAO  extends AbstractDAO {
         return null;
     }
 
-    public static boolean getUserbyEmail(String email) throws DatabaseException {
+    public boolean getUserbyEmail(String email) throws DatabaseException {
 
         ResultSet set = null;
 
@@ -98,7 +93,7 @@ public class UserDAO  extends AbstractDAO {
         return false;
     }
 
-    public static void registerUser(User user) throws DatabaseException {
+    public void registerUser(User user) throws DatabaseException {
         String sql;
 
         if (user.getType().equals("S")) {
@@ -133,7 +128,7 @@ public class UserDAO  extends AbstractDAO {
             JDBCConnection.getInstance().closeConnection();
         }
     }
-    public static String getUserType(String email)  {
+    public String getUserType(String email)  {
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
@@ -151,7 +146,7 @@ public class UserDAO  extends AbstractDAO {
     }
     public static void deleteUser(String email) throws DatabaseException {
         String sql;
-        if(UserDAO.getUserType(email).equals("S")) {
+        if(UserDAO.getInstance().getUserType(email).equals("S")) {
             sql = "DELETE FROM lacasa.tab_student WHERE email = '" + email + "'; DELETE FROM lacasa.tab_user WHERE email = '" + email + "'";
         } else {
             sql = "DELETE FROM lacasa.tab_unternehmen WHERE email = '" + email + "'; DELETE FROM lacasa.tab_user WHERE email = '" + email + "'";
@@ -171,57 +166,6 @@ public class UserDAO  extends AbstractDAO {
 
     }
 
-
-    public  Image getImage(String email)  {
-        ResultSet set = null;
-
-        try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
-            set = statement.executeQuery("SELECT picture "
-                    + "FROM lacasa.tab_student "
-                    + "WHERE email = '" + email + "'");
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-
-        }
-        try {
-            while (true) {
-                assert set != null;
-                if (!set.next()) break;
-                if(set.getBytes(1) == null) {
-                    ThemeResource unknownPic = new ThemeResource("images/Unknown.png");
-                    return  new Image("",unknownPic);
-                }
-                    byte[] bild = set.getBytes(1);
-
-
-
-                StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
-                    public InputStream getStream()
-                    {
-                        return (bild == null) ? null : new ByteArrayInputStream(
-                                bild);
-                    }
-                };
-                    return new Image(
-                            null, new StreamResource(
-                            streamSource, "streamedSourceFromByteArray"));
-            }
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            try {
-                JDBCConnection.getInstance().closeConnection();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
-        }
-        ThemeResource resource = new ThemeResource("img/RegisterStudent/Unknown.png");
-        return new Image(null,resource);
-    }
-
-
     public static Unternehmen getUnternehmenByStellAnz(StellenanzeigeDTO stellenanzeige) throws DatabaseException {
         ResultSet set;
         try {
@@ -229,7 +173,7 @@ public class UserDAO  extends AbstractDAO {
             set = statement.executeQuery("SELECT * FROM lacasa.tab_unternehmen " +
                     "JOIN lacasa.tab_user " +
                     "USING(email)" +
-                    "WHERE firmenname = \'" + stellenanzeige.getFirmenname() + "\'");
+                    "WHERE firmenname = '" + stellenanzeige.getFirmenname() + "'");
 
             if( set.next()){
                 Unternehmen unternehmen = new Unternehmen();

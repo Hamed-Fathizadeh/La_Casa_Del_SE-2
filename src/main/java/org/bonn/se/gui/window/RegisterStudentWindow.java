@@ -6,7 +6,6 @@ import com.vaadin.data.HasValue;
 import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.Page;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.*;
@@ -247,7 +246,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                 student.setAdresse(adresse);
 
             try {
-                ProfilDAO.createStudentProfil1(student);
+                ProfilDAO.getInstance().createStudentProfil1(student);
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
@@ -267,8 +266,8 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
     private class TaetigkeitStep implements WizardStep {
 
-        ArrayList<Taetigkeit> taetigkeitArrayList = new ArrayList<>();
-        Binder<Taetigkeit> binder = new Binder<>(Taetigkeit.class);
+        final ArrayList<Taetigkeit> taetigkeitArrayList = new ArrayList<>();
+        final Binder<Taetigkeit> binder = new Binder<>(Taetigkeit.class);
         Button plus;
 
         @Override
@@ -424,7 +423,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                     ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setTaetigkeiten(taetigkeitArrayList);
 
                     try {
-                        ProfilDAO.createStudentProfil2((Student) UI.getCurrent().getSession().getAttribute(Roles.Student));
+                        ProfilDAO.getInstance().createStudentProfil2((Student) UI.getCurrent().getSession().getAttribute(Roles.Student));
                     } catch (DatabaseException e) {
                         e.printStackTrace();
                     }
@@ -725,7 +724,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                 }
 
                 try {
-                    ProfilDAO.createStudentProfil3((Student) UI.getCurrent().getSession().getAttribute(Roles.Student));
+                    ProfilDAO.getInstance().createStudentProfil3((Student) UI.getCurrent().getSession().getAttribute(Roles.Student));
                 } catch (DatabaseException e) {
                     e.printStackTrace();
                 }

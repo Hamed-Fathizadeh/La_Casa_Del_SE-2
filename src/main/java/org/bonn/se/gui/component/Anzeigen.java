@@ -1,6 +1,5 @@
 package org.bonn.se.gui.component;
 
-import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
@@ -13,7 +12,6 @@ import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
-import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -22,24 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
-    List<T> data;
-    ContainerNeuigkeiten container;
-
-    @Override
-    public List<T> getData() {
-        return data;
-    }
-
-    public int getAnzahlRow() {
-        return data.size();
-    }
-
-    public Grid<T> setData(List<T> data) {
-        this.removeAllColumns();
-        this.data = data;
-        setUp();
-        return this;
-    }
 
     public Anzeigen(String str, ContainerNeuigkeiten container){
         super();
@@ -49,13 +29,12 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
         this.setSelectionMode(SelectionMode.SINGLE);
         this.setCaption("Treffer: "+ container.getAnzahl());
 
-
         if(!str.equals("Student")) {
-            this.setWidth("150px");
+            this.setWidth("150%");
         }else{
-            this.setWidth("1500px");
+            this.setWidth("800px");
         }
-        this.setHeight("500px");
+        this.setHeight("100%");
 
         // Allow column reordering
         this.setColumnReorderingAllowed(true);
@@ -94,15 +73,9 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
             }
         });
 
-        data = (List<T>) container.getListe();
-        setUp();
-
-    }
-    public void setUp(){
-
-
+        List<T> liste = (List<T>) container.getListe();
         //this.setCaption("Anzahl Anzeigen " + container.getAnzahl());
-        this.setItems( data);
+        this.setItems( liste);
 
         ThemeResource resource = new ThemeResource("img/Anzeigen/rot.png");
         Image rot = new Image(null, resource);
@@ -115,26 +88,21 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
         orange.setDescription("Entwurf");
         String day ="";
         long div;
-        if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        if(str.equals("Student")) {
             this.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Logo");
             this.addColumn(StellenanzeigeDTO::getFirmenname).setCaption("Unternehmen");
             this.addColumn(StellenanzeigeDTO::getZeitstempel).setCaption("Online seit");
-            this.addComponentColumn(p -> {
-                RatingStars rating = new RatingStars();
-                rating.setMaxValue(5);
-                rating.setValue(p.getBewertung());
-                rating.setReadOnly(true);
-                return rating;
-            }).setCaption("Bewertung");
         }
         this.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
         this.addColumn(StellenanzeigeDTO::getStandort).setCaption("Ort");
         this.addColumn(StellenanzeigeDTO::getDatum).setCaption("Beginn");
 
-        if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        if(!str.equals("Student")) {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
             this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status");
         }
+
+
 
     }
  }
