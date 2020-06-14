@@ -1,5 +1,9 @@
 package junit.util;
 
+import com.vaadin.server.FileResource;
+import com.vaadin.server.StreamResource;
+import com.vaadin.ui.Image;
+
 import java.io.*;
 
 public class ImageConverter {
@@ -19,4 +23,5 @@ public class ImageConverter {
         }
         return bos.toByteArray();
     }
+
 }
