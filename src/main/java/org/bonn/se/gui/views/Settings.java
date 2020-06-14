@@ -142,6 +142,8 @@ public class Settings  extends VerticalLayout implements View {
 
                                     Window subWindow = new Window("Löschung Ihres Kontos");
                                     VerticalLayout subContent = new VerticalLayout();
+                                    subWindow.setWidth("600px");
+                                    subWindow.setHeight("200px");
                                     subWindow.setContent(subContent);
                                     subContent.addComponent(new Label("Ihr Konto wurde erfolgreich gelöscht!"));
                                     subWindow.center();
