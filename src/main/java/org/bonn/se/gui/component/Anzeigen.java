@@ -57,7 +57,7 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
         }
         this.setHeight("500px");
 
-        // Allow column reordering
+        // Allow column reordering wir können es auch ändern
         this.setColumnReorderingAllowed(true);
 
         SingleSelect<StellenanzeigeDTO> selection = (SingleSelect<StellenanzeigeDTO>) this.asSingleSelect();

@@ -7,9 +7,12 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.bonn.se.gui.component.Anzeigen;
+import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.util.Roles;
@@ -94,7 +97,15 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         gAnzeigenPapierkorb.setSizeFull();
         tabSheet.addTab(gAnzeigenPapierkorb,"Papierkorb "+gAnzeigenPapierkorb.getAnzahlRow());
 
-        tabSheet.addTab(new Label("\n Wird noch von Hamed bearbeitet"),"Neue Bewerbungen 0");
+        ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
+        containerBewerbungen.loadNeueBewerbungen();
+        Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"Unternehmen");
+        //bewerbungen.setHeightMode(HeightMode.UNDEFINED);
+        bewerbungen.setSizeFull();
+
+
+
+        tabSheet.addTab(bewerbungen,"Neue Bewerbungen "+bewerbungen.getAnzahlRow());
 
 
 

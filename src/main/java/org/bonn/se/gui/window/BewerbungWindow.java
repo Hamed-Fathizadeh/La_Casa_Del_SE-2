@@ -178,7 +178,7 @@ public class BewerbungWindow extends Window {
                     BewerbungDTO bewerbungDTO = new BewerbungDTO();
                     bewerbungDTO.setDescription(richTextArea.getValue());
                     bewerbungDTO.setLebenslauf(PdfUploader.getByte());
-                    bewerbungDTO.setStatus(1);
+                    bewerbungDTO.setStatus(9);
                     bewerbungDTO.setStudentID(st.getStudent_id());
                     if(userType.equals("Student")) {
                         bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
