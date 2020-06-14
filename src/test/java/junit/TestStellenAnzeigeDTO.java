@@ -36,6 +36,9 @@ public class TestStellenAnzeigeDTO {
     private String art = "Feste Anstellung";
 
 
+    //        File file = new File("src/main/resources/Unknown.png");
+    //       byte[] immage = ImageConverter.getImage(file);
+
     StellenanzeigeDTO stanz = new StellenanzeigeDTO();
 
 
