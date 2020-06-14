@@ -94,7 +94,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         gAnzeigenPapierkorb.setSizeFull();
         tabSheet.addTab(gAnzeigenPapierkorb,"Papierkorb "+gAnzeigenPapierkorb.getAnzahlRow());
 
-        tabSheet.addTab(new Label("Wird noch von Hamed bearbeitet"),"Neue Bewerbungen 0");
+        tabSheet.addTab(new Label("\n Wird noch von Hamed bearbeitet"),"Neue Bewerbungen 0");
 
 
 
