@@ -24,6 +24,16 @@ import java.util.List;
 
 public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
     List<T> data;
+    public BewerbungDTO bewerbungDTO;
+
+    public BewerbungDTO getBewerbungDTO() {
+        return bewerbungDTO;
+    }
+
+    public void setBewerbungDTO(BewerbungDTO bewerbungDTO) {
+        this.bewerbungDTO = bewerbungDTO;
+    }
+
 
     public List<T> getListe() {
         return data;
@@ -62,12 +72,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             VerticalLayout subContent = new VerticalLayout();
             subWindow.setContent(subContent);
 
-            // Put some components in it
-            // subContent.addComponent(new Label("Bewerten"));
-
-            //selection.getValue().getUnternehmenName();
-            //selection.getValue().getUnternehmenHauptsitz();
-
             RatingStars rating = new RatingStars();
 
             rating.setMaxValue(5);
@@ -92,7 +96,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
 
                     // Open it in the UI
-                    UI.getCurrent().addWindow(subWindow);
+                    subWindow.close();
                 }
             });
 
@@ -103,9 +107,16 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             // Open it in the UI
             UI.getCurrent().addWindow(subWindow);
         }else{
-                 BewerbungDTO bw = selection.getValue();
-                 BewerbungWindow bewerbungWindow = new BewerbungWindow(null, "Unternehmen", bw);
-                 UI.getCurrent().addWindow(bewerbungWindow);
+
+
+                 BewerbungDTO bewDTOtemp = selection.getValue();
+                 if(bewDTOtemp != null){
+                     setBewerbungDTO(bewDTOtemp);
+                 }
+
+                BewerbungWindow bewerbungWindow = new BewerbungWindow(null, "Unternehmen", bewerbungDTO);
+                UI.getCurrent().addWindow(bewerbungWindow);
+
 
 
         }
