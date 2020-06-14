@@ -97,13 +97,12 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         gAnzeigenPapierkorb.setSizeFull();
         tabSheet.addTab(gAnzeigenPapierkorb,"Papierkorb "+gAnzeigenPapierkorb.getAnzahlRow());
 
+
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungen.loadNeueBewerbungen();
         Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"Unternehmen");
-        //bewerbungen.setHeightMode(HeightMode.UNDEFINED);
+        bewerbungen.setHeightMode(HeightMode.UNDEFINED);
         bewerbungen.setSizeFull();
-
-
 
         tabSheet.addTab(bewerbungen,"Neue Bewerbungen "+bewerbungen.getAnzahlRow());
 
