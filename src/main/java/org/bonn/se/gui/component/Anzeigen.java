@@ -138,4 +138,3 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
 
     }
 }
-
