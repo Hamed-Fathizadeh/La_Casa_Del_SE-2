@@ -39,7 +39,7 @@ public class StellenanzeigeDTO {
 
     public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
                              int status, String standort, String bundesland, String firmenname, String hauptsitz,
-                             String suchbegriff, String art, byte[] unternehmenLogo) {
+                             String suchbegriff, String art, byte[] unternehmenLogo, double bewertung) {
         this.id = id;
         this.datum = datum;
         this.zeitstempel = zeitstempel;
@@ -53,6 +53,7 @@ public class StellenanzeigeDTO {
         this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
         this.suchbegriff = suchbegriff;
         this.art = art;
+        this.bewertung = bewertung;
     }
 
     public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,

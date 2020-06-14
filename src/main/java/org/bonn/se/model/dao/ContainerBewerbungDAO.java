@@ -3,6 +3,7 @@ package org.bonn.se.model.dao;
 import com.vaadin.ui.UI;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
@@ -27,6 +28,42 @@ public class ContainerBewerbungDAO {
         }
         return dao;
     }
+    public static List<BewerbungDTO> loadNeueBewerbungen()throws DatabaseException{
+        List<BewerbungDTO> liste = new ArrayList<>();
+        ResultSet set;
+        Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
+                    "where firmenname = '"+unternehmen.getCname()+"' and hauptsitz = '"+unternehmen.getHauptsitz()+"' and status = 9"
+            );
+
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+        try {
+
+            while (set.next()) {
+                BewerbungDTO bewerbung = new BewerbungDTO(set.getInt(1),set.getDate(2),set.getString(3),
+                        set.getBytes(4),set.getInt(5),set.getInt(6),
+                        set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
+                        set.getString(11),set.getString(12),set.getDouble(22)
+                );
+                liste.add(bewerbung);
+
+
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+        return liste;
+
+    }
+
 
     public static List<BewerbungDTO> load(String str) throws DatabaseException {
         List<BewerbungDTO> liste = new ArrayList<>();

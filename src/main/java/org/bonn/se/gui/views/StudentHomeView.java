@@ -246,7 +246,8 @@ public class StudentHomeView extends VerticalLayout implements View {
         }
     }
 
-    public static void stellenSuchen( String fachgebiet, String standort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche) {
+    public static void stellenSuchen( String fachgebiet, String standort, String bundesland, String umkreis,
+                                      String artSuche, String einstellungsart, Date ab_Datum, String branche) {
 
         ContainerNeuigkeiten container = ContainerNeuigkeiten.getInstance();
         container.loadSuche(fachgebiet, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
