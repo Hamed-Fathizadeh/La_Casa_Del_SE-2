@@ -240,6 +240,7 @@ public class TestDAOs {
 
 
     }
+
 /*
     @Test
     public void checkRegisterStudentWithBuilder() throws DatabaseException {
