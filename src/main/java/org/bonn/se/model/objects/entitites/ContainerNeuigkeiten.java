@@ -4,13 +4,17 @@ import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.db.exception.DatabaseException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class ContainerNeuigkeiten {
 
     private List<StellenanzeigeDTO> liste;
+
+    private ArrayList<StellenanzeigeDTO> liste2;
 
     private static ContainerNeuigkeiten instance = new ContainerNeuigkeiten();
 
@@ -71,6 +75,7 @@ public class ContainerNeuigkeiten {
         return liste;
     }
 
+
     public void loadSuche(String suchbegriff_id, String standort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche){
         try {
             liste = ContainerAnzDAO.loadSuche(suchbegriff_id, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
@@ -79,6 +84,21 @@ public class ContainerNeuigkeiten {
             throwables.getMessage();
         }
 
+    }
+
+    public Stream<StellenanzeigeDTO> fetchNachwas(StellenanzeigeDTO filter, int offset, int limit) {
+        return getListe().stream()
+                .filter(begrif -> filter == null || begrif.getSuchbegriff()
+                        .toLowerCase().startsWith(filter.getSuchbegriff().toLowerCase())
+                )
+                .skip(offset).limit(limit);
+    }
+    public Stream<StellenanzeigeDTO> fetchOrtBund(StellenanzeigeDTO filter, int offset, int limit) {
+        return getListe().stream()
+                .filter(begrif -> filter == null || begrif.getStandort()
+                        .toLowerCase().startsWith(filter.getStandort().toLowerCase())
+                )
+                .skip(offset).limit(limit);
     }
 
 }
