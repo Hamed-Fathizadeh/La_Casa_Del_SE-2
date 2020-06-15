@@ -2,17 +2,24 @@ package org.bonn.se.gui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.bonn.se.gui.component.Anzeigen;
+import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
+
+import java.util.stream.Collectors;
 
 
 public class UnternehmenHomeView extends VerticalLayout implements View {
@@ -38,12 +45,14 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         vlayoutButton.setComponentAlignment(buttonAnzeigeErstellen,Alignment.BOTTOM_CENTER);
 
 //grid anzeige
-        ContainerNeuigkeiten containerMeinAnzeigen = ContainerNeuigkeiten.getInstance();
-        String email = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getEmail();
 
-        containerMeinAnzeigen.loadUnternehmenAnzeigen(email);
+        Unternehmen unternehmen = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
+
+        ContainerNeuigkeiten containerMeinAnzeigen = ContainerNeuigkeiten.getInstance();
+        containerMeinAnzeigen.loadUnternehmenAnzeigen(unternehmen.getEmail());
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
+        gAnzeigen.setSizeFull();
 
  //grid anzeige end
 
@@ -60,13 +69,57 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         Label lBewerbung = new Label(ls, ContentMode.HTML);
 
 
+        //add TabSheet
+        TabSheet tabSheet = new TabSheet();
+        tabSheet.setWidthFull();
+        tabSheet.setHeight("1000px");
+        tabSheet.addStyleName(ValoTheme.TABSHEET_FRAMED);
+        tabSheet.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
+        gAnzeigen.removeColumn("Anzahl neue Bewerbungen");
+        tabSheet.addTab(gAnzeigen,"Alle "+gAnzeigen.getAnzahlRow());
+
+
+        Anzeigen<StellenanzeigeDTO> gAnzeigenOnline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        gAnzeigenOnline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==1).collect(Collectors.toList()));
+        gAnzeigenOnline.setSizeFull();
+        gAnzeigenOnline.removeColumn("Anzahl neue Bewerbungen");
+        tabSheet.addTab(gAnzeigenOnline,"Online "+gAnzeigenOnline.getAnzahlRow());
+
+        Anzeigen<StellenanzeigeDTO> gAnzeigenOffline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        gAnzeigenOffline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==2).collect(Collectors.toList()));
+        gAnzeigenOffline.setSizeFull();
+        gAnzeigenOffline.removeColumn("Anzahl neue Bewerbungen");
+        tabSheet.addTab(gAnzeigenOffline,"Offline "+gAnzeigenOffline.getAnzahlRow());
+
+        Anzeigen<StellenanzeigeDTO> gAnzeigenEntwurf = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        gAnzeigenEntwurf.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==3).collect(Collectors.toList()));
+        gAnzeigenEntwurf.setSizeFull();
+        gAnzeigenEntwurf.removeColumn("Anzahl neue Bewerbungen");
+        tabSheet.addTab(gAnzeigenEntwurf,"Entwurf "+gAnzeigenEntwurf.getAnzahlRow());
+
+
+         containerMeinAnzeigen.loadNeuBewerbungen(unternehmen);
+         Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+         gAnzeigenNeuBewerbungen.setSizeFull();
+         gAnzeigenNeuBewerbungen.removeColumn("Status");
+
+         if(gAnzeigenNeuBewerbungen.getData().size()>0){
+             ThemeResource resource = new ThemeResource("img/Anzeigen/rot_klein.png");
+             tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ",resource);
+         }else {
+             tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ");
+         }
+
         bottomGridBewNeu.addComponent(lBewerbung,0,0,0,0);
-          bottomGridBewNeu.addComponent(gAnzeigen,0,1,0,1);
+        bottomGridBewNeu.addComponent(tabSheet,0,1,0,1);
 
         bottomGridBewNeu.setComponentAlignment(lBewerbung, Alignment.BOTTOM_CENTER);
-        bottomGridBewNeu.setComponentAlignment(gAnzeigen, Alignment.BOTTOM_CENTER);
+        bottomGridBewNeu.setComponentAlignment(tabSheet, Alignment.BOTTOM_CENTER);
         bottomGridBewNeu.setSizeFull();
+        bottomGridBewNeu.setMargin(true);
+
        // bottomGridBewNeu.addStyleName("AnzeigeUnternehmen");
+
 
 
 
@@ -75,7 +128,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
               Maingrid.addComponent(bottomGridBewNeu, 0, 2, 2, 2);
 
 
-       Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
+        Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
         Maingrid.setComponentAlignment(vlayoutButton, Alignment.MIDDLE_CENTER);
         Maingrid.setComponentAlignment(bottomGridBewNeu, Alignment.BOTTOM_CENTER);
 

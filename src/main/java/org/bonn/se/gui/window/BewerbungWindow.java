@@ -52,6 +52,7 @@ public class BewerbungWindow extends Window {
             System.out.println("bewWind hier1");
         }else {
             try {
+                System.out.println("bewWindow "+bewerbung);
                 student = ProfilDAO.getInstance().getStudent(bewerbung.getEmailStudent());
             } catch (DatabaseException e) {
                 e.printStackTrace();
@@ -178,7 +179,7 @@ public class BewerbungWindow extends Window {
                     BewerbungDTO bewerbungDTO = new BewerbungDTO();
                     bewerbungDTO.setDescription(richTextArea.getValue());
                     bewerbungDTO.setLebenslauf(PdfUploader.getByte());
-                    bewerbungDTO.setStatus(1);
+                    bewerbungDTO.setStatus(9);
                     bewerbungDTO.setStudentID(st.getStudent_id());
                     if(userType.equals("Student")) {
                         bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
@@ -200,9 +201,13 @@ public class BewerbungWindow extends Window {
             Label lAnschreiben = new Label("<h1>Anschreiben<h1>", ContentMode.HTML);
 
             Button downloadLebnslauf = new Button("Lebenslauf Herunterladen");
-            Button loeschen = new Button("Bewerbung Löschen");
             Button markieren = new Button("Bewerbung Markieren");
             markieren.setSizeFull();
+
+            Button ablehnen = new Button("Bewerbung ablehnen");
+            Button zusagen = new Button("Bewerbung zusagen");
+
+
 
 
 
@@ -228,9 +233,10 @@ public class BewerbungWindow extends Window {
             mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 14, 5, 14);
 
 
-            mainGridLayout.addComponent(downloadLebnslauf, 5, 15);
             mainGridLayout.addComponent(markieren, 4, 0);
-            mainGridLayout.addComponent(loeschen, 4, 15);
+            mainGridLayout.addComponent(downloadLebnslauf, 5, 15);
+            mainGridLayout.addComponent(zusagen, 4, 15);
+            mainGridLayout.addComponent(ablehnen, 3, 15);
             mainGridLayout.addComponent(titel, 0, 1, 5, 1);
             mainGridLayout.setComponentAlignment(titel, Alignment.TOP_CENTER);
             mainGridLayout.setComponentAlignment(markieren, Alignment.TOP_RIGHT);
@@ -239,7 +245,7 @@ public class BewerbungWindow extends Window {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     try {
-                       bewerbung.setBewerbung_markiert(BewerbungControl.statusaendern(bewerbung.getBewerbungID()));
+                       bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
                     } catch (DatabaseException e) {
                         e.printStackTrace();
                     }
@@ -249,6 +255,32 @@ public class BewerbungWindow extends Window {
 
 
 
+                }
+            });
+
+            zusagen.addClickListener(new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+
+                    BewerbungControl.statusAendern(bewerbung.getBewerbungID(),2);
+                    BewerbungWindow.this.close();
+                }
+            });
+
+            ablehnen.addClickListener(new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
+                    if(bewerbung.isBewerbung_markiert()) {
+                        try {
+                            bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
+                        } catch (DatabaseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    BewerbungControl.statusAendern(bewerbung.getBewerbungID(),3);
+
+                    BewerbungWindow.this.close();
                 }
             });
 

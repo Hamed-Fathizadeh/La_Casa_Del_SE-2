@@ -55,6 +55,14 @@ public class ContainerNeuigkeiten {
         }
     }
 
+    public void loadNeuBewerbungen(Unternehmen unternehmen){
+        try {
+            liste = ContainerAnzDAO.loadNeuBewerbungen(unternehmen);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+    }
+
     public StellenanzeigeDTO getAnzeige(int i){
         return liste.get(i);
     }

@@ -4,9 +4,11 @@ package org.bonn.se.gui.views;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.Page;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
+import org.bonn.se.control.BewerbungControl;
 import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.OrtField;
@@ -15,13 +17,16 @@ import org.bonn.se.gui.window.ErweiterteSuche;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.*;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.SuchbegrifService;
 import org.bonn.se.services.util.Views;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 public class StudentHomeView extends VerticalLayout implements View {
+
     static Grid GridAnzeig = null;
     static GridLayout Maingrid = new GridLayout(2, 5);
 
@@ -43,7 +48,7 @@ public class StudentHomeView extends VerticalLayout implements View {
 
 
 
-    public void setUp() {
+    public void setUp() throws DatabaseException, SQLException {
 
         Maingrid = new GridLayout(2, 5);
 
@@ -214,6 +219,12 @@ public class StudentHomeView extends VerticalLayout implements View {
         this.setMargin(false);
         this.addStyleName("grid");
 
+        loadProfil();
+
+    }
+
+    public void loadProfil() throws DatabaseException, SQLException {
+        BewerbungControl.checkDeletedAnzeige();
     }
 
     @Override
@@ -221,7 +232,13 @@ public class StudentHomeView extends VerticalLayout implements View {
 
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            this.setUp();
+            try {
+                this.setUp();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
@@ -229,7 +246,8 @@ public class StudentHomeView extends VerticalLayout implements View {
         }
     }
 
-    public static void stellenSuchen( String fachgebiet, String standort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche) {
+    public static void stellenSuchen( String fachgebiet, String standort, String bundesland, String umkreis,
+                                      String artSuche, String einstellungsart, Date ab_Datum, String branche) {
 
         ContainerNeuigkeiten container = ContainerNeuigkeiten.getInstance();
         container.loadSuche(fachgebiet, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);

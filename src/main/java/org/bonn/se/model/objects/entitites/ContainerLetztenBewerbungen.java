@@ -46,6 +46,15 @@ public class ContainerLetztenBewerbungen {
         }
     }
 
+    public void loadNeueBewerbungen(){
+        try {
+            liste = ContainerBewerbungDAO.loadNeueBewerbungen();
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void loadByStellenAnzeigeID(String str, int saID){
         try {
             liste = ContainerBewerbungDAO.loadByStellenAnzeigeID(str,saID);
