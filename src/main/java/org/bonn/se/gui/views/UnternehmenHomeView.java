@@ -2,6 +2,7 @@ package org.bonn.se.gui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
@@ -44,10 +45,11 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         vlayoutButton.setComponentAlignment(buttonAnzeigeErstellen,Alignment.BOTTOM_CENTER);
 
 //grid anzeige
-        ContainerNeuigkeiten containerMeinAnzeigen = ContainerNeuigkeiten.getInstance();
-        String email = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getEmail();
 
-        containerMeinAnzeigen.loadUnternehmenAnzeigen(email);
+        Unternehmen unternehmen = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
+
+        ContainerNeuigkeiten containerMeinAnzeigen = ContainerNeuigkeiten.getInstance();
+        containerMeinAnzeigen.loadUnternehmenAnzeigen(unternehmen.getEmail());
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setSizeFull();
@@ -73,43 +75,43 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         tabSheet.setHeight("1000px");
         tabSheet.addStyleName(ValoTheme.TABSHEET_FRAMED);
         tabSheet.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-
+        gAnzeigen.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigen,"Alle "+gAnzeigen.getAnzahlRow());
 
 
         Anzeigen<StellenanzeigeDTO> gAnzeigenOnline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
         gAnzeigenOnline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==1).collect(Collectors.toList()));
         gAnzeigenOnline.setSizeFull();
+        gAnzeigenOnline.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigenOnline,"Online "+gAnzeigenOnline.getAnzahlRow());
 
         Anzeigen<StellenanzeigeDTO> gAnzeigenOffline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
         gAnzeigenOffline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==2).collect(Collectors.toList()));
         gAnzeigenOffline.setSizeFull();
+        gAnzeigenOffline.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigenOffline,"Offline "+gAnzeigenOffline.getAnzahlRow());
 
         Anzeigen<StellenanzeigeDTO> gAnzeigenEntwurf = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
         gAnzeigenEntwurf.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==3).collect(Collectors.toList()));
         gAnzeigenEntwurf.setSizeFull();
+        gAnzeigenEntwurf.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigenEntwurf,"Entwurf "+gAnzeigenEntwurf.getAnzahlRow());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenPapierkorb = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
-        gAnzeigenPapierkorb.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==4).collect(Collectors.toList()));
-        gAnzeigenPapierkorb.setSizeFull();
-        tabSheet.addTab(gAnzeigenPapierkorb,"Papierkorb "+gAnzeigenPapierkorb.getAnzahlRow());
 
+         containerMeinAnzeigen.loadNeuBewerbungen(unternehmen);
+         Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+         gAnzeigenNeuBewerbungen.setSizeFull();
+         gAnzeigenNeuBewerbungen.removeColumn("Status");
 
-        ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
-        containerBewerbungen.loadNeueBewerbungen();
-        Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"Unternehmen");
-        bewerbungen.setHeightMode(HeightMode.UNDEFINED);
-        bewerbungen.setSizeFull();
-
-        tabSheet.addTab(bewerbungen,"Neue Bewerbungen "+bewerbungen.getAnzahlRow());
-
-
+         if(gAnzeigenNeuBewerbungen.getAnzahlNeuBewerbungen()>0){
+             ThemeResource resource = new ThemeResource("img/Anzeigen/rot_klein.png");
+             tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ",resource);
+         }else {
+             tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ");
+         }
 
         bottomGridBewNeu.addComponent(lBewerbung,0,0,0,0);
-          bottomGridBewNeu.addComponent(tabSheet,0,1,0,1);
+        bottomGridBewNeu.addComponent(tabSheet,0,1,0,1);
 
         bottomGridBewNeu.setComponentAlignment(lBewerbung, Alignment.BOTTOM_CENTER);
         bottomGridBewNeu.setComponentAlignment(tabSheet, Alignment.BOTTOM_CENTER);

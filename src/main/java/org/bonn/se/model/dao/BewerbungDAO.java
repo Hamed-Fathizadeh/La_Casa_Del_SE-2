@@ -86,6 +86,22 @@ public class BewerbungDAO extends AbstractDAO{
 
     }
 
+    public static void statusNeuBewAendern(int bew_id) throws DatabaseException{
+
+        String sql = "update lacasa.tab_bewerbung set status = 1 where bewerbung_id = "+bew_id +" and status = 9";
+        PreparedStatement statement = getPreparedStatement(sql);
+
+        try {
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+
+    }
+
+
     public static StreamResource downloadLebenslauf(int student_id) throws DatabaseException {
 
         ResultSet set;

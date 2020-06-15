@@ -33,9 +33,9 @@ public class ContainerAnzDAO extends AbstractDAO{
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
-            set = statement.executeQuery("SELECT *, " +
-                    "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew GROUP BY bew.firmenname) AS bewertung"+
-                    "FROM lacasa.tab_stellen_anzeige where status = 1 ");
+            set = statement.executeQuery("SELECT as.*, " +
+                    "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = as.firmenname and bew.hauptsitz = as.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
+                    "FROM lacasa.tab_stellen_anzeige as where status = 1 ");
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
@@ -119,18 +119,10 @@ public class ContainerAnzDAO extends AbstractDAO{
                         "and b.bundesland = '"+bundesland+"') \n");
             }
 
-            System.out.println("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
-                    "      ,a.ort, a.bundesland, a.firmenname, a.hauptsitz, a.suchbegriff, a.art, u.logo ,\n" +
-                    "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew GROUP BY bew.firmenname) AS bewertung"+
-                    "  FROM lacasa.tab_stellen_anzeige a\n" +
-                    "  join lacasa.tab_unternehmen u\n" +
-                    "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
-                    " where status = 1" + sbSuchbeg  + sbOrt + sbBund + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis);
-
 
             set = statement.executeQuery("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
                     "      ,a.ort, a.bundesland, a.firmenname, a.hauptsitz, a.suchbegriff, a.art, u.logo ,\n" +
-                    "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew GROUP BY bew.firmenname) AS bewertung"+
+                    "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = u.firmenname and bew.hauptsitz = u.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
                     "  FROM lacasa.tab_stellen_anzeige a\n" +
                     "  join lacasa.tab_unternehmen u\n" +
                     "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
@@ -175,7 +167,7 @@ public class ContainerAnzDAO extends AbstractDAO{
             }
                     Statement statement = JDBCConnection.getInstance().getStatement();
                     set = statement.executeQuery("select sa.*, u.logo,\n" +
-                            "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew GROUP BY bew.firmenname) AS bewertung"+
+                            "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = u.firmenname and bew.hauptsitz = u.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
                             "  from lacasa.tab_stellen_anzeige sa\n" +
                             "  join lacasa.tab_unternehmen u\n" +
                             "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz and sa.status = 1 order by sa.zeitstempel desc "+limit);
@@ -215,14 +207,24 @@ public class ContainerAnzDAO extends AbstractDAO{
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
         try {
-                Statement statement = JDBCConnection.getInstance().getStatement();
-                set = statement.executeQuery("select sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung," +
-                        " sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art \n" +
-                        "  from lacasa.tab_stellen_anzeige sa\n" +
-                        "  join lacasa.tab_unternehmen u\n" +
-                        "    on u.firmenname = sa.firmenname\n" +
-                        "   and u.hauptsitz = sa.hauptsitz\n" +
-                        " where u.email = '" + email + "'");
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            System.out.println("select sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung," +
+                    " sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art ,b.status \n" +
+                    "  from lacasa.tab_stellen_anzeige sa\n" +
+                    "  join lacasa.tab_unternehmen u\n" +
+                    "    on u.firmenname = sa.firmenname\n" +
+                    "  join lacasa.tab_bewerbung b\n" +
+                    "    on sa.s_anzeige_id = b.s_anzeige_id\n" +
+                    "   and u.hauptsitz = sa.hauptsitz\n" +
+                    " where u.email = '" + email + "'");
+
+            set = statement.executeQuery("select sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung," +
+                    " sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art ,null \n" +
+                    "  from lacasa.tab_stellen_anzeige sa\n" +
+                    "  join lacasa.tab_unternehmen u\n" +
+                    "    on u.firmenname = sa.firmenname\n" +
+                    "   and u.hauptsitz = sa.hauptsitz\n" +
+                    " where u.email = '" + email + "'");
 
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
@@ -238,7 +240,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getDate(3), set.getString(4), set.getString(5),
                         set.getInt(6), set.getString(7), set.getString(8),
                         set.getString(9), set.getString(10),set.getString(11),
-                        set.getString(12)
+                        set.getString(12),set.getInt(13)
                 );
 
                 liste.add(sa);
@@ -269,6 +271,79 @@ public class ContainerAnzDAO extends AbstractDAO{
 
         return liste;
     }
+
+
+
+    public static List<StellenanzeigeDTO> loadNeuBewerbungen(Unternehmen unternehmen) throws DatabaseException {
+
+        List<StellenanzeigeDTO> liste = new ArrayList<>();
+        ResultSet set;
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            System.out.println("SELECT sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung,  \n" +
+                    "                                                      sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art, b.bewerbung_id, count( b.bewerbung_id) anzahlBewerbung\n" +
+                    "                                                  FROM lacasa.tab_stellen_anzeige sa\n" +
+                    "                                                 join lacasa.tab_bewerbung b\n" +
+                    "                                                    on sa.s_anzeige_id = b.s_anzeige_id\n" +
+                    "                                                 where sa.firmenname = '"+unternehmen.getCname()+"' and sa.hauptsitz = '"+unternehmen.getHauptsitz()+"'\n" +
+                    "                                                   and b.status = 9\n" +
+                    "                                                 group by sa.s_anzeige_id , b.bewerbung_id ");
+            set = statement.executeQuery("SELECT sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung, \n" +
+                                                "       sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art, count( b.bewerbung_id) anzahlBewerbung\n" +
+                                                "  FROM lacasa.tab_stellen_anzeige sa\n" +
+                                                "  join lacasa.tab_bewerbung b\n" +
+                                                "    on sa.s_anzeige_id = b.s_anzeige_id\n" +
+                                                " where sa.firmenname = '"+unternehmen.getCname()+"' and sa.hauptsitz = '"+unternehmen.getHauptsitz()+"'\n" +
+                                                "   and b.status = 9\n" +
+                                                " group by sa.s_anzeige_id , b.bewerbung_id "
+                                         );
+
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+
+        try {
+
+            while (set.next()) {
+
+                StellenanzeigeDTO sa = new StellenanzeigeDTO(
+                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
+                        set.getDate(3), set.getString(4), set.getString(5),
+                        set.getInt(6), set.getString(7), set.getString(8),
+                        set.getString(9), set.getString(10),set.getString(11),
+                        set.getString(12),set.getInt(13)
+                );
+
+                liste.add(sa);
+
+
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+
+        Collections.sort(liste, new Comparator<StellenanzeigeDTO>() {
+            @Override
+            public int compare(StellenanzeigeDTO o1, StellenanzeigeDTO o2) {
+                if (o1.getId() < o2.getId()) {
+                    return -1;
+                } else if (o1.getId() == o2.getId()) {
+                    return 0;
+                }
+                return 1;
+            }
+        });
+
+        //noinspection unchecked,unchecked,unchecked
+        ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList)liste);
+
+        return liste;
+    }
+
 
     public static void setAnzeige() throws DatabaseException {
 

@@ -20,7 +20,15 @@ public class StellenanzeigeDTO {
     private String hauptsitz;
     private Image unternehmenLogo;
     private double bewertung;
+    private int    anzahlNeuBewerbung;
 
+    public int getanzahlNeuBewerbung() {
+        return anzahlNeuBewerbung;
+    }
+
+    public void setHatNeuBewerbung(int anzahlNeuBewerbung) {
+        this.anzahlNeuBewerbung = anzahlNeuBewerbung;
+    }
 
     public StellenanzeigeDTO() {
         setId(id);
@@ -35,6 +43,7 @@ public class StellenanzeigeDTO {
         setHauptsitz(hauptsitz);
         setSuchbegriff(suchbegriff);
         setArt(art);
+        setHatNeuBewerbung(anzahlNeuBewerbung);
     }
 
     public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
@@ -58,7 +67,7 @@ public class StellenanzeigeDTO {
 
     public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
                              int status, String standort, String bundesland, String firmenname, String hauptsitz,
-                             String suchbegriff, String art) {
+                             String suchbegriff, String art, int anzahlNeuBewerbung) {
         this.id = id;
         this.datum = datum;
         this.zeitstempel = zeitstempel;
@@ -71,6 +80,7 @@ public class StellenanzeigeDTO {
         this.hauptsitz = hauptsitz;
         this.suchbegriff = suchbegriff;
         this.art = art;
+        this.anzahlNeuBewerbung = anzahlNeuBewerbung ;
     }
 
     public Image getUnternehmenLogo() {

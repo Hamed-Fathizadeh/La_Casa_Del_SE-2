@@ -22,6 +22,14 @@ public class BewerbungControl {
        return BewerbungDAO.statusaendern( bew_id);
     }
 
+    public static void statusNeuBewAendern(int bew_id)  {
+           try{
+               BewerbungDAO.statusNeuBewAendern( bew_id);
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            }
+
+    }
 
     public static StreamResource downloadLebenslauf(int student_id) throws DatabaseException {
         return BewerbungDAO.downloadLebenslauf( student_id);

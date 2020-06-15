@@ -10,6 +10,8 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.services.util.Views;
 
+import java.util.stream.Collectors;
+
 public class StellenanzeigeBewerbungenWindow extends Window {
 
     public StellenanzeigeBewerbungenWindow(StellenanzeigeDTO stellenanzeige) {
@@ -48,17 +50,18 @@ public class StellenanzeigeBewerbungenWindow extends Window {
             public void focus(FieldEvents.FocusEvent event) {
 
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
-        containerBewerbungen.loadByStellenAnzeigeID("Alle",stellenanzeige.getId());
+        containerBewerbungen.loadByStellenAnzeigeID(stellenanzeige.getId());
         Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"Unternehmen");
         bewerbungen.setHeightMode(HeightMode.UNDEFINED);
         bewerbungen.setWidthFull();
 
 
-        ContainerLetztenBewerbungen containerBewerbungenMakiert  = ContainerLetztenBewerbungen.getInstance();
-        containerBewerbungenMakiert.loadByStellenAnzeigeID("Makiert",stellenanzeige.getId());
-        Bewerbungen<BewerbungDTO> bewerbungenMakiert = new Bewerbungen(containerBewerbungenMakiert,"Unternehmen");
+
+        Bewerbungen<BewerbungDTO> bewerbungenMakiert = new Bewerbungen(containerBewerbungen,"Unternehmen");
+        bewerbungenMakiert.setData(bewerbungen.getData().stream().filter(c -> c.isBewerbung_markiert() == true).collect(Collectors.toList()));;
         bewerbungenMakiert.setHeightMode(HeightMode.UNDEFINED);
         bewerbungenMakiert.setWidthFull();
+
 
  //add TabSheet
         TabSheet tabSheet = new TabSheet();
