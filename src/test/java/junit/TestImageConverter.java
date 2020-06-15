@@ -33,7 +33,27 @@ public class TestImageConverter {
     }
     @Test
     public void testConvertImagetoProfil() {
+        byte[] bild1=null;
+        byte[] bild2=new byte[1];
+        bild2[0]=-112;
+        Assertions.assertTrue(ImageConverter.convertImagetoProfil(bild1) instanceof Image);
+        Assertions.assertTrue(ImageConverter.convertImagetoProfil(bild2) instanceof Image);
+    }
 
+
+    @Test
+    public void testGetStream(){
+        byte[] bild1=null;
+        byte[] bild2=new byte[1];
+        bild2[0]=-112;
+    }
+    @Test
+    public void testConvertImagetoMenu() {
+        byte[] bild1=null;
+        byte[] bild2=new byte[1];
+        bild2[0]=-112;
+        Assertions.assertTrue(ImageConverter.convertImagetoMenu(bild1) instanceof Image);
+        Assertions.assertTrue(ImageConverter.convertImagetoMenu(bild2) instanceof Image);
     }
 
 }
