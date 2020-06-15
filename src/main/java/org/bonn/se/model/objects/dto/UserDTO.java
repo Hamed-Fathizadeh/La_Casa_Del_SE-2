@@ -1,6 +1,7 @@
 package org.bonn.se.model.objects.dto;
 
 import org.bonn.se.model.dao.UserDAO;
+import org.bonn.se.services.db.exception.DatabaseException;
 
 import java.io.Serializable;
 
@@ -35,7 +36,7 @@ public class UserDTO implements Serializable {
         this.passwort = passwort;
     }
 
-        public String getType() {
+        public String getType() throws DatabaseException {
             //Lazy Load
             if(this.type == null){
                 setType();
@@ -43,7 +44,7 @@ public class UserDTO implements Serializable {
             return this.type;
         }
 
-        private void setType() {
+        private void setType() throws DatabaseException {
 
             this.type = UserDAO.getInstance().getUserType(this.getEmail());
         }

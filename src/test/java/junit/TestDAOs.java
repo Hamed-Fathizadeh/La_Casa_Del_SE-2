@@ -1,9 +1,11 @@
 package junit;
 
+import junit.util.ImageConverter;
 import junit.util.RandomString;
 import junit.util.UserTestFactory;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.dao.UserDAO;
+import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
@@ -12,9 +14,13 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.postgresql.util.PSQLException;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.*;
@@ -24,7 +30,7 @@ public class TestDAOs {
 
     String vorname = "Vjunit";
     String nachname = "Njunit";
-    String email = "junit@junit.de";
+    String email = "11junit@junit.de";
     String password = "11111111";
     String hauptsitz = "Bonn - Nordrhein-Westfalen";
     String cname = "Firma-JUNIT";
@@ -34,6 +40,9 @@ public class TestDAOs {
 
     UserTestFactory userTestFactory = new UserTestFactory();
 
+    public TestDAOs() throws IOException {
+    }
+/*
     @Test
     public void createStudent() throws DatabaseException {
 
@@ -56,6 +65,9 @@ public class TestDAOs {
             UserDAO.deleteUser(i+email);
         }
     }
+
+ */
+    /*
     @Test
     public void createUnternehmen() throws DatabaseException {
 
@@ -84,6 +96,8 @@ public class TestDAOs {
         }
 
         }
+
+     */
 
     @Test
     public void registerStudentWithCheck() throws DatabaseException {
@@ -235,8 +249,43 @@ public class TestDAOs {
         assertEquals(student.getItKenntnisList().size(),actual.getItKenntnisList().size());
         assertEquals(student.getITKenntnis().getKenntnis(),actual.getITKenntnis().getKenntnis());
         assertEquals(student.getITKenntnis().getNiveau(),actual.getITKenntnis().getNiveau());
+    }
 
+    @Test
+    public void testGetUser() throws DatabaseException {
+        User expected = userTestFactory.registerStudent();
+        UserDAO.getInstance().registerUser(expected);
+        User actual = UserDAO.getInstance().getUser(expected.getEmail());
 
+        Assert.assertEquals(expected.getVorname(),actual.getVorname());
+        Assert.assertEquals(expected.getNachname(),actual.getNachname());
+        Assert.assertEquals(expected.getPasswort(),actual.getPasswort());
+        Assert.assertEquals(expected.getEmail(),actual.getEmail());
+        Assert.assertTrue(actual.getType().equals("S"));
+        UserDAO.deleteUser(expected.getEmail());
+
+        Assert.assertTrue(UserDAO.getInstance().getUserType("abc") == null);
+    }
+
+    @Test
+    public void testGetUserException() throws DatabaseException {
+        User expected = userTestFactory.registerStudent();
+        expected.setEmail("'ad'jh'");
+        assertThrows(DatabaseException.class, () -> {
+            UserDAO.getInstance().getUser(expected.getEmail());
+        });
+        assertThrows(DatabaseException.class,() -> {
+            UserDAO.getInstance().getUserbyEmail(expected.getEmail());
+        });
+        assertThrows(DatabaseException.class,() -> {
+            UserDAO.getInstance().getUserType(expected.getEmail());
+        });
+        assertThrows(DatabaseException.class,() -> {
+            User user = new User();
+            user.setType("S");
+            UserDAO.getInstance().registerUser(user);
+
+        });
     }
 
 /*
@@ -262,12 +311,4 @@ public class TestDAOs {
 
     }
  */
-
-
-
-
-
-
-
-
 }
