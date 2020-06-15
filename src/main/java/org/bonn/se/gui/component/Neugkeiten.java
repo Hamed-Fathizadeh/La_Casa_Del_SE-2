@@ -13,8 +13,9 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Neugkeiten extends GridLayout {
+    Image Ulogo;
 
-   public Neugkeiten(ContainerNeuigkeiten container){
+    public Neugkeiten(ContainerNeuigkeiten container){
        super(1, container.getAnzahl()==0 ? 1:container.getAnzahl() );
       // this.setMargin(true);
 
@@ -55,7 +56,9 @@ public class Neugkeiten extends GridLayout {
                                "Online seit "+ day
                               );
                txArea.setReadOnly(true);
-               Image Ulogo = ImageConverter.convertImagetoMenu(unternehmen.getLogo());
+               if(unternehmen.getLogo() != null) {
+                   Ulogo= ImageConverter.convertImagetoMenu(unternehmen.getLogo());
+               }
               // Ulogo.setHeight("130px");
                Ulogo.addStyleName("whiteBackground");
                glayout.addComponent(txArea,1,0,1,0);
