@@ -77,7 +77,7 @@ public class ContainerBewerbungDAO {
               }
                  Statement statement = JDBCConnection.getInstance().getStatement();
                  set = statement.executeQuery("select * from lacasa.view_bewerbung \n" +
-                                                  "where email ='"+student.getEmail()+"' and status = 1 order by datum desc \n" +limit
+                                                  "where email ='"+student.getEmail()+"' and status = 1 or status = 9 order by datum desc \n" +limit
                                              );
 
         } catch (SQLException | DatabaseException throwables) {
@@ -106,25 +106,17 @@ public class ContainerBewerbungDAO {
     }
 
 
-    public static List<BewerbungDTO> loadByStellenAnzeigeID(String str,int saID) throws DatabaseException {
+    public static List<BewerbungDTO> loadByStellenAnzeigeID(int saID) throws DatabaseException {
         List<BewerbungDTO> liste = new ArrayList<>();
         ResultSet set;
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
         try {
             System.out.println("contabewDAO"+saID);
-            if(str.equals("Makiert")) {
-                Statement statement = JDBCConnection.getInstance().getStatement();
-                set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
-                        " where s_anzeige_id = " +saID+" and markiert = true "+
-                        " order by datum desc");
-            }else{
+
                 Statement statement = JDBCConnection.getInstance().getStatement();
                 set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
                         " where s_anzeige_id = " +saID+
                         " order by datum desc" );
-            }
-
-
 
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();

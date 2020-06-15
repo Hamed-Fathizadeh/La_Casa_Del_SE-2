@@ -3,13 +3,18 @@ package junit;
 
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Image;
+import junit.util.ImageConverter;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import junit.util.RandomString;
+
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
@@ -36,10 +41,19 @@ public class TestStellenAnzeigeDTO {
     private String art = "Feste Anstellung";
 
 
-    //        File file = new File("src/main/resources/Unknown.png");
-    //       byte[] immage = ImageConverter.getImage(file);
+
+
+   File file = new File("src/main/resources/Unknown.png");
+   private byte[] image = ImageConverter.getImage(file);
+
+
+
+
 
     StellenanzeigeDTO stanz = new StellenanzeigeDTO();
+
+    public TestStellenAnzeigeDTO() throws IOException {
+    }
 
 
     @Test
@@ -60,6 +74,7 @@ public class TestStellenAnzeigeDTO {
         stanz.setSuchbegriff(suchbegriff);
         stanz.setBewertung(bewertung);
         stanz.setArt(art);
+        stanz.setUnternehmenLogo(image);
 
 
         Assertions.assertEquals(id, stanz.getId());
@@ -76,9 +91,15 @@ public class TestStellenAnzeigeDTO {
         Assertions.assertEquals(bewertung, stanz.getBewertung());
         Assertions.assertEquals(art, stanz.getArt());
 
+        assertTrue( stanz.getUnternehmenLogo() instanceof Image);
 
-        //Konstruktor Test
-        StellenanzeigeDTO stanz2 = new StellenanzeigeDTO(id, datum, zeitstempel, titel, beschreibung, status,
+
+
+
+
+
+        //Konstruktor ohne Unternehmenslogo
+     /*   StellenanzeigeDTO stanz2 = new StellenanzeigeDTO(id, datum, zeitstempel, titel, beschreibung, status,
                 standort, bundesland, firmenname, hauptsitz, suchbegriff, art);
 
 
@@ -93,7 +114,32 @@ public class TestStellenAnzeigeDTO {
         Assertions.assertEquals(stanz.getFirmenname(), stanz2.getFirmenname());
         Assertions.assertEquals(stanz.getHauptsitz(), stanz2.getHauptsitz());
         Assertions.assertEquals(stanz.getSuchbegriff(), stanz2.getSuchbegriff());
-        Assertions.assertEquals(stanz.getArt(), stanz2.getArt());
+        Assertions.assertEquals(stanz.getArt(), stanz2.getArt());*/
+
+
+        //Konstruktor mit Unternehmenslogo und mit Bewertung
+
+        StellenanzeigeDTO stanz3 = new StellenanzeigeDTO(id, datum, zeitstempel, titel, beschreibung, status,
+                standort, bundesland, firmenname, hauptsitz, suchbegriff, art, image, bewertung);
+
+
+
+
+        Assertions.assertEquals(stanz.getId(), stanz3.getId());
+        Assertions.assertEquals(stanz.getDatum(), stanz3.getDatum());
+        Assertions.assertEquals(stanz.getZeitstempel(), stanz3.getZeitstempel());
+        Assertions.assertEquals(stanz.getTitel(), stanz3.getTitel());
+        Assertions.assertEquals(stanz.getBeschreibung(), stanz3.getBeschreibung());
+        Assertions.assertEquals(stanz.getStatus(), stanz3.getStatus());
+        Assertions.assertEquals(stanz.getStandort(), stanz3.getStandort());
+        Assertions.assertEquals(stanz.getBundesland(), stanz3.getBundesland());
+        Assertions.assertEquals(stanz.getFirmenname(), stanz3.getFirmenname());
+        Assertions.assertEquals(stanz.getHauptsitz(), stanz3.getHauptsitz());
+        Assertions.assertEquals(stanz.getSuchbegriff(), stanz3.getSuchbegriff());
+        Assertions.assertEquals(stanz.getArt(), stanz3.getArt());
+        Assertions.assertNotNull(stanz3.getUnternehmenLogo());
+        Assertions.assertTrue(stanz3.getUnternehmenLogo() != null);
+        Assertions.assertEquals(stanz.getBewertung(), stanz3.getBewertung());
 
 
 

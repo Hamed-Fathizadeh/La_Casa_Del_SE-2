@@ -55,9 +55,9 @@ public class ContainerLetztenBewerbungen {
     }
 
 
-    public void loadByStellenAnzeigeID(String str, int saID){
+    public void loadByStellenAnzeigeID(int saID){
         try {
-            liste = ContainerBewerbungDAO.loadByStellenAnzeigeID(str,saID);
+            liste = ContainerBewerbungDAO.loadByStellenAnzeigeID(saID);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }

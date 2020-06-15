@@ -1,9 +1,11 @@
 package org.bonn.se.gui.component;
 
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 
+import org.bonn.se.control.BewerbungControl;
 import org.bonn.se.gui.window.BewerbungWindow;
 import org.bonn.se.model.dao.BewertungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
@@ -35,11 +37,11 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
     }
 
 
-    public List<T> getListe() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setListe(List<T> liste) {
+    public void setData(List<T> liste) {
         this.data = liste;
     }
 
@@ -115,6 +117,9 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                  }
 
                 BewerbungWindow bewerbungWindow = new BewerbungWindow(null, "Unternehmen", bewerbungDTO);
+                if(bewerbungDTO.getStatus() == 9){
+                    BewerbungControl.statusNeuBewAendern(bewerbungDTO.getBewerbungID());
+                }
                 UI.getCurrent().addWindow(bewerbungWindow);
 
 
@@ -160,8 +165,9 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
             this.addComponentColumn(Bew -> (Bew.isBewerbung_markiert() ? new Image(null, resource4) : null)).setCaption("Markiert");
+            this.addComponentColumn(Bew -> (Bew.getStatus() == 9 ? new Label(" <style>p { color:red ; font-weight:bold;  font-size: 18px; }</style><p>Neu</p>", ContentMode.HTML): null)).setCaption("");
 
-        }
+        } new Label("<b>Unternehmensname</b>", ContentMode.HTML);
     }
 
 

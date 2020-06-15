@@ -5,6 +5,7 @@ import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.AnzStatusControl;
+import org.bonn.se.control.BewerbungControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
@@ -142,6 +143,7 @@ public class StellenanzeigeWindow extends Window {
                         StellenanzeigeWindow.this.close();
                         BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige, "Student", null);
                         UI.getCurrent().addWindow(bewerbungWindow);
+
                     }else{
                         UI.getCurrent().addWindow(new ConfirmationWindow("Um dich zu bewerben musst du ein Lebenslauf in deine Profil hinterlegen!"));
                     }
