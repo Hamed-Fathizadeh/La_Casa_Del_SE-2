@@ -1,30 +1,23 @@
 package junit;
 
-import junit.util.ImageConverter;
+
+import com.vaadin.navigator.ViewChangeListener;
 import junit.util.RandomString;
 import junit.util.UserTestFactory;
+import org.bonn.se.gui.views.RegisterStudent;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.dao.UserDAO;
-import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.postgresql.util.PSQLException;
+import org.mockito.Mockito;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.*;
-
 
 public class TestDAOs {
 
@@ -40,8 +33,6 @@ public class TestDAOs {
 
     UserTestFactory userTestFactory = new UserTestFactory();
 
-    public TestDAOs() throws IOException {
-    }
 /*
     @Test
     public void createStudent() throws DatabaseException {
@@ -215,7 +206,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkStudentWithKenntnisse() throws DatabaseException, IOException {
+    public void checkStudentWithKenntnisse() throws DatabaseException {
         Student student = userTestFactory.registerStudent();
         UserDAO.getInstance().registerUser(student);
 
@@ -232,8 +223,8 @@ public class TestDAOs {
             itKenntnis.setKenntnis(kenntnis);
             itKenntnis.setNiveau(niveau);
 
-            Assert.assertEquals(kenntnis,itKenntnis.getKenntnis());
-            Assert.assertEquals(niveau,itKenntnis.getNiveau());
+            assertEquals(kenntnis,itKenntnis.getKenntnis());
+            assertEquals(niveau,itKenntnis.getNiveau());
 
             student.setITKenntnis(itKenntnis);
         }
@@ -257,14 +248,14 @@ public class TestDAOs {
         UserDAO.getInstance().registerUser(expected);
         User actual = UserDAO.getInstance().getUser(expected.getEmail());
 
-        Assert.assertEquals(expected.getVorname(),actual.getVorname());
-        Assert.assertEquals(expected.getNachname(),actual.getNachname());
-        Assert.assertEquals(expected.getPasswort(),actual.getPasswort());
-        Assert.assertEquals(expected.getEmail(),actual.getEmail());
-        Assert.assertTrue(actual.getType().equals("S"));
+        assertEquals(expected.getVorname(),actual.getVorname());
+        assertEquals(expected.getNachname(),actual.getNachname());
+        assertEquals(expected.getPasswort(),actual.getPasswort());
+        assertEquals(expected.getEmail(),actual.getEmail());
+        assertTrue(actual.getType().equals("S"));
         UserDAO.deleteUser(expected.getEmail());
 
-        Assert.assertTrue(UserDAO.getInstance().getUserType("abc") == null);
+        assertTrue(UserDAO.getInstance().getUserType("abc") == null);
     }
 
     @Test
