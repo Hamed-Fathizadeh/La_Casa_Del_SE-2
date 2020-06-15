@@ -28,6 +28,8 @@ public class BewertungDAO extends AbstractDAO {
     public static void bewertung(BewerbungDTO bewerbung) {
         ResultSet set = null;
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+
+
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
 

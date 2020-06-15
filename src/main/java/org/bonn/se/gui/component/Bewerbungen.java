@@ -79,7 +79,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             rating.setMaxValue(5);
             rating.setAnimated(true);
 
-            rating.setValue(rating.getValue());
+            //rating.setValue(rating.getValue());
 
             rating.setReadOnly(false);
 
@@ -141,8 +141,8 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         orange.setDescription("Entwurf");
         ThemeResource resource4 = new ThemeResource("img/Anzeigen/makierung.png");
 
-        RatingStars ratingStars = new RatingStars();
-        ratingStars.setMaxValue(5);
+        //RatingStars ratingStars = new RatingStars();
+        //ratingStars.setMaxValue(5);
 
         if(userType.equals("Student")) {
             this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Logo");
