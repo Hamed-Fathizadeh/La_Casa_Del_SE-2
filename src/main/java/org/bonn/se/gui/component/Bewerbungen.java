@@ -79,7 +79,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             rating.setMaxValue(5);
             rating.setAnimated(true);
 
-            //rating.setValue(rating.getValue());
 
             rating.setReadOnly(false);
 
@@ -94,6 +93,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 @Override
                 public void buttonClick(Button.ClickEvent clickEvent) {
                         BewerbungDTO bw = selection.getValue();
+                        bw.setRating(rating.getValue());
                         BewertungDAO.bewertung(bw);
 
 
