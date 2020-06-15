@@ -3,8 +3,8 @@ package org.bonn.se.model.objects.entitites;
 import org.bonn.se.services.util.IllegalException;
 
 public class Adresse {
-    private int adresse_id;
-    private String strasse;
+    private int adresse_id ;
+    private String strasse ;
     private String plz;
     private String ort;
     private String email;
