@@ -28,8 +28,16 @@ public class BewerbungControl {
         }
     }
 
-    public static boolean statusaendern(int bew_id) throws DatabaseException {
-        return BewerbungDAO.statusaendern(bew_id);
+    public static void statusAendern(int bew_id, int status){
+        try{
+            BewerbungDAO.statusAendern( bew_id, status);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean markierungAendern(int bew_id) throws DatabaseException {
+        return BewerbungDAO.markierungAendern(bew_id);
     }
 
     public static void statusNeuBewAendern(int bew_id)  {

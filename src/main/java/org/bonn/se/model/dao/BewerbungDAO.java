@@ -24,6 +24,19 @@ public class BewerbungDAO extends AbstractDAO{
         return dao;
     }
 
+    public static void statusAendern(int bew_id, int status) throws DatabaseException {
+        String sql = "update lacasa.tab_bewerbung set status ="+ status + " where bewerbung_id = "+bew_id;
+        PreparedStatement statement = getPreparedStatement(sql);
+
+        try {
+            statement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+    }
+
     public static void bewerben(BewerbungDTO bewerbung) throws DatabaseException {
         String sql = "INSERT INTO lacasa.tab_bewerbung (datum, description, lebenslauf, status, student_id, s_anzeige_id)"+
                 "VALUES(?,?,?,?,?,?)";
@@ -47,7 +60,7 @@ public class BewerbungDAO extends AbstractDAO{
 
     }
 
-    public static boolean statusaendern(int bew_id) throws DatabaseException{
+    public static boolean markierungAendern(int bew_id) throws DatabaseException{
         ResultSet set;
         boolean bMarkierung= false;
 
