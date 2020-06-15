@@ -44,6 +44,7 @@ public class UserDAO  extends AbstractDAO {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         }
+
         boolean exist;
         User user = null;
         try {

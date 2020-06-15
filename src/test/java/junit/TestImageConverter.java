@@ -1,16 +1,37 @@
 package junit;
 
-import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-class TestImageConverter {
+import org.bonn.se.model.dao.UserDAO;
+import org.bonn.se.services.db.exception.DatabaseException;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+
+import java.sql.SQLException;
+
+
+public class TestImageConverter {
 
     @Test
-    void getInt() {
-        assertEquals(2,2);
+    public void test() {
+        Assert.assertTrue(true);
+        Assertions.assertTrue(true);
+        Assertions.assertThrows(DatabaseException.class, () -> {
+            UserDAO.getInstance().getUser("asdfasdfasdf");
+        });
     }
 
+
+
+
+
+
+
+
+
+    /*
     @Test
     void getUnknownProfilImage() {
     }
@@ -26,4 +47,6 @@ class TestImageConverter {
     @Test
     void convertImagetoMenu() {
     }
+
+ */
 }
