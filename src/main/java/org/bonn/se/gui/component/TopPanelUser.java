@@ -12,9 +12,6 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 public class TopPanelUser extends GridLayout {
-    MenuBar bar = new MenuBar();
-    MenuBar.MenuItem item1;
-
 
     public TopPanelUser(){
 
@@ -38,8 +35,10 @@ public class TopPanelUser extends GridLayout {
 
 
 
+        MenuBar bar = new MenuBar();
         // MenuBar.MenuItem item1 = bar.addItem("Menü", null);
         bar.addStyleName("user-menu");
+        MenuBar.MenuItem item1 = null;
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
            Image profilbild = ImageConverter.convertImagetoMenu(((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture());

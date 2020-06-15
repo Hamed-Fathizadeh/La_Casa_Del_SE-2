@@ -173,21 +173,6 @@ public class RegisterStudent extends GridLayout implements View {
         binder.addStatusChangeListener(
                 event -> registerButton.setEnabled(binder.isValid()));
 
-        Button button = new Button("Test");
-
-        this.addComponent(button,9,9);
-
-        button.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                Unternehmen unternehmen = new Unternehmen();
-                unternehmen.setVorname("TEst");
-
-                RegisterStudentWindow registerStudentWindow = new RegisterStudentWindow();
-                MyUI.getCurrent().addWindow(registerStudentWindow);
-            }
-        });
-
 
         //hafa change#########################################################
         /*

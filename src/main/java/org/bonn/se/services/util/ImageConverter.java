@@ -7,7 +7,6 @@ import com.vaadin.ui.Image;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
-import java.util.Arrays;
 
 public class ImageConverter {
 
@@ -44,7 +43,7 @@ public class ImageConverter {
 
         image = new Image(
                 null, new StreamResource(
-                streamSource, Arrays.toString(bild)));
+                streamSource, bild.toString()));
         image.setWidth("150px");
         image.setHeight("150px");
 
@@ -68,7 +67,7 @@ public class ImageConverter {
 
         image = new Image(
                 null, new StreamResource(
-                streamSource, Arrays.toString(bild)));
+                streamSource, bild.toString()));
         image.setWidth("50px");
         image.setHeight("50px");
 
