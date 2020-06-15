@@ -3,8 +3,7 @@ package org.bonn.se.model.objects.entitites;
 import org.bonn.se.services.util.IllegalException;
 
 public class Adresse {
-    private int adresse_id;
-    private String strasse;
+    private String strasse ;
     private String plz;
     private String ort;
     private String email;
@@ -39,25 +38,18 @@ public class Adresse {
         this.bundesland = bundesland;
     }
 
-    public int getAdresse_id(){
-        return  adresse_id;
-    }
-    public void setAdresse_id(int adresse_id) {
-        int length = String.valueOf(adresse_id).length();
-        if (length > 5) {
-            throw new IllegalException("Illegale  adresse_id");
-        } else
-            this.adresse_id = adresse_id;
-    }
+
     public String getStrasse(){
         return strasse;
     }
     public void setStrasse(String strasse){
         this.strasse=strasse;
     }
+
     public String getPlz(){
         return plz;
     }
+
     public void setPlz(String plz) {
         int length = String.valueOf(plz).length();
         if (length > 5) {

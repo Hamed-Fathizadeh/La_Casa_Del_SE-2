@@ -1,30 +1,29 @@
 package junit;
 
+
+import com.vaadin.navigator.ViewChangeListener;
 import junit.util.RandomString;
 import junit.util.UserTestFactory;
+import org.bonn.se.gui.views.RegisterStudent;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
-
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
+import org.mockito.Mockito;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.*;
-
 
 public class TestDAOs {
 
     String vorname = "Vjunit";
     String nachname = "Njunit";
-    String email = "junit@junit.de";
+    String email = "11junit@junit.de";
     String password = "11111111";
     String hauptsitz = "Bonn - Nordrhein-Westfalen";
     String cname = "Firma-JUNIT";
@@ -34,6 +33,7 @@ public class TestDAOs {
 
     UserTestFactory userTestFactory = new UserTestFactory();
 
+/*
     @Test
     public void createStudent() throws DatabaseException {
 
@@ -56,6 +56,9 @@ public class TestDAOs {
             UserDAO.deleteUser(i+email);
         }
     }
+
+ */
+    /*
     @Test
     public void createUnternehmen() throws DatabaseException {
 
@@ -84,6 +87,8 @@ public class TestDAOs {
         }
 
         }
+
+     */
 
     @Test
     public void registerStudentWithCheck() throws DatabaseException {
@@ -201,7 +206,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkStudentWithKenntnisse() throws DatabaseException, IOException {
+    public void checkStudentWithKenntnisse() throws DatabaseException {
         Student student = userTestFactory.registerStudent();
         UserDAO.getInstance().registerUser(student);
 
@@ -218,8 +223,8 @@ public class TestDAOs {
             itKenntnis.setKenntnis(kenntnis);
             itKenntnis.setNiveau(niveau);
 
-            Assert.assertEquals(kenntnis,itKenntnis.getKenntnis());
-            Assert.assertEquals(niveau,itKenntnis.getNiveau());
+            assertEquals(kenntnis,itKenntnis.getKenntnis());
+            assertEquals(niveau,itKenntnis.getNiveau());
 
             student.setITKenntnis(itKenntnis);
         }
@@ -235,8 +240,43 @@ public class TestDAOs {
         assertEquals(student.getItKenntnisList().size(),actual.getItKenntnisList().size());
         assertEquals(student.getITKenntnis().getKenntnis(),actual.getITKenntnis().getKenntnis());
         assertEquals(student.getITKenntnis().getNiveau(),actual.getITKenntnis().getNiveau());
+    }
 
+    @Test
+    public void testGetUser() throws DatabaseException {
+        User expected = userTestFactory.registerStudent();
+        UserDAO.getInstance().registerUser(expected);
+        User actual = UserDAO.getInstance().getUser(expected.getEmail());
 
+        assertEquals(expected.getVorname(),actual.getVorname());
+        assertEquals(expected.getNachname(),actual.getNachname());
+        assertEquals(expected.getPasswort(),actual.getPasswort());
+        assertEquals(expected.getEmail(),actual.getEmail());
+        assertTrue(actual.getType().equals("S"));
+        UserDAO.deleteUser(expected.getEmail());
+
+        assertTrue(UserDAO.getInstance().getUserType("abc") == null);
+    }
+
+    @Test
+    public void testGetUserException() throws DatabaseException {
+        User expected = userTestFactory.registerStudent();
+        expected.setEmail("'ad'jh'");
+        assertThrows(DatabaseException.class, () -> {
+            UserDAO.getInstance().getUser(expected.getEmail());
+        });
+        assertThrows(DatabaseException.class,() -> {
+            UserDAO.getInstance().getUserbyEmail(expected.getEmail());
+        });
+        assertThrows(DatabaseException.class,() -> {
+            UserDAO.getInstance().getUserType(expected.getEmail());
+        });
+        assertThrows(DatabaseException.class,() -> {
+            User user = new User();
+            user.setType("S");
+            UserDAO.getInstance().registerUser(user);
+
+        });
     }
 
 /*
@@ -262,12 +302,4 @@ public class TestDAOs {
 
     }
  */
-
-
-
-
-
-
-
-
 }

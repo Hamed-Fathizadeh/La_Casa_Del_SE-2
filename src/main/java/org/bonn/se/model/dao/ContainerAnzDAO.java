@@ -280,14 +280,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
-            System.out.println("SELECT sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung,  \n" +
-                    "                                                      sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art, b.bewerbung_id, count( b.bewerbung_id) anzahlBewerbung\n" +
-                    "                                                  FROM lacasa.tab_stellen_anzeige sa\n" +
-                    "                                                 join lacasa.tab_bewerbung b\n" +
-                    "                                                    on sa.s_anzeige_id = b.s_anzeige_id\n" +
-                    "                                                 where sa.firmenname = '"+unternehmen.getCname()+"' and sa.hauptsitz = '"+unternehmen.getHauptsitz()+"'\n" +
-                    "                                                   and b.status = 9\n" +
-                    "                                                 group by sa.s_anzeige_id , b.bewerbung_id ");
+
             set = statement.executeQuery("SELECT sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung, \n" +
                                                 "       sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art, count( b.bewerbung_id) anzahlBewerbung\n" +
                                                 "  FROM lacasa.tab_stellen_anzeige sa\n" +
@@ -295,7 +288,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                                                 "    on sa.s_anzeige_id = b.s_anzeige_id\n" +
                                                 " where sa.firmenname = '"+unternehmen.getCname()+"' and sa.hauptsitz = '"+unternehmen.getHauptsitz()+"'\n" +
                                                 "   and b.status = 9\n" +
-                                                " group by sa.s_anzeige_id , b.bewerbung_id "
+                                                " group by sa.s_anzeige_id  "
                                          );
 
         } catch (SQLException | DatabaseException throwables) {

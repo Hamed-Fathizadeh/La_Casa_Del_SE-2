@@ -213,16 +213,6 @@ public class RegisterUnternehmer extends GridLayout implements View {
 
 */
 
-
-
-
-
-        Button button = new Button("Test");
-
-        this.addComponent(test,9,9);
-
-
-
     }
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) { this.setUp(); }
