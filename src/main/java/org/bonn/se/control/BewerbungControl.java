@@ -83,6 +83,7 @@ public class BewerbungControl {
                 notification.setHtmlContentAllowed(true);
                 notification.addCloseListener(e -> notification.close());
                 notification.show(Page.getCurrent());
+                return;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();

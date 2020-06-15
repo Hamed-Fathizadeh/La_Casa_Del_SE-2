@@ -180,10 +180,22 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
             image.setWidth("150px");
             lebenslauf = new UploadField();
             lebenslauf.setButtonCaption("Lebenslauf hochladen");
+            lebenslauf.setDisplayUpload(false);
+            Label filename = new Label(lebenslauf.getLastFileName());
+            lebenslauf.addValueChangeListener(new HasValue.ValueChangeListener<byte[]>() {
+                @Override
+                public void valueChange(HasValue.ValueChangeEvent<byte[]> event) {
+                    form1.removeComponent(filename);
+                    Label filename = new Label(lebenslauf.getLastFileName());
+                    form1.addComponent(filename,5);
+                }
+            }
+            );
 
 
-            form1.addComponents(image,uploadField, g_datum, mobilnr,lebenslauf);
-            //form1.setComponentAlignment(image, Alignment.MIDDLE_CENTER);
+
+
+            form1.addComponents(image,uploadField, g_datum, mobilnr,lebenslauf,filename);
 
 
             FormLayout form2 = new FormLayout();
@@ -227,10 +239,14 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
 
 
                 Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-                student.setPicture(uploadField.getValue());
-                uploadField.clear();
-                student.setLebenslauf(lebenslauf.getValue());
-                lebenslauf.clear();
+                if(uploadField.getValue() != null){
+                    student.setPicture(uploadField.getValue());
+                    uploadField.clear();
+                }
+                if(lebenslauf.getValue() != null) {
+                    student.setLebenslauf(lebenslauf.getValue());
+                    lebenslauf.clear();
+                }
                 student.setAbschluss(abschluss.getValue());
                 student.setKontakt_nr(mobilnr.getValue());
                 student.setAusbildung(ausbildung.getValue());

@@ -40,10 +40,11 @@ public class UserDAO  extends AbstractDAO {
             set = statement.executeQuery("SELECT * "
                     + "FROM lacasa.tab_user "
                     + "WHERE upper(lacasa.tab_user.email) = '" + email.toUpperCase() + "'");
-        } catch (SQLException | DatabaseException throwables) {
+        } catch (DatabaseException | SQLException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         }
+
         boolean exist;
         User user = null;
         try {
@@ -128,7 +129,7 @@ public class UserDAO  extends AbstractDAO {
             JDBCConnection.getInstance().closeConnection();
         }
     }
-    public String getUserType(String email)  {
+    public String getUserType(String email) throws DatabaseException {
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
@@ -139,8 +140,9 @@ public class UserDAO  extends AbstractDAO {
             if( set.next()){
                 return set.getString("benutzertyp");
             }
-        } catch (SQLException | DatabaseException ex) {
-            Logger.getLogger(LoginControl.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("UserTyp nicht vorhanden");
         }
      return null;
     }
