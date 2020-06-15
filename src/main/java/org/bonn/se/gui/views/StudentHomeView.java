@@ -4,7 +4,6 @@ package org.bonn.se.gui.views;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.Page;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
@@ -22,8 +21,17 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.SuchbegrifService;
 import org.bonn.se.services.util.Views;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.stream.Stream;
 
 public class StudentHomeView extends VerticalLayout implements View {
 
@@ -45,6 +53,10 @@ public class StudentHomeView extends VerticalLayout implements View {
     public static void setMaingrid(GridLayout maingrid) {
         Maingrid = maingrid;
     }
+
+    static ContainerNeuigkeiten containerOnFly = ContainerNeuigkeiten.getInstance();
+
+
 
 
 
@@ -80,6 +92,32 @@ public class StudentHomeView extends VerticalLayout implements View {
         comboNachWas.setPlaceholder("Nach was suchen Sie?");
         comboNachWas.setWidth(300.0f, Unit.PIXELS);
 
+       /* containerOnFly.loadSuche(null, null, null, "Ganzer Ort", "Normal", null, null, null);
+
+        comboNachWas.addValueChangeListener(event -> {
+            Maingrid.removeComponent(GridAnzeig);
+            BufferedImage image = ImageIO.read(getClass().getResource("/resources/" + Config.getString("SMALL_LOGO_IMAGE", "")));
+
+            containerOnFly.getListe().stream().filter(begrif -> {
+                        try {
+                            return comboNachWas.getValue() == null || begrif.getSuchbegriff()
+                                    .toLowerCase().startsWith(comboNachWas.getValue().toLowerCase()) &
+                                    ImageIO.write(image, "png", (ImageOutputStream) begrif.getUnternehmenLogo());
+                                    begrif.setUnternehmenLogo(  );
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+            );
+
+            stellenSuchenOnFly( containerOnFly );
+            System.out.println("stuhomewiev hier1");
+
+            Maingrid.addComponent(GridAnzeig, 0, 2, 1, 2);
+            Maingrid.setComponentAlignment(GridAnzeig, Alignment.MIDDLE_CENTER);
+
+        });*/
+
         SuchbegrifService Sservice = new SuchbegrifService();
         comboNachWas.setDataProvider(Sservice::fetch, Sservice::count);
 
@@ -101,6 +139,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                     Maingrid.removeComponent(GridAnzeig);
 
                     stellenSuchen( comboNachWas.getValue(), comboOrtBund.getOrt(), comboOrtBund.getBundesland(),comboUmkreis.getValue(), "Normal", null, null, null);
+
                     Maingrid.addComponent(GridAnzeig, 0, 2, 1, 2);
                     Maingrid.setComponentAlignment(GridAnzeig, Alignment.MIDDLE_CENTER);
                 });
@@ -253,6 +292,15 @@ public class StudentHomeView extends VerticalLayout implements View {
         container.loadSuche(fachgebiet, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
 
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",container);
+        gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
+        gAnzeigen.setWidth("1000px");
+        GridAnzeig = gAnzeigen;
+
+    }
+
+    public static void stellenSuchenOnFly(ContainerNeuigkeiten containerOnFly ) {
+
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",containerOnFly);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("1000px");
         GridAnzeig = gAnzeigen;
