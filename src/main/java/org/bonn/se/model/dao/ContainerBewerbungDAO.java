@@ -106,17 +106,34 @@ public class ContainerBewerbungDAO {
     }
 
 
-    public static List<BewerbungDTO> loadByStellenAnzeigeID(int saID) throws DatabaseException {
+    public static List<BewerbungDTO> loadByStellenAnzeigeID(String str, int saID) throws DatabaseException {
         List<BewerbungDTO> liste = new ArrayList<>();
         ResultSet set;
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
         try {
-            System.out.println("contabewDAO"+saID);
-
-                Statement statement = JDBCConnection.getInstance().getStatement();
-                set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
-                        " where s_anzeige_id = " +saID+
-                        " order by datum desc" );
+                    Statement statement = JDBCConnection.getInstance().getStatement();
+                if(str.equals("Alle")) {
+                    set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
+                            " where s_anzeige_id = " + saID + "and status != 3"+
+                            " order by datum desc");
+                }else if(str.equals("Markiert")){
+                    set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
+                            " where s_anzeige_id = " + saID + " and status != 3 "+ " and markiert = true"+
+                            " order by datum desc");
+                }
+                else if(str.equals("Zusage")){
+                    set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
+                            " where s_anzeige_id = " + saID + " and status = 2 "+
+                            " order by datum desc");
+                }else if(str.equals("Abgelehnt")){
+                    set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
+                            " where s_anzeige_id = " + saID + " and status = 3 "+
+                            " order by datum desc");
+                }else{
+                    set = statement.executeQuery("select * from lacasa.view_bewerbung\n" +
+                            " where s_anzeige_id = " + saID + "and status != 3"+
+                            " order by datum desc");
+                }
 
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();

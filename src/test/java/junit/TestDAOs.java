@@ -1,6 +1,5 @@
 package junit;
 
-import junit.util.ImageConverter;
 import junit.util.RandomString;
 import junit.util.UserTestFactory;
 import org.bonn.se.model.dao.ProfilDAO;
