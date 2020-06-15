@@ -36,10 +36,10 @@ public class TestAdresse {
         Assertions.assertEquals(adr.getPlz(), adr2.getPlz());
         Assertions.assertEquals(adr.getOrt(), adr2.getOrt());
 
-        Adresse adr3 = new Adresse (strasse, ort, plz, bundesland);
+        Adresse adr3 = new Adresse (strasse, plz, ort, bundesland);
         Assertions.assertEquals(adr.getStrasse(), adr3.getStrasse());
-        Assertions.assertEquals(adr.getOrt(),adr3.getOrt());
-        Assertions.assertEquals(adr.getPlz(), adr3.getPlz());
+        Assertions.assertEquals(adr.getPlz(),adr3.getPlz());
+        Assertions.assertEquals(adr.getOrt(), adr3.getOrt());
         Assertions.assertEquals(adr.getBundesland(), adr3.getBundesland());
     }
 }
