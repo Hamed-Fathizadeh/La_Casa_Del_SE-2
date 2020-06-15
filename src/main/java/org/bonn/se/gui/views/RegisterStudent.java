@@ -77,6 +77,7 @@ public class RegisterStudent extends GridLayout implements View {
                 .withValidator(new EmailValidator("Keine gültige E-Mail Adresse!"))
                 .bind(User::getEmail,User::setEmail);
         binder.forField(passwort)
+                .asRequired("Bitte Passwort eingeben!")
                 .withValidator(new StringLengthValidator(
                         "Passwort muss mindestens 8 Zeichen lang sein", 8, null))
                 .bind(User::getPasswort,User::setPasswort);

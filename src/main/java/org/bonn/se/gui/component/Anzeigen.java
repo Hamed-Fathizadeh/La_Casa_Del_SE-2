@@ -2,6 +2,7 @@ package org.bonn.se.gui.component;
 
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.ui.MyUI;
@@ -24,6 +25,29 @@ import java.util.List;
 public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
     List<T> data;
     ContainerNeuigkeiten container;
+    static int anzahlNeuBewerbungen = 0;
+    static int gesamtNeuBewerbungen = 0;
+
+    public int getGesamtNeuBewerbungen() {
+
+        return gesamtNeuBewerbungen;
+    }
+
+    public int setGesamtNeuBewerbungen(int gesamtNeuBew) {
+        this.gesamtNeuBewerbungen += gesamtNeuBew;
+        return gesamtNeuBew;
+    }
+
+    public int getAnzahlNeuBewerbungen() {
+        return anzahlNeuBewerbungen;
+    }
+
+    public int setAnzahlNeuBewerbungen(int anzahlNeuBewerbungen) {
+
+        this.anzahlNeuBewerbungen = anzahlNeuBewerbungen;
+        setGesamtNeuBewerbungen(this.anzahlNeuBewerbungen );
+        return this.anzahlNeuBewerbungen;
+    }
 
     @Override
     public List<T> getData() {
@@ -57,7 +81,7 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
         }
         this.setHeight("500px");
 
-        // Allow column reordering
+        // Allow column reordering wir können es auch ändern
         this.setColumnReorderingAllowed(true);
 
         SingleSelect<StellenanzeigeDTO> selection = (SingleSelect<StellenanzeigeDTO>) this.asSingleSelect();
@@ -133,7 +157,8 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
-            this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status");
+            this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status").setId("Status");
+            this.addComponentColumn(Sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setAnzahlNeuBewerbungen(Sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
         }
 
     }
