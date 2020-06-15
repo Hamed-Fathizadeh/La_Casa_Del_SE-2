@@ -14,15 +14,13 @@ public class ImageConverter {
     private static final FileResource menu = new FileResource(new File("src/main/resources/Unknown_profil.png"));
     private static final FileResource profil = new FileResource(new File("src/main/resources/Unknown.png"));
 
-    public static Integer getInt(){
-        return 2;
-    }
     public static Image getUnknownProfilImage() {
 
         return new Image("",profil);
     }
 
     public static Image getUnknownMenuImage() {
+
         return new Image("",menu);
     }
 
