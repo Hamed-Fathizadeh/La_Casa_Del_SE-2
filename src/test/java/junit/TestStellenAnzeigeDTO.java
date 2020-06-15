@@ -99,7 +99,7 @@ public class TestStellenAnzeigeDTO {
 
 
         //Konstruktor ohne Unternehmenslogo
-        StellenanzeigeDTO stanz2 = new StellenanzeigeDTO(id, datum, zeitstempel, titel, beschreibung, status,
+     /*   StellenanzeigeDTO stanz2 = new StellenanzeigeDTO(id, datum, zeitstempel, titel, beschreibung, status,
                 standort, bundesland, firmenname, hauptsitz, suchbegriff, art);
 
 
@@ -114,7 +114,7 @@ public class TestStellenAnzeigeDTO {
         Assertions.assertEquals(stanz.getFirmenname(), stanz2.getFirmenname());
         Assertions.assertEquals(stanz.getHauptsitz(), stanz2.getHauptsitz());
         Assertions.assertEquals(stanz.getSuchbegriff(), stanz2.getSuchbegriff());
-        Assertions.assertEquals(stanz.getArt(), stanz2.getArt());
+        Assertions.assertEquals(stanz.getArt(), stanz2.getArt());*/
 
 
         //Konstruktor mit Unternehmenslogo und mit Bewertung
