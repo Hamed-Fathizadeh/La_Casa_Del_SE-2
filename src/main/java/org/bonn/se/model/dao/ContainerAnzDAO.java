@@ -437,12 +437,29 @@ public class ContainerAnzDAO extends AbstractDAO{
             JDBCConnection.getInstance().closeConnection();
         }
     }
+
     public static void deleteAnzeige(StellenanzeigeDTO stellenanzeige) throws DatabaseException {
+        boolean result;
+        String sql;
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            result = statement.execute("" +
+                    "SELECT lacasa.tab_bewerbung.s_anzeige_id " +
+                    "FROM lacasa.tab_bewerbung " +
+                    "WHERE lacasa.tab_bewerbung.s_anzeige_id = \'"+ stellenanzeige.getId() + "\'");
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
 
-        String sql = "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
-
+        if(result == false) {
+            sql = "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
+        } else {
+            sql ="UPDATE lacasa.tab_bewerbung SET s_anzeige_id = '-1'" +
+                    "WHERE lacasa.tab_bewerbung.s_anzeige_id = \'"+ stellenanzeige.getId()+ "\';" +
+                    "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = \'" + stellenanzeige.getId()+ "\';";
+        }
         PreparedStatement statement = getPreparedStatement(sql);
-
 
         try {
             statement.executeUpdate();

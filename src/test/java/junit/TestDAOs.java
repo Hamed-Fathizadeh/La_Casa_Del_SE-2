@@ -1,5 +1,6 @@
 package junit;
 
+import junit.util.ImageConverter;
 import junit.util.RandomString;
 import junit.util.UserTestFactory;
 import org.bonn.se.model.dao.ProfilDAO;
@@ -13,6 +14,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.*;
@@ -199,7 +202,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkStudentWithKenntnisse() throws DatabaseException {
+    public void checkStudentWithKenntnisse() throws DatabaseException, IOException {
         Student student = userTestFactory.registerStudent();
         UserDAO.getInstance().registerUser(student);
 
@@ -235,11 +238,8 @@ public class TestDAOs {
         assertEquals(student.getITKenntnis().getNiveau(),actual.getITKenntnis().getNiveau());
 
 
-        UserDAO.deleteUser(student.getEmail());
-
-
-
     }
+
 /*
     @Test
     public void checkRegisterStudentWithBuilder() throws DatabaseException {

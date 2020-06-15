@@ -82,25 +82,12 @@ public class LoginControl {
             JDBCConnection.getInstance().closeConnection();
         }
 
-
-
-//        VaadinSession session = UI.getCurrent().getSession();
-//        session.setAttribute(Roles.CURRENT_USER,user);
         UI.getCurrent().getNavigator().navigateTo(Views.MainView);
-
-
-//Benuter vorhanden
-//        UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
-
-//Fehlerfall
-//        throw new NoSuchUserOrPassword();
-
-
     }
 
     public static void logoutUser() {
-        VaadinSession vaadinSession = UI.getCurrent().getSession();
 
+        VaadinSession vaadinSession = UI.getCurrent().getSession();
         vaadinSession.setAttribute(Roles.Student,null);
         vaadinSession.setAttribute(Roles.Unternehmen,null);
         UI.getCurrent().getNavigator().navigateTo(Views.MainView);
