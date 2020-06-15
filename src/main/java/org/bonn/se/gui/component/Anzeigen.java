@@ -8,7 +8,9 @@ import com.vaadin.ui.*;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenanzeigeWindow;
 import org.bonn.se.model.dao.UserDAO;
+import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
@@ -22,7 +24,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
+public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     List<T> data;
     ContainerNeuigkeiten container;
     static int anzahlNeuBewerbungen = 0;
@@ -87,7 +89,7 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
         SingleSelect<StellenanzeigeDTO> selection = (SingleSelect<StellenanzeigeDTO>) this.asSingleSelect();
 
         // Der Event Listener für den Grid
-        this.addSelectionListener(event -> {
+       this.addSelectionListener(event -> {
 
             // Speichert den aktuell angewählten Wert bei klick auf die Zeile in der Var. "selected"
             StellenanzeigeDTO sa =  selection.getValue();
@@ -120,6 +122,8 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
 
         data = (List<T>) container.getListe();
         setUp();
+
+
 
     }
     public void setUp(){
@@ -159,6 +163,7 @@ public class Anzeigen<T extends StellenanzeigeDTO> extends Grid<T> {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
             this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status").setId("Status");
             this.addComponentColumn(Sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setAnzahlNeuBewerbungen(Sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
+
         }
 
     }

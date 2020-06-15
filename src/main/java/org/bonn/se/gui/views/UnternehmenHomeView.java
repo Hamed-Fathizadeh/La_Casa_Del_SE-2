@@ -103,7 +103,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
          gAnzeigenNeuBewerbungen.setSizeFull();
          gAnzeigenNeuBewerbungen.removeColumn("Status");
 
-         if(gAnzeigenNeuBewerbungen.getAnzahlNeuBewerbungen()>0){
+         if(gAnzeigenNeuBewerbungen.getData().size()>0){
              ThemeResource resource = new ThemeResource("img/Anzeigen/rot_klein.png");
              tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ",resource);
          }else {
