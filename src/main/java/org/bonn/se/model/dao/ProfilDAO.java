@@ -224,7 +224,7 @@ public class ProfilDAO extends AbstractDAO{
                 unternehmen.setHauptsitz(set.getString("hauptsitz"));
                 unternehmen.setDescription(set.getString("description"));
                 unternehmen.setBundesland(set.getString("u_bundesland"));
-                unternehmen.setKontaktnummer(String.valueOf(set.getInt("kontakt_nr")));
+                unternehmen.setKontaktnummer(set.getString("kontakt_nr"));
                 unternehmen.setLogo(set.getBytes("logo"));
                 Adresse adresse = new Adresse();
                 unternehmen.setAdresse(adresse);
