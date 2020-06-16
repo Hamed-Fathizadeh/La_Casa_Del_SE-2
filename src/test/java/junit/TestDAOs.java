@@ -89,7 +89,6 @@ public class TestDAOs {
         }
 
      */
-
     @Test
     public void registerStudentWithCheck() throws DatabaseException {
         Student student = userTestFactory.registerStudent();
