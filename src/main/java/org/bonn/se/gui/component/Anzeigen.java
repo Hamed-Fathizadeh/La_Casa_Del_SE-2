@@ -27,7 +27,6 @@ import java.util.List;
 
 public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     List<T> data;
-    ContainerNeuigkeiten container;
     static int anzahlNeuBewerbungen = 0;
     static int gesamtNeuBewerbungen = 0;
 
@@ -68,13 +67,13 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         return this;
     }
 
-    public Anzeigen(String str, ContainerNeuigkeiten container){
+    public Anzeigen(String str, List<StellenanzeigeDTO> dataInput){
         super();
 
         this.setHeightMode(HeightMode.UNDEFINED);
         this.addStyleName("AnzeigeUnternehmen");
         this.setSelectionMode(SelectionMode.SINGLE);
-        this.setCaption("Treffer: "+ container.getAnzahl());
+        this.setCaption("Treffer: "+ dataInput.size());
 
 
         if(!str.equals("Student")) {
@@ -128,7 +127,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
             }
         });
 
-        data = (List<T>) container.getListe();
+        data = (List<T>) dataInput;
         setUp();
 
 
@@ -169,6 +168,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         }
         this.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
         this.addColumn(StellenanzeigeDTO::getStandort).setCaption("Ort");
+        this.addColumn(StellenanzeigeDTO::getBundesland).setCaption("Bundesland");//temporär
         this.addColumn(StellenanzeigeDTO::getDatum).setCaption("Beginn");
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
@@ -177,6 +177,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
             this.addComponentColumn(Sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setAnzahlNeuBewerbungen(Sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
 
         }
+        this.addColumn(StellenanzeigeDTO::getSuchbegriff).setCaption("suchbegrif");//temporär
 
     }
 }

@@ -24,6 +24,10 @@ import org.bonn.se.services.util.Views;
 
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StudentHomeView extends VerticalLayout implements View {
 
@@ -46,19 +50,20 @@ public class StudentHomeView extends VerticalLayout implements View {
         Maingrid = maingrid;
     }
 
-    static ContainerNeuigkeiten containerOnFly = ContainerNeuigkeiten.getInstance();
 
     static GridLayout bottomGridBewNeu;
+    static ContainerNeuigkeiten containerOnFly = ContainerNeuigkeiten.getInstance();
 
 
 
     public void setUp() throws DatabaseException, SQLException {
 
         Maingrid = new GridLayout(2, 5);
-
-
         Maingrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
+
+
+        containerOnFly.loadSuche(null, null, null, "Ganzer Ort", "Normal", null, null, null);
 
         ///HorizontalLayout hLayoutSearch = new HorizontalLayout();
         //hLayoutSearch.setSizeFull();
@@ -77,8 +82,6 @@ public class StudentHomeView extends VerticalLayout implements View {
         GridLayout searchGrid = new GridLayout(7, 3);
         searchGrid.setMargin(true);
         searchGrid.setSizeFull();
-        containerOnFly.loadSuche(null, null, null, "Ganzer Ort", "Normal", null, null, null);
-
 
 // add combobox
         ComboBox<String> comboNachWas = new ComboBox<>();
@@ -89,12 +92,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         comboNachWas.addValueChangeListener(event -> {
             Maingrid.removeComponent(GridAnzeig);
 
-            containerOnFly.getListe().stream().filter(begrif -> comboNachWas.getValue() == null || begrif.getSuchbegriff()
-                    .toLowerCase().startsWith(comboNachWas.getValue().toLowerCase())
-            );
-
-            stellenSuchenOnFly( containerOnFly );
-            System.out.println("stuhomewiev hier1");
+            stellenSuchenOnFly( "",comboNachWas.getValue(),null,null,null );
 
             Maingrid.addComponent(GridAnzeig, 0, 2, 1, 2);
             Maingrid.setComponentAlignment(GridAnzeig, Alignment.MIDDLE_CENTER);
@@ -107,6 +105,15 @@ public class StudentHomeView extends VerticalLayout implements View {
 // add combobox ortBund
         OrtField comboOrtBund = new OrtField("Ort");
         comboOrtBund.setWidth(300.0f, Unit.PIXELS);
+
+        comboOrtBund.addValueChangeListener(event -> {
+            Maingrid.removeComponent(GridAnzeig);
+            stellenSuchenOnFly(comboOrtBund.getValue(), "",null,null,null);
+
+            Maingrid.addComponent(GridAnzeig, 0, 2, 1, 2);
+            Maingrid.setComponentAlignment(GridAnzeig, Alignment.MIDDLE_CENTER);
+
+        });
 
 
 // add combobox
@@ -138,15 +145,15 @@ public class StudentHomeView extends VerticalLayout implements View {
              searchGrid.addComponent(lSpruch,0,0,6,0);
         searchGrid.addComponent(comboNachWas,2,1,2,1);
         searchGrid.addComponent(comboOrtBund,3,1,3,1);
-        searchGrid.addComponent(comboUmkreis,5,1,5,1);
-      //  searchGrid.addComponent(buttonSearch,6,1,6,1);
+     //   searchGrid.addComponent(comboUmkreis,5,1,5,1);
+     //   searchGrid.addComponent(buttonSearch,6,1,6,1);
  searchGrid.addComponent(buttonErwitertSuche,2,2,2,2);
 
 
         searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
-        searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
-        searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_CENTER);
-     //   searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
+        searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_LEFT);
+       // searchGrid.setComponentAlignment(comboUmkreis, Alignment.BOTTOM_CENTER);
+      //  searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
         searchGrid.setComponentAlignment(buttonErwitertSuche, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
 
@@ -159,9 +166,11 @@ public class StudentHomeView extends VerticalLayout implements View {
                 });
 
         ContainerNeuigkeiten containerNeuigkeiten = ContainerNeuigkeiten.getInstance();
-        containerNeuigkeiten.loadNeuigkeiten("Top 5");
+        containerNeuigkeiten.loadNeuigkeiten("Alle");
+        List<StellenanzeigeDTO> dataTop5 = containerNeuigkeiten.getListe().stream().limit(5)
+        .collect(Collectors.toList());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",containerNeuigkeiten);
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",dataTop5);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("705px");
 
@@ -291,16 +300,30 @@ public class StudentHomeView extends VerticalLayout implements View {
         ContainerNeuigkeiten container = ContainerNeuigkeiten.getInstance();
         container.loadSuche(fachgebiet, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",container);
+
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",container.getListe());
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("1000px");
         GridAnzeig = gAnzeigen;
 
     }
 
-    public static void stellenSuchenOnFly(ContainerNeuigkeiten containerOnFly ) {
+    public static void stellenSuchenOnFly(String ortBund, String suchbegrif, String art, String branche, String beginDatum) {
+String str = "hklfd";
+        System.out.println("stuhomeview hier2" +str.equals(null));
+        List<StellenanzeigeDTO> data = containerOnFly.getListe().stream().peek(c -> {
+            if (c.getSuchbegriff() == null){c.setSuchbegriff("");}
+            if (c.getStandortBundesland() == null){c.setStandort("");}
+            if (c.getArt() == null){c.setArt("");}
+            if (c.getBranche() == null){c.setBranche("");}
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",containerOnFly);
+        }).filter( suche -> suche.getStandortBundesland().equals(ortBund) || suche.getStandortBundesland().equals("")
+                || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals(""))
+        ).collect(Collectors.toList());
+
+
+        System.out.println("studenthomeview hierX  "+containerOnFly.getAnzahl());
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",data);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("1000px");
         GridAnzeig = gAnzeigen;

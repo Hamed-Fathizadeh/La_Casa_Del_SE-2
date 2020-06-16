@@ -51,7 +51,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
         ContainerNeuigkeiten containerMeinAnzeigen = ContainerNeuigkeiten.getInstance();
         containerMeinAnzeigen.loadUnternehmenAnzeigen(unternehmen.getEmail());
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setSizeFull();
 
@@ -80,19 +80,19 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         tabSheet.addTab(gAnzeigen,"Alle "+gAnzeigen.getAnzahlRow());
 
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenOnline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        Anzeigen<StellenanzeigeDTO> gAnzeigenOnline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigenOnline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==1).collect(Collectors.toList()));
         gAnzeigenOnline.setSizeFull();
         gAnzeigenOnline.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigenOnline,"Online "+gAnzeigenOnline.getAnzahlRow());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenOffline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        Anzeigen<StellenanzeigeDTO> gAnzeigenOffline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigenOffline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==2).collect(Collectors.toList()));
         gAnzeigenOffline.setSizeFull();
         gAnzeigenOffline.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigenOffline,"Offline "+gAnzeigenOffline.getAnzahlRow());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenEntwurf = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        Anzeigen<StellenanzeigeDTO> gAnzeigenEntwurf = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigenEntwurf.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==3).collect(Collectors.toList()));
         gAnzeigenEntwurf.setSizeFull();
         gAnzeigenEntwurf.removeColumn("Anzahl neue Bewerbungen");
@@ -100,7 +100,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
 
          containerMeinAnzeigen.loadNeuBewerbungen(unternehmen);
-         Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+         Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
          gAnzeigenNeuBewerbungen.setSizeFull();
          gAnzeigenNeuBewerbungen.removeColumn("Status");
 
