@@ -7,8 +7,8 @@ import org.bonn.se.model.dao.SuchbegriffDAO;
 import java.util.List;
 
 public class ComponentControl {
-
-    private ComponentControl(){}
+    private ComponentControl(){
+    }
 
     public static ComponentControl search = null;
 
@@ -20,6 +20,7 @@ public class ComponentControl {
     }
 
     public List<String> getSuchbegriffe () {
+
         return SuchbegriffDAO.getInstance().getSuchbegriffe();
     }
 
