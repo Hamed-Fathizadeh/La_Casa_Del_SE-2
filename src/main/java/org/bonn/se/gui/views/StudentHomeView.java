@@ -1,6 +1,5 @@
 package org.bonn.se.gui.views;
 
-
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -142,33 +141,33 @@ public class StudentHomeView extends VerticalLayout implements View {
 
 // add components in searchGrid
 
-             searchGrid.addComponent(lSpruch,0,0,6,0);
+        searchGrid.addComponent(lSpruch,0,0,6,0);
         searchGrid.addComponent(comboNachWas,2,1,2,1);
         searchGrid.addComponent(comboOrtBund,3,1,3,1);
-     //   searchGrid.addComponent(comboUmkreis,5,1,5,1);
-     //   searchGrid.addComponent(buttonSearch,6,1,6,1);
- searchGrid.addComponent(buttonErwitertSuche,2,2,2,2);
+        //   searchGrid.addComponent(comboUmkreis,5,1,5,1);
+        //   searchGrid.addComponent(buttonSearch,6,1,6,1);
+        searchGrid.addComponent(buttonErwitertSuche,2,2,2,2);
 
 
         searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_LEFT);
-       // searchGrid.setComponentAlignment(comboUmkreis, Alignment.BOTTOM_CENTER);
-      //  searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
+        // searchGrid.setComponentAlignment(comboUmkreis, Alignment.BOTTOM_CENTER);
+        //  searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
         searchGrid.setComponentAlignment(buttonErwitertSuche, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
 
         buttonErwitertSuche.addClickListener(
                 event -> {
-                            Maingrid.removeComponent(GridAnzeig);
-                            comboNachWas.clear();comboOrtBund.clear(); comboUmkreis.clear();
-                            ErweiterteSuche window = new ErweiterteSuche();
-                            UI.getCurrent().addWindow(window);
+                    Maingrid.removeComponent(GridAnzeig);
+                    comboNachWas.clear();comboOrtBund.clear(); comboUmkreis.clear();
+                    ErweiterteSuche window = new ErweiterteSuche();
+                    UI.getCurrent().addWindow(window);
                 });
 
         ContainerNeuigkeiten containerNeuigkeiten = ContainerNeuigkeiten.getInstance();
         containerNeuigkeiten.loadNeuigkeiten("Alle");
         List<StellenanzeigeDTO> dataTop5 = containerNeuigkeiten.getListe().stream().limit(5)
-        .collect(Collectors.toList());
+                .collect(Collectors.toList());
 
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",dataTop5);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
@@ -218,14 +217,14 @@ public class StudentHomeView extends VerticalLayout implements View {
 
 
 
-                bottomGridBewNeu.addComponent(lBewerbung,0,0,1,0);
-                bottomGridBewNeu.addComponent(lNeuigkeit,2,0,3,0);
+        bottomGridBewNeu.addComponent(lBewerbung,0,0,1,0);
+        bottomGridBewNeu.addComponent(lNeuigkeit,2,0,3,0);
         bottomGridBewNeu.addComponent(gBewerbungen,0,1,1,1);
-                bottomGridBewNeu.addComponent(gAnzeigen,2,1,3,1);
-               bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
-           bottomGridBewNeu.addComponent(alleBewerbungen,0,3,0,3);
-           bottomGridBewNeu.addComponent(alleNeuigkeiten,2,3,2,3);
-                 bottomGridBewNeu.addComponent(meineAbos,3,3,3,3);
+        bottomGridBewNeu.addComponent(gAnzeigen,2,1,3,1);
+        bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
+        bottomGridBewNeu.addComponent(alleBewerbungen,0,3,0,3);
+        bottomGridBewNeu.addComponent(alleNeuigkeiten,2,3,2,3);
+        bottomGridBewNeu.addComponent(meineAbos,3,3,3,3);
 
 
         bottomGridBewNeu.setComponentAlignment(lBewerbung,Alignment.TOP_CENTER);
@@ -236,9 +235,9 @@ public class StudentHomeView extends VerticalLayout implements View {
         bottomGridBewNeu.setComponentAlignment(alleNeuigkeiten,Alignment.BOTTOM_CENTER);
         bottomGridBewNeu.setComponentAlignment(meineAbos,Alignment.BOTTOM_CENTER);
 
-             Maingrid.addComponent(topPanel, 0, 0, 1, 0);
-           Maingrid.addComponent(searchGrid, 0, 1, 1, 1);
-     Maingrid.addComponent(bottomGridBewNeu, 0, 3, 1, 3);
+        Maingrid.addComponent(topPanel, 0, 0, 1, 0);
+        Maingrid.addComponent(searchGrid, 0, 1, 1, 1);
+        Maingrid.addComponent(bottomGridBewNeu, 0, 3, 1, 3);
 
         Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
         Maingrid.setComponentAlignment(searchGrid, Alignment.TOP_CENTER);
@@ -309,7 +308,7 @@ public class StudentHomeView extends VerticalLayout implements View {
     }
 
     public static void stellenSuchenOnFly(String ortBund, String suchbegrif, String art, String branche, String beginDatum) {
-String str = "hklfd";
+        String str = "hklfd";
         System.out.println("stuhomeview hier2" +str.equals(null));
         List<StellenanzeigeDTO> data = containerOnFly.getListe().stream().peek(c -> {
             if (c.getSuchbegriff() == null){c.setSuchbegriff("");}
