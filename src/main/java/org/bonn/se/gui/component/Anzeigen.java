@@ -18,6 +18,7 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Collections;
@@ -115,7 +116,14 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
                 ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigeDTO(sa);
                 MyUI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
             } else {
-                StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmen_data);
+                StellenanzeigeWindow stellenanzeigeWindow = null;
+                try {
+                    stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmen_data);
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
                 UI.getCurrent().addWindow(stellenanzeigeWindow);
             }
         });

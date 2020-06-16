@@ -3,17 +3,23 @@ package org.bonn.se.gui.component;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
+import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
-public class TopPanelUser extends GridLayout {
+import java.sql.SQLException;
 
-    public TopPanelUser(){
+public class TopPanelUser extends GridLayout {
+        MenuBar bar;
+        MenuBar.MenuItem item1;
+
+    public TopPanelUser() throws DatabaseException, SQLException {
 
         this.setRows(1);
         this.setColumns(10);
@@ -35,10 +41,10 @@ public class TopPanelUser extends GridLayout {
 
 
 
-        MenuBar bar = new MenuBar();
+        bar = new MenuBar();
         // MenuBar.MenuItem item1 = bar.addItem("Menü", null);
         bar.addStyleName("user-menu");
-        MenuBar.MenuItem item1 = null;
+        item1 = null;
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
            Image profilbild = ImageConverter.convertImagetoMenu(((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture());
@@ -73,15 +79,14 @@ public class TopPanelUser extends GridLayout {
                 LoginControl.logoutUser();
             }
         });
-
-        item1.addItem("Letzte Bewerbungen", VaadinIcons.SEARCH, new MenuBar.Command() {
+        MenuBar.MenuItem bew = item1.addItem("Letzte Bewerbungen", VaadinIcons.SEARCH, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem menuItem) {
                 LoginControl.logoutUser();
             }
         });
 
-        item1.addItem("Settings", VaadinIcons.SEARCH, new MenuBar.Command() {
+            item1.addItem("Settings", VaadinIcons.SEARCH, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem menuItem) {
                 UI.getCurrent().getNavigator().navigateTo(Views.Settings);
@@ -97,5 +102,15 @@ public class TopPanelUser extends GridLayout {
         });
         this.addComponent(bar,9,0,9,0);
         this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
+
+        if(!FeatureToggleControl.featureIsEnabled("BEWERBUNGEN")) {
+
+            UI.getCurrent().access(new Runnable() {
+                @Override
+                public void run() {
+                    item1.removeChild(bew);
+                }
+            });
+        }
     }
 }

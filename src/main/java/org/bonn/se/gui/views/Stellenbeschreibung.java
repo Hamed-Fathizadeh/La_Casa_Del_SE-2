@@ -17,11 +17,13 @@ import org.bonn.se.services.util.Views;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
+import java.sql.SQLException;
+
 public class Stellenbeschreibung extends GridLayout implements View {
     StellenanzeigeDTO sa;
 
 
-    public void setUp() {
+    public void setUp() throws DatabaseException, SQLException {
         this.setMargin(false);
         this.setSizeFull();
         this.setColumns(10);
@@ -182,7 +184,13 @@ public class Stellenbeschreibung extends GridLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            this.setUp();
+            try {
+                this.setUp();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
 

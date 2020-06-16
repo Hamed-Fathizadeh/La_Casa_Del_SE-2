@@ -15,7 +15,6 @@ public class ImageConverter {
     private static final FileResource profil = new FileResource(new File("src/main/resources/Unknown.png"));
 
     public static Image getUnknownProfilImage() {
-
         return new Image("",profil);
     }
 

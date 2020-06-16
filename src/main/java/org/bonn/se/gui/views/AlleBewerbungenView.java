@@ -9,13 +9,16 @@ import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.*;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
+
+import java.sql.SQLException;
 
 public class AlleBewerbungenView extends VerticalLayout implements View {
 
     static GridLayout Maingrid = new GridLayout(2, 5);
-    public void setUp() {
+    public void setUp() throws DatabaseException, SQLException {
 
         Maingrid = new GridLayout(1, 5);
         Maingrid.setSizeFull();
@@ -70,7 +73,13 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
 
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            this.setUp();
+            try {
+                this.setUp();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {

@@ -15,11 +15,13 @@ import org.bonn.se.services.util.Roles;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
+import java.sql.SQLException;
+
 
 public class Settings  extends VerticalLayout implements View {
 
     static GridLayout Maingrid = new GridLayout(2, 5);
-    public void setUp() {
+    public void setUp() throws DatabaseException, SQLException {
 
         Maingrid = new GridLayout(1, 5);
         Maingrid.setSizeFull();
@@ -165,10 +167,22 @@ public class Settings  extends VerticalLayout implements View {
 
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            this.setUp();
+            try {
+                this.setUp();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
 
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            this.setUp();
+            try {
+                this.setUp();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
 
         } else {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
