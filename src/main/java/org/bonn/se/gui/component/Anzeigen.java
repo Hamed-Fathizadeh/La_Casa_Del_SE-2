@@ -168,16 +168,13 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         }
         this.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
         this.addColumn(StellenanzeigeDTO::getStandort).setCaption("Ort");
-        this.addColumn(StellenanzeigeDTO::getBundesland).setCaption("Bundesland");//temporär
         this.addColumn(StellenanzeigeDTO::getDatum).setCaption("Beginn");
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
             this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status").setId("Status");
-            this.addComponentColumn(Sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setAnzahlNeuBewerbungen(Sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
-
+            this.addComponentColumn(Sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setGesamtNeuBewerbungen(Sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
         }
-        this.addColumn(StellenanzeigeDTO::getSuchbegriff).setCaption("suchbegrif");//temporär
 
     }
 }

@@ -19,6 +19,16 @@ import java.sql.Statement;
 
 public class BewerbungControl {
 
+    public static void bewerbungLoeschen(BewerbungDTO bewerbung) throws DatabaseException {
+        try {
+            BewerbungDAO.bewerbungLoeschen(bewerbung);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DatabaseException("Die Bewerbung ist nicht vorhanden!");
+        }
+
+    }
+
     public static void bewerben(BewerbungDTO bewerbung) throws DatabaseException {
         try {
             BewerbungDAO.bewerben(bewerbung);

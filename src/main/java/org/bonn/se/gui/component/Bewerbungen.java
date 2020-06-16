@@ -7,10 +7,13 @@ import com.vaadin.ui.*;
 
 import org.bonn.se.control.BewerbungControl;
 import org.bonn.se.gui.window.BewerbungWindow;
+import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.dao.BewertungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.Views;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.sql.*;
@@ -69,45 +72,56 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
             if (userType.equals("Student")) {
 
-            // Create a sub-window and set the content
-            Window subWindow = new Window("Bewertung");
-            VerticalLayout subContent = new VerticalLayout();
-            subWindow.setContent(subContent);
-
-            RatingStars rating = new RatingStars();
-
-            rating.setMaxValue(5);
-            rating.setAnimated(true);
+                Window subWindow = new Window("Bewertung abgeben oder Löschen");
+                HorizontalLayout subContent = new HorizontalLayout();
+                subWindow.setContent(subContent);
+                subWindow.setWidth("600px");
+                subWindow.setHeight("300px");
 
 
-            rating.setReadOnly(false);
 
-            subContent.addComponent(rating);
+                subContent.addComponent(new Label("Möchten Sie Bewerten oder Löschen!"));
 
-            subContent.addComponent(new Label("Bitte beachten Sie, dass sie jedes Unternehmen nur einmal bewerten können"));
+                Button bewerten = new Button("Bewertung abgeben");
+                subContent.addComponent(bewerten);
 
-            Button bewerten = new Button("Bewertung abgeben");
-            subContent.addComponent(bewerten);
+                Button Loeschen = new Button("Löschen");
+                subContent.addComponent(Loeschen);
+                BewerbungDTO bewDTO =  selection.getValue();
+                bewerten.addClickListener(new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
 
-            bewerten.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent clickEvent) {
-                        BewerbungDTO bw = selection.getValue();
-                        bw.setRating(rating.getValue());
-                        BewertungDAO.bewertung(bw);
+                        setUpBewertung(bewDTO);
+                        subWindow.close();
+                    }
+                });
+
+                Loeschen.addClickListener(new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(Button.ClickEvent clickEvent) {
+                        try {
+                            BewerbungControl.bewerbungLoeschen(bewDTO);
+                        } catch (DatabaseException e) {
+                            e.printStackTrace();
+                        }
+                        subWindow.close();
+                        ConfirmationWindow confWindow =  new ConfirmationWindow("Ihre Bewerbung wurde gelöscht");
+                        UI.getCurrent().addWindow(confWindow);
+                        confWindow.focus();
+                        UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
+                    }
+                });
 
 
-                    // Open it in the UI
-                    subWindow.close();
-                }
-            });
+                // Center it in the browser window
+                subWindow.center();
+
+                // Open it in the UI
+                UI.getCurrent().addWindow(subWindow);
 
 
-            // Center it in the browser window
-            subWindow.center();
 
-            // Open it in the UI
-            UI.getCurrent().addWindow(subWindow);
         }else{
 
 
@@ -127,7 +141,17 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         }
         });
 
-         data = (List<T>) container.getListe();
+        setUP(container);
+
+    }
+
+
+    public void setUP(ContainerLetztenBewerbungen container){
+
+
+        this.removeAllColumns();
+
+        data = (List<T>) container.getListe();
         this.setItems( data);
 
         ThemeResource resource = new ThemeResource("img/Anzeigen/rot.png");
@@ -144,7 +168,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         //RatingStars ratingStars = new RatingStars();
         //ratingStars.setMaxValue(5);
 
-        if(userType.equals("Student")) {
+        if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Logo");
             this.addColumn(BewerbungDTO::getUnternehmenName).setCaption("Unternehmen").setWidth(150);
             this.addColumn(BewerbungDTO::getTitel).setCaption("Titel");
@@ -158,7 +182,11 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 return rating;
             }).setCaption("Bewertung");
         }else{
-            this.addComponentColumn(BewerbungDTO::getStudent_picture).setCaption("Bild");
+            this.addComponentColumn(im ->{
+                VerticalLayout imageL = new VerticalLayout();
+                imageL.addComponent(im.getStudent_picture());
+                return imageL;
+            }).setCaption("Bild");
             this.addColumn(BewerbungDTO::getStudent_vorname).setCaption("Vorname");
             this.addColumn(BewerbungDTO::getStudent_nachname).setCaption("Nachname");
             this.addColumn(BewerbungDTO::getStudent_studiengang).setCaption("Studiengang");
@@ -168,12 +196,57 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             this.addComponentColumn(Bew -> (Bew.getStatus() == 9 ? new Label(" <style>p { color:red ; font-weight:bold;  font-size: 18px; }</style><p>Neu</p>", ContentMode.HTML): null)).setCaption("");
 
         } new Label("<b>Unternehmensname</b>", ContentMode.HTML);
+
+
+
+    }
+
+
+    public void setUpBewertung( BewerbungDTO inBew){
+
+        Window subWindow = new Window("Bewertung");
+        VerticalLayout subContent = new VerticalLayout();
+        subWindow.setContent(subContent);
+
+        RatingStars rating = new RatingStars();
+
+        rating.setMaxValue(5);
+        rating.setAnimated(true);
+
+
+        rating.setReadOnly(false);
+
+        subContent.addComponent(rating);
+
+        subContent.addComponent(new Label("Bitte beachten Sie, dass sie jedes Unternehmen nur einmal bewerten können"));
+
+        Button bewerten = new Button("Bewertung abgeben");
+        subContent.addComponent(bewerten);
+
+        bewerten.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                BewerbungDTO bw = inBew;
+                bw.setRating(rating.getValue());
+                BewertungDAO.bewertung(bw);
+
+
+                // Open it in the UI
+                subWindow.close();
+            }
+        });
+
+
+        // Center it in the browser window
+        subWindow.center();
+
+        // Open it in the UI
+        UI.getCurrent().addWindow(subWindow);
+
     }
 
 
-    public void setUpBewerbung(ContainerLetztenBewerbungen inCcontainer, String inUserType) {
-        new Bewerbungen( inCcontainer,  inUserType);
 
-    }
+
 }
 

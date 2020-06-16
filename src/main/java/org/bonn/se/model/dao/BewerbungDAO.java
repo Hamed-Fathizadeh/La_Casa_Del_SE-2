@@ -36,6 +36,19 @@ public class BewerbungDAO extends AbstractDAO{
             JDBCConnection.getInstance().closeConnection();
         }
     }
+    public static void bewerbungLoeschen(BewerbungDTO bewerbung) throws SQLException, DatabaseException {
+        String sql = "DELETE FROM lacasa.tab_bewerbung WHERE bewerbung_id = "+bewerbung.getBewerbungID();
+
+        PreparedStatement statement = getPreparedStatement(sql);
+        try {
+            statement.executeUpdate();
+        }catch(NullPointerException | SQLException e){
+            e.printStackTrace();
+        }finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+
+    }
 
     public static void bewerben(BewerbungDTO bewerbung) throws DatabaseException {
         String sql = "INSERT INTO lacasa.tab_bewerbung (datum, description, lebenslauf, status, student_id, s_anzeige_id)"+

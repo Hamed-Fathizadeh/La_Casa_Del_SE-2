@@ -19,6 +19,8 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
@@ -104,11 +106,20 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
          gAnzeigenNeuBewerbungen.setSizeFull();
          gAnzeigenNeuBewerbungen.removeColumn("Status");
 
+
+
+
          if(gAnzeigenNeuBewerbungen.getData().size()>0){
+             List<StellenanzeigeDTO> data = gAnzeigenNeuBewerbungen.getData().stream().filter(c -> c.getStatus() == 1).collect(Collectors.toList());
+             int gesamtAnzahl = 0;
+             for( StellenanzeigeDTO sa: data){
+                 gesamtAnzahl+= sa.getanzahlNeuBewerbung();
+             }
+
              ThemeResource resource = new ThemeResource("img/Anzeigen/rot_klein.png");
-             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ",resource);
+             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen "+gesamtAnzahl ,resource);
          }else {
-             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ");
+             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen 0");
          }
 
         bottomGridBewNeu.addComponent(lBewerbung,0,0,0,0);
