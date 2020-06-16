@@ -1,9 +1,6 @@
 package org.bonn.se.gui.ui;
 
-import com.vaadin.annotations.PreserveOnRefresh;
-import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.Title;
-import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.annotations.*;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -25,6 +22,7 @@ import static org.bonn.se.services.util.Views.Settings;
  * The UI is initialized using {@link #init(VaadinRequest)}. This method is intended to be 
  * overridden to add component to the user interface and initialize non-component functionality.
  */
+@Push
 @Theme("demo")
 @Title("Lacolsco")
 @PreserveOnRefresh

@@ -5,7 +5,7 @@ import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.AnzStatusControl;
-import org.bonn.se.control.BewerbungControl;
+import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
@@ -18,17 +18,20 @@ import org.bonn.se.services.util.Views;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
+import java.sql.SQLException;
+
 
 public class StellenanzeigeWindow extends Window {
 
 
     private OnOffSwitch onOffSwitch = new OnOffSwitch();
-
-    public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data)  {
+    Button bewerbungen;
+    Button bewerben;
+    public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) throws DatabaseException, SQLException {
         setUp(stellenanzeige,unternehmen_data);
     }
 
-    public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) {
+    public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) throws DatabaseException, SQLException {
         center();
 
         this.setWidth("80%");
@@ -130,7 +133,7 @@ public class StellenanzeigeWindow extends Window {
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
 
-            Button bewerben = new Button("Bewerben");
+            bewerben = new Button("Bewerben");
             Button back = new Button("Zurück zu Ergebnissen");
 
             gridLayout.addComponent(bewerben, 4, 14, 4, 14);
@@ -153,8 +156,8 @@ public class StellenanzeigeWindow extends Window {
             back.addClickListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
                     StellenanzeigeWindow.this.close();
+                    UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
                 }
             });
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
@@ -162,7 +165,7 @@ public class StellenanzeigeWindow extends Window {
             Button back = new Button("Zurück zu Anzeigen");
             Button bearbeiten = new Button("Bearbeiten");
             Button delete = new Button("Löschen");
-            Button bewerbungen = new Button("Zum Bewerbungen");
+            bewerbungen = new Button("Zum Bewerbungen");
 
             gridLayout.addComponent(back, 4, 0, 4, 0);
             gridLayout.addComponent(bearbeiten, 2, 0, 2, 0);
@@ -287,7 +290,13 @@ public class StellenanzeigeWindow extends Window {
                                             gridLayout.replaceComponent(save, delete);
                                             gridLayout.replaceComponent(titel_bearbeiten, titel);
 
-                                            StellenanzeigeWindow.this.setUp(stellenanzeige, unternehmen_data);
+                                            try {
+                                                StellenanzeigeWindow.this.setUp(stellenanzeige, unternehmen_data);
+                                            } catch (DatabaseException e) {
+                                                e.printStackTrace();
+                                            } catch (SQLException throwables) {
+                                                throwables.printStackTrace();
+                                            }
                                         }
                                     }
                                 });
@@ -327,6 +336,19 @@ public class StellenanzeigeWindow extends Window {
 
         }
         panel.setContent(gridLayout);
+
+        if(!FeatureToggleControl.featureIsEnabled("BEWERBUNGEN")) {
+
+            UI.getCurrent().access(new Runnable() {
+                @Override
+                public void run() {
+                    gridLayout.removeComponent(bewerbungen);
+                    gridLayout.removeComponent(bewerben);
+                }
+            });
+        }
+
+
         this.setContent(panel);
 
 

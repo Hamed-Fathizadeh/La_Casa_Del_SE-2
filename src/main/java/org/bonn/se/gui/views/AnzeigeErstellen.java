@@ -16,10 +16,12 @@ import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.*;
 
+import java.sql.SQLException;
+
 public class AnzeigeErstellen extends GridLayout implements View {
         private OrtField ort;
 
-    public void setUp() throws DatabaseException {
+    public void setUp() throws DatabaseException, SQLException {
 
 
         this.setRows(4);
@@ -178,7 +180,7 @@ public class AnzeigeErstellen extends GridLayout implements View {
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             try {
                 this.setUp();
-            } catch (DatabaseException e) {
+            } catch (DatabaseException | SQLException e) {
                 e.printStackTrace();
             }
         } else {

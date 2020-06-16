@@ -8,6 +8,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.BewerbungControl;
+import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.OrtField;
@@ -21,17 +22,8 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.SuchbegrifService;
 import org.bonn.se.services.util.Views;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
-
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.stream.Stream;
 
 public class StudentHomeView extends VerticalLayout implements View {
 
@@ -56,7 +48,7 @@ public class StudentHomeView extends VerticalLayout implements View {
 
     static ContainerNeuigkeiten containerOnFly = ContainerNeuigkeiten.getInstance();
 
-
+    static GridLayout bottomGridBewNeu;
 
 
 
@@ -219,7 +211,7 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
 
-        GridLayout bottomGridBewNeu = new GridLayout(4, 4);
+        bottomGridBewNeu = new GridLayout(4, 4);
         bottomGridBewNeu.setSizeFull();
         bottomGridBewNeu.addStyleName("bottomGridBewNeu");
         bottomGridBewNeu.setMargin(true);
@@ -259,6 +251,23 @@ public class StudentHomeView extends VerticalLayout implements View {
         this.addStyleName("grid");
 
         loadProfil();
+        if(!FeatureToggleControl.featureIsEnabled("BEWERBUNGEN")) {
+
+            UI.getCurrent().access(new Runnable() {
+                @Override
+                public void run() {
+
+                    bottomGridBewNeu.removeAllComponents();
+                    bottomGridBewNeu.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+                    bottomGridBewNeu.addComponent(lNeuigkeit,0,0,3,0);
+                    bottomGridBewNeu.addComponent(gAnzeigen,0,1,3,1);
+                    bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
+                    bottomGridBewNeu.addComponent(alleNeuigkeiten,1,3,1,3);
+                    bottomGridBewNeu.addComponent(meineAbos,2,3,2,3);
+
+                }
+            });
+        }
 
     }
 

@@ -24,6 +24,10 @@ import org.bonn.se.services.util.Roles;
 public class RegisterStudent extends GridLayout implements View {
 
     public void setUp() {
+
+        boolean status = true;
+
+
         System.out.println("LOG: get UI-Objekt in RegisterStudent!" + VaadinSession.getCurrent().toString());
         // this.setSizeFull();
         // this.setSpacing(true);
@@ -215,10 +219,6 @@ public class RegisterStudent extends GridLayout implements View {
         binder2.addStatusChangeListener(
                 event -> VnummerButton.setEnabled(binder2.isValid()));
          */
-
-
-
-
 
     }
 

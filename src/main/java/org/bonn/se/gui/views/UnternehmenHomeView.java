@@ -7,25 +7,26 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.gui.component.Anzeigen;
-import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
-import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
+import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 
 public class UnternehmenHomeView extends VerticalLayout implements View {
     private final StellenanzeigeDTO selected = null;
     private final int anzahl = 0;
-    public void setUp() {
+    private TabSheet.Tab bewerbung;
+    public void setUp() throws DatabaseException, SQLException {
 
         TopPanelUser topPanel = new TopPanelUser();
 
@@ -105,9 +106,9 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
          if(gAnzeigenNeuBewerbungen.getData().size()>0){
              ThemeResource resource = new ThemeResource("img/Anzeigen/rot_klein.png");
-             tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ",resource);
+             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ",resource);
          }else {
-             tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ");
+             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ");
          }
 
         bottomGridBewNeu.addComponent(lBewerbung,0,0,0,0);
@@ -140,6 +141,16 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
 
 
+        if(!FeatureToggleControl.featureIsEnabled("BEWERBUNGEN")) {
+
+            UI.getCurrent().access(new Runnable() {
+                @Override
+                public void run() {
+                    tabSheet.removeTab(bewerbung);
+                }
+            });
+        }
+
 
 
     }
@@ -149,7 +160,13 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            this.setUp();
+            try {
+                this.setUp();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {

@@ -12,10 +12,12 @@ import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.User;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 import java.io.File;
+import java.sql.SQLException;
 
 public class ProfilVerwaltenStudent extends GridLayout implements View {
     static GridLayout GridAnzeig = null;
@@ -29,7 +31,7 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
     }
 
 
-    public void setUp() {
+    public void setUp() throws DatabaseException, SQLException {
         User user = new User();
 
         //Für Test
@@ -242,7 +244,13 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
         @Override
         public void enter (ViewChangeListener.ViewChangeEvent event){
             if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-                this.setUp();
+                try {
+                    this.setUp();
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
                 UI.getCurrent().getNavigator().getCurrentNavigationState();
             } else {

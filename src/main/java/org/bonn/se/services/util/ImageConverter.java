@@ -18,7 +18,6 @@ public class ImageConverter {
         return 2;
     }
     public static Image getUnknownProfilImage() {
-
         return new Image("",profil);
     }
 
