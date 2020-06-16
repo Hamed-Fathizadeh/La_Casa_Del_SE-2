@@ -28,47 +28,48 @@ public class ImageConverter {
 
         if(bild == null ) {
             return getUnknownProfilImage();
+        } else {
+            Image image;
+
+            StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
+                public InputStream getStream() {
+                    return new ByteArrayInputStream(
+                            bild);
+                }
+            };
+
+            image = new Image(
+                    null, new StreamResource(
+                    streamSource, bild.toString()));
+            image.setWidth("150px");
+            image.setHeight("150px");
+
+            return image;
         }
-        Image image;
-
-        StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
-            public InputStream getStream() {
-                return (bild == null) ? null : new ByteArrayInputStream(
-                        bild);
-            }
-        };
-
-        image = new Image(
-                null, new StreamResource(
-                streamSource, bild.toString()));
-        image.setWidth("150px");
-        image.setHeight("150px");
-
-        return image;
     }
 
     public static Image convertImagetoMenu(byte[] bild) {
 
         if(bild == null ) {
             return getUnknownMenuImage();
+        } else {
+            Image image;
+
+            StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
+                public InputStream getStream() {
+                    return new ByteArrayInputStream(
+                            bild);
+                }
+            };
+
+            image = new Image(
+                    null, new StreamResource(
+                    streamSource, bild.toString()));
+            image.setWidth("50px");
+            image.setHeight("50px");
+
+            return image;
         }
-        new Image();
-        Image image;
-
-        StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
-            public InputStream getStream() {
-                return (bild == null) ? null : new ByteArrayInputStream(
-                        bild);
-            }
-        };
-
-        image = new Image(
-                null, new StreamResource(
-                streamSource, bild.toString()));
-        image.setWidth("50px");
-        image.setHeight("50px");
-
-        return image;
     }
 
 }
