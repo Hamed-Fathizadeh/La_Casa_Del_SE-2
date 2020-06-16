@@ -144,7 +144,11 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         String day ="";
         long div;
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            this.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Logo");
+            this.addComponentColumn(im ->{
+                VerticalLayout imageL = new VerticalLayout();
+                imageL.addComponent(im.getUnternehmenLogo());
+                return imageL;
+            }).setCaption("Logo");
             this.addColumn(StellenanzeigeDTO::getFirmenname).setCaption("Unternehmen");
             this.addColumn(StellenanzeigeDTO::getZeitstempel).setCaption("Online seit");
             this.addComponentColumn(p -> {

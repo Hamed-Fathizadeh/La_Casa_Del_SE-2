@@ -85,6 +85,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         GridLayout searchGrid = new GridLayout(7, 3);
         searchGrid.setMargin(true);
         searchGrid.setSizeFull();
+        containerOnFly.loadSuche(null, null, null, "Ganzer Ort", "Normal", null, null, null);
 
 
 // add combobox
@@ -92,22 +93,12 @@ public class StudentHomeView extends VerticalLayout implements View {
         comboNachWas.setPlaceholder("Nach was suchen Sie?");
         comboNachWas.setWidth(300.0f, Unit.PIXELS);
 
-       /* containerOnFly.loadSuche(null, null, null, "Ganzer Ort", "Normal", null, null, null);
 
         comboNachWas.addValueChangeListener(event -> {
             Maingrid.removeComponent(GridAnzeig);
-            BufferedImage image = ImageIO.read(getClass().getResource("/resources/" + Config.getString("SMALL_LOGO_IMAGE", "")));
 
-            containerOnFly.getListe().stream().filter(begrif -> {
-                        try {
-                            return comboNachWas.getValue() == null || begrif.getSuchbegriff()
-                                    .toLowerCase().startsWith(comboNachWas.getValue().toLowerCase()) &
-                                    ImageIO.write(image, "png", (ImageOutputStream) begrif.getUnternehmenLogo());
-                                    begrif.setUnternehmenLogo(  );
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+            containerOnFly.getListe().stream().filter(begrif -> comboNachWas.getValue() == null || begrif.getSuchbegriff()
+                    .toLowerCase().startsWith(comboNachWas.getValue().toLowerCase())
             );
 
             stellenSuchenOnFly( containerOnFly );
@@ -116,7 +107,7 @@ public class StudentHomeView extends VerticalLayout implements View {
             Maingrid.addComponent(GridAnzeig, 0, 2, 1, 2);
             Maingrid.setComponentAlignment(GridAnzeig, Alignment.MIDDLE_CENTER);
 
-        });*/
+        });
 
         SuchbegrifService Sservice = new SuchbegrifService();
         comboNachWas.setDataProvider(Sservice::fetch, Sservice::count);
@@ -156,14 +147,14 @@ public class StudentHomeView extends VerticalLayout implements View {
         searchGrid.addComponent(comboNachWas,2,1,2,1);
         searchGrid.addComponent(comboOrtBund,3,1,3,1);
         searchGrid.addComponent(comboUmkreis,5,1,5,1);
-        searchGrid.addComponent(buttonSearch,6,1,6,1);
+      //  searchGrid.addComponent(buttonSearch,6,1,6,1);
  searchGrid.addComponent(buttonErwitertSuche,2,2,2,2);
 
 
         searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_CENTER);
-        searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
+     //   searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
         searchGrid.setComponentAlignment(buttonErwitertSuche, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
 
