@@ -27,7 +27,6 @@ import java.util.List;
 
 public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     List<T> data;
-    ContainerNeuigkeiten container;
     static int anzahlNeuBewerbungen = 0;
     static int gesamtNeuBewerbungen = 0;
 
@@ -68,13 +67,13 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         return this;
     }
 
-    public Anzeigen(String str, ContainerNeuigkeiten container){
+    public Anzeigen(String str, List<StellenanzeigeDTO> dataInput){
         super();
 
         this.setHeightMode(HeightMode.UNDEFINED);
         this.addStyleName("AnzeigeUnternehmen");
         this.setSelectionMode(SelectionMode.SINGLE);
-        this.setCaption("Treffer: "+ container.getAnzahl());
+        this.setCaption("Treffer: "+ dataInput.size());
 
 
         if(!str.equals("Student")) {
@@ -128,7 +127,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
             }
         });
 
-        data = (List<T>) container.getListe();
+        data = (List<T>) dataInput;
         setUp();
 
 
@@ -152,7 +151,11 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         String day ="";
         long div;
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            this.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Logo");
+            this.addComponentColumn(im ->{
+                VerticalLayout imageL = new VerticalLayout();
+                imageL.addComponent(im.getUnternehmenLogo());
+                return imageL;
+            }).setCaption("Logo");
             this.addColumn(StellenanzeigeDTO::getFirmenname).setCaption("Unternehmen");
             this.addColumn(StellenanzeigeDTO::getZeitstempel).setCaption("Online seit");
             this.addComponentColumn(p -> {
@@ -170,8 +173,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
             this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status").setId("Status");
-            this.addComponentColumn(Sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setAnzahlNeuBewerbungen(Sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
-
+            this.addComponentColumn(Sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setGesamtNeuBewerbungen(Sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
         }
 
     }

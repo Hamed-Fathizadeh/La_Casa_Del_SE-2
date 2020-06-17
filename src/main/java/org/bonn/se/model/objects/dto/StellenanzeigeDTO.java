@@ -16,11 +16,34 @@ public class StellenanzeigeDTO {
     private int status;
     private String standort;
     private String bundesland;
+    private String standortBundesland;
     private String firmenname;
     private String hauptsitz;
     private Image unternehmenLogo;
     private double bewertung;
     private int    anzahlNeuBewerbung;
+    private String branche;
+    static private int gesamtNeuBewerbungen;
+
+    public static int getGesamtNeuBewerbungen() {
+        return gesamtNeuBewerbungen;
+    }
+
+    public static void setGesamtNeuBewerbungen(int gesamtNeuBewerbungen) {
+        StellenanzeigeDTO.gesamtNeuBewerbungen = gesamtNeuBewerbungen;
+    }
+
+    public String getBranche() {
+        return branche;
+    }
+
+    public void setBranche(String branche) {
+        this.branche = branche;
+    }
+
+    public String getStandortBundesland() {
+        return standort+", "+bundesland;
+    }
 
     public int getanzahlNeuBewerbung() {
         return anzahlNeuBewerbung;
@@ -44,11 +67,12 @@ public class StellenanzeigeDTO {
         setSuchbegriff(suchbegriff);
         setArt(art);
         setHatNeuBewerbung(anzahlNeuBewerbung);
+        setBranche(branche);
     }
 
     public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
                              int status, String standort, String bundesland, String firmenname, String hauptsitz,
-                             String suchbegriff, String art, byte[] unternehmenLogo, double bewertung) {
+                             String suchbegriff, String art, byte[] unternehmenLogo, double bewertung, String branche) {
         this.id = id;
         this.datum = datum;
         this.zeitstempel = zeitstempel;
@@ -63,6 +87,7 @@ public class StellenanzeigeDTO {
         this.suchbegriff = suchbegriff;
         this.art = art;
         this.bewertung = bewertung;
+        this.branche = branche;
     }
 
     public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,

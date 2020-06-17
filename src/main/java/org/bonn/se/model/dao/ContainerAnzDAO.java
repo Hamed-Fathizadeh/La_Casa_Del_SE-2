@@ -43,14 +43,14 @@ public class ContainerAnzDAO extends AbstractDAO{
         try {
 
             while (set.next()) {
-
+// taghir mikhad 100
                 StellenanzeigeDTO sa = new StellenanzeigeDTO(
                         set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate()
                         ,set.getDate(3),
                         set.getString(4), set.getString(5), set.getInt(6),
                         set.getString(7), set.getString(8), set.getString(9),
                         set.getString(10),set.getString(11),set.getString(12),
-                        set.getBytes(13),set.getDouble(14)
+                        set.getBytes(13),set.getDouble(14),set.getString(12)
                                                             );
 
                    liste.add(sa);
@@ -119,10 +119,13 @@ public class ContainerAnzDAO extends AbstractDAO{
                         "and b.bundesland = '"+bundesland+"') \n");
             }
 
+            System.out.println();
+
 
             set = statement.executeQuery("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
-                    "      ,a.ort, a.bundesland, a.firmenname, a.hauptsitz, a.suchbegriff, a.art, u.logo ,\n" +
+                    "      ,a.ort, a.bundesland, a.firmenname, a.hauptsitz, a.suchbegriff, a.art, u.logo ,  \n" +
                     "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = u.firmenname and bew.hauptsitz = u.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
+                    ", u.branch_name"+
                     "  FROM lacasa.tab_stellen_anzeige a\n" +
                     "  join lacasa.tab_unternehmen u\n" +
                     "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
@@ -142,7 +145,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getString(4), set.getString(5), set.getInt(6),
                         set.getString(7), set.getString(8), set.getString(9),
                         set.getString(10),set.getString(11),set.getString(12),
-                        set.getBytes(13),set.getDouble(14)
+                        set.getBytes(13),set.getDouble(14),set.getString(15)
                 );
 
                 liste.add(sa);
@@ -166,8 +169,9 @@ public class ContainerAnzDAO extends AbstractDAO{
                 limit = " LIMIT 5";
             }
                     Statement statement = JDBCConnection.getInstance().getStatement();
-                    set = statement.executeQuery("select sa.*, u.logo,\n" +
+                    set = statement.executeQuery("select sa.*, u.logo, \n" +
                             "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = u.firmenname and bew.hauptsitz = u.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
+                            ",u.branch_name"+
                             "  from lacasa.tab_stellen_anzeige sa\n" +
                             "  join lacasa.tab_unternehmen u\n" +
                             "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz and sa.status = 1 order by sa.zeitstempel desc "+limit);
@@ -185,7 +189,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getString(4), set.getString(5), set.getInt(6),
                         set.getString(7), set.getString(8), set.getString(9),
                         set.getString(10),set.getString(11),set.getString(12),
-                        set.getBytes(13),set.getDouble(14)
+                        set.getBytes(13),set.getDouble(14),set.getString(15)
                 );
 
                 liste.add(sa);

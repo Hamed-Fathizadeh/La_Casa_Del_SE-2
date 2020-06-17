@@ -86,6 +86,7 @@ public class ContainerNeuigkeiten {
 
     }
 
+
     public Stream<StellenanzeigeDTO> fetchNachwas(StellenanzeigeDTO filter, int offset, int limit) {
         return getListe().stream()
                 .filter(begrif -> filter == null || begrif.getSuchbegriff()

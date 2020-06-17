@@ -19,6 +19,8 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 import java.sql.SQLException;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
@@ -51,7 +53,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
         ContainerNeuigkeiten containerMeinAnzeigen = ContainerNeuigkeiten.getInstance();
         containerMeinAnzeigen.loadUnternehmenAnzeigen(unternehmen.getEmail());
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setSizeFull();
 
@@ -80,19 +82,19 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         tabSheet.addTab(gAnzeigen,"Alle "+gAnzeigen.getAnzahlRow());
 
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenOnline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        Anzeigen<StellenanzeigeDTO> gAnzeigenOnline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigenOnline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==1).collect(Collectors.toList()));
         gAnzeigenOnline.setSizeFull();
         gAnzeigenOnline.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigenOnline,"Online "+gAnzeigenOnline.getAnzahlRow());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenOffline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        Anzeigen<StellenanzeigeDTO> gAnzeigenOffline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigenOffline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==2).collect(Collectors.toList()));
         gAnzeigenOffline.setSizeFull();
         gAnzeigenOffline.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigenOffline,"Offline "+gAnzeigenOffline.getAnzahlRow());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenEntwurf = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+        Anzeigen<StellenanzeigeDTO> gAnzeigenEntwurf = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigenEntwurf.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==3).collect(Collectors.toList()));
         gAnzeigenEntwurf.setSizeFull();
         gAnzeigenEntwurf.removeColumn("Anzahl neue Bewerbungen");
@@ -100,15 +102,24 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
 
          containerMeinAnzeigen.loadNeuBewerbungen(unternehmen);
-         Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen);
+         Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
          gAnzeigenNeuBewerbungen.setSizeFull();
          gAnzeigenNeuBewerbungen.removeColumn("Status");
 
+
+
+
          if(gAnzeigenNeuBewerbungen.getData().size()>0){
+             List<StellenanzeigeDTO> data = gAnzeigenNeuBewerbungen.getData().stream().filter(c -> c.getStatus() == 1).collect(Collectors.toList());
+             int gesamtAnzahl = 0;
+             for( StellenanzeigeDTO sa: data){
+                 gesamtAnzahl+= sa.getanzahlNeuBewerbung();
+             }
+
              ThemeResource resource = new ThemeResource("img/Anzeigen/rot_klein.png");
-             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ",resource);
+             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen "+gesamtAnzahl ,resource);
          }else {
-             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen ");
+             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen 0");
          }
 
         bottomGridBewNeu.addComponent(lBewerbung,0,0,0,0);

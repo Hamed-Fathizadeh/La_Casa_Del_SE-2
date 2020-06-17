@@ -40,6 +40,7 @@ public class TestStellenAnzeigeDTO {
     private double bewertung = 4.0;
     private String art = "Feste Anstellung";
     private int anzahlNeuBewerbung = 5;
+    private String branche = "Banken";
 
 
 
@@ -77,6 +78,7 @@ public class TestStellenAnzeigeDTO {
         stanz.setArt(art);
         stanz.setUnternehmenLogo(image);
         stanz.setHatNeuBewerbung(anzahlNeuBewerbung);
+        stanz.setBranche(branche);
 
 
         Assertions.assertEquals(id, stanz.getId());
@@ -92,6 +94,7 @@ public class TestStellenAnzeigeDTO {
         Assertions.assertEquals(suchbegriff, stanz.getSuchbegriff());
         Assertions.assertEquals(bewertung, stanz.getBewertung());
         Assertions.assertEquals(art, stanz.getArt());
+        Assertions.assertEquals(branche, stanz.getBranche());
 
         assertTrue( stanz.getUnternehmenLogo() instanceof Image);
         Assertions.assertEquals(anzahlNeuBewerbung, stanz.getanzahlNeuBewerbung());
@@ -124,7 +127,7 @@ public class TestStellenAnzeigeDTO {
         //Konstruktor mit Unternehmenslogo und mit Bewertung
 
         StellenanzeigeDTO stanz3 = new StellenanzeigeDTO(id, datum, zeitstempel, titel, beschreibung, status,
-                standort, bundesland, firmenname, hauptsitz, suchbegriff, art, image, bewertung);
+                standort, bundesland, firmenname, hauptsitz, suchbegriff, art, image, bewertung, branche);
 
 
 
@@ -144,6 +147,7 @@ public class TestStellenAnzeigeDTO {
         Assertions.assertNotNull(stanz3.getUnternehmenLogo());
         Assertions.assertTrue(stanz3.getUnternehmenLogo() != null);
         Assertions.assertEquals(stanz.getBewertung(), stanz3.getBewertung());
+        Assertions.assertEquals(stanz.getBranche(), stanz3.getBranche());
 
 
 
