@@ -33,9 +33,9 @@ public class ContainerAnzDAO extends AbstractDAO{
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
-            set = statement.executeQuery("SELECT as.*, " +
-                    "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = as.firmenname and bew.hauptsitz = as.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
-                    "FROM lacasa.tab_stellen_anzeige as where status = 1 ");
+            set = statement.executeQuery("SELECT st.*, " +
+                    "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = st.firmenname and bew.hauptsitz = st.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
+                    " FROM lacasa.tab_stellen_anzeige st where status = 1 ");
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
@@ -49,8 +49,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         ,set.getDate(3),
                         set.getString(4), set.getString(5), set.getInt(6),
                         set.getString(7), set.getString(8), set.getString(9),
-                        set.getString(10),set.getString(11),set.getString(12),
-                        set.getBytes(13),set.getDouble(14),set.getString(12)
+                        set.getString(10),set.getString(11),set.getString(12),null,set.getDouble(13),set.getString(12)
                                                             );
 
                    liste.add(sa);
