@@ -174,11 +174,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("705px");
 
-        ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
-        containerBewerbungen.load("Top 5");
-        Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen,"Student");
-        gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
-        gBewerbungen.setWidth("705px");
+
 
 //bottom grid für bewerbung und Neugkeiten
         String ls1 = "<p class=MsoNormal><b><span style='font-size:18.0pt;line-height:107%;\n" +
@@ -191,19 +187,9 @@ public class StudentHomeView extends VerticalLayout implements View {
                 "minor-bidi;mso-bidi-theme-font:minor-bidi;color:white;mso-themecolor:background1'>\n" +
                 "Neuigkeiten<o:p></o:p></span></b></p>";
 
-        Label lBewerbung = new Label(ls1, ContentMode.HTML);
         Label lNeuigkeit = new Label(ls2, ContentMode.HTML);
 
         // button für bottomGridBewNeu
-        Button alleBewerbungen = new Button("Alle Bewerbungen", VaadinIcons.SEARCH);
-
-        alleBewerbungen.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
-                System.out.println("stuhomeview hier 1");
-            }
-        });
 
         Button alleNeuigkeiten = new Button("Alle Neuigkeiten", VaadinIcons.SEARCH);
 
@@ -217,22 +203,41 @@ public class StudentHomeView extends VerticalLayout implements View {
         bottomGridBewNeu.setMargin(true);
 
 
+                //Feature Toggle
+        Label lBewerbung = new Label(ls1, ContentMode.HTML);
+        bottomGridBewNeu.addComponent(lBewerbung,0,0,1,0);
 
-                bottomGridBewNeu.addComponent(lBewerbung,0,0,1,0);
-                bottomGridBewNeu.addComponent(lNeuigkeit,2,0,3,0);
+        ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
+        containerBewerbungen.load("Top 5");
+        Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen,"Student");
+        gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
+        gBewerbungen.setWidth("705px");
         bottomGridBewNeu.addComponent(gBewerbungen,0,1,1,1);
-                bottomGridBewNeu.addComponent(gAnzeigen,2,1,3,1);
-               bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
-           bottomGridBewNeu.addComponent(alleBewerbungen,0,3,0,3);
-           bottomGridBewNeu.addComponent(alleNeuigkeiten,2,3,2,3);
-                 bottomGridBewNeu.addComponent(meineAbos,3,3,3,3);
 
+        Button alleBewerbungen = new Button("Alle Bewerbungen", VaadinIcons.SEARCH);
 
+        alleBewerbungen.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
+                System.out.println("stuhomeview hier 1");
+            }
+        });
+        bottomGridBewNeu.addComponent(alleBewerbungen,0,3,0,3);
         bottomGridBewNeu.setComponentAlignment(lBewerbung,Alignment.TOP_CENTER);
-        bottomGridBewNeu.setComponentAlignment(lNeuigkeit,Alignment.TOP_CENTER);
-        bottomGridBewNeu.setComponentAlignment(gBewerbungen,Alignment.TOP_CENTER);
-        bottomGridBewNeu.setComponentAlignment(gAnzeigen,Alignment.TOP_CENTER);
         bottomGridBewNeu.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
+        bottomGridBewNeu.setComponentAlignment(gBewerbungen,Alignment.TOP_CENTER);
+////Feature Toggle
+
+        bottomGridBewNeu.addComponent(lNeuigkeit,2,0,3,0);
+        bottomGridBewNeu.addComponent(gAnzeigen,2,1,3,1);
+        bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
+        bottomGridBewNeu.addComponent(alleNeuigkeiten,2,3,2,3);
+        bottomGridBewNeu.addComponent(meineAbos,3,3,3,3);
+
+
+        bottomGridBewNeu.setComponentAlignment(lNeuigkeit,Alignment.TOP_CENTER);
+        bottomGridBewNeu.setComponentAlignment(gAnzeigen,Alignment.TOP_CENTER);
         bottomGridBewNeu.setComponentAlignment(alleNeuigkeiten,Alignment.BOTTOM_CENTER);
         bottomGridBewNeu.setComponentAlignment(meineAbos,Alignment.BOTTOM_CENTER);
 

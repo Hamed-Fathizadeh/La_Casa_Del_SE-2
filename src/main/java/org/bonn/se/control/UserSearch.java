@@ -20,7 +20,12 @@ public class UserSearch {
         return search;
     }
 
-    public boolean existUser(String email ) throws DatabaseException {
-        return UserDAO.getInstance().getUserbyEmail(email);
+    public boolean existUser(String email )  {
+        try {
+            return UserDAO.getInstance().getUserbyEmail(email);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

@@ -32,6 +32,12 @@
 // Example variants can be copy/pasted from https://vaadin.com/docs/v8/framework/articles/ValoExamples.html
 //0f2a54
 
+input.v-textfield.v-widget.v-required.v-textfield-required.v-has-width.v-has-height.v-textfield-focus {
+  color:black;
+}
+input.v-textfield.v-widget.v-required.v-textfield-required.v-has-width.v-has-height {
+  color: black;
+}
 $green: #40b527;
 div .onoffswitch-slider {
   background-color: #d32f2f;

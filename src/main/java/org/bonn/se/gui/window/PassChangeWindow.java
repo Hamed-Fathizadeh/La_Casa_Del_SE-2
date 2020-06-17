@@ -70,7 +70,7 @@ public class PassChangeWindow extends Window {
        passAendern.addClickListener(
                event -> {
 
-                   try {
+
 
                        if (!vnummer.equals(Vnummer.getValue())) {
                            UI.getCurrent().addWindow(new ConfirmationWindow("Verifizierungscode ist falsch!"));
@@ -88,9 +88,7 @@ public class PassChangeWindow extends Window {
                            Vnummer.clear();
                        }
 
-                   } catch(DatabaseException e){
-                       e.printStackTrace();
-                   }
+
 
                });
 
