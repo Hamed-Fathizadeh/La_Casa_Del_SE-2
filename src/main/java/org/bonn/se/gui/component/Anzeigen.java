@@ -1,6 +1,5 @@
 package org.bonn.se.gui.component;
 
-import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
@@ -8,19 +7,13 @@ import com.vaadin.ui.*;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenanzeigeWindow;
 import org.bonn.se.model.dao.UserDAO;
-import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
-import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
-import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
-import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -116,13 +109,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
                 MyUI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
             } else {
                 StellenanzeigeWindow stellenanzeigeWindow = null;
-                try {
-                    stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmen_data);
-                } catch (DatabaseException e) {
-                    e.printStackTrace();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
+                stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmen_data);
                 UI.getCurrent().addWindow(stellenanzeigeWindow);
             }
         });

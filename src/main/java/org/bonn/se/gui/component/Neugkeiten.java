@@ -9,7 +9,6 @@ import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -78,13 +77,9 @@ public class Neugkeiten extends GridLayout {
                        e.printStackTrace();
                    }
                    StellenanzeigeWindow stellenanzeigeWindow = null;
-                   try {
+
                        stellenanzeigeWindow = new StellenanzeigeWindow(sa,unternehmen_data);
-                   } catch (DatabaseException e) {
-                       e.printStackTrace();
-                   } catch (SQLException throwables) {
-                       throwables.printStackTrace();
-                   }
+
                    UI.getCurrent().addWindow(stellenanzeigeWindow);
 
                });

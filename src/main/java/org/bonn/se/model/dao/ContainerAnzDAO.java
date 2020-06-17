@@ -1,13 +1,10 @@
 package org.bonn.se.model.dao;
 
-import com.vaadin.ui.UI;
-import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.JavaMailUtil;
-import org.bonn.se.services.util.Roles;
 
 import java.sql.*;
 import java.sql.Date;

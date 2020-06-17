@@ -13,13 +13,8 @@ import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
-import org.bonn.se.services.util.Views;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
-import java.sql.*;
-
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 
 
