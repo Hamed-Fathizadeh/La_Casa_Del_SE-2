@@ -18,7 +18,7 @@ import org.bonn.se.services.util.*;
 
 import java.sql.SQLException;
 
-public class AnzeigeErstellen extends GridLayout implements View {
+public class AnzeigeErstellenView extends GridLayout implements View {
         private OrtField ort;
 
     public void setUp() throws DatabaseException, SQLException {
@@ -110,13 +110,7 @@ public class AnzeigeErstellen extends GridLayout implements View {
 
 
 
-        cancel.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
-
-            }
-        });
+        cancel.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView));
 
 
         Binder<StellenanzeigeDTO> binder = new Binder<>(StellenanzeigeDTO.class);
@@ -148,22 +142,19 @@ public class AnzeigeErstellen extends GridLayout implements View {
         binder.addStatusChangeListener(
                 event -> weiter.setEnabled(binder.isValid()));
 
-        weiter.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
-                    stellenanzeigeDTO.setFirmenname(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname());
-                    stellenanzeigeDTO.setHauptsitz(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getHauptsitz());
-                    stellenanzeigeDTO.setStandort(stellenanzeigeDTO.getStandort());
-                    stellenanzeigeDTO.setStandort(ort.getOrt());
-                    stellenanzeigeDTO.setBundesland(ort.getBundesland());
+        weiter.addClickListener((Button.ClickListener) event -> {
+            if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
+                stellenanzeigeDTO.setFirmenname(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname());
+                stellenanzeigeDTO.setHauptsitz(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getHauptsitz());
+                stellenanzeigeDTO.setStandort(stellenanzeigeDTO.getStandort());
+                stellenanzeigeDTO.setStandort(ort.getOrt());
+                stellenanzeigeDTO.setBundesland(ort.getBundesland());
 
-                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeige(stellenanzeigeDTO);
-                }
-
-                UI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
-
+                ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeige(stellenanzeigeDTO);
             }
+
+            UI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
+
         });
 
 

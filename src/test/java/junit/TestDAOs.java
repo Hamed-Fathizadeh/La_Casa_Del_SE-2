@@ -1,19 +1,15 @@
 package junit;
 
 
-import com.vaadin.navigator.ViewChangeListener;
 import junit.util.RandomString;
 import junit.util.UserTestFactory;
-import org.bonn.se.gui.views.RegisterStudent;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.junit.Assert;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.concurrent.ThreadLocalRandom;
 

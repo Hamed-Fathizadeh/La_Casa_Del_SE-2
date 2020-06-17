@@ -6,12 +6,11 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.PassChangeControl;
-import org.bonn.se.control.UserSearch;
+import org.bonn.se.control.UserSearchControl;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.model.objects.dto.PassChangeRequest;
 import org.bonn.se.model.objects.entitites.User;
-import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.JavaMailUtil;
 import org.bonn.se.services.util.VerifikationNummer;
 
@@ -76,7 +75,7 @@ public class PassChangeWindow extends Window {
                            UI.getCurrent().addWindow(new ConfirmationWindow("Verifizierungscode ist falsch!"));
                            Vnummer.clear();
                        }
-                       else if(UserSearch.getInstance().existUser(email.getValue())) {
+                       else if(UserSearchControl.getInstance().existUser(email.getValue())) {
                            PassChangeRequest request = new PassChangeRequest();
                            request.setEmail(email.getValue());
                            request.setNewPass(neuPasswort.getValue());

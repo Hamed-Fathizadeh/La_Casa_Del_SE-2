@@ -12,7 +12,7 @@ import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.TopPanelUser;
-import org.bonn.se.gui.window.ErweiterteSuche;
+import org.bonn.se.gui.window.ErweiterteSucheWindow;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.*;
@@ -24,9 +24,7 @@ import org.bonn.se.services.util.Views;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class StudentHomeView extends VerticalLayout implements View {
 
@@ -160,7 +158,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 event -> {
                     Maingrid.removeComponent(GridAnzeig);
                     comboNachWas.clear();comboOrtBund.clear(); comboUmkreis.clear();
-                    ErweiterteSuche window = new ErweiterteSuche();
+                    ErweiterteSucheWindow window = new ErweiterteSucheWindow();
                     UI.getCurrent().addWindow(window);
                 });
 
@@ -196,12 +194,9 @@ public class StudentHomeView extends VerticalLayout implements View {
         // button für bottomGridBewNeu
         Button alleBewerbungen = new Button("Alle Bewerbungen", VaadinIcons.SEARCH);
 
-        alleBewerbungen.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
-                System.out.println("stuhomeview hier 1");
-            }
+        alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> {
+            UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
+            System.out.println("stuhomeview hier 1");
         });
 
         Button alleNeuigkeiten = new Button("Alle Neuigkeiten", VaadinIcons.SEARCH);
@@ -250,21 +245,18 @@ public class StudentHomeView extends VerticalLayout implements View {
         this.addStyleName("grid");
 
         loadProfil();
-        if(!FeatureToggleControl.featureIsEnabled("BEWERBUNGEN")) {
+        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN)")) {
 
-            UI.getCurrent().access(new Runnable() {
-                @Override
-                public void run() {
+            UI.getCurrent().access(() -> {
 
-                    bottomGridBewNeu.removeAllComponents();
-                    bottomGridBewNeu.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-                    bottomGridBewNeu.addComponent(lNeuigkeit,0,0,3,0);
-                    bottomGridBewNeu.addComponent(gAnzeigen,0,1,3,1);
-                    bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
-                    bottomGridBewNeu.addComponent(alleNeuigkeiten,1,3,1,3);
-                    bottomGridBewNeu.addComponent(meineAbos,2,3,2,3);
+                bottomGridBewNeu.removeAllComponents();
+                bottomGridBewNeu.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+                bottomGridBewNeu.addComponent(lNeuigkeit,0,0,3,0);
+                bottomGridBewNeu.addComponent(gAnzeigen,0,1,3,1);
+                bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
+                bottomGridBewNeu.addComponent(alleNeuigkeiten,1,3,1,3);
+                bottomGridBewNeu.addComponent(meineAbos,2,3,2,3);
 
-                }
             });
         }
 

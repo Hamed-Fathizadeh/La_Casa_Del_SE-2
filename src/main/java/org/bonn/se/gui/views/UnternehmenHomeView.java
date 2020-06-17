@@ -21,7 +21,6 @@ import org.bonn.se.services.util.Views;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
@@ -157,14 +156,9 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
 
 
-        if(!FeatureToggleControl.featureIsEnabled("BEWERBUNGEN")) {
+        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN)")) {
 
-            UI.getCurrent().access(new Runnable() {
-                @Override
-                public void run() {
-                    tabSheet.removeTab(bewerbung);
-                }
-            });
+            UI.getCurrent().access(() -> tabSheet.removeTab(bewerbung));
         }
 
 

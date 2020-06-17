@@ -4,18 +4,18 @@ package org.bonn.se.control;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.services.db.exception.DatabaseException;
 
-public class UserSearch {
+public class UserSearchControl {
 
 
-    private UserSearch(){}
+    private UserSearchControl(){}
 
 
 
-    public static UserSearch search = null;
+    public static UserSearchControl search = null;
 
-    public static UserSearch getInstance() {
+    public static UserSearchControl getInstance() {
         if(search == null) {
-            search = new UserSearch();
+            search = new UserSearchControl();
         }
         return search;
     }

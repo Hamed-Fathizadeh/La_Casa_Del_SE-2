@@ -8,11 +8,11 @@ import org.bonn.se.services.util.ControlException;
 
 import java.util.ArrayList;
 
-public class Registrieren {
+public class RegistrierenControl {
     //container
     final ArrayList<User> liste;
 
-    public Registrieren(ArrayList<User> liste){
+    public RegistrierenControl(ArrayList<User> liste){
         this.liste=liste;
     }
     public boolean DoesExist(User user){

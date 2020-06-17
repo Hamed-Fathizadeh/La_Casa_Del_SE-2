@@ -18,7 +18,7 @@ import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 import java.sql.SQLException;
 
 
-public class Settings  extends VerticalLayout implements View {
+public class SettingsView extends VerticalLayout implements View {
 
     static GridLayout Maingrid = new GridLayout(2, 5);
     public void setUp() throws DatabaseException, SQLException {

@@ -6,10 +6,10 @@ import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.util.Views;
 
-public class StellenbeschreibungConfirmation extends Window {
+public class StellenanzeigeConfWindow extends Window {
 
 
-    public StellenbeschreibungConfirmation(StellenanzeigeDTO stellenanzeigeDTO){
+    public StellenanzeigeConfWindow(StellenanzeigeDTO stellenanzeigeDTO){
         setWindow(stellenanzeigeDTO);
     }
 
@@ -43,20 +43,12 @@ public class StellenbeschreibungConfirmation extends Window {
         gridLayout.setComponentAlignment(message,Alignment.MIDDLE_CENTER);
         gridLayout.setComponentAlignment(fertig,Alignment.MIDDLE_CENTER);
 
-        fertig.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                StellenbeschreibungConfirmation.this.close();
-                MyUI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
-            }
+        fertig.addClickListener((Button.ClickListener) event -> {
+            StellenanzeigeConfWindow.this.close();
+            MyUI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
         });
 
-        this.addCloseListener(new CloseListener() {
-            @Override
-            public void windowClose(CloseEvent e) {
-                UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
-            }
-        });
+        this.addCloseListener((CloseListener) e -> UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView));
 
         setContent(gridLayout);
     }

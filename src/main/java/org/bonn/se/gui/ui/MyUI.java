@@ -45,16 +45,16 @@ public class MyUI extends UI {
         System.out.println("LOG: neues UI-Objekt erzeugt!" + VaadinSession.getCurrent().toString());
 
         Navigator navi = new Navigator(this , this );
-        navi.addView(RegisterStudent, RegisterStudent.class);
-        navi.addView(MainView, org.bonn.se.gui.views.MainView.class);
-        navi.addView(RegisterUnternehmen, RegisterUnternehmer.class);
+        navi.addView(RegisterStudent, RegisterStudentView.class);
+        navi.addView(MainView, LoginView.class);
+        navi.addView(RegisterUnternehmen, RegisterUnternehmerView.class);
         navi.addView(StudentHomeView, StudentHomeView.class);
         navi.addView(UnternehmenHomeView, org.bonn.se.gui.views.UnternehmenHomeView.class);
-        navi.addView(AnzeigeErstellen, org.bonn.se.gui.views.AnzeigeErstellen.class);
-        navi.addView(Stellenbeschreibung,  org.bonn.se.gui.views.Stellenbeschreibung.class);
-        navi.addView(ProfilVerwaltenStudent, org.bonn.se.gui.views.ProfilVerwaltenStudent.class);
+        navi.addView(AnzeigeErstellen, AnzeigeErstellenView.class);
+        navi.addView(Stellenbeschreibung,  StellenbeschreibungView.class);
+        navi.addView(ProfilVerwaltenStudent, ProfilVerwaltenStudentView.class);
         navi.addView(AlleBewerbungenView, org.bonn.se.gui.views.AlleBewerbungenView.class);
-        navi.addView(Settings, org.bonn.se.gui.views.Settings.class);
+        navi.addView(Settings, SettingsView.class);
 
 
         UI.getCurrent().getNavigator().navigateTo(RegisterStudent);

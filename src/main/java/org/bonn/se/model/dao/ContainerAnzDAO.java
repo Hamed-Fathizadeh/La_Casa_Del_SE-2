@@ -28,7 +28,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         }
         return dao;
     }
-    public static List<StellenanzeigeDTO> load() throws DatabaseException {
+    public List<StellenanzeigeDTO> load() throws DatabaseException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
         try {
@@ -65,7 +65,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         return liste;
     }
 
-    public static List<StellenanzeigeDTO> loadSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, java.util.Date ab_Datum, String branche) throws DatabaseException {
+    public List<StellenanzeigeDTO> loadSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, java.util.Date ab_Datum, String branche) throws DatabaseException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
         try {
@@ -159,7 +159,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         return liste;
     }
 
-    public static List<StellenanzeigeDTO> loadNeuigkeiten(String str) throws DatabaseException {
+    public List<StellenanzeigeDTO> loadNeuigkeiten(String str) throws DatabaseException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
         try {
@@ -206,7 +206,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
     }
 
-    public static List<StellenanzeigeDTO> loadUnternehmenAnzeigen(String email) throws DatabaseException {
+    public List<StellenanzeigeDTO> loadUnternehmenAnzeigen(String email) throws DatabaseException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
         try {
@@ -265,7 +265,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
 
 
-    public static List<StellenanzeigeDTO> loadNeuBewerbungen(Unternehmen unternehmen) throws DatabaseException {
+    public List<StellenanzeigeDTO> loadNeuBewerbungen(Unternehmen unternehmen) throws DatabaseException {
 
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
@@ -327,7 +327,7 @@ public class ContainerAnzDAO extends AbstractDAO{
     }
 
 
-    public static void setAnzeige(Unternehmen user) throws DatabaseException {
+    public void setAnzeige(Unternehmen user) throws DatabaseException {
 
         String sql = "INSERT INTO lacasa.tab_stellen_anzeige (datum,zeitstempel,titel,s_beschreibung,status,ort, bundesland,firmenname,hauptsitz, suchbegriff, art) " +
                 "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
@@ -367,7 +367,7 @@ public class ContainerAnzDAO extends AbstractDAO{
             }
     }
 
-    public static void sendEmail(Unternehmen unternehmen) throws DatabaseException {
+    public void sendEmail(Unternehmen unternehmen) throws DatabaseException {
         HashMap<String, String> liste = new HashMap<String, String>();
         ResultSet set;
         try {
@@ -399,7 +399,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
     }
 
-    public static void updateAnzeige(StellenanzeigeDTO stellenanzeige) throws DatabaseException {
+    public void updateAnzeige(StellenanzeigeDTO stellenanzeige) throws DatabaseException {
 
         String sql = "UPDATE lacasa.tab_stellen_anzeige " +
                 "SET titel = '" + stellenanzeige.getTitel() + "', s_beschreibung = '" +stellenanzeige.getBeschreibung()+ "' " +

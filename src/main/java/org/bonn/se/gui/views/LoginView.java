@@ -22,7 +22,7 @@ import java.io.File;
 import static org.bonn.se.services.util.Views.RegisterUnternehmen;
 
 //LoginSeite
-public class MainView extends VerticalLayout implements View {
+public class LoginView extends VerticalLayout implements View {
 
     public void setUp(){
         this.setStyleName("toppanel");
@@ -30,19 +30,9 @@ public class MainView extends VerticalLayout implements View {
         Button regStudent = new Button("Registrierung Student");
         Button regUnternehmen= new Button("Registrierung Unternehmen");
 
-        regStudent.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getNavigator().navigateTo(Views.RegisterStudent);
-            }
-        });
+        regStudent.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.RegisterStudent));
 
-        regUnternehmen.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getNavigator().navigateTo(RegisterUnternehmen);
-            }
-        });
+        regUnternehmen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(RegisterUnternehmen));
 
         HorizontalLayout hLayout = new HorizontalLayout();
         hLayout.addComponent(regStudent);
@@ -123,23 +113,20 @@ public class MainView extends VerticalLayout implements View {
         panel.setStyleName("login_bg");
 
 
-        buttonLogin.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                String login = userLogin.getValue();
-                String password = passwordField.getValue();
+        buttonLogin.addClickListener((Button.ClickListener) clickEvent -> {
+            String login = userLogin.getValue();
+            String password = passwordField.getValue();
 
-                try {
-                    LoginControl.checkAuthentication(login, password);
-                } catch (NoSuchUserOrPassword ex) {
-                    Notification.show("Fehler", "Login oder Passwort falsch", Notification.Type.ERROR_MESSAGE);
-                    userLogin.clear();
-                    passwordField.clear();
-                } catch (DatabaseException ex) {
-                    Notification.show("DB-Fehler", ex.getReason(), Notification.Type.ERROR_MESSAGE);
-                    userLogin.clear();
-                    passwordField.clear();
-                }
+            try {
+                LoginControl.checkAuthentication(login, password);
+            } catch (NoSuchUserOrPassword ex) {
+                Notification.show("Fehler", "Login oder Passwort falsch", Notification.Type.ERROR_MESSAGE);
+                userLogin.clear();
+                passwordField.clear();
+            } catch (DatabaseException ex) {
+                Notification.show("DB-Fehler", ex.getReason(), Notification.Type.ERROR_MESSAGE);
+                userLogin.clear();
+                passwordField.clear();
             }
         });
 

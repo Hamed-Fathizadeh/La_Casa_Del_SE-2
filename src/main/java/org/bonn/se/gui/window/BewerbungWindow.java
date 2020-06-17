@@ -33,13 +33,10 @@ public class BewerbungWindow extends Window {
         panel.setWidthFull();
         Button back = new Button("Zurück");
 
-        back.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                BewerbungWindow.this.close();
-               // UI.getCurrent().getPage().reload();
+        back.addClickListener((Button.ClickListener) event -> {
+            BewerbungWindow.this.close();
+           // UI.getCurrent().getPage().reload();
 
-            }
         });
 
         GridLayout mainGridLayout = new GridLayout(6, 16);
@@ -172,28 +169,25 @@ public class BewerbungWindow extends Window {
             mainGridLayout.setComponentAlignment(richTextArea, Alignment.BOTTOM_CENTER);
             mainGridLayout.setComponentAlignment(bewerben, Alignment.BOTTOM_RIGHT);
 
-            bewerben.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
+            bewerben.addClickListener((Button.ClickListener) event -> {
 
-                    BewerbungDTO bewerbungDTO = new BewerbungDTO();
-                    bewerbungDTO.setDescription(richTextArea.getValue());
-                    bewerbungDTO.setLebenslauf(PdfUploader.getByte());
-                    bewerbungDTO.setStatus(9);
-                    bewerbungDTO.setStudentID(st.getStudent_id());
-                    if(userType.equals("Student")) {
-                        bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
-                    }
-                    BewerbungWindow.this.close();
-                    try {
-                        BewerbungControl.bewerben(bewerbungDTO);
-                    } catch (DatabaseException e) {
-                        e.printStackTrace();
-                        Notification.show("DB-Fehler", e.getReason(), Notification.Type.ERROR_MESSAGE);
-                    }
-                    UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben sich erfolgreich beworben!"));
-                    UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+                BewerbungDTO bewerbungDTO = new BewerbungDTO();
+                bewerbungDTO.setDescription(richTextArea.getValue());
+                bewerbungDTO.setLebenslauf(PdfUploader.getByte());
+                bewerbungDTO.setStatus(9);
+                bewerbungDTO.setStudentID(st.getStudent_id());
+                if(userType.equals("Student")) {
+                    bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
                 }
+                BewerbungWindow.this.close();
+                try {
+                    BewerbungControl.bewerben(bewerbungDTO);
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                    Notification.show("DB-Fehler", e.getReason(), Notification.Type.ERROR_MESSAGE);
+                }
+                UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben sich erfolgreich beworben!"));
+                UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
             });
 
         }else{
@@ -241,47 +235,38 @@ public class BewerbungWindow extends Window {
             mainGridLayout.setComponentAlignment(titel, Alignment.TOP_CENTER);
             mainGridLayout.setComponentAlignment(markieren, Alignment.TOP_RIGHT);
 
-            markieren.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
+            markieren.addClickListener((Button.ClickListener) event -> {
+                try {
+                   bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
+                BewerbungWindow bewerbungWindow = new BewerbungWindow(null,"Unternehmen", bewerbung);
+                UI.getCurrent().addWindow(bewerbungWindow);
+                BewerbungWindow.this.close();
+
+
+
+            });
+
+            zusagen.addClickListener((Button.ClickListener) event -> {
+
+                BewerbungControl.statusAendern(bewerbung.getBewerbungID(),2);
+                BewerbungWindow.this.close();
+            });
+
+            ablehnen.addClickListener((Button.ClickListener) event -> {
+                if(bewerbung.isBewerbung_markiert()) {
                     try {
-                       bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
+                        bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
                     } catch (DatabaseException e) {
                         e.printStackTrace();
                     }
-                    BewerbungWindow bewerbungWindow = new BewerbungWindow(null,"Unternehmen", bewerbung);
-                    UI.getCurrent().addWindow(bewerbungWindow);
-                    BewerbungWindow.this.close();
-
-
-
                 }
-            });
 
-            zusagen.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
+                BewerbungControl.statusAendern(bewerbung.getBewerbungID(),3);
 
-                    BewerbungControl.statusAendern(bewerbung.getBewerbungID(),2);
-                    BewerbungWindow.this.close();
-                }
-            });
-
-            ablehnen.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    if(bewerbung.isBewerbung_markiert()) {
-                        try {
-                            bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
-                        } catch (DatabaseException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    BewerbungControl.statusAendern(bewerbung.getBewerbungID(),3);
-
-                    BewerbungWindow.this.close();
-                }
+                BewerbungWindow.this.close();
             });
 
             if(bewerbung != null) {
@@ -295,11 +280,8 @@ public class BewerbungWindow extends Window {
                 }
             }
 
-            downloadLebnslauf.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
+            downloadLebnslauf.addClickListener((Button.ClickListener) event -> {
 
-                }
             });
 
 

@@ -10,9 +10,9 @@ import org.bonn.se.services.util.*;
 import java.sql.Date;
 import java.time.LocalDate;
 
-public class ErweiterteSuche extends Window {
+public class ErweiterteSucheWindow extends Window {
     GridLayout GridAnzeig = null;
-    public ErweiterteSuche() {
+    public ErweiterteSucheWindow() {
         setWindow();
     }
     private void setWindow() {
@@ -25,13 +25,7 @@ public class ErweiterteSuche extends Window {
         gridLayout.setHeight("100%");
         gridLayout.setWidth("100%");
 
-        this.addCloseListener(new CloseListener() {
-            @Override
-            public void windowClose(CloseEvent e) {
-                UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-
-            }
-        });
+        this.addCloseListener((CloseListener) e -> UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView));
 
         Label head = new Label("<h1><p><font color=\"blue\">Erweiterte Suche\n</font></p></h1>", ContentMode.HTML);
         head.setHeight("70px");
@@ -93,7 +87,7 @@ public class ErweiterteSuche extends Window {
                             StudentHomeView.stellenSuchen(comboNachWas.getValue(), comboOrtBund.getOrt(), comboOrtBund.getBundesland(),comboUmkreis.getValue(),"Erweitert",
                                                           comboEinstellungsart.getValue(), Date.valueOf(wann_datum.getValue()== null? emptyDate :wann_datum.getValue()), ComboBranche.getValue()
                                                          );
-                             ErweiterteSuche.this.close();
+                             ErweiterteSucheWindow.this.close();
                              UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
 
                             StudentHomeView.getMaingrid().addComponent(StudentHomeView.getGridAnzeig(), 0, 2, 1, 2);

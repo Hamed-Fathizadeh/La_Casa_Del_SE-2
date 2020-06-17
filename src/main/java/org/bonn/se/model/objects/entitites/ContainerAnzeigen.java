@@ -12,7 +12,7 @@ public class ContainerAnzeigen {
     private List<StellenanzeigeDTO> liste;
 
     private static ContainerAnzeigen instance = new ContainerAnzeigen();
-
+    private ContainerAnzDAO containerAnzDAO  = ContainerAnzDAO.getInstance();
     public static synchronized ContainerAnzeigen getInstance() {
         if (instance == null) {
             instance = new ContainerAnzeigen();
@@ -30,7 +30,7 @@ public class ContainerAnzeigen {
 
     public void load(){
         try {
-            liste = ContainerAnzDAO.load();
+            liste = containerAnzDAO.load();
         }
         catch( DatabaseException throwables){
             throwables.getMessage();
@@ -40,7 +40,7 @@ public class ContainerAnzeigen {
 
     public void loadSuche(String suchbegriff_id, String standort, String bundesland, String umkreis,String artSuche, String einstellungsart, Date ab_Datum,String branche){
         try {
-            liste = ContainerAnzDAO.loadSuche(suchbegriff_id, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
+            liste = containerAnzDAO.loadSuche(suchbegriff_id, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
         }
         catch( DatabaseException throwables){
             throwables.getMessage();
@@ -50,7 +50,7 @@ public class ContainerAnzeigen {
 
     public void setAnzeige(Unternehmen user){
         try {
-            ContainerAnzDAO.setAnzeige(user);
+            containerAnzDAO.setAnzeige(user);
         }
         catch( DatabaseException throwables){
             throwables.getMessage();
@@ -59,7 +59,7 @@ public class ContainerAnzeigen {
 
     public void updateAnzeige(StellenanzeigeDTO stellenanzeigeDTO){
         try {
-            ContainerAnzDAO.updateAnzeige(stellenanzeigeDTO);
+            containerAnzDAO.updateAnzeige(stellenanzeigeDTO);
         }
         catch( DatabaseException throwables){
             throwables.getMessage();

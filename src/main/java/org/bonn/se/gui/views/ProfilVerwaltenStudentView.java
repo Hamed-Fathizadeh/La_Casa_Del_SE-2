@@ -19,7 +19,7 @@ import org.bonn.se.services.util.Views;
 import java.io.File;
 import java.sql.SQLException;
 
-public class ProfilVerwaltenStudent extends GridLayout implements View {
+public class ProfilVerwaltenStudentView extends GridLayout implements View {
     static GridLayout GridAnzeig = null;
 
     public static GridLayout getGridAnzeig() {

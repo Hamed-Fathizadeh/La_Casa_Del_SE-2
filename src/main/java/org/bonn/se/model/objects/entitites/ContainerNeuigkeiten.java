@@ -17,6 +17,7 @@ public class ContainerNeuigkeiten {
     private ArrayList<StellenanzeigeDTO> liste2;
 
     private static ContainerNeuigkeiten instance = new ContainerNeuigkeiten();
+    private ContainerAnzDAO containerAnzDAO = ContainerAnzDAO.getInstance();
 
     public static synchronized ContainerNeuigkeiten getInstance() {
         if (instance == null) {
@@ -35,7 +36,7 @@ public class ContainerNeuigkeiten {
 
     public void load(){
         try {
-            liste = ContainerAnzDAO.load();
+            liste = containerAnzDAO.load();
         }
         catch( DatabaseException throwables){
             throwables.getMessage();
@@ -45,7 +46,7 @@ public class ContainerNeuigkeiten {
 
     public void loadNeuigkeiten(String str){
         try {
-            liste = ContainerAnzDAO.loadNeuigkeiten(str);
+            liste = containerAnzDAO.loadNeuigkeiten(str);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
@@ -53,7 +54,7 @@ public class ContainerNeuigkeiten {
 
     public void loadUnternehmenAnzeigen(String email){
         try {
-            liste = ContainerAnzDAO.loadUnternehmenAnzeigen(email);
+            liste = containerAnzDAO.loadUnternehmenAnzeigen(email);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
@@ -61,7 +62,7 @@ public class ContainerNeuigkeiten {
 
     public void loadNeuBewerbungen(Unternehmen unternehmen){
         try {
-            liste = ContainerAnzDAO.loadNeuBewerbungen(unternehmen);
+            liste = containerAnzDAO.loadNeuBewerbungen(unternehmen);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
@@ -78,7 +79,7 @@ public class ContainerNeuigkeiten {
 
     public void loadSuche(String suchbegriff_id, String standort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche){
         try {
-            liste = ContainerAnzDAO.loadSuche(suchbegriff_id, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
+            liste = containerAnzDAO.loadSuche(suchbegriff_id, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
         }
         catch( DatabaseException throwables){
             throwables.getMessage();

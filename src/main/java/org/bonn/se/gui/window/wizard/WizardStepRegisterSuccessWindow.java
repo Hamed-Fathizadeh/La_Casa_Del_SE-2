@@ -1,19 +1,20 @@
-package org.bonn.se.gui.window;
+package org.bonn.se.gui.window.wizard;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
 import org.vaadin.teemu.wizards.WizardStep;
 
-public class WizardStepFertig implements WizardStep {
+public class WizardStepRegisterSuccessWindow implements WizardStep {
 
         @Override
         public String getCaption() {
-            return "Fertig";
+            return "Erfolgreich";
         }
 
         @Override
         public Component getContent() {
-            return new Label("Sehr gut sie können sich nun einloggen.....");
+
+            return new Label("Vielen Dank für ihre Registrierung!");
         }
 
         @Override
@@ -23,9 +24,8 @@ public class WizardStepFertig implements WizardStep {
 
         @Override
         public boolean onBack() {
-            return false;
+            return true;
         }
-
 
 
 }

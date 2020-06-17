@@ -7,7 +7,6 @@ import com.vaadin.ui.*;
 import org.bonn.se.control.AnzStatusControl;
 import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
 import org.bonn.se.model.objects.entitites.Student;
@@ -19,8 +18,6 @@ import org.bonn.se.services.util.Views;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
-import java.sql.SQLException;
-
 
 public class StellenanzeigeWindow extends Window {
 
@@ -28,11 +25,11 @@ public class StellenanzeigeWindow extends Window {
     private OnOffSwitch onOffSwitch = new OnOffSwitch();
     Button bewerbungen;
     Button bewerben;
-    public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) throws DatabaseException, SQLException {
+    public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) {
         setUp(stellenanzeige,unternehmen_data);
     }
 
-    public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) throws DatabaseException, SQLException {
+    public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data)  {
         center();
 
         this.setWidth("80%");
@@ -140,26 +137,20 @@ public class StellenanzeigeWindow extends Window {
             gridLayout.addComponent(bewerben, 4, 14, 4, 14);
             gridLayout.addComponent(back, 4, 0, 4, 0);
 
-            bewerben.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    if( ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).hasLebenslauf()) {
-                        StellenanzeigeWindow.this.close();
-                        BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige, "Student", null);
-                        UI.getCurrent().addWindow(bewerbungWindow);
+            bewerben.addClickListener((Button.ClickListener) event -> {
+                if( ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).hasLebenslauf()) {
+                    StellenanzeigeWindow.this.close();
+                    BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige, "Student", null);
+                    UI.getCurrent().addWindow(bewerbungWindow);
 
-                    }else{
-                        UI.getCurrent().addWindow(new ConfirmationWindow("Um dich zu bewerben musst du ein Lebenslauf in deine Profil hinterlegen!"));
-                    }
+                }else{
+                    UI.getCurrent().addWindow(new ConfirmationWindow("Um dich zu bewerben musst du ein Lebenslauf in deine Profil hinterlegen!"));
                 }
             });
 
-            back.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    StellenanzeigeWindow.this.close();
-                    UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-                }
+            back.addClickListener((Button.ClickListener) event -> {
+                StellenanzeigeWindow.this.close();
+                UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
             });
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
 
@@ -188,26 +179,23 @@ public class StellenanzeigeWindow extends Window {
             horizontalLayout.addComponents(status,onOffSwitch);
             horizontalLayout.setMargin(false);
             gridLayout.addComponent(horizontalLayout,0,0,0,0);
-            onOffSwitch.addValueChangeListener(new HasValue.ValueChangeListener<Boolean>() {
-                @Override
-                public void valueChange(HasValue.ValueChangeEvent<Boolean> event) {
-                    boolean checked = event.getValue();
-                    if(checked) {
-                        stellenanzeige.setStatus(1);
-                        Notification.show("Anzeige online!");
-                    } else {
-                        stellenanzeige.setStatus(2);
-                        Notification.show("Anzeige offline!");
-                    }
-                    try {
-                        AnzStatusControl.changeStatus(stellenanzeige);
-                    } catch (DatabaseException e) {
-                        e.printStackTrace();
-                    }
-
-                    System.out.println("OnOffSwitch checked : " + checked);
-
+            onOffSwitch.addValueChangeListener((HasValue.ValueChangeListener<Boolean>) event -> {
+                boolean checked = event.getValue();
+                if(checked) {
+                    stellenanzeige.setStatus(1);
+                    Notification.show("Anzeige online!");
+                } else {
+                    stellenanzeige.setStatus(2);
+                    Notification.show("Anzeige offline!");
                 }
+                try {
+                    AnzStatusControl.changeStatus(stellenanzeige);
+                } catch (DatabaseException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println("OnOffSwitch checked : " + checked);
+
             });
 
 // Vaadin8
@@ -251,15 +239,12 @@ public class StellenanzeigeWindow extends Window {
                 gridLayout.removeComponent(back);
                 richTextArea.addValueChangeListener(event1 -> save.setEnabled(true));
 
-                cancel.addClickListener(new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        gridLayout.replaceComponent(richTextArea,beschreibung_data);
-                        gridLayout.replaceComponent(cancel,bearbeiten);
-                        gridLayout.replaceComponent(save,delete);
-                        gridLayout.replaceComponent(titel_bearbeiten,titel);
-                        gridLayout.addComponent(back, 4, 0, 4, 0);
-                    }
+                cancel.addClickListener((Button.ClickListener) event12 -> {
+                    gridLayout.replaceComponent(richTextArea,beschreibung_data);
+                    gridLayout.replaceComponent(cancel,bearbeiten);
+                    gridLayout.replaceComponent(save,delete);
+                    gridLayout.replaceComponent(titel_bearbeiten,titel);
+                    gridLayout.addComponent(back, 4, 0, 4, 0);
                 });
 
                 save.addClickListener(new Button.ClickListener() {
@@ -275,26 +260,18 @@ public class StellenanzeigeWindow extends Window {
 
                         ConfirmDialog.setFactory(df);
                         ConfirmDialog.show(MyUI.getCurrent(), "Bist du dir sicher?",
-                                new ConfirmDialog.Listener() {
+                                (ConfirmDialog.Listener) dialog -> {
+                                    if (dialog.isConfirmed()) {
+                                        stellenanzeige.setTitel(titel_bearbeiten.getValue());
+                                        stellenanzeige.setBeschreibung(richTextArea.getValue());
+                                        ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeige);
+                                        gridLayout.replaceComponent(richTextArea, beschreibung_data);
+                                        gridLayout.replaceComponent(cancel, bearbeiten);
+                                        gridLayout.replaceComponent(save, delete);
+                                        gridLayout.replaceComponent(titel_bearbeiten, titel);
 
-                                    public void onClose(ConfirmDialog dialog) {
-                                        if (dialog.isConfirmed()) {
-                                            stellenanzeige.setTitel(titel_bearbeiten.getValue());
-                                            stellenanzeige.setBeschreibung(richTextArea.getValue());
-                                            ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeige);
-                                            gridLayout.replaceComponent(richTextArea, beschreibung_data);
-                                            gridLayout.replaceComponent(cancel, bearbeiten);
-                                            gridLayout.replaceComponent(save, delete);
-                                            gridLayout.replaceComponent(titel_bearbeiten, titel);
+                                        StellenanzeigeWindow.this.setUp(stellenanzeige, unternehmen_data);
 
-                                            try {
-                                                StellenanzeigeWindow.this.setUp(stellenanzeige, unternehmen_data);
-                                            } catch (DatabaseException e) {
-                                                e.printStackTrace();
-                                            } catch (SQLException throwables) {
-                                                throwables.printStackTrace();
-                                            }
-                                        }
                                     }
                                 });
 
@@ -309,35 +286,26 @@ public class StellenanzeigeWindow extends Window {
 
             });
 
-            delete.addClickListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
+            delete.addClickListener((Button.ClickListener) event -> ConfirmDialog.show(MyUI.getCurrent(), "Bist du dir sicher?",
+                    new ConfirmDialog.Listener() {
 
-                    ConfirmDialog.show(MyUI.getCurrent(), "Bist du dir sicher?",
-                            new ConfirmDialog.Listener() {
-
-                                public void onClose(ConfirmDialog dialog) {
-                                    if (dialog.isConfirmed()) {
-                                        ContainerAnzeigen.getInstance().deleteAnzeige(stellenanzeige);
-                                        StellenanzeigeWindow.this.close();
-                                        UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
-                                    }
-                                }
-                            });
-                }
-            });
+                        public void onClose(ConfirmDialog dialog) {
+                            if (dialog.isConfirmed()) {
+                                ContainerAnzeigen.getInstance().deleteAnzeige(stellenanzeige);
+                                StellenanzeigeWindow.this.close();
+                                UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+                            }
+                        }
+                    }));
 
         }
         panel.setContent(gridLayout);
 
-        if(!FeatureToggleControl.featureIsEnabled("BEWERBUNGEN")) {
+        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN)")) {
 
-            UI.getCurrent().access(new Runnable() {
-                @Override
-                public void run() {
-                    gridLayout.removeComponent(bewerbungen);
-                    gridLayout.removeComponent(bewerben);
-                }
+            UI.getCurrent().access(() -> {
+                gridLayout.removeComponent(bewerbungen);
+                gridLayout.removeComponent(bewerben);
             });
         }
 
