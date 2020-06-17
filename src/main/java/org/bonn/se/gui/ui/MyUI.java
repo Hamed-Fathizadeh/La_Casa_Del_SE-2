@@ -1,22 +1,17 @@
 package org.bonn.se.gui.ui;
 
-import com.vaadin.annotations.PreserveOnRefresh;
-import com.vaadin.annotations.Theme;
-import com.vaadin.annotations.Title;
-import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.annotations.*;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import org.bonn.se.gui.views.*;
-import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.User;
 
 import javax.servlet.annotation.WebServlet;
 
 import static org.bonn.se.services.util.Views.*;
-import static org.bonn.se.services.util.Views.Settings;
 
 
 /**
@@ -26,6 +21,7 @@ import static org.bonn.se.services.util.Views.Settings;
  * The UI is initialized using {@link #init(VaadinRequest)}. This method is intended to be 
  * overridden to add component to the user interface and initialize non-component functionality.
  */
+@Push
 @Theme("demo")
 @Title("Lacolsco")
 @PreserveOnRefresh
@@ -48,16 +44,16 @@ public class MyUI extends UI {
         System.out.println("LOG: neues UI-Objekt erzeugt!" + VaadinSession.getCurrent().toString());
 
         Navigator navi = new Navigator(this , this );
-        navi.addView(RegisterStudent, RegisterStudent.class);
-        navi.addView(MainView, org.bonn.se.gui.views.MainView.class);
-        navi.addView(RegisterUnternehmen, RegisterUnternehmer.class);
+        navi.addView(RegisterStudent, RegisterStudentView.class);
+        navi.addView(MainView, LoginView.class);
+        navi.addView(RegisterUnternehmen, RegisterUnternehmerView.class);
         navi.addView(StudentHomeView, StudentHomeView.class);
         navi.addView(UnternehmenHomeView, org.bonn.se.gui.views.UnternehmenHomeView.class);
-        navi.addView(AnzeigeErstellen, org.bonn.se.gui.views.AnzeigeErstellen.class);
-        navi.addView(Stellenbeschreibung,  org.bonn.se.gui.views.Stellenbeschreibung.class);
-        navi.addView(ProfilVerwaltenStudent, org.bonn.se.gui.views.ProfilVerwaltenStudent.class);
+        navi.addView(AnzeigeErstellen, AnzeigeErstellenView.class);
+        navi.addView(Stellenbeschreibung,  StellenbeschreibungView.class);
+        navi.addView(ProfilVerwaltenStudent, ProfilVerwaltenStudentView.class);
         navi.addView(AlleBewerbungenView, org.bonn.se.gui.views.AlleBewerbungenView.class);
-        navi.addView(Settings, org.bonn.se.gui.views.Settings.class);
+        navi.addView(Settings, SettingsView.class);
 
 
         UI.getCurrent().getNavigator().navigateTo(ProfilVerwaltenStudent);

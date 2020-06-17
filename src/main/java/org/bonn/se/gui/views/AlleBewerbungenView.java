@@ -9,13 +9,16 @@ import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.*;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
+
+import java.sql.SQLException;
 
 public class AlleBewerbungenView extends VerticalLayout implements View {
 
     static GridLayout Maingrid = new GridLayout(2, 5);
-    public void setUp() {
+    public void setUp() throws DatabaseException, SQLException {
 
         Maingrid = new GridLayout(1, 5);
         Maingrid.setSizeFull();
@@ -35,7 +38,7 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
 
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungen.load("Alle");
-        Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen);
+        @SuppressWarnings("unchecked") Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"AlleBewerbungenView");
         bewerbungen.setHeightMode(HeightMode.UNDEFINED);
 
         GridLayout bottomGridBewNeu = new GridLayout(1, 1);
@@ -49,8 +52,8 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
         bottomGridBewNeu.setComponentAlignment(bewerbungen,Alignment.TOP_CENTER);
 
 
-                Maingrid.addComponent(topPanel, 0, 0);
-                 Maingrid.addComponent(lSpruch, 0, 1);
+        Maingrid.addComponent(topPanel, 0, 0);
+        Maingrid.addComponent(lSpruch, 0, 1);
         Maingrid.addComponent(bottomGridBewNeu, 0, 2);
 
         Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
@@ -69,13 +72,18 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        User user = null;
-        if( UI.getCurrent().getSession().getAttribute(Roles.Student) == null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
-
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            try {
+                this.setUp();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-
-            this.setUp();
+            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
         }
 
     }

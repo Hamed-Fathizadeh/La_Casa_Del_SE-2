@@ -1,46 +1,89 @@
 package org.bonn.se.model.objects.dto;
 
 import com.vaadin.ui.Image;
-import org.bonn.se.services.util.ConvertByteToImage;
+import org.bonn.se.services.util.ImageConverter;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class StellenanzeigeDTO {
 
     private int id;
-    private Date datum;
+    private LocalDate datum;
     private Date zeitstempel;
     private String titel;
     private String beschreibung;
     private int status;
     private String standort;
     private String bundesland;
+    private String standortBundesland;
     private String firmenname;
     private String hauptsitz;
     private Image unternehmenLogo;
     private double bewertung;
+    private int    anzahlNeuBewerbung;
+    private String branche;
 
-    public StellenanzeigeDTO(int id, Date datum, Date zeitstempel, String titel, String beschreibung,
-                             int status, String standort, String bundesland, String firmenname, String hauptsitz,
-                             String suchbegriff, String art, byte[] unternehmenLogo) {
-        this.id = id;
-        this.datum = datum;
-        this.zeitstempel = zeitstempel;
-        this.titel = titel;
-        this.beschreibung = beschreibung;
-        this.status = status;
-        this.standort = standort;
-        this.bundesland = bundesland;
-        this.firmenname = firmenname;
-        this.hauptsitz = hauptsitz;
-        this.unternehmenLogo =  ConvertByteToImage.getImage(unternehmenLogo);
-        this.suchbegriff = suchbegriff;
-        this.art = art;
+    public String getBranche() {
+        return branche;
     }
 
-    public StellenanzeigeDTO(int id, Date datum, Date zeitstempel, String titel, String beschreibung,
+    public void setBranche(String branche) {
+        this.branche = branche;
+    }
+
+    public String getStandortBundesland() {
+        return standort+", "+bundesland;
+    }
+
+    public int getanzahlNeuBewerbung() {
+        return anzahlNeuBewerbung;
+    }
+
+    public void setHatNeuBewerbung(int anzahlNeuBewerbung) {
+        this.anzahlNeuBewerbung = anzahlNeuBewerbung;
+    }
+
+    public StellenanzeigeDTO() {
+        setId(id);
+        setDatum(datum);
+        setZeitstempel(zeitstempel);
+        setTitel(titel);
+        setBeschreibung(beschreibung);
+        setStatus(status);
+        setStandort(standort);
+        setBundesland(bundesland);
+        setFirmenname(firmenname);
+        setHauptsitz(hauptsitz);
+        setSuchbegriff(suchbegriff);
+        setArt(art);
+        setHatNeuBewerbung(anzahlNeuBewerbung);
+        setBranche(branche);
+    }
+
+    public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
                              int status, String standort, String bundesland, String firmenname, String hauptsitz,
-                             String suchbegriff, String art) {
+                             String suchbegriff, String art, byte[] unternehmenLogo, double bewertung, String branche) {
+        this.id = id;
+        this.datum = datum;
+        this.zeitstempel = zeitstempel;
+        this.titel = titel;
+        this.beschreibung = beschreibung;
+        this.status = status;
+        this.standort = standort;
+        this.bundesland = bundesland;
+        this.firmenname = firmenname;
+        this.hauptsitz = hauptsitz;
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
+        this.suchbegriff = suchbegriff;
+        this.art = art;
+        this.bewertung = bewertung;
+        this.branche = branche;
+    }
+
+    public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
+                             int status, String standort, String bundesland, String firmenname, String hauptsitz,
+                             String suchbegriff, String art, int anzahlNeuBewerbung) {
         this.id = id;
         this.datum = datum;
         this.zeitstempel = zeitstempel;
@@ -53,6 +96,7 @@ public class StellenanzeigeDTO {
         this.hauptsitz = hauptsitz;
         this.suchbegriff = suchbegriff;
         this.art = art;
+        this.anzahlNeuBewerbung = anzahlNeuBewerbung ;
     }
 
     public Image getUnternehmenLogo() {
@@ -60,7 +104,7 @@ public class StellenanzeigeDTO {
     }
 
     public void setUnternehmenLogo(byte[] unternehmenLogo) {
-        this.unternehmenLogo = ConvertByteToImage.getImage(unternehmenLogo);
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
     }
 
     public double getBewertung() {
@@ -101,11 +145,11 @@ public class StellenanzeigeDTO {
         this.id = id;
     }
 
-    public Date getDatum() {
+    public LocalDate getDatum() {
         return datum;
     }
 
-    public void setDatum(Date datum) {
+    public void setDatum(LocalDate datum) {
         this.datum = datum;
     }
 

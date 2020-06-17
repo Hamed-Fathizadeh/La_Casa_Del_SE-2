@@ -109,18 +109,18 @@ public class JavaMailUtil {
                     "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
                     "minor-bidi;mso-bidi-theme-font:minor-bidi;color:#2F5496;mso-themecolor:accent1;\n" +
                     "mso-themeshade:191'>Das Unternehmen <span class=SpellE>"+unternehmen.getCname()+"</span> hat\n" +
-                    "eine Stelle mit der Titel: "+unternehmen.getStellenanzeige().getTitel() +" hochgeladen!<o:p></o:p></span></b></p>\n" +
+                    "eine Stelle mit der Titel: "+unternehmen.getStellenanzeigeDTO().getTitel() +" hochgeladen!<o:p></o:p></span></b></p>\n" +
                     "\n" +
                     "<p class=MsoNormal><b><span style='font-size:20.0pt;line-height:107%;\n" +
                     "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
                     "minor-bidi;mso-bidi-theme-font:minor-bidi;color:#2F5496;mso-themecolor:accent1;\n" +
-                    "mso-themeshade:191'>Die Stelle ist ein "+unternehmen.getStellenanzeige().getArt()+" und fängt am "+unternehmen.getStellenanzeige().getDatum()+"\n" +
+                    "mso-themeshade:191'>Die Stelle ist ein "+unternehmen.getStellenanzeigeDTO().getArt()+" und fängt am "+unternehmen.getStellenanzeigeDTO().getDatum()+"\n" +
                     "an.<o:p></o:p></span></b></p>\n" +
                     "\n" +
                     "<p class=MsoNormal><b><span style='font-size:20.0pt;line-height:107%;\n" +
                     "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
                     "minor-bidi;mso-bidi-theme-font:minor-bidi;color:#2F5496;mso-themecolor:accent1;\n" +
-                    "mso-themeshade:191'>Standort ist "+unternehmen.getStellenanzeige().getStandort()+" - "+unternehmen.getStellenanzeige().getBundesland()   +"<o:p></o:p></span></b></p>\n" +
+                    "mso-themeshade:191'>Standort ist "+unternehmen.getStellenanzeigeDTO().getStandort()+" - "+unternehmen.getStellenanzeigeDTO().getBundesland()   +"<o:p></o:p></span></b></p>\n" +
                     "\n" +
                     "<p class=MsoNormal><b><span style='font-size:20.0pt;line-height:107%;\n" +
                     "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +

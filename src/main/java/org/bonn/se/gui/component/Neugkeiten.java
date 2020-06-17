@@ -7,13 +7,15 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.ImageConverter;
 
 import java.time.LocalDate;
 import java.time.Period;
 
 public class Neugkeiten extends GridLayout {
+    Image Ulogo;
 
-   public Neugkeiten(ContainerNeuigkeiten container){
+    public Neugkeiten(ContainerNeuigkeiten container){
        super(1, container.getAnzahl()==0 ? 1:container.getAnzahl() );
       // this.setMargin(true);
 
@@ -54,7 +56,9 @@ public class Neugkeiten extends GridLayout {
                                "Online seit "+ day
                               );
                txArea.setReadOnly(true);
-               Image Ulogo = unternehmen.getLogo();
+               if(unternehmen.getLogo() != null) {
+                   Ulogo= ImageConverter.convertImagetoMenu(unternehmen.getLogo());
+               }
               // Ulogo.setHeight("130px");
                Ulogo.addStyleName("whiteBackground");
                glayout.addComponent(txArea,1,0,1,0);
@@ -72,7 +76,10 @@ public class Neugkeiten extends GridLayout {
                    } catch (DatabaseException e) {
                        e.printStackTrace();
                    }
-                   StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(sa,unternehmen_data);
+                   StellenanzeigeWindow stellenanzeigeWindow = null;
+
+                       stellenanzeigeWindow = new StellenanzeigeWindow(sa,unternehmen_data);
+
                    UI.getCurrent().addWindow(stellenanzeigeWindow);
 
                });

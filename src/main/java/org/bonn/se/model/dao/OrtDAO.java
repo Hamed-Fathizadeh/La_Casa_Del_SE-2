@@ -38,7 +38,7 @@ public class OrtDAO extends AbstractDAO{
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
-                liste.add(set.getString(1)+" - "+set.getString(2));
+                liste.add(set.getString(1)+", "+set.getString(2));
 
             }
         }catch (SQLException  throwables) {

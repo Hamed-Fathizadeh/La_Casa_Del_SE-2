@@ -4,7 +4,6 @@ package org.bonn.se.control;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import org.bonn.se.control.exception.NoSuchUserOrPassword;
-import org.bonn.se.gui.component.ProfilStudentTextField;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Student;
@@ -37,6 +36,7 @@ public class LoginControl {
                     + "FROM lacasa.tab_user "
                     + "WHERE upper(lacasa.tab_user.email) = '" +login.toUpperCase() + "'"
                     + " AND lacasa.tab_user.passwort = '" + password + "'");
+
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
@@ -47,60 +47,49 @@ public class LoginControl {
             if ( set.next()) {
 
                 user = new User();
+                user.setVorname(set.getString("vorname"));
+                user.setNachname(set.getString("nachname"));
                 user.setEmail((set.getString(1)));
                 user.setPasswort(set.getString(2));
                 user.setType(set.getString(5));
 
                 if(set.getString(5).equals("C")) {
                         Unternehmen unternehmen = new Unternehmen();
-                        UI.getCurrent().getSession().setAttribute("Unternehmen",unternehmen);
+                        MyUI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
                         unternehmen.setEmail(user.getEmail());
                         unternehmen.setVorname(user.getVorname());
                         unternehmen.setNachname(user.getNachname());
-                        unternehmen = ProfilDAO.getUnternehmenProfil(unternehmen);
+                        unternehmen = ProfilDAO.getInstance().getUnternehmenProfil(unternehmen);
 
-                        UI.getCurrent().getSession().setAttribute("Unternehmen",unternehmen);
+                        UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
 
                     } else if(set.getString(5).equals("S")) {
-                        Student student = new Student();
-                        student = ProfilDAO.getStudent(user.getEmail());
-                        //student = ProfilDAO.getStudent2(user.getEmail());
+                        Student student;
+                        student = ProfilDAO.getInstance().getStudent(user.getEmail());
 
-                        UI.getCurrent().getSession().setAttribute("Student",student);
-
+                        UI.getCurrent().getSession().setAttribute(Roles.Student,student);
 
 
                      } else {
                         throw new NoSuchUserOrPassword();
                      }
-          }
+          }else{
+                throw new DatabaseException("Fehler Passwort oder Email ist falsch!");
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
 
-
-
-//        VaadinSession session = UI.getCurrent().getSession();
-//        session.setAttribute(Roles.CURRENT_USER,user);
         UI.getCurrent().getNavigator().navigateTo(Views.MainView);
-
-
-//Benuter vorhanden
-//        UI.getCurrent().getNavigator().navigateTo(Views.MAIN);
-
-//Fehlerfall
-//        throw new NoSuchUserOrPassword();
-
-
     }
 
     public static void logoutUser() {
-        VaadinSession vaadinSession = MyUI.getCurrent().getSession();
+
+        VaadinSession vaadinSession = UI.getCurrent().getSession();
         vaadinSession.setAttribute(Roles.Student,null);
         vaadinSession.setAttribute(Roles.Unternehmen,null);
-
         UI.getCurrent().getNavigator().navigateTo(Views.MainView);
     }
 

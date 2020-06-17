@@ -3,60 +3,75 @@ package org.bonn.se.gui.component;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
+import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
-public class TopPanelUser extends HorizontalLayout {
+import java.sql.SQLException;
 
-    public TopPanelUser(){
+public class TopPanelUser extends GridLayout {
+        MenuBar bar;
+        MenuBar.MenuItem item1;
 
-        this.setSizeFull();
+    public TopPanelUser() throws DatabaseException, SQLException {
+
+        this.setRows(1);
+        this.setColumns(10);
         this.setStyleName("toppanel");
 
-        GridLayout Topgrid = new GridLayout(6, 1);
-        Topgrid.setMargin(true);
-        Topgrid.setSizeFull();
+
+        this.setMargin(false);
+        this.setWidthFull();
+        this.setHeightUndefined();
 
         ThemeResource resource = new ThemeResource("img/RegisterStudent/logo.png");
-        Image logo = new Image(null,resource);
 
-        logo.setSizeUndefined();
-        logo.addStyleName("logo");
-        Topgrid.addComponent(logo,0,0,0,0);
-        Topgrid.setComponentAlignment(logo, Alignment.BOTTOM_LEFT);
-
-//add image
+        Button imagePropertyInfo = new Button(resource);
+        imagePropertyInfo.setStyleName(ValoTheme.BUTTON_BORDERLESS);
 
 
+        imagePropertyInfo.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+                    UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+                }else{
+                    UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+                }
+            }
+        });
 
-        Image profilbild = null;
-        Image firma_logo = null;
+        this.addComponent(imagePropertyInfo,0,0,0,0);
+        this.setComponentAlignment(imagePropertyInfo, Alignment.MIDDLE_LEFT);
 
-        MenuBar bar = new MenuBar();
+
+
+
+        bar = new MenuBar();
         // MenuBar.MenuItem item1 = bar.addItem("Menü", null);
         bar.addStyleName("user-menu");
-        MenuBar.MenuItem item1 = null;
+        item1 = null;
 
-        if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            profilbild = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getImage();
-            profilbild.setHeight(70, Unit.PIXELS);
-            profilbild.setWidth(70, Unit.PIXELS);
+        if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+           Image profilbild = ImageConverter.convertImagetoMenu(((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture());
             // Topgrid.addComponent(profilbild,4,0,4,0);
+            //test
             //   Topgrid.setComponentAlignment(profilbild, Alignment.BOTTOM_RIGHT);
             item1 = bar.addItem(
-                    ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).getVorname(),
-                    profilbild.getSource(),
+                    ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).getVorname()
+                    ,profilbild.getSource(),
                     null);
-        } else if(MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            firma_logo = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo();
-            firma_logo.setHeight(70, Unit.PIXELS);
-            firma_logo.setWidth(70, Unit.PIXELS);
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            Image firma_logo = ImageConverter.convertImagetoMenu(((Unternehmen)UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo());
             item1 = bar.addItem(
-                    ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname(),
+                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname(),
                     firma_logo.getSource(),
                     null);
         }
@@ -77,15 +92,14 @@ public class TopPanelUser extends HorizontalLayout {
                 LoginControl.logoutUser();
             }
         });
-
-        item1.addItem("Letzte Bewerbungen", VaadinIcons.SEARCH, new MenuBar.Command() {
+        MenuBar.MenuItem bew = item1.addItem("Letzte Bewerbungen", VaadinIcons.SEARCH, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem menuItem) {
                 LoginControl.logoutUser();
             }
         });
 
-        item1.addItem("Settings", VaadinIcons.SEARCH, new MenuBar.Command() {
+            item1.addItem("Settings", VaadinIcons.SEARCH, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem menuItem) {
                 UI.getCurrent().getNavigator().navigateTo(Views.Settings);
@@ -99,13 +113,17 @@ public class TopPanelUser extends HorizontalLayout {
                 LoginControl.logoutUser();
             }
         });
+        this.addComponent(bar,9,0,9,0);
+        this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
 
-        Topgrid.addComponent(bar,5,0,5,0);
-        Topgrid.setComponentAlignment(bar, Alignment.BOTTOM_CENTER);
+        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN)")) {
 
-        this.addComponent(Topgrid);
-        this.setComponentAlignment(Topgrid, Alignment.TOP_CENTER);
-
+            UI.getCurrent().access(new Runnable() {
+                @Override
+                public void run() {
+                    item1.removeChild(bew);
+                }
+            });
+        }
     }
-
 }

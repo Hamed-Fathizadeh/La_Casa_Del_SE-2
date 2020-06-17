@@ -1,28 +1,33 @@
 package org.bonn.se.gui.views;
 
-
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
+import org.bonn.se.control.BewerbungControl;
+import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.Bewerbungen;
+import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.TopPanelUser;
-import org.bonn.se.gui.window.ErweiterteSuche;
+import org.bonn.se.gui.window.ErweiterteSucheWindow;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.*;
-import org.bonn.se.services.util.OrtService;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.SuchbegrifService;
 import org.bonn.se.services.util.Views;
 
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class StudentHomeView extends VerticalLayout implements View {
+
     static Grid GridAnzeig = null;
     static GridLayout Maingrid = new GridLayout(2, 5);
 
@@ -43,13 +48,19 @@ public class StudentHomeView extends VerticalLayout implements View {
     }
 
 
-    public void setUp() {
+    static GridLayout bottomGridBewNeu;
+    static ContainerNeuigkeiten containerOnFly = ContainerNeuigkeiten.getInstance();
+
+
+
+    public void setUp() throws DatabaseException, SQLException {
 
         Maingrid = new GridLayout(2, 5);
-
-
         Maingrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
+
+
+        containerOnFly.loadSuche(null, null, null, "Ganzer Ort", "Normal", null, null, null);
 
         ///HorizontalLayout hLayoutSearch = new HorizontalLayout();
         //hLayoutSearch.setSizeFull();
@@ -69,22 +80,37 @@ public class StudentHomeView extends VerticalLayout implements View {
         searchGrid.setMargin(true);
         searchGrid.setSizeFull();
 
-
 // add combobox
         ComboBox<String> comboNachWas = new ComboBox<>();
         comboNachWas.setPlaceholder("Nach was suchen Sie?");
         comboNachWas.setWidth(300.0f, Unit.PIXELS);
 
+
+        comboNachWas.addValueChangeListener(event -> {
+            Maingrid.removeComponent(GridAnzeig);
+
+            stellenSuchenOnFly( "",comboNachWas.getValue(),null,null,null );
+
+            Maingrid.addComponent(GridAnzeig, 0, 2, 1, 2);
+            Maingrid.setComponentAlignment(GridAnzeig, Alignment.MIDDLE_CENTER);
+
+        });
+
         SuchbegrifService Sservice = new SuchbegrifService();
         comboNachWas.setDataProvider(Sservice::fetch, Sservice::count);
 
 // add combobox ortBund
-        ComboBox<String> comboOrtBund = new ComboBox<>();
-        comboOrtBund.setPlaceholder("Ort - Bundesland");
+        OrtField comboOrtBund = new OrtField("Ort");
         comboOrtBund.setWidth(300.0f, Unit.PIXELS);
 
-        OrtService Ortservice = new OrtService("Stadt - Bund");
-        comboOrtBund.setDataProvider(Ortservice::fetch, Ortservice::count);
+        comboOrtBund.addValueChangeListener(event -> {
+            Maingrid.removeComponent(GridAnzeig);
+            stellenSuchenOnFly(comboOrtBund.getValue(), "",null,null,null);
+
+            Maingrid.addComponent(GridAnzeig, 0, 2, 1, 2);
+            Maingrid.setComponentAlignment(GridAnzeig, Alignment.MIDDLE_CENTER);
+
+        });
 
 
 // add combobox
@@ -98,9 +124,9 @@ public class StudentHomeView extends VerticalLayout implements View {
         buttonSearch.addClickListener(
                 event -> {
                     Maingrid.removeComponent(GridAnzeig);
-                    String[]a = {null,null};
-                    String[] ortBund = comboOrtBund.getValue() == null? a: comboOrtBund.getValue().split(" - ");
-                    stellenSuchen( comboNachWas.getValue(),  ortBund[0], ortBund[1],comboUmkreis.getValue(), "Normal", null, null, null);
+
+                    stellenSuchen( comboNachWas.getValue(), comboOrtBund.getOrt(), comboOrtBund.getBundesland(),comboUmkreis.getValue(), "Normal", null, null, null);
+
                     Maingrid.addComponent(GridAnzeig, 0, 2, 1, 2);
                     Maingrid.setComponentAlignment(GridAnzeig, Alignment.MIDDLE_CENTER);
                 });
@@ -113,39 +139,41 @@ public class StudentHomeView extends VerticalLayout implements View {
 
 // add components in searchGrid
 
-             searchGrid.addComponent(lSpruch,0,0,6,0);
+        searchGrid.addComponent(lSpruch,0,0,6,0);
         searchGrid.addComponent(comboNachWas,2,1,2,1);
         searchGrid.addComponent(comboOrtBund,3,1,3,1);
-        searchGrid.addComponent(comboUmkreis,5,1,5,1);
-        searchGrid.addComponent(buttonSearch,6,1,6,1);
- searchGrid.addComponent(buttonErwitertSuche,2,2,2,2);
+        //   searchGrid.addComponent(comboUmkreis,5,1,5,1);
+        //   searchGrid.addComponent(buttonSearch,6,1,6,1);
+        searchGrid.addComponent(buttonErwitertSuche,2,2,2,2);
 
 
         searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
-        searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
-        searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_CENTER);
-        searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
+        searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_LEFT);
+        // searchGrid.setComponentAlignment(comboUmkreis, Alignment.BOTTOM_CENTER);
+        //  searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
         searchGrid.setComponentAlignment(buttonErwitertSuche, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
 
         buttonErwitertSuche.addClickListener(
                 event -> {
-                            Maingrid.removeComponent(GridAnzeig);
-                            comboNachWas.clear();comboOrtBund.clear(); comboUmkreis.clear();
-                            ErweiterteSuche window = new ErweiterteSuche();
-                            UI.getCurrent().addWindow(window);
+                    Maingrid.removeComponent(GridAnzeig);
+                    comboNachWas.clear();comboOrtBund.clear(); comboUmkreis.clear();
+                    ErweiterteSucheWindow window = new ErweiterteSucheWindow();
+                    UI.getCurrent().addWindow(window);
                 });
 
         ContainerNeuigkeiten containerNeuigkeiten = ContainerNeuigkeiten.getInstance();
-        containerNeuigkeiten.loadNeuigkeiten("Top 5");
+        containerNeuigkeiten.loadNeuigkeiten("Alle");
+        List<StellenanzeigeDTO> dataTop5 = containerNeuigkeiten.getListe().stream().limit(5)
+                .collect(Collectors.toList());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",containerNeuigkeiten);
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",dataTop5);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("705px");
 
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungen.load("Top 5");
-        Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen);
+        Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen,"StudentHomeView");
         gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
         gBewerbungen.setWidth("705px");
 
@@ -166,12 +194,9 @@ public class StudentHomeView extends VerticalLayout implements View {
         // button für bottomGridBewNeu
         Button alleBewerbungen = new Button("Alle Bewerbungen", VaadinIcons.SEARCH);
 
-        alleBewerbungen.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
-                System.out.println("stuhomeview hier 1");
-            }
+        alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> {
+            UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
+            System.out.println("stuhomeview hier 1");
         });
 
         Button alleNeuigkeiten = new Button("Alle Neuigkeiten", VaadinIcons.SEARCH);
@@ -180,21 +205,21 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
 
-        GridLayout bottomGridBewNeu = new GridLayout(4, 4);
+        bottomGridBewNeu = new GridLayout(4, 4);
         bottomGridBewNeu.setSizeFull();
         bottomGridBewNeu.addStyleName("bottomGridBewNeu");
         bottomGridBewNeu.setMargin(true);
 
 
 
-                bottomGridBewNeu.addComponent(lBewerbung,0,0,1,0);
-                bottomGridBewNeu.addComponent(lNeuigkeit,2,0,3,0);
+        bottomGridBewNeu.addComponent(lBewerbung,0,0,1,0);
+        bottomGridBewNeu.addComponent(lNeuigkeit,2,0,3,0);
         bottomGridBewNeu.addComponent(gBewerbungen,0,1,1,1);
-                bottomGridBewNeu.addComponent(gAnzeigen,2,1,3,1);
-               bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
-           bottomGridBewNeu.addComponent(alleBewerbungen,0,3,0,3);
-           bottomGridBewNeu.addComponent(alleNeuigkeiten,2,3,2,3);
-                 bottomGridBewNeu.addComponent(meineAbos,3,3,3,3);
+        bottomGridBewNeu.addComponent(gAnzeigen,2,1,3,1);
+        bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
+        bottomGridBewNeu.addComponent(alleBewerbungen,0,3,0,3);
+        bottomGridBewNeu.addComponent(alleNeuigkeiten,2,3,2,3);
+        bottomGridBewNeu.addComponent(meineAbos,3,3,3,3);
 
 
         bottomGridBewNeu.setComponentAlignment(lBewerbung,Alignment.TOP_CENTER);
@@ -205,9 +230,9 @@ public class StudentHomeView extends VerticalLayout implements View {
         bottomGridBewNeu.setComponentAlignment(alleNeuigkeiten,Alignment.BOTTOM_CENTER);
         bottomGridBewNeu.setComponentAlignment(meineAbos,Alignment.BOTTOM_CENTER);
 
-             Maingrid.addComponent(topPanel, 0, 0, 1, 0);
-           Maingrid.addComponent(searchGrid, 0, 1, 1, 1);
-     Maingrid.addComponent(bottomGridBewNeu, 0, 3, 1, 3);
+        Maingrid.addComponent(topPanel, 0, 0, 1, 0);
+        Maingrid.addComponent(searchGrid, 0, 1, 1, 1);
+        Maingrid.addComponent(bottomGridBewNeu, 0, 3, 1, 3);
 
         Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
         Maingrid.setComponentAlignment(searchGrid, Alignment.TOP_CENTER);
@@ -219,27 +244,79 @@ public class StudentHomeView extends VerticalLayout implements View {
         this.setMargin(false);
         this.addStyleName("grid");
 
+        loadProfil();
+        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN)")) {
+
+            UI.getCurrent().access(() -> {
+
+                bottomGridBewNeu.removeAllComponents();
+                bottomGridBewNeu.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
+                bottomGridBewNeu.addComponent(lNeuigkeit,0,0,3,0);
+                bottomGridBewNeu.addComponent(gAnzeigen,0,1,3,1);
+                bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
+                bottomGridBewNeu.addComponent(alleNeuigkeiten,1,3,1,3);
+                bottomGridBewNeu.addComponent(meineAbos,2,3,2,3);
+
+            });
+        }
+
+    }
+
+    public void loadProfil() throws DatabaseException, SQLException {
+        BewerbungControl.checkDeletedAnzeige();
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-        if( student == null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            try {
+                this.setUp();
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-            this.setUp();
+            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
         }
     }
 
-    public static void stellenSuchen( String fachgebiet, String standort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche) {
+    public static void stellenSuchen( String fachgebiet, String standort, String bundesland, String umkreis,
+                                      String artSuche, String einstellungsart, Date ab_Datum, String branche) {
 
         ContainerNeuigkeiten container = ContainerNeuigkeiten.getInstance();
         container.loadSuche(fachgebiet, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",container);
+
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",container.getListe());
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
+        gAnzeigen.setWidth("1000px");
+        GridAnzeig = gAnzeigen;
+
+    }
+
+    public static void stellenSuchenOnFly(String ortBund, String suchbegrif, String art, String branche, String beginDatum) {
+        String str = "hklfd";
+        System.out.println("stuhomeview hier2" +str.equals(null));
+        List<StellenanzeigeDTO> data = containerOnFly.getListe().stream().peek(c -> {
+            if (c.getSuchbegriff() == null){c.setSuchbegriff("");}
+            if (c.getStandortBundesland() == null){c.setStandort("");}
+            if (c.getArt() == null){c.setArt("");}
+            if (c.getBranche() == null){c.setBranche("");}
+
+        }).filter( suche -> suche.getStandortBundesland().equals(ortBund) || suche.getStandortBundesland().equals("")
+                || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals(""))
+        ).collect(Collectors.toList());
+
+
+        System.out.println("studenthomeview hierX  "+containerOnFly.getAnzahl());
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",data);
+        gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
+        gAnzeigen.setWidth("1000px");
         GridAnzeig = gAnzeigen;
 
     }

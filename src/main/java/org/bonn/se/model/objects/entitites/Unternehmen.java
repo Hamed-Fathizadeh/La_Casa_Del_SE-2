@@ -1,5 +1,4 @@
 package org.bonn.se.model.objects.entitites;
-import com.vaadin.ui.Image;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.util.IllegalException;
 
@@ -7,32 +6,27 @@ import java.util.ArrayList;
 
 public class Unternehmen extends User {
        private int unt_id;
-       private String name;
        private String ansprechpartner;
        private String hauptsitz;
-       private final ArrayList<Stellenanzeige> stellenanzeigen;
-       private Image logo;
-       private int mitarbeiteranzahl;
-       private int gruendungsjahr;
+       private ArrayList<StellenanzeigeDTO> stellenanzeigenDTOliste;
+       private byte[] logo;
        private String description;
        private String bundesland;
-       private String reichweite;
        private String branche;
        private String kontaktnummer;
        private Adresse adresse;
-       private StellenanzeigeDTO stellenanzeigeDTO;
 
-    public StellenanzeigeDTO getStellenanzeigeDTO() {
-        return stellenanzeigeDTO;
+
+    public ArrayList<StellenanzeigeDTO> getStellenanzeigenDTOliste() {
+        return stellenanzeigenDTOliste;
     }
+
+    public StellenanzeigeDTO getStellenanzeigeDTO() { return stellenanzeigenDTOliste.get(stellenanzeigenDTOliste.size()-1); }
+
 
     public void setStellenanzeigeDTO(StellenanzeigeDTO stellenanzeigeDTO) {
-        this.stellenanzeigeDTO = stellenanzeigeDTO;
     }
 
-    public int getGruendungsjahr() {
-        return gruendungsjahr;
-    }
 
 
     public String getBundesland() {
@@ -43,47 +37,34 @@ public class Unternehmen extends User {
         this.bundesland = bundesland;
     }
 
-
-    public void setGruendungsjahr(int gruendungsjahr) {
-        this.gruendungsjahr = gruendungsjahr;
+    public ArrayList<StellenanzeigeDTO> getStellenanzeigenDTO() {
+        return stellenanzeigenDTOliste;
     }
 
-    public int getMitarbeiteranzahl() {
-        return mitarbeiteranzahl;
-    }
+    public byte[] getLogo() {
 
-    public void setMitarbeiteranzahl(int mitarbeiteranzahl) {
-        this.mitarbeiteranzahl = mitarbeiteranzahl;
-    }
-
-    public ArrayList<Stellenanzeige> getStellenanzeigen() {
-        return stellenanzeigen;
-    }
-
-    public Image getLogo() {
         return logo;
     }
 
-    public void setLogo(Image logo) {
+    public void setLogo(byte[] logo) {
         this.logo = logo;
     }
 
 
+    public void setStellenanzeigenDTOliste(ArrayList<StellenanzeigeDTO> stellenanzeigenDTOliste) {
+        this.stellenanzeigenDTOliste = stellenanzeigenDTOliste;
+    }
 
-       public Unternehmen() {
+    public Unternehmen() {
            super();
            setUnt_id(unt_id);
-           setName(name);
-           setAnsprechpartner(ansprechpartner);
+           getAnsprechpartner();
            setBundesland(bundesland);
            setDescription(description);
-           setMitarbeiteranzahl(mitarbeiteranzahl);
            setHauptsitz(hauptsitz);
-           setGruendungsjahr(gruendungsjahr);
-           setReichweite(reichweite);
            setLogo(logo);
            super.setType("C");
-           stellenanzeigen = new ArrayList<>();
+           setStellenanzeigenDTOliste(stellenanzeigenDTOliste);
        }
        public int getUnt_id(){
            return unt_id;
@@ -105,17 +86,11 @@ public class Unternehmen extends User {
     public void setAdresse(Adresse adresse){
         this.adresse=adresse;
     }
-    public String getReichweite(){
-        return reichweite;
-    }
     public void setDescription(String description){
         this.description=description;
     }
     public String getDescription(){
         return description;
-    }
-    public void setReichweite(String reichweite){
-        this.reichweite=reichweite;
     }
 
     public String getKontaktnummer(){
@@ -131,18 +106,9 @@ public class Unternehmen extends User {
     public void setBranche(String branche){
         this.branche=branche;
     }
-    public String getName(){
-           return name;
-       }
 
-    public void setName(String name){
-           this.name=name;
-       }
     public String getAnsprechpartner(){
-           return ansprechpartner;
-       }
-       public void setAnsprechpartner(String name){
-           this.ansprechpartner=ansprechpartner;
+        return super.getVorname() + " " + super.getNachname();
        }
 
 
@@ -151,6 +117,10 @@ public class Unternehmen extends User {
        }
        public String getHauptsitz() {   return hauptsitz; }
        public void setHauptsitz(String hauptsitz) { this.hauptsitz = hauptsitz; }
-       public Stellenanzeige getStellenanzeige() { return stellenanzeigen.get(stellenanzeigen.size()-1); }
-       public void setStellenanzeige(Stellenanzeige stellenanzeige) { stellenanzeigen.add(stellenanzeige);}
-   }
+       public void setStellenanzeige(StellenanzeigeDTO stellenanzeigeDTO) {
+        if (stellenanzeigenDTOliste == null ) {
+            stellenanzeigenDTOliste = new ArrayList<>();
+        }
+           stellenanzeigenDTOliste.add(stellenanzeigeDTO);
+       }
+}
