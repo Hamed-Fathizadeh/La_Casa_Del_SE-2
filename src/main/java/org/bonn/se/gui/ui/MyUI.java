@@ -56,7 +56,7 @@ public class MyUI extends UI {
         navi.addView(Settings, SettingsView.class);
 
 
-        UI.getCurrent().getNavigator().navigateTo(RegisterStudent);
+        UI.getCurrent().getNavigator().navigateTo(ProfilVerwaltenStudent);
 
     }
 
