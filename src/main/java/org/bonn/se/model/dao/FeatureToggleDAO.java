@@ -38,6 +38,6 @@ public class FeatureToggleDAO {
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
-        return false;
+        return true;
     }
 }

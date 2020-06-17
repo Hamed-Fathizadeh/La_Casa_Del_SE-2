@@ -245,7 +245,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         this.addStyleName("grid");
 
         loadProfil();
-        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN)")) {
+        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
             UI.getCurrent().access(() -> {
 
