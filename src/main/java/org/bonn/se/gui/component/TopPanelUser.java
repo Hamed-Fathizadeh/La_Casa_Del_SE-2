@@ -3,9 +3,12 @@ package org.bonn.se.gui.component;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
+import org.bonn.se.control.BewerbungControl;
 import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
@@ -31,12 +34,24 @@ public class TopPanelUser extends GridLayout {
         this.setHeightUndefined();
 
         ThemeResource resource = new ThemeResource("img/RegisterStudent/logo.png");
-        Image logo = new Image(null,resource);
 
-        logo.setSizeUndefined();
-        logo.addStyleName("logo");
-        this.addComponent(logo,0,0,0,0);
-        this.setComponentAlignment(logo, Alignment.MIDDLE_LEFT);
+        Button imagePropertyInfo = new Button(resource);
+        imagePropertyInfo.setStyleName(ValoTheme.BUTTON_BORDERLESS);
+
+
+        imagePropertyInfo.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+                    UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+                }else{
+                    UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+                }
+            }
+        });
+
+        this.addComponent(imagePropertyInfo,0,0,0,0);
+        this.setComponentAlignment(imagePropertyInfo, Alignment.MIDDLE_LEFT);
 
 
 

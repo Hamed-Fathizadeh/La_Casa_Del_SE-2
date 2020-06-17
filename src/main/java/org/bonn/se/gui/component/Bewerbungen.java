@@ -39,7 +39,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         this.bewerbungDTO = bewerbungDTO;
     }
 
-
     public List<T> getData() {
         return data;
     }
@@ -51,7 +50,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
     public int getAnzahlRow() {
         return data.size();
     }
-    public Bewerbungen(ContainerLetztenBewerbungen container, String userType){
+    public Bewerbungen(ContainerLetztenBewerbungen container, String viewName){
         super();
 
         this.setHeightMode(HeightMode.UNDEFINED);
@@ -70,29 +69,29 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         // Der Event Listener für den Grid
         this.addSelectionListener(event -> {
 
-            if (userType.equals("Student")) {
+            if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
 
                 Window subWindow = new Window("Bewertung abgeben oder Löschen");
-                HorizontalLayout subContent = new HorizontalLayout();
+                GridLayout  subContent = new GridLayout (2,2);
                 subWindow.setContent(subContent);
                 subWindow.setWidth("600px");
                 subWindow.setHeight("300px");
 
 
 
-                subContent.addComponent(new Label("Möchten Sie Bewerten oder Löschen!"));
+                subContent.addComponent(new Label(""),0,0);
 
                 Button bewerten = new Button("Bewertung abgeben");
-                subContent.addComponent(bewerten);
+                subContent.addComponent(bewerten,0,1);
 
                 Button Loeschen = new Button("Löschen");
-                subContent.addComponent(Loeschen);
-                BewerbungDTO bewDTO =  selection.getValue();
+                subContent.addComponent(Loeschen,1,1);
+                BewerbungDTO bewDTOtemp = selection.getValue();
                 bewerten.addClickListener(new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
 
-                        setUpBewertung(bewDTO);
+                        setUpBewertung(bewDTOtemp);
                         subWindow.close();
                     }
                 });
@@ -100,8 +99,12 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 Loeschen.addClickListener(new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
+
+                        if(bewDTOtemp != null){
+                            setBewerbungDTO(bewDTOtemp);
+                        }
                         try {
-                            BewerbungControl.bewerbungLoeschen(bewDTO);
+                            BewerbungControl.bewerbungLoeschen(bewDTOtemp);
                         } catch (DatabaseException e) {
                             e.printStackTrace();
                         }
@@ -109,7 +112,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                         ConfirmationWindow confWindow =  new ConfirmationWindow("Ihre Bewerbung wurde gelöscht");
                         UI.getCurrent().addWindow(confWindow);
                         confWindow.focus();
-                        UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
+                        UI.getCurrent().getNavigator().navigateTo(viewName);
                     }
                 });
 

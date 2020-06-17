@@ -175,7 +175,7 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungen.load("Top 5");
-        Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen,"Student");
+        Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen,"StudentHomeView");
         gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
         gBewerbungen.setWidth("705px");
 

@@ -38,7 +38,7 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
 
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungen.load("Alle");
-        @SuppressWarnings("unchecked") Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"Student");
+        @SuppressWarnings("unchecked") Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"AlleBewerbungenView");
         bewerbungen.setHeightMode(HeightMode.UNDEFINED);
 
         GridLayout bottomGridBewNeu = new GridLayout(1, 1);

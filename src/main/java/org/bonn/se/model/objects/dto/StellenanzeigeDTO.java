@@ -23,15 +23,6 @@ public class StellenanzeigeDTO {
     private double bewertung;
     private int    anzahlNeuBewerbung;
     private String branche;
-    static private int gesamtNeuBewerbungen;
-
-    public static int getGesamtNeuBewerbungen() {
-        return gesamtNeuBewerbungen;
-    }
-
-    public static void setGesamtNeuBewerbungen(int gesamtNeuBewerbungen) {
-        StellenanzeigeDTO.gesamtNeuBewerbungen = gesamtNeuBewerbungen;
-    }
 
     public String getBranche() {
         return branche;

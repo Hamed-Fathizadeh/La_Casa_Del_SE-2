@@ -54,26 +54,26 @@ public class StellenanzeigeBewerbungenWindow extends Window {
 
                 ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
                 containerBewerbungen.loadByStellenAnzeigeID("Alle",stellenanzeige.getId());
-                Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"Unternehmen");
+                Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"UnternehmenHomeView");
                 bewerbungen.setHeightMode(HeightMode.UNDEFINED);
                 bewerbungen.setWidthFull();
 
 
                 ContainerLetztenBewerbungen containerBewerbungenMarkiert  = ContainerLetztenBewerbungen.getInstance();
                 containerBewerbungenMarkiert.loadByStellenAnzeigeID("Markiert",stellenanzeige.getId());
-                Bewerbungen<BewerbungDTO> bewerbungenMakiert = new Bewerbungen(containerBewerbungenMarkiert,"Unternehmen");
+                Bewerbungen<BewerbungDTO> bewerbungenMakiert = new Bewerbungen(containerBewerbungenMarkiert,"UnternehmenHomeView");
                 bewerbungenMakiert.setHeightMode(HeightMode.UNDEFINED);
                 bewerbungenMakiert.setWidthFull();
 
                 ContainerLetztenBewerbungen containerBewerbungenZusage  = ContainerLetztenBewerbungen.getInstance();
                 containerBewerbungenZusage.loadByStellenAnzeigeID("Zusage",stellenanzeige.getId());
-                Bewerbungen<BewerbungDTO> bewerbungenZugesagt = new Bewerbungen(containerBewerbungenZusage,"Unternehmen");
+                Bewerbungen<BewerbungDTO> bewerbungenZugesagt = new Bewerbungen(containerBewerbungenZusage,"UnternehmenHomeView");
                 bewerbungenZugesagt.setHeightMode(HeightMode.UNDEFINED);
                 bewerbungenZugesagt.setWidthFull();
 
                 ContainerLetztenBewerbungen containerBewerbungenAbgelehnt  = ContainerLetztenBewerbungen.getInstance();
                 containerBewerbungenAbgelehnt.loadByStellenAnzeigeID("Abgelehnt",stellenanzeige.getId());
-                Bewerbungen<BewerbungDTO> bewerbungenAbgelehnt = new Bewerbungen(containerBewerbungenAbgelehnt,"Unternehmen");
+                Bewerbungen<BewerbungDTO> bewerbungenAbgelehnt = new Bewerbungen(containerBewerbungenAbgelehnt,"UnternehmenHomeView");
                 bewerbungenAbgelehnt.setHeightMode(HeightMode.UNDEFINED);
                 bewerbungenAbgelehnt.setWidthFull();
 
