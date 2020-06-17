@@ -9,6 +9,9 @@ public class Bewertung {
     private String hauptsitz;
     private int studentID;
 
+    public Bewertung(){
+
+    }
     public Bewertung(Date datum , int anzahlSterne, String firmenname, String hauptsitz, int studentID){
         this.datum = datum;
         this.anzahlSterne = anzahlSterne;
