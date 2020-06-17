@@ -118,7 +118,7 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
         //Erzeugung von TextField: mit Student Daten ausfüllen
         //Column 0
         Image profilbild = new Image();
-        profilbild.setSource(new FileResource(new File("src/main/webapp/image/Unknown.png")));
+        profilbild.setSource(new FileResource(new File("src/main/webapp/VAADIN/themes/demo/images/Unknown.png")));
         ProfilStudentTextField tfvorname = new ProfilStudentTextField("Vorname", "vorname");
         ProfilStudentTextField tfnachname = new ProfilStudentTextField("Nachname", "nachname");
         ProfilStudentTextField tfgdatum= new ProfilStudentTextField("Geburtsdatum", "Muster");
@@ -129,6 +129,7 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
         ortPlzTextField.getBundesland().setCaption("Ort");
         ortPlzTextField.getPlz().setHeight("37px");
         ortPlzTextField.getBundesland().setHeight("37px");
+
 
         ProfilStudentTextField tfemail = new ProfilStudentTextField("Email", "vorname");
         ProfilStudentTextField tfmobilnr = new ProfilStudentTextField("Mobil. Nr", "mobilnr");
@@ -194,14 +195,17 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
         this.addComponent(bearbeitenButton,8,2,8,2);
         this.addComponent(fertigButton,9,2,9,2);
 
-        student.getTaetigkeitenListe().size();
+        //student.getTaetigkeitenListe().size();
 
         for (int i = 0; i <= 9; i++) {
             gridLayout.setComponentAlignment(gridLayout.getComponent(0,i),Alignment.MIDDLE_CENTER);
         }
 
 
-
+        //Anordnung von Button
+        this.addComponent(abbrechenButton,7,2,7,2);
+        this.addComponent(bearbeitenButton,8,2,8,2);
+        this.addComponent(fertigButton,9,2,9,2);
 
 
         this.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
@@ -211,7 +215,7 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
         bearbeitenButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
-                for (int i = 0; i < 10 ; i++) {
+               for (int i = 0; i < 10 ; i++) {
                     if (gridLayout.getComponent(0,i) instanceof TextField ) {
                         ((TextField) gridLayout.getComponent(0, i)).setReadOnly(false);
                     }

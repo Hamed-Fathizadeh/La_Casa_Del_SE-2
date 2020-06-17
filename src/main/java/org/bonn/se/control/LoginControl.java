@@ -4,6 +4,7 @@ package org.bonn.se.control;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import org.bonn.se.control.exception.NoSuchUserOrPassword;
+import org.bonn.se.gui.component.ProfilStudentTextField;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Student;
@@ -62,7 +63,8 @@ public class LoginControl {
 
                     } else if(set.getString(5).equals("S")) {
                         Student student = new Student();
-                        student = ProfilDAO.getStudent2(user.getEmail());
+                        student = ProfilDAO.getStudent(user.getEmail());
+                        //student = ProfilDAO.getStudent2(user.getEmail());
 
                         UI.getCurrent().getSession().setAttribute("Student",student);
 

@@ -60,7 +60,7 @@ public class MyUI extends UI {
         navi.addView(Settings, org.bonn.se.gui.views.Settings.class);
 
 
-        UI.getCurrent().getNavigator().navigateTo(RegisterStudent);
+        UI.getCurrent().getNavigator().navigateTo(ProfilVerwaltenStudent);
 
     }
 
