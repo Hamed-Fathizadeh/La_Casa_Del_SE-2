@@ -10,6 +10,7 @@ import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenbeschreibungConfirmation;
 import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
@@ -74,38 +75,29 @@ public class Stellenbeschreibung extends GridLayout implements View {
                                         try {
                                             stellenanzeigeDTO.setStatus(1);
                                             AnzStatusControl.changeStatus(stellenanzeigeDTO);
-                                            ContainerAnzDAO.updateAnzeige(stellenanzeigeDTO);
+                                            ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeigeDTO);
                                         } catch (DatabaseException e) {
                                             e.printStackTrace();
                                         }
                                     } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
                                         ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
                                                 .getStellenanzeigeDTO().setStatus(1);
-                                        try {
-                                            ContainerAnzDAO.setAnzeige();
-                                        } catch (DatabaseException e) {
-                                            e.printStackTrace();
-                                        }
-
+                                            ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
                                     }
                                 } else {
                                     if (stellenanzeigeDTO.getStatus() == 3) {
                                         try {
                                             stellenanzeigeDTO.setStatus(2);
                                             AnzStatusControl.changeStatus(stellenanzeigeDTO);
-                                            ContainerAnzDAO.updateAnzeige(stellenanzeigeDTO);
+                                            ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeigeDTO);
                                         } catch (DatabaseException e) {
                                             e.printStackTrace();
                                         }
                                     } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
                                         ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
                                                 .getStellenanzeigeDTO().setStatus(2);
+                                                ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
 
-                                            try {
-                                                ContainerAnzDAO.setAnzeige();
-                                            } catch (DatabaseException e) {
-                                                e.printStackTrace();
-                                            }
                                     }
                                 }
                                 StellenbeschreibungConfirmation stellenbeschreibungConfirmation
@@ -131,25 +123,15 @@ public class Stellenbeschreibung extends GridLayout implements View {
                         .getStellenanzeigeDTO();
                 stellenanzeigeDTO.setBeschreibung(richTextArea.getValue());
                 if( stellenanzeigeDTO.getStatus() == 3) {
-                    try {
-                        ContainerAnzDAO.updateAnzeige(stellenanzeigeDTO);
-                    } catch (DatabaseException e) {
-                        e.printStackTrace();
-                    }
+                        ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeigeDTO);
                 } else {
 
                     if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
                         ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
                                 .getStellenanzeigeDTO().setStatus(3);
                     }
+                        ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
 
-                    try {
-
-                        ContainerAnzDAO.setAnzeige();
-
-                    } catch (DatabaseException e) {
-                        e.printStackTrace();
-                    }
                 }
                     StellenbeschreibungConfirmation stellenbeschreibungConfirmation =
                             new StellenbeschreibungConfirmation(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigeDTO());

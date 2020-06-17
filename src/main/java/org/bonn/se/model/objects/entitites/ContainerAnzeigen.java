@@ -48,6 +48,35 @@ public class ContainerAnzeigen {
 
     }
 
+    public void setAnzeige(Unternehmen user){
+        try {
+            ContainerAnzDAO.setAnzeige(user);
+        }
+        catch( DatabaseException throwables){
+            throwables.getMessage();
+        }
+    }
+
+    public void updateAnzeige(StellenanzeigeDTO stellenanzeigeDTO){
+        try {
+            ContainerAnzDAO.updateAnzeige(stellenanzeigeDTO);
+        }
+        catch( DatabaseException throwables){
+            throwables.getMessage();
+        }
+
+    }
+
+    public void deleteAnzeige(StellenanzeigeDTO stellenanzeigeDTO){
+        try {
+            ContainerAnzDAO.deleteAnzeige(stellenanzeigeDTO);
+        }
+        catch( DatabaseException throwables){
+            throwables.getMessage();
+        }
+
+    }
+
     public StellenanzeigeDTO getAnzeige(int i){
         return liste.get(i);
     }

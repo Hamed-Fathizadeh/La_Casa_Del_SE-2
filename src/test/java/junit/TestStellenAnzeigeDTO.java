@@ -5,6 +5,9 @@ import com.vaadin.ui.DateField;
 import com.vaadin.ui.Image;
 import junit.util.ImageConverter;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
+import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
+import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.hamcrest.core.IsInstanceOf;
@@ -32,11 +35,11 @@ public class TestStellenAnzeigeDTO {
     private String titel = "Business Analyst";
     private String beschreibung =  "hallo wir suchen einen Absolventen";
     private int status = 1;
-    private String standort  = " Köln";
+    private String standort  = "Köln";
     private String bundesland = "Nordrhein-Westfalen";
     private String firmenname = "BargoBank";
     private String hauptsitz  = "Köln";
-    private String suchbegriff = "Analyst";
+    private String suchbegriff = "IT";
     private double bewertung = 4.0;
     private String art = "Feste Anstellung";
     private int anzahlNeuBewerbung = 5;
@@ -149,8 +152,12 @@ public class TestStellenAnzeigeDTO {
         Assertions.assertEquals(stanz.getBewertung(), stanz3.getBewertung());
         Assertions.assertEquals(stanz.getBranche(), stanz3.getBranche());
 
-
-
+///     Test ContainerAnzDAO Tobias
+        Unternehmen unternehmen = new Unternehmen();
+        unternehmen.setStellenanzeige(stanz);
+        ContainerAnzeigen.getInstance().setAnzeige(unternehmen);
+        ContainerAnzeigen.getInstance().updateAnzeige(stanz);
+        ContainerAnzeigen.getInstance().deleteAnzeige(stanz);
 
 
     }

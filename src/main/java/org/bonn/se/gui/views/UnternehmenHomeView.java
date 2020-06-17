@@ -19,6 +19,7 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -53,6 +54,8 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
         ContainerNeuigkeiten containerMeinAnzeigen = ContainerNeuigkeiten.getInstance();
         containerMeinAnzeigen.loadUnternehmenAnzeigen(unternehmen.getEmail());
+        ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList<StellenanzeigeDTO>) containerMeinAnzeigen.getListe());
+
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setSizeFull();
@@ -101,8 +104,10 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         tabSheet.addTab(gAnzeigenEntwurf,"Entwurf "+gAnzeigenEntwurf.getAnzahlRow());
 
 
-         containerMeinAnzeigen.loadNeuBewerbungen(unternehmen);
-         Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
+        containerMeinAnzeigen.loadNeuBewerbungen(unternehmen);
+        ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList<StellenanzeigeDTO>) containerMeinAnzeigen.getListe());
+
+        Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
          gAnzeigenNeuBewerbungen.setSizeFull();
          gAnzeigenNeuBewerbungen.removeColumn("Status");
 

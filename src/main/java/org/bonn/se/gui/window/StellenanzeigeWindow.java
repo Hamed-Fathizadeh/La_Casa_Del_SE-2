@@ -9,6 +9,7 @@ import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
@@ -280,11 +281,7 @@ public class StellenanzeigeWindow extends Window {
                                         if (dialog.isConfirmed()) {
                                             stellenanzeige.setTitel(titel_bearbeiten.getValue());
                                             stellenanzeige.setBeschreibung(richTextArea.getValue());
-                                            try {
-                                                ContainerAnzDAO.updateAnzeige(stellenanzeige);
-                                            } catch (DatabaseException e) {
-                                                e.printStackTrace();
-                                            }
+                                            ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeige);
                                             gridLayout.replaceComponent(richTextArea, beschreibung_data);
                                             gridLayout.replaceComponent(cancel, bearbeiten);
                                             gridLayout.replaceComponent(save, delete);
@@ -321,11 +318,7 @@ public class StellenanzeigeWindow extends Window {
 
                                 public void onClose(ConfirmDialog dialog) {
                                     if (dialog.isConfirmed()) {
-                                        try {
-                                            ContainerAnzDAO.deleteAnzeige(stellenanzeige);
-                                        } catch (DatabaseException e) {
-                                            e.printStackTrace();
-                                        }
+                                        ContainerAnzeigen.getInstance().deleteAnzeige(stellenanzeige);
                                         StellenanzeigeWindow.this.close();
                                         UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
                                     }

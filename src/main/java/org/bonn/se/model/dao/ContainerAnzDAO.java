@@ -211,16 +211,6 @@ public class ContainerAnzDAO extends AbstractDAO{
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
-            System.out.println("select sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung," +
-                    " sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art ,b.status \n" +
-                    "  from lacasa.tab_stellen_anzeige sa\n" +
-                    "  join lacasa.tab_unternehmen u\n" +
-                    "    on u.firmenname = sa.firmenname\n" +
-                    "  join lacasa.tab_bewerbung b\n" +
-                    "    on sa.s_anzeige_id = b.s_anzeige_id\n" +
-                    "   and u.hauptsitz = sa.hauptsitz\n" +
-                    " where u.email = '" + email + "'");
-
             set = statement.executeQuery("select sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung," +
                     " sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art ,null \n" +
                     "  from lacasa.tab_stellen_anzeige sa\n" +
@@ -269,8 +259,6 @@ public class ContainerAnzDAO extends AbstractDAO{
             }
         });
 
-        //noinspection unchecked,unchecked,unchecked
-        ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList)liste);
 
         return liste;
     }
@@ -334,14 +322,12 @@ public class ContainerAnzDAO extends AbstractDAO{
             }
         });
 
-        //noinspection unchecked,unchecked,unchecked
-        ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList)liste);
 
         return liste;
     }
 
 
-    public static void setAnzeige() throws DatabaseException {
+    public static void setAnzeige(Unternehmen user) throws DatabaseException {
 
         String sql = "INSERT INTO lacasa.tab_stellen_anzeige (datum,zeitstempel,titel,s_beschreibung,status,ort, bundesland,firmenname,hauptsitz, suchbegriff, art) " +
                 "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
@@ -350,8 +336,6 @@ public class ContainerAnzDAO extends AbstractDAO{
 
 
             try {
-                Unternehmen user = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
-                String[] sOrt = user.getStellenanzeigeDTO().getStandort().split(" - ");
 
 
                 assert statement != null;
