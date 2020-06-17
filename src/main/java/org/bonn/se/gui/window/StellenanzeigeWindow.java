@@ -150,7 +150,6 @@ public class StellenanzeigeWindow extends Window {
 
             back.addClickListener((Button.ClickListener) event -> {
                 StellenanzeigeWindow.this.close();
-                UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
             });
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
 
