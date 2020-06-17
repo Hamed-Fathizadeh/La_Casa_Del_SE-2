@@ -116,7 +116,7 @@ public class TopPanelUser extends GridLayout {
         this.addComponent(bar,9,0,9,0);
         this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
 
-        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN)")) {
+        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
             UI.getCurrent().access(new Runnable() {
                 @Override

@@ -301,7 +301,7 @@ public class StellenanzeigeWindow extends Window {
         }
         panel.setContent(gridLayout);
 
-        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN)")) {
+        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
             UI.getCurrent().access(() -> {
                 gridLayout.removeComponent(bewerbungen);
