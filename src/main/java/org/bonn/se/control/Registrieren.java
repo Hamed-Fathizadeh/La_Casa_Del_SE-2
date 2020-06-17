@@ -1,7 +1,9 @@
 package org.bonn.se.control;
 
+import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.RegistrationResult;
 import org.bonn.se.model.objects.entitites.User;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ControlException;
 
 import java.util.ArrayList;
@@ -39,6 +41,15 @@ public class Registrieren {
             result.setReason("satisfying");
         }
         return result;
+    }
+
+    public static void registerUser(User user){
+        try {
+            UserDAO.getInstance().registerUser(user);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
