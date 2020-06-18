@@ -1,12 +1,10 @@
 package junit;
 
 import org.bonn.se.model.objects.entitites.Bewertung;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.sql.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 
@@ -33,11 +31,11 @@ public class BewertungTest {
 
         //Test
         Bewertung bwt1 = new Bewertung(datum, anzahlSterne,firmenname,hauptsitz,studentID);
-        Assertions.assertEquals(bwt.getDatum(), bwt1.getDatum());
-        Assertions.assertEquals(bwt.getAnzahlSterne(), bwt1.getAnzahlSterne());
-        Assertions.assertEquals(bwt.getFirmenname(), bwt1.getFirmenname());
-        Assertions.assertEquals(bwt.getHauptsitz(), bwt1.getHauptsitz());
-        Assertions.assertEquals(bwt.getStudentID(), bwt1.getStudentID());
+        Assert.assertEquals(bwt.getDatum(), bwt1.getDatum());
+        Assert.assertEquals(bwt.getAnzahlSterne(), bwt1.getAnzahlSterne());
+        Assert.assertEquals(bwt.getFirmenname(), bwt1.getFirmenname());
+        Assert.assertEquals(bwt.getHauptsitz(), bwt1.getHauptsitz());
+        Assert.assertEquals(bwt.getStudentID(), bwt1.getStudentID());
 
     }
 }
