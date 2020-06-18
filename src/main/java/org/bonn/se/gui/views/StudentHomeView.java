@@ -1,3 +1,4 @@
+
 package org.bonn.se.gui.views;
 
 import com.vaadin.icons.VaadinIcons;
@@ -113,6 +114,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         });
 
 
+
 // add combobox
         ComboBox<String> comboUmkreis = new ComboBox<>();
         comboUmkreis.setWidth(200.0f, Unit.PIXELS);
@@ -142,14 +144,14 @@ public class StudentHomeView extends VerticalLayout implements View {
         searchGrid.addComponent(lSpruch,0,0,6,0);
         searchGrid.addComponent(comboNachWas,2,1,2,1);
         searchGrid.addComponent(comboOrtBund,3,1,3,1);
-        //   searchGrid.addComponent(comboUmkreis,5,1,5,1);
+        searchGrid.addComponent(comboUmkreis,5,1,5,1);
         //   searchGrid.addComponent(buttonSearch,6,1,6,1);
         searchGrid.addComponent(buttonErwitertSuche,2,2,2,2);
 
 
         searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_LEFT);
-        // searchGrid.setComponentAlignment(comboUmkreis, Alignment.BOTTOM_CENTER);
+        searchGrid.setComponentAlignment(comboUmkreis, Alignment.BOTTOM_CENTER);
         //  searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
         searchGrid.setComponentAlignment(buttonErwitertSuche, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
