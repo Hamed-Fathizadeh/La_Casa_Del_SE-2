@@ -1,4 +1,4 @@
-package org.bonn.se.services.util;
+package junit;
 
 import org.bonn.se.model.objects.entitites.Bewertung;
 import org.junit.jupiter.api.Assertions;
@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-class BewertungTest {
+public class BewertungTest {
 
         private Date datum = null;
         private int anzahlSterne = 2;
@@ -24,7 +24,7 @@ class BewertungTest {
         //Setter und Getter Methode Test
 
     @Test
-    void getDatum() {
+    public void getDatum() {
         bwt.setDatum(datum);
         bwt.setAnzahlSterne(anzahlSterne);
         bwt.setFirmenname(firmenname);
