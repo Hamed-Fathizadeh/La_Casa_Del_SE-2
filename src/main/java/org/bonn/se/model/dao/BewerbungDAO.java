@@ -6,6 +6,7 @@ import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.Views;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -55,7 +56,7 @@ public class BewerbungDAO extends AbstractDAO{
     public static void bewerben(BewerbungDTO bewerbung) throws DatabaseException {
         String sql = "INSERT INTO lacasa.tab_bewerbung (datum, description, lebenslauf, status, student_id, s_anzeige_id)"+
                 "select ?,?,?,?,?,? "+
-                " WHERE NOT EXISTS( SELECT bewerbung_id from lavasa.tab_bewerbung where student_id = ? and s_anzeige_id = ? and status = 1) LIMIT 1";
+                " WHERE NOT EXISTS( SELECT bewerbung_id from lacasa.tab_bewerbung where student_id = ? and s_anzeige_id = ? and ( status = 1 or status = 9) ) LIMIT 1";
 
         PreparedStatement statement = getPreparedStatement(sql);
         try {
@@ -67,11 +68,14 @@ public class BewerbungDAO extends AbstractDAO{
             statement.setInt(5, bewerbung.getStudentID());
             statement.setInt(6, bewerbung.getAnzeigeID());
             statement.setInt(7, bewerbung.getStudentID());
-            statement.setInt(6, bewerbung.getAnzeigeID());
+            statement.setInt(8, bewerbung.getAnzeigeID());
+
            if( statement.executeUpdate() == 0){
-               ConfirmationWindow confWindow =  new ConfirmationWindow("Ihre Bewerbung bei der Firma "+
-                                                bewerbung.getUnternehmenName()+" ist noch in bearbeitung!");
+               ConfirmationWindow confWindow =  new ConfirmationWindow("Ihre Bewerbung ist noch bei der Bearbeitung!");
                UI.getCurrent().addWindow(confWindow);
+           }else{
+               UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben sich erfolgreich beworben!"));
+               UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -79,6 +83,7 @@ public class BewerbungDAO extends AbstractDAO{
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
+
 
     }
 

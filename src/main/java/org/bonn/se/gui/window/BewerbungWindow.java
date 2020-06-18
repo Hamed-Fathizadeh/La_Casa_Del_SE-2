@@ -46,10 +46,10 @@ public class BewerbungWindow extends Window {
         Student student = null;
         if(userType.equals("Student")) {
             student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-            System.out.println("bewWind hier1");
+
         }else {
             try {
-                System.out.println("bewWindow "+bewerbung);
+
                 student = ProfilDAO.getInstance().getStudent(bewerbung.getEmailStudent());
             } catch (DatabaseException e) {
                 e.printStackTrace();
@@ -186,8 +186,6 @@ public class BewerbungWindow extends Window {
                     e.printStackTrace();
                     Notification.show("DB-Fehler", e.getReason(), Notification.Type.ERROR_MESSAGE);
                 }
-                UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben sich erfolgreich beworben!"));
-                UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
             });
 
         }else{

@@ -198,7 +198,6 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> {
             UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
-            System.out.println("stuhomeview hier 1");
         });
 
         Button alleNeuigkeiten = new Button("Alle Neuigkeiten", VaadinIcons.SEARCH);
@@ -303,7 +302,6 @@ public class StudentHomeView extends VerticalLayout implements View {
 
     public static void stellenSuchenOnFly(String ortBund, String suchbegrif, String art, String branche, String beginDatum) {
         String str = "hklfd";
-        System.out.println("stuhomeview hier2" +str.equals(null));
         List<StellenanzeigeDTO> data = containerOnFly.getListe().stream().peek(c -> {
             if (c.getSuchbegriff() == null){c.setSuchbegriff("");}
             if (c.getStandortBundesland() == null){c.setStandort("");}
@@ -315,7 +313,6 @@ public class StudentHomeView extends VerticalLayout implements View {
         ).collect(Collectors.toList());
 
 
-        System.out.println("studenthomeview hierX  "+containerOnFly.getAnzahl());
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",data);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("1000px");
