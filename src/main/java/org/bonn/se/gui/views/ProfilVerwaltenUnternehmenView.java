@@ -54,7 +54,7 @@ public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
         this.setHeightUndefined();
         this.setWidthFull();
 
-        GridLayout gridLayout = new GridLayout(2,13);
+        GridLayout gridLayout = new GridLayout(3,13);
         gridLayout.setHeightUndefined();
         gridLayout.setWidthFull();
 
@@ -62,7 +62,6 @@ public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
         topPanel.setHeightUndefined();
         topPanel.addStyleName("toppanel");
         Label label = new Label("<h1>Allgemeine Angaben</h1>", ContentMode.HTML);
-
 
 
     }
