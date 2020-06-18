@@ -51,9 +51,6 @@ public class TopPanelUser extends GridLayout {
         this.addComponent(imagePropertyInfo,0,0,0,0);
         this.setComponentAlignment(imagePropertyInfo, Alignment.MIDDLE_LEFT);
 
-
-
-
         bar = new MenuBar();
         // MenuBar.MenuItem item1 = bar.addItem("Menü", null);
         bar.addStyleName("user-menu");

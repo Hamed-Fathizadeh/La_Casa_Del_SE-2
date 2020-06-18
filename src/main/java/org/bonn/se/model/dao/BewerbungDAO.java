@@ -1,9 +1,12 @@
 package org.bonn.se.model.dao;
 
 import com.vaadin.server.StreamResource;
+import com.vaadin.ui.UI;
+import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.Views;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -52,7 +55,8 @@ public class BewerbungDAO extends AbstractDAO{
 
     public static void bewerben(BewerbungDTO bewerbung) throws DatabaseException {
         String sql = "INSERT INTO lacasa.tab_bewerbung (datum, description, lebenslauf, status, student_id, s_anzeige_id)"+
-                "VALUES(?,?,?,?,?,?)";
+                "select ?,?,?,?,?,? "+
+                " WHERE NOT EXISTS( SELECT bewerbung_id from lacasa.tab_bewerbung where student_id = ? and s_anzeige_id = ? and ( status = 1 or status = 9) ) LIMIT 1";
 
         PreparedStatement statement = getPreparedStatement(sql);
         try {
@@ -63,13 +67,23 @@ public class BewerbungDAO extends AbstractDAO{
             statement.setInt(4, bewerbung.getStatus());
             statement.setInt(5, bewerbung.getStudentID());
             statement.setInt(6, bewerbung.getAnzeigeID());
-            statement.executeUpdate();
+            statement.setInt(7, bewerbung.getStudentID());
+            statement.setInt(8, bewerbung.getAnzeigeID());
+
+           if( statement.executeUpdate() == 0){
+               ConfirmationWindow confWindow =  new ConfirmationWindow("Ihre Bewerbung ist noch bei der Bearbeitung!");
+               UI.getCurrent().addWindow(confWindow);
+           }else{
+               UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben sich erfolgreich beworben!"));
+               UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+           }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
+
 
     }
 
