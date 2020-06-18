@@ -273,7 +273,7 @@ public class ProfilDAO extends AbstractDAO{
                 student.setAbschluss(set.getString("hoester_abschluss"));
                 student.setBenachrichtigung(set.getInt("benachrichtigung"));
                 student.setType(set.getString("benutzertyp"));
-                Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"));
+                Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"),set.getString("bundesland"));
                 student.setAdresse(adresse);
                 student.setPicture(set.getBytes("picture"));
                 //nur um zu checken ob der student einen lebenslauf hochgeladen hat
@@ -361,5 +361,48 @@ public class ProfilDAO extends AbstractDAO{
         }
         return student;
     }
+
+
+    public void updateStudent(Student student) throws DatabaseException {
+        String sql = "UPDATE lacasa.tab_user " +
+                "SET vorname = ?, nachname = ? " +
+                "WHERE email = ?; " +
+                "UPDATE lacasa.tab_student " +
+                "SET   g_datum = ?, studiengang = ?, ausbildung =?, " +
+                "kontakt_nr = ?, picture = ?, lebenslauf = ?, hoester_abschluss = ? WHERE email = ?; " +
+                "UPDATE lacasa.tab_adresse SET strasse = ?, plz = ?, ort = ?, bundesland = ? WHERE email = ?;";
+
+        PreparedStatement statement = getPreparedStatement(sql);
+
+        try {
+
+            statement.setString(1,student.getVorname());
+            statement.setString(2,student.getNachname());
+            statement.setString(3,student.getEmail());
+            statement.setDate(4,student.getG_datum() == null ? null : Date.valueOf(student.getG_datum()));
+            statement.setString(5,student.getStudiengang());
+            statement.setString(6,student.getAusbildung());
+            statement.setString(7,student.getKontakt_nr());
+            statement.setBytes(8,student.getPicture());
+            statement.setBytes(9,student.getLebenslauf());
+            statement.setString(10,student.getAbschluss());
+            statement.setString(11,student.getEmail());
+            statement.setString(12,student.getAdresse().getStrasse());
+            statement.setInt(13,student.getAdresse().getPlz() == null ? null : Integer.parseInt(student.getAdresse().getPlz()));
+            statement.setString(14,student.getAdresse().getOrt());
+            statement.setString(15,student.getAdresse().getBundesland());
+            statement.setString(16,student.getEmail());
+
+            statement.executeUpdate();
+
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");
+        }finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+    }
+
+
 
 }

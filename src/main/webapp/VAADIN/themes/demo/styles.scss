@@ -32,6 +32,10 @@
 // Example variants can be copy/pasted from https://vaadin.com/docs/v8/framework/articles/ValoExamples.html
 //0f2a54
 
+.v-caption-inline-label{
+  display: inline-block;
+}
+
 input.v-textfield.v-widget.v-required.v-textfield-required.v-has-width.v-has-height.v-textfield-focus {
   color:black;
 }
