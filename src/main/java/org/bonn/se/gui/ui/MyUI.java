@@ -6,6 +6,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
+import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.gui.views.*;
 import org.bonn.se.model.objects.entitites.User;
 

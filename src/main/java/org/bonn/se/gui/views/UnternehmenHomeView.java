@@ -156,7 +156,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
 
 
-        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN)")) {
+        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
             UI.getCurrent().access(() -> tabSheet.removeTab(bewerbung));
         }

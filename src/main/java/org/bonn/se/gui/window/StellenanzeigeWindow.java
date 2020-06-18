@@ -150,7 +150,6 @@ public class StellenanzeigeWindow extends Window {
 
             back.addClickListener((Button.ClickListener) event -> {
                 StellenanzeigeWindow.this.close();
-                UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
             });
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
 
@@ -301,7 +300,7 @@ public class StellenanzeigeWindow extends Window {
         }
         panel.setContent(gridLayout);
 
-        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN)")) {
+        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
             UI.getCurrent().access(() -> {
                 gridLayout.removeComponent(bewerbungen);
