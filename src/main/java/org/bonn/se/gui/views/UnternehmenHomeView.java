@@ -80,51 +80,26 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         tabSheet.setHeight("1000px");
         tabSheet.addStyleName(ValoTheme.TABSHEET_FRAMED);
         tabSheet.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
-        gAnzeigen.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigen,"Alle "+gAnzeigen.getAnzahlRow());
 
 
         Anzeigen<StellenanzeigeDTO> gAnzeigenOnline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigenOnline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==1).collect(Collectors.toList()));
         gAnzeigenOnline.setSizeFull();
-        gAnzeigenOnline.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigenOnline,"Online "+gAnzeigenOnline.getAnzahlRow());
 
         Anzeigen<StellenanzeigeDTO> gAnzeigenOffline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigenOffline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==2).collect(Collectors.toList()));
         gAnzeigenOffline.setSizeFull();
-        gAnzeigenOffline.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigenOffline,"Offline "+gAnzeigenOffline.getAnzahlRow());
 
         Anzeigen<StellenanzeigeDTO> gAnzeigenEntwurf = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
         gAnzeigenEntwurf.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==3).collect(Collectors.toList()));
         gAnzeigenEntwurf.setSizeFull();
-        gAnzeigenEntwurf.removeColumn("Anzahl neue Bewerbungen");
         tabSheet.addTab(gAnzeigenEntwurf,"Entwurf "+gAnzeigenEntwurf.getAnzahlRow());
 
 
-        containerMeinAnzeigen.loadNeuBewerbungen(unternehmen);
-        ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList<StellenanzeigeDTO>) containerMeinAnzeigen.getListe());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
-         gAnzeigenNeuBewerbungen.setSizeFull();
-         gAnzeigenNeuBewerbungen.removeColumn("Status");
-
-
-
-
-         if(gAnzeigenNeuBewerbungen.getData().size()>0){
-             List<StellenanzeigeDTO> data = gAnzeigenNeuBewerbungen.getData().stream().filter(c -> c.getStatus() == 1).collect(Collectors.toList());
-             int gesamtAnzahl = 0;
-             for( StellenanzeigeDTO sa: data){
-                 gesamtAnzahl+= sa.getanzahlNeuBewerbung();
-             }
-
-             ThemeResource resource = new ThemeResource("img/Anzeigen/rot_klein.png");
-             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen "+gesamtAnzahl ,resource);
-         }else {
-             bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen 0");
-         }
 
         bottomGridBewNeu.addComponent(lBewerbung,0,0,0,0);
         bottomGridBewNeu.addComponent(tabSheet,0,1,0,1);
@@ -154,15 +129,36 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         this.setMargin(false);
         this.addStyleName("grid");
 
+        gAnzeigen.removeColumn("Anzahl neue Bewerbungen");
+        gAnzeigenOnline.removeColumn("Anzahl neue Bewerbungen");
+        gAnzeigenOffline.removeColumn("Anzahl neue Bewerbungen");
+        gAnzeigenEntwurf.removeColumn("Anzahl neue Bewerbungen");
+
+        if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
+
+            UI.getCurrent().access(() -> {
+
+                containerMeinAnzeigen.loadNeuBewerbungen(unternehmen);
+                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList<StellenanzeigeDTO>) containerMeinAnzeigen.getListe());
+                Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new Anzeigen<StellenanzeigeDTO>("Alle", containerMeinAnzeigen.getListe());
+                gAnzeigenNeuBewerbungen.setSizeFull();
+                gAnzeigenNeuBewerbungen.removeColumn("Status");
 
 
-        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
+                if (gAnzeigenNeuBewerbungen.getData().size() > 0) {
+                    List<StellenanzeigeDTO> data = gAnzeigenNeuBewerbungen.getData().stream().filter(c -> c.getStatus() == 1).collect(Collectors.toList());
+                    int gesamtAnzahl = 0;
+                    for (StellenanzeigeDTO sa : data) {
+                        gesamtAnzahl += sa.getanzahlNeuBewerbung();
+                    }
 
-            UI.getCurrent().access(() -> tabSheet.removeTab(bewerbung));
-        }
-
-
-
+                    ThemeResource resource = new ThemeResource("img/Anzeigen/rot_klein.png");
+                    bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen " + gesamtAnzahl, resource);
+                } else {
+                    bewerbung = tabSheet.addTab(gAnzeigenNeuBewerbungen, "Neue Bewerbungen 0");
+                }
+            });
+            }
     }
 
 

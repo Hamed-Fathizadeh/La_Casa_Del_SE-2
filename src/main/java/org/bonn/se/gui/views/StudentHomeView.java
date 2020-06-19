@@ -16,7 +16,8 @@ import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.window.ErweiterteSucheWindow;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
-import org.bonn.se.model.objects.entitites.*;
+import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
+import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.SuchbegrifService;
@@ -50,6 +51,7 @@ public class StudentHomeView extends VerticalLayout implements View {
 
 
     static GridLayout bottomGridBewNeu;
+
     static ContainerNeuigkeiten containerOnFly = ContainerNeuigkeiten.getInstance();
 
 
@@ -173,11 +175,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("705px");
 
-        ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
-        containerBewerbungen.load("Top 5");
-        Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen,"StudentHomeView");
-        gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
-        gBewerbungen.setWidth("705px");
+
 
 //bottom grid für bewerbung und Neugkeiten
         String ls1 = "<p class=MsoNormal><b><span style='font-size:18.0pt;line-height:107%;\n" +
@@ -190,55 +188,48 @@ public class StudentHomeView extends VerticalLayout implements View {
                 "minor-bidi;mso-bidi-theme-font:minor-bidi;color:white;mso-themecolor:background1'>\n" +
                 "Neuigkeiten<o:p></o:p></span></b></p>";
 
-        Label lBewerbung = new Label(ls1, ContentMode.HTML);
         Label lNeuigkeit = new Label(ls2, ContentMode.HTML);
 
         // button für bottomGridBewNeu
-        Button alleBewerbungen = new Button("Alle Bewerbungen", VaadinIcons.SEARCH);
 
-        alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> {
-            UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
-        });
+
 
         Button alleNeuigkeiten = new Button("Alle Neuigkeiten", VaadinIcons.SEARCH);
 
         Button meineAbos = new Button("Meine Abos", VaadinIcons.SEARCH);
 
         Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
-
-        bottomGridBewNeu = new GridLayout(4, 4);
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        horizontalLayout.setWidthFull();
+        bottomGridBewNeu = new GridLayout(2, 4);
+        horizontalLayout.addComponents(bottomGridBewNeu);
+        horizontalLayout.setComponentAlignment(bottomGridBewNeu,Alignment.MIDDLE_CENTER);
         bottomGridBewNeu.setSizeFull();
-        bottomGridBewNeu.addStyleName("bottomGridBewNeu");
+        horizontalLayout.addStyleName("bottomGridBewNeu");
+        horizontalLayout.setMargin(true);
         bottomGridBewNeu.setMargin(true);
 
 
 
-        bottomGridBewNeu.addComponent(lBewerbung,0,0,1,0);
-        bottomGridBewNeu.addComponent(lNeuigkeit,2,0,3,0);
-        bottomGridBewNeu.addComponent(gBewerbungen,0,1,1,1);
-        bottomGridBewNeu.addComponent(gAnzeigen,2,1,3,1);
-        bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
-        bottomGridBewNeu.addComponent(alleBewerbungen,0,3,0,3);
-        bottomGridBewNeu.addComponent(alleNeuigkeiten,2,3,2,3);
-        bottomGridBewNeu.addComponent(meineAbos,3,3,3,3);
+        bottomGridBewNeu.addComponent(lNeuigkeit,0,0,1,0);
+        bottomGridBewNeu.addComponent(gAnzeigen,0,1,1,1);
+        bottomGridBewNeu.addComponent(lPatzhalter,0,2,1,2);
+        bottomGridBewNeu.addComponent(alleNeuigkeiten,0,3);
+        bottomGridBewNeu.addComponent(meineAbos,1,3);
 
 
-        bottomGridBewNeu.setComponentAlignment(lBewerbung,Alignment.TOP_CENTER);
         bottomGridBewNeu.setComponentAlignment(lNeuigkeit,Alignment.TOP_CENTER);
-        bottomGridBewNeu.setComponentAlignment(gBewerbungen,Alignment.TOP_CENTER);
         bottomGridBewNeu.setComponentAlignment(gAnzeigen,Alignment.TOP_CENTER);
-        bottomGridBewNeu.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
         bottomGridBewNeu.setComponentAlignment(alleNeuigkeiten,Alignment.BOTTOM_CENTER);
         bottomGridBewNeu.setComponentAlignment(meineAbos,Alignment.BOTTOM_CENTER);
 
         Maingrid.addComponent(topPanel, 0, 0, 1, 0);
         Maingrid.addComponent(searchGrid, 0, 1, 1, 1);
-        Maingrid.addComponent(bottomGridBewNeu, 0, 3, 1, 3);
+        Maingrid.addComponent(horizontalLayout, 0, 3, 1, 3);
 
         Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
         Maingrid.setComponentAlignment(searchGrid, Alignment.TOP_CENTER);
-        Maingrid.setComponentAlignment(bottomGridBewNeu, Alignment.TOP_CENTER);
-
+       // Maingrid.setComponentAlignment(bottomGridBewNeu, Alignment.TOP_CENTER);
 
         this.addComponent(Maingrid);
         this.setComponentAlignment(Maingrid, Alignment.TOP_CENTER);
@@ -246,21 +237,39 @@ public class StudentHomeView extends VerticalLayout implements View {
         this.addStyleName("grid");
 
         loadProfil();
-        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
+        //FeatureToggle
+
+
+        if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
             UI.getCurrent().access(() -> {
+                GridLayout bottomGridBewNeu_2 = new GridLayout(2, 4);
+                bottomGridBewNeu_2.setMargin(true);
+                Label lBewerbung = new Label(ls1, ContentMode.HTML);
+                Label lPatzhalter1 = new Label("&nbsp", ContentMode.HTML);
 
-                bottomGridBewNeu.removeAllComponents();
-                bottomGridBewNeu.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
-                bottomGridBewNeu.addComponent(lNeuigkeit,0,0,3,0);
-                bottomGridBewNeu.addComponent(gAnzeigen,0,1,3,1);
-                bottomGridBewNeu.addComponent(lPatzhalter,0,2,3,2);
-                bottomGridBewNeu.addComponent(alleNeuigkeiten,1,3,1,3);
-                bottomGridBewNeu.addComponent(meineAbos,2,3,2,3);
+                bottomGridBewNeu_2.addComponent(lBewerbung,0,0,1,0);
+                bottomGridBewNeu_2.setComponentAlignment(lBewerbung,Alignment.TOP_CENTER);
 
+                ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
+                containerBewerbungen.load("Top 5");
+                Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen,"StudentHomeView");
+                gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
+                gBewerbungen.setWidth("705px");
+                bottomGridBewNeu_2.addComponent(gBewerbungen,0,1,1,1);
+                bottomGridBewNeu_2.setComponentAlignment(gBewerbungen,Alignment.TOP_CENTER);
+
+                Button alleBewerbungen = new Button("Alle Bewerbungen", VaadinIcons.SEARCH);
+                bottomGridBewNeu_2.addComponent(lPatzhalter1,0,2,1,2);
+                bottomGridBewNeu_2.addComponent(alleBewerbungen,0,3,1,3);
+                bottomGridBewNeu_2.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
+                horizontalLayout.addComponent(bottomGridBewNeu_2,0);
+                horizontalLayout.setComponentAlignment(bottomGridBewNeu_2,Alignment.MIDDLE_CENTER);
+                alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> {
+                    UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
+                });
             });
         }
-
     }
 
     public void loadProfil() throws DatabaseException, SQLException {

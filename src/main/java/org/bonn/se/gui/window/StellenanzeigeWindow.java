@@ -131,23 +131,8 @@ public class StellenanzeigeWindow extends Window {
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
 
-            bewerben = new Button("Bewerben");
             Button back = new Button("Zurück zu Ergebnissen");
-
-            gridLayout.addComponent(bewerben, 4, 14, 4, 14);
             gridLayout.addComponent(back, 4, 0, 4, 0);
-
-            bewerben.addClickListener((Button.ClickListener) event -> {
-                if( ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).hasLebenslauf()) {
-                    StellenanzeigeWindow.this.close();
-                    BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige, "Student", null);
-                    UI.getCurrent().addWindow(bewerbungWindow);
-
-                }else{
-                    UI.getCurrent().addWindow(new ConfirmationWindow("Um dich zu bewerben musst du ein Lebenslauf in deine Profil hinterlegen!"));
-                }
-            });
-
             back.addClickListener((Button.ClickListener) event -> {
                 StellenanzeigeWindow.this.close();
             });
@@ -156,12 +141,10 @@ public class StellenanzeigeWindow extends Window {
             Button back = new Button("Zurück zu Anzeigen");
             Button bearbeiten = new Button("Bearbeiten");
             Button delete = new Button("Löschen");
-            bewerbungen = new Button("Zum Bewerbungen");
 
             gridLayout.addComponent(back, 4, 0, 4, 0);
             gridLayout.addComponent(bearbeiten, 2, 0, 2, 0);
             gridLayout.addComponent(delete, 3, 0, 3, 0);
-            gridLayout.addComponent(bewerbungen, 1, 0, 1, 0);
 
             onOffSwitch.setCaption("Status");
             if(stellenanzeige.getStatus() == 1) {
@@ -197,22 +180,12 @@ public class StellenanzeigeWindow extends Window {
 
             });
 
-// Vaadin8
-
-
-
             back.addClickListener(event -> {
                 this.close();
                 UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
 
             });
 
-            bewerbungen.addClickListener(event -> {
-                StellenanzeigeBewerbungenWindow stellenanzeigeBewerbungenWindow = new StellenanzeigeBewerbungenWindow(stellenanzeige);
-                UI.getCurrent().addWindow(stellenanzeigeBewerbungenWindow);
-                this.close();
-
-            });
 
             bearbeiten.addClickListener(event -> {
                 Button cancel = new Button("Abbrechen");
@@ -270,15 +243,8 @@ public class StellenanzeigeWindow extends Window {
                                         gridLayout.replaceComponent(titel_bearbeiten, titel);
 
                                         StellenanzeigeWindow.this.setUp(stellenanzeige, unternehmen_data);
-
                                     }
                                 });
-
-
-
-
-
-
                     }
                 });
 
@@ -300,11 +266,36 @@ public class StellenanzeigeWindow extends Window {
         }
         panel.setContent(gridLayout);
 
-        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
+        if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
             UI.getCurrent().access(() -> {
-                gridLayout.removeComponent(bewerbungen);
-                gridLayout.removeComponent(bewerben);
+                if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
+
+                    bewerben = new Button("Bewerben");
+
+                    gridLayout.addComponent(bewerben, 4, 14, 4, 14);
+
+                    bewerben.addClickListener((Button.ClickListener) event -> {
+                        if (((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).hasLebenslauf()) {
+                            StellenanzeigeWindow.this.close();
+                            BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige, "Student", null);
+                            UI.getCurrent().addWindow(bewerbungWindow);
+
+                        } else {
+                            UI.getCurrent().addWindow(new ConfirmationWindow("Um dich zu bewerben musst du ein Lebenslauf in deine Profil hinterlegen!"));
+                        }
+                    });
+                } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+                    bewerbungen = new Button("Zum Bewerbungen");
+                    gridLayout.addComponent(bewerbungen, 1, 0, 1, 0);
+
+                    bewerbungen.addClickListener(event -> {
+                        StellenanzeigeBewerbungenWindow stellenanzeigeBewerbungenWindow = new StellenanzeigeBewerbungenWindow(stellenanzeige);
+                        UI.getCurrent().addWindow(stellenanzeigeBewerbungenWindow);
+                        this.close();
+
+                    });
+                }
             });
         }
 
