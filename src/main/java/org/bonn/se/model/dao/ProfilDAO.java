@@ -389,8 +389,15 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(11,student.getEmail());
             statement.setString(12,student.getAdresse().getStrasse());
             statement.setInt(13,student.getAdresse().getPlz() == null ? null : Integer.parseInt(student.getAdresse().getPlz()));
-            statement.setString(14,student.getAdresse().getOrt());
-            statement.setString(15,student.getAdresse().getBundesland());
+
+            if(!(student.getAdresse().getOrt() == null) || !(student.getAdresse().getBundesland() == null)) {
+                statement.setString(14, student.getAdresse().getOrt());
+                statement.setString(15,student.getAdresse().getBundesland());
+            } else {
+                statement.setNull(14, Types.VARCHAR);
+                statement.setNull(15, Types.VARCHAR);
+            }
+
             statement.setString(16,student.getEmail());
 
             statement.executeUpdate();

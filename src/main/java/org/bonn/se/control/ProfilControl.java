@@ -1,4 +1,4 @@
-package org.bonn.se.control.exception;
+package org.bonn.se.control;
 
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Student;

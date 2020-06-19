@@ -6,7 +6,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-import org.bonn.se.control.exception.ProfilControl;
+import org.bonn.se.control.ProfilControl;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
@@ -222,10 +222,8 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         ortPlzTextField.getOrtField().addValueChangeListener((HasValue.ValueChangeListener<String>) event -> save.setEnabled(true));
         tfabschluss.addValueChangeListener((HasValue.ValueChangeListener<String>) event -> save.setEnabled(true));
 
-
         for (int i = 0; i < student.getTaetigkeiten().size(); i++) {
             taetigkeit = new ProfilStudentTaetigkeit();
-
             taetigkeit.getBeschreibungField().setValue(student.getTaetigkeiten().get(i).getTaetigkeitName());
             taetigkeit.getBeginnField().setValue(student.getTaetigkeiten().get(i).getBeginn());
             taetigkeit.getEndeField().setValue(student.getTaetigkeiten().get(i).getEnde());
