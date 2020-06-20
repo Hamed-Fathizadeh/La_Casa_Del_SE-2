@@ -291,7 +291,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
         }
     }
 

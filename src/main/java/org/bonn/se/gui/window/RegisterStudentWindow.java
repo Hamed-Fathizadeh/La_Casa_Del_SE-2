@@ -71,7 +71,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
         this.close();
         UI.getCurrent().getSession().setAttribute(Roles.Student,null);
 
-        MyUI.getCurrent().getNavigator().navigateTo(Views.MainView);
+        MyUI.getCurrent().getNavigator().navigateTo(Views.LoginView);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class RegisterStudentWindow extends Window implements WizardProgressListe
                         wizard.setVisible(false);
                         RegisterStudentWindow.this.close();
                         UI.getCurrent().getSession().setAttribute(Roles.Student,null);
-                        UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+                        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
                     }
                 });
 
