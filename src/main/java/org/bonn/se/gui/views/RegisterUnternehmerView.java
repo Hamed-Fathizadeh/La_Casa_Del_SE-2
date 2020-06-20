@@ -33,7 +33,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         this.addStyleName("grid");
         this.setSizeFull();
 
-        Label head = new Label("<h2><p><font color=\"blue\"> Willkommen bei Lacolsco Registrieren Sie sich jetzt.... !!!.</font></p></h2>", ContentMode.HTML);
+        Label head = new Label("<h2><span style=\"color: blue;\"> Willkommen bei Lacolsco Registrieren Sie sich jetzt.... !!!.</span></h2>", ContentMode.HTML);
         this.setMargin(false);
         this.addStyleName("grid");
 
