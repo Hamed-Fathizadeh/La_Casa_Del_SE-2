@@ -15,7 +15,7 @@ public class RegistrierenControl {
     public RegistrierenControl(ArrayList<User> liste){
         this.liste=liste;
     }
-    public boolean DoesExist(User user){
+    public boolean doesExist(User user){
         for (User u:liste){
             if(u.getEmail().equals(user.getEmail())){
                 return true;
@@ -24,7 +24,7 @@ public class RegistrierenControl {
         return false;
     }
     public void add(User user) throws ControlException {
-        if(!DoesExist(user)){
+        if(!doesExist(user)){
             liste.add(user);
         }
         else
