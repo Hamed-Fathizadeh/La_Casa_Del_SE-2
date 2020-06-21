@@ -6,28 +6,28 @@ import org.bonn.se.services.util.ImageConverter;
 import java.sql.Date;
 
 public class BewerbungDTO {
-    private int bewerbungID;
-    private Date datum;
-    private String description;
-    private byte[] lebenslauf;
-    private int status;
-    private int studentID;
-    private String unternehmenName;
-    private String unternehmenHauptsitz;
-    private Image unternehmenLogo;
-    private String s_titel;
-    private double rating;
-    private String emailStudent;
-    private Date student_g_datum;
-    private String student_studiengang;
-    private String student_ausbildung;
-    private String  student_kontakt_nr;
-    private int student_benachrichtigung;
-    private Image student_picture;
-    private String student_hoester_abschluss;
-    private String student_vorname;
-    private String student_nachname;
-    private boolean bewerbung_markiert;
+    private int bewerbungID;//pass
+    private Date datum;//pass
+    private String description;//pass
+    private byte[] lebenslauf;//pass
+    private int status;//pass
+    private int studentID;//pass
+    private String unternehmenName;//notyet
+    private String unternehmenHauptsitz;//pass
+    private Image unternehmenLogo;//notyet
+    private String s_titel;//notyet
+    private double rating;//pass
+    private String emailStudent;//pass
+    private Date student_g_datum;//notyt
+    private String student_studiengang;//not
+    private String student_ausbildung;//notyet
+    private String  student_kontakt_nr;//noty
+    private int student_benachrichtigung;//noty
+    private Image student_picture;//noty
+    private String student_hoester_abschluss;//noty
+    private String student_vorname;//noty
+    private String student_nachname;//noty
+    private boolean bewerbung_markiert;//
 
     public Image getStudent_picture_klein() {
         Image res = student_picture;
@@ -150,6 +150,7 @@ public class BewerbungDTO {
     }
 
     public void setUnternehmenName(String unternehmenName) {
+        this.unternehmenName=unternehmenName;
     }
 
     public Image getUnternehmenLogo() {
