@@ -309,8 +309,9 @@ public class StudentHomeView extends VerticalLayout implements View {
             if (c.getBranche() == null){c.setBranche("");}
 
         }).filter( suche -> suche.getStandortBundesland().equals(ortBund) || suche.getStandortBundesland().equals("")
-                || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals(""))
-        ).collect(Collectors.toList());
+                         || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals(""))
+                         || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals("")) && suche.getStandortBundesland().equals(ortBund) || suche.getStandortBundesland().equals("")
+                 ).collect(Collectors.toList());
 
 
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",data);

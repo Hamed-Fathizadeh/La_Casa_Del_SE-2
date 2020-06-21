@@ -153,9 +153,9 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
                 return rating;
             }).setCaption("Bewertung");
         }
-        this.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
         this.addColumn(StellenanzeigeDTO::getStandort).setCaption("Ort");
         this.addColumn(StellenanzeigeDTO::getDatum).setCaption("Beginn");
+        this.addColumn(StellenanzeigeDTO::getSuchbegriff).setCaption("Stelle");
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
