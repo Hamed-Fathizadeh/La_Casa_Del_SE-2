@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class AnzStatusControl {
+  private  AnzStatusControl(){
 
+  }
 
         public static void changeStatus (StellenanzeigeDTO stellenanzeige) throws DatabaseException {
 
