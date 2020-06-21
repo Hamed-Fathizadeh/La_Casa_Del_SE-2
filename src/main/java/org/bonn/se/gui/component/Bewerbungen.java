@@ -45,6 +45,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
     public int getAnzahlRow() {
         return data.size();
     }
+
     public Bewerbungen(ContainerLetztenBewerbungen container, String viewName){
         super();
 
