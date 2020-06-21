@@ -28,9 +28,9 @@ public class ContainerLetztenBewerbungen {
         return liste.size();
     }
 
-    public void load(){
+    public void load(String email){
         try {
-            liste = ContainerBewerbungDAO.load("Alle");
+            liste = ContainerBewerbungDAO.load("Alle", email);
         }
         catch( DatabaseException throwables){
             throwables.getMessage();
@@ -38,9 +38,9 @@ public class ContainerLetztenBewerbungen {
 
     }
 
-    public void load(String str){
+    public void load(String str, String email){
         try {
-            liste = ContainerBewerbungDAO.load(str);
+            liste = ContainerBewerbungDAO.load(str, email);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
