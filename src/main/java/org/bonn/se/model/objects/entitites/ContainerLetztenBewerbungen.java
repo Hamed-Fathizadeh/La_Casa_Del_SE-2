@@ -28,9 +28,9 @@ public class ContainerLetztenBewerbungen {
         return liste.size();
     }
 
-    public void load(){
+    public void load(String email){
         try {
-            liste = ContainerBewerbungDAO.load("Alle");
+            liste = ContainerBewerbungDAO.load("Alle", email);
         }
         catch( DatabaseException throwables){
             throwables.getMessage();
@@ -38,9 +38,9 @@ public class ContainerLetztenBewerbungen {
 
     }
 
-    public void load(String str){
+    public void load(String str, String email){
         try {
-            liste = ContainerBewerbungDAO.load(str);
+            liste = ContainerBewerbungDAO.load(str, email);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
@@ -70,7 +70,23 @@ public class ContainerLetztenBewerbungen {
     public List<BewerbungDTO> getListe(){
         return liste;
     }
+    public void printAll(){
+        for(BewerbungDTO b :liste){
+            System.out.println(b.toString());
+        }
+    }
 
+   // public static void main(String [] args){
+        // ContainerLetztenBewerbungen ins= ContainerLetztenBewerbungen.getInstance();
+         //ins.load("s@s.de");
+         //ins.loadNeueBewerbungen();
+        // ins.load("Alle","test1@test.de");
+         //ins.printAll();
+
+
+
+
+   // }
 }
 
 

@@ -175,7 +175,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
                 e.printStackTrace();
             }
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
         }
     }
 

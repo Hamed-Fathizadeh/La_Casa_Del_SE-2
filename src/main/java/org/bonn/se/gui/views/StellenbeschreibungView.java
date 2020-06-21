@@ -165,7 +165,7 @@ public class StellenbeschreibungView extends GridLayout implements View {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
 
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
         }
     }
 

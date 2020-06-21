@@ -5,8 +5,6 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.VaadinService;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.LoginControl;
@@ -16,8 +14,6 @@ import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
-
-import java.io.File;
 
 import static org.bonn.se.services.util.Views.RegisterUnternehmen;
 
@@ -64,11 +60,10 @@ public class LoginView extends VerticalLayout implements View {
 
 //Vertikales Layout + Hinzufügen der Textfelder
         VerticalLayout layout = new VerticalLayout();
-
-        String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-        FileResource resource = new FileResource(new File(basepath + "/VAADIN/themes/demo/img/RegisterStudent/Logo_Login.png"));
-        Image Logo = new Image("", resource);
-        layout.addComponent(Logo);
+//        String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+  //      FileResource resource = new FileResource(new File(basepath + "/VAADIN/themes/demo/img/RegisterStudent/Logo_Login.png"));
+  //      Image Logo = new Image("", resource);
+//        layout.addComponent(Logo);
 
 
 
@@ -118,7 +113,7 @@ public class LoginView extends VerticalLayout implements View {
             String password = passwordField.getValue();
 
             try {
-                LoginControl.checkAuthentication(login, password);
+                LoginControl.getInstance().checkAuthentication(login, password);
             } catch (NoSuchUserOrPassword ex) {
                 Notification.show("Fehler", "Login oder Passwort falsch", Notification.Type.ERROR_MESSAGE);
                 userLogin.clear();
