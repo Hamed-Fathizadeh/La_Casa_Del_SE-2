@@ -20,8 +20,8 @@ import java.util.List;
 
 public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     List<T> data;
-    static int anzahlNeuBewerbungen = 0;
-    static int gesamtNeuBewerbungen = 0;
+    static int anzahlNeuBewerbungen = 0;//jumlah pelamar
+    static int gesamtNeuBewerbungen = 0;//jumal pelamar keseluran
 
     public int getGesamtNeuBewerbungen() {
 
