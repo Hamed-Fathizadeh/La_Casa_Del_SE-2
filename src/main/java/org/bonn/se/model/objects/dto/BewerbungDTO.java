@@ -284,5 +284,9 @@ public class BewerbungDTO {
         this.anzeigeID = anzeigeID;
     }
 
+    public String toString(){
+        return "BewerbungID : "+getBewerbungID()+" UnternehmenName  : "+ getUnternehmenName();
+    }
+
 
 }
