@@ -32,13 +32,6 @@ public class WizardStudentKenntnisStepTest {
         Assertions.assertEquals(true, wz.onBack());
     }
 
-    @Test
-    public void getContentTest(){
-        Assertions.assertDoesNotThrow(
-                ()-> wz.getContent()
-        );
-    }
-
 
 
     // diese methode kann nicht getestet werden, wegen UI.getCurrent()
