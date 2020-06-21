@@ -65,7 +65,7 @@ public class ContainerBewerbungDAO {
     }
 
 
-    public static List<BewerbungDTO> load(String str) throws DatabaseException {
+    public static List<BewerbungDTO> load(String str, String email ) throws DatabaseException {
         List<BewerbungDTO> liste = new ArrayList<>();
         ResultSet set;
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
