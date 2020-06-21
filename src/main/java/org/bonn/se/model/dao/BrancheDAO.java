@@ -13,7 +13,7 @@ public class BrancheDAO {
 
     public static BrancheDAO dao = null;
 
-    private BrancheDAO() {
+    public BrancheDAO() {
 
     }
     public static BrancheDAO getInstance() {

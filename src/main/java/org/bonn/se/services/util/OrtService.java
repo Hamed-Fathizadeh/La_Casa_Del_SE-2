@@ -1,13 +1,14 @@
 package org.bonn.se.services.util;
 
+import com.itextpdf.text.log.SysoCounter;
 import org.bonn.se.control.ComponentControl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 public class OrtService {
-
     public static OrtService dao = null;
     private static List<String> listeOrt = new ArrayList<>();
 
@@ -18,6 +19,7 @@ public class OrtService {
             listeOrt = ComponentControl.getInstance().getBund();
         }
     }
+
 
     public static List<String> OrtService(){
         return listeOrt;
@@ -41,5 +43,4 @@ public class OrtService {
                 .skip(offset).limit(limit);
 
     }
-
 }

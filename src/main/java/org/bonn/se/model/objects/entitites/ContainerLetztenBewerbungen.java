@@ -70,7 +70,23 @@ public class ContainerLetztenBewerbungen {
     public List<BewerbungDTO> getListe(){
         return liste;
     }
+    public void printAll(){
+        for(BewerbungDTO b :liste){
+            System.out.println(b.toString());
+        }
+    }
 
+   // public static void main(String [] args){
+        // ContainerLetztenBewerbungen ins= ContainerLetztenBewerbungen.getInstance();
+         //ins.load("s@s.de");
+         //ins.loadNeueBewerbungen();
+        // ins.load("Alle","test1@test.de");
+         //ins.printAll();
+
+
+
+
+   // }
 }
 
 
