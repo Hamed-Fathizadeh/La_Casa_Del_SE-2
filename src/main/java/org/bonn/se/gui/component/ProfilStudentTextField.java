@@ -2,7 +2,7 @@ package org.bonn.se.gui.component;
 
 import com.vaadin.ui.TextField;
 
-public class ProfilStudentTextField extends TextField {
+public class ProfilStudentTextField extends TextField  {
 
     //eingabe wert
     private String caption;

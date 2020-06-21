@@ -17,6 +17,7 @@ public class JDBCConnection {
         if (connection == null) {
             connection = new JDBCConnection();
         }
+
         return connection;
     }
 
@@ -29,6 +30,7 @@ public class JDBCConnection {
             DriverManager.registerDriver(new org.postgresql.Driver());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+
         }
         this.openConnection();
     }

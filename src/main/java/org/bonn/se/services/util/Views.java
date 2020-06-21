@@ -3,7 +3,7 @@ package org.bonn.se.services.util;
 public class Views {
 
     public static final String RegisterStudent = "registerStudent";
-    public static final String MainView = "mainView";
+    public static final String LoginView = "LoginView";
     public static final String RegisterUnternehmen = "registerUnternehmen";
     public static final String StudentHomeView = "StudentHomeView";
     public static final String UnternehmenHomeView = "UnternehmenHomeView";
@@ -12,5 +12,7 @@ public class Views {
     public static final String ProfilVerwaltenStudent = "ProfilVerwaltenStudent";
     public static final String AlleBewerbungenView = "AlleBewerbungenView";
     public static final String Settings = "Settings";
+    public static final String ProfilTest = "ProfilTest";
+
 
 }

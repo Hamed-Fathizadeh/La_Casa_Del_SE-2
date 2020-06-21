@@ -20,7 +20,13 @@ import java.sql.Statement;
 
 public class LoginControl {
 
-    public static void checkAuthentication ( String login , String password) throws NoSuchUserOrPassword, DatabaseException {
+    private static LoginControl instance;
+
+    public static LoginControl getInstance() {
+        return instance == null ? instance = new LoginControl() : instance;
+    }
+
+    public void checkAuthentication ( String login , String password) throws NoSuchUserOrPassword, DatabaseException {
 
 //DB-Zugriff
         ResultSet set;
@@ -82,7 +88,7 @@ public class LoginControl {
             JDBCConnection.getInstance().closeConnection();
         }
 
-        UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
     }
 
     public static void logoutUser() {
@@ -90,7 +96,7 @@ public class LoginControl {
         VaadinSession vaadinSession = UI.getCurrent().getSession();
         vaadinSession.setAttribute(Roles.Student,null);
         vaadinSession.setAttribute(Roles.Unternehmen,null);
-        UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
     }
 
 

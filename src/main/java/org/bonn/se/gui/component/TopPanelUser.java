@@ -76,27 +76,22 @@ public class TopPanelUser extends GridLayout {
 
 
 
-        item1.addItem("Mein Profil", VaadinIcons.SEARCH, new MenuBar.Command() {
+        item1.addItem("Mein Profil", VaadinIcons.USER, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem menuItem) {
                 MyUI.getCurrent().getNavigator().navigateTo(Views.ProfilVerwaltenStudent);
             }
         });
 
-        item1.addItem("Neuigkeiten", VaadinIcons.SEARCH, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem menuItem) {
-                LoginControl.logoutUser();
-            }
-        });
-        MenuBar.MenuItem bew = item1.addItem("Letzte Bewerbungen", VaadinIcons.SEARCH, new MenuBar.Command() {
+        item1.addItem("Neuigkeiten", VaadinIcons.INFO_CIRCLE, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem menuItem) {
                 LoginControl.logoutUser();
             }
         });
 
-            item1.addItem("Settings", VaadinIcons.SEARCH, new MenuBar.Command() {
+
+            item1.addItem("Settings", VaadinIcons.COG, new MenuBar.Command() {
             @Override
             public void menuSelected(MenuBar.MenuItem menuItem) {
                 UI.getCurrent().getNavigator().navigateTo(Views.Settings);
@@ -113,13 +108,20 @@ public class TopPanelUser extends GridLayout {
         this.addComponent(bar,9,0,9,0);
         this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
 
-        if(!FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
+        if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
             UI.getCurrent().access(new Runnable() {
                 @Override
                 public void run() {
-                    item1.removeChild(bew);
+
+                    item1.addItemBefore("Letzte Bewerbungen", VaadinIcons.CLIPBOARD_TEXT, new MenuBar.Command() {
+                        @Override
+                        public void menuSelected(MenuBar.MenuItem menuItem) {
+                            LoginControl.logoutUser();
+                        }
+                    },item1.getChildren().get(2));
                 }
+
             });
         }
     }

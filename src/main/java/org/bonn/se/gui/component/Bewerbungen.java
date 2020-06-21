@@ -55,7 +55,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         this.setHeight("100%");
         this.setCaption("Treffer: "+ container.getAnzahl());
 
-
+        //Das ist ein Test @Hbajwa
         // Allow column reordering
         this.setColumnReorderingAllowed(true);
 

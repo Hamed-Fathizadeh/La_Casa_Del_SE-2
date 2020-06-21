@@ -136,7 +136,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         Image orange = new Image(null, resource3);
         orange.setDescription("Entwurf");
         String day ="";
-        long div;
+
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.addComponentColumn(im ->{
                 VerticalLayout imageL = new VerticalLayout();

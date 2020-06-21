@@ -20,7 +20,7 @@ public class TopPanel  extends GridLayout {
         if(usertyp.equals("Unternehmen")){
             Button1 = "Unternehmen";
             Button2 = "Login";
-            NavigateTo1 = MainView;
+            NavigateTo1 = LoginView;
             NavigateTo2 = RegisterUnternehmen;
             logo.addClickListener(new MouseEvents.ClickListener() {
                 @Override
@@ -31,7 +31,7 @@ public class TopPanel  extends GridLayout {
         }else if(usertyp.equals("Studenten")){
             Button1 = "Studenten";
             Button2 = "Login";
-            NavigateTo1 = MainView;
+            NavigateTo1 = LoginView;
             NavigateTo2 = RegisterStudent;
             logo.addClickListener(new MouseEvents.ClickListener() {
                 @Override
