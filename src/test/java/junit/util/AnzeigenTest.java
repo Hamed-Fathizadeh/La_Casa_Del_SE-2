@@ -1,19 +1,14 @@
 package junit.util;
 
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Image;
 import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class AnzeigenTest {
     //public Anzeigen(String str, List<StellenanzeigeDTO> dataInput){
@@ -63,7 +58,7 @@ public class AnzeigenTest {
             dataInput.add(san);
         }
         try {
-            anz = new Anzeigen("str", null);
+            anz = new Anzeigen("str", dataInput);
             Assert.assertEquals(dataInput, anz.getData());
             Assert.assertEquals(10,anz.setGesamtNeuBewerbungen(10));
             Assert.assertEquals(10, anz.getGesamtNeuBewerbungen());
