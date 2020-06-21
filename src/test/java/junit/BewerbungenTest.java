@@ -34,16 +34,33 @@ public class BewerbungenTest<T extends BewerbungDTO> {
         ContainerLetztenBewerbungen container = ContainerLetztenBewerbungen.getInstance();
 
         public BewerbungenTest() throws IOException {
+
+        }
+
+        //kann nicht getestet werden, weil beim aufruf des konstrutors wird UI.getCurrent aufgerufen
+/*
+        @Test
+        public void getBewerbungDTOTest(){
+            BewerbungDTO bwdto = new BewerbungDTO(image, unternehmenName, datum, status, bewerbungID, s_titel);
+
+            Bewerbungen bw = new Bewerbungen(container, "AlleBewerbungenView");
+
+            bw.setBewerbungDTO(bwdto);
+
+            Assertions.assertEquals(bw.getBewerbungDTO(), bwdto);
+
+
         }
 
 
-        @Test
+ */
+
+
+        //methode setUP und setUpBewertung haben auch UI.getCurrent
+
+       /* @Test
 
         public void TestBewerbungDTO(){
-            bewerbungDTO = new BewerbungDTO(image, unternehmenName, datum, status, bewerbungID, s_titel);
-
-            BewerbungDTO bwdto2;
-
 
 
                // ob ne Exception geworfen wird, kann nicht getest werden weil die Methode UI.getCurrent aufruft
@@ -54,4 +71,6 @@ public class BewerbungenTest<T extends BewerbungDTO> {
 
 
         }
+
+        */
 }
