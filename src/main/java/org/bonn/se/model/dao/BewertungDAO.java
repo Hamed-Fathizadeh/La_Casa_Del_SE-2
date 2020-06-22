@@ -10,6 +10,8 @@ import org.bonn.se.services.util.Roles;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BewertungDAO extends AbstractDAO {
     public static BewertungDAO dao = null;
@@ -55,7 +57,7 @@ public class BewertungDAO extends AbstractDAO {
                     statement.executeUpdate();
 
                 } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                    Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
                     throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
                 } finally {
                     JDBCConnection.getInstance().closeConnection();

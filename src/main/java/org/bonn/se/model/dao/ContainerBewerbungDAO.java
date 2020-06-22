@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContainerBewerbungDAO {
 
@@ -56,7 +58,7 @@ public class ContainerBewerbungDAO {
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -97,7 +99,7 @@ public class ContainerBewerbungDAO {
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -156,7 +158,7 @@ public class ContainerBewerbungDAO {
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }

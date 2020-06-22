@@ -10,23 +10,26 @@ import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class SettingsView extends VerticalLayout implements View {
 
-    static GridLayout Maingrid = new GridLayout(2, 5);
+    static GridLayout mainGrid = new GridLayout(2, 5);
     public void setUp() throws DatabaseException, SQLException {
 
-        Maingrid = new GridLayout(1, 5);
-        Maingrid.setSizeFull();
+        mainGrid = new GridLayout(1, 5);
+        mainGrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
-
+        String dimensionSet= "200px";
 // spruch oben
 
         String ls3 = "<p class=MsoNormal><b><span style='font-size:28.0pt;line-height:107%;\n" +
@@ -38,8 +41,8 @@ public class SettingsView extends VerticalLayout implements View {
 
 
         Label lSpruch = new Label(ls3, ContentMode.HTML);
-        lSpruch.setHeight("200px");
-        lSpruch.setWidth("200px");
+        lSpruch.setHeight(dimensionSet);
+        lSpruch.setWidth(dimensionSet);
         GridLayout vLayoutSpruch = new GridLayout(1,1);
         vLayoutSpruch.addComponent(lSpruch,0,0);
         vLayoutSpruch.addStyleName("grid");
@@ -80,7 +83,7 @@ public class SettingsView extends VerticalLayout implements View {
 
         GridLayout bottomGridBewNeu = new GridLayout(1, 1);
 
-        //bottomGridBewNeu.setHeight("700px");
+
         bottomGridBewNeu.addStyleName("bottomGridBewNeu");
         bottomGridBewNeu.setMargin(true);
         bottomGridBewNeu.setColumnExpandRatio(0,22);
@@ -91,17 +94,17 @@ public class SettingsView extends VerticalLayout implements View {
         bottomGridBewNeu.setComponentAlignment(formGrid,Alignment.TOP_CENTER);
         bottomGridBewNeu.setHeight("500px");
 
-        Maingrid.addComponent(topPanel, 0, 0);
-       Maingrid.addComponent(vLayoutSpruch, 0, 1);
-        Maingrid.addComponent(bottomGridBewNeu, 0, 2);
+        mainGrid.addComponent(topPanel, 0, 0);
+        mainGrid.addComponent(vLayoutSpruch, 0, 1);
+        mainGrid.addComponent(bottomGridBewNeu, 0, 2);
 
-        Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
-       Maingrid.setComponentAlignment(vLayoutSpruch, Alignment.TOP_CENTER);
-        Maingrid.setComponentAlignment(bottomGridBewNeu, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(vLayoutSpruch, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(bottomGridBewNeu, Alignment.TOP_CENTER);
 
 
-        this.addComponent(Maingrid);
-        this.setComponentAlignment(Maingrid, Alignment.TOP_CENTER);
+        this.addComponent(mainGrid);
+        this.setComponentAlignment(mainGrid, Alignment.TOP_CENTER);
         this.setMargin(false);
         this.addStyleName("backSeite");
 
@@ -145,7 +148,7 @@ public class SettingsView extends VerticalLayout implements View {
                                     Window subWindow = new Window("Löschung Ihres Kontos");
                                     VerticalLayout subContent = new VerticalLayout();
                                     subWindow.setWidth("600px");
-                                    subWindow.setHeight("200px");
+                                    subWindow.setHeight(dimensionSet);
                                     subWindow.setContent(subContent);
                                     subContent.addComponent(new Label("Ihr Konto wurde erfolgreich gelöscht!"));
                                     subWindow.center();
@@ -172,7 +175,7 @@ public class SettingsView extends VerticalLayout implements View {
             } catch (DatabaseException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             }
 
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
@@ -181,7 +184,7 @@ public class SettingsView extends VerticalLayout implements View {
             } catch (DatabaseException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             }
 
         } else {

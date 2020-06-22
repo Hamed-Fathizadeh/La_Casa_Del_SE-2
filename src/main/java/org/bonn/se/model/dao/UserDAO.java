@@ -61,7 +61,7 @@ public class UserDAO  extends AbstractDAO {
 
             return user;
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -87,7 +87,7 @@ public class UserDAO  extends AbstractDAO {
                 return set.getString(1).equalsIgnoreCase(email);
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -123,7 +123,7 @@ public class UserDAO  extends AbstractDAO {
             }
             statement.executeUpdate();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         } finally {
             JDBCConnection.getInstance().closeConnection();
@@ -141,7 +141,7 @@ public class UserDAO  extends AbstractDAO {
                 return set.getString("benutzertyp");
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("UserTyp nicht vorhanden");
         }
      return null;
@@ -161,7 +161,7 @@ public class UserDAO  extends AbstractDAO {
             statement.executeUpdate();
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }

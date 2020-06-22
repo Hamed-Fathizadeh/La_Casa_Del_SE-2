@@ -52,24 +52,22 @@ public class TopPanelUser extends GridLayout {
         this.setComponentAlignment(imagePropertyInfo, Alignment.MIDDLE_LEFT);
 
         bar = new MenuBar();
-        // MenuBar.MenuItem item1 = bar.addItem("Menü", null);
+
         bar.addStyleName("user-menu");
         item1 = null;
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
            Image profilbild = ImageConverter.convertImagetoMenu(((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture());
-            // Topgrid.addComponent(profilbild,4,0,4,0);
-            //test
-            //   Topgrid.setComponentAlignment(profilbild, Alignment.BOTTOM_RIGHT);
+
             item1 = bar.addItem(
                     ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).getVorname()
                     ,profilbild.getSource(),
                     null);
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            Image firma_logo = ImageConverter.convertImagetoMenu(((Unternehmen)UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo());
+            Image firmaLogo = ImageConverter.convertImagetoMenu(((Unternehmen)UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo());
             item1 = bar.addItem(
                     ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname(),
-                    firma_logo.getSource(),
+                    firmaLogo.getSource(),
                     null);
         }
 //create menubar

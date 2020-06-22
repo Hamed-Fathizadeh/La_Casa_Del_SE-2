@@ -10,18 +10,18 @@ public class TopPanel  extends GridLayout {
     public TopPanel(String usertyp) {
         this.setSizeFull();
 
-        String Button2;
-        String Button1;
-        String NavigateTo1;
-        String NavigateTo2;
+        String buttonTwo;
+        String buttonOne;
+        String navigateToOne;
+        String navigateToTwo;
         //Logo
         ThemeResource resource = new ThemeResource("img/RegisterStudent/logo.png");
         Image logo = new Image(null,resource);
         if(usertyp.equals("Unternehmen")){
-            Button1 = "Unternehmen";
-            Button2 = "Login";
-            NavigateTo1 = LoginView;
-            NavigateTo2 = RegisterUnternehmen;
+            buttonOne = "Unternehmen";
+            buttonTwo = "Login";
+            navigateToOne = LoginView;
+            navigateToTwo = RegisterUnternehmen;
             logo.addClickListener(new MouseEvents.ClickListener() {
                 @Override
                 public void click(MouseEvents.ClickEvent event) {
@@ -29,10 +29,10 @@ public class TopPanel  extends GridLayout {
                 }
             });
         }else if(usertyp.equals("Studenten")){
-            Button1 = "Studenten";
-            Button2 = "Login";
-            NavigateTo1 = LoginView;
-            NavigateTo2 = RegisterStudent;
+            buttonOne = "Studenten";
+            buttonTwo = "Login";
+            navigateToOne = LoginView;
+            navigateToTwo = RegisterStudent;
             logo.addClickListener(new MouseEvents.ClickListener() {
                 @Override
                 public void click(MouseEvents.ClickEvent event) {
@@ -40,10 +40,10 @@ public class TopPanel  extends GridLayout {
                 }
             });
         }else{
-            Button1 = "Registrierung Unternehmen";
-            Button2 = "Registrierung Student";
-            NavigateTo1 = RegisterStudent;
-            NavigateTo2 = RegisterUnternehmen;
+            buttonOne = "Registrierung Unternehmen";
+            buttonTwo = "Registrierung Student";
+            navigateToOne = RegisterStudent;
+            navigateToTwo = RegisterUnternehmen;
         }
 
 
@@ -52,14 +52,14 @@ public class TopPanel  extends GridLayout {
         this.setRows(1);
         this.setColumns(10);
         this.setSizeFull();
-        Button switchUnternehmen = new Button(Button1);
+        Button switchUnternehmen = new Button(buttonOne);
 
-        Button login = new Button(Button2);
+        Button login = new Button(buttonTwo);
 
         switchUnternehmen.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getNavigator().navigateTo(NavigateTo2);
+                UI.getCurrent().getNavigator().navigateTo(navigateToTwo);
             }
         });
 
@@ -69,10 +69,10 @@ public class TopPanel  extends GridLayout {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 if(login.getCaption().equals("Registrierung Student")){
-                    UI.getCurrent().getNavigator().navigateTo(NavigateTo2);
+                    UI.getCurrent().getNavigator().navigateTo(navigateToTwo);
                 }else {
 
-                    UI.getCurrent().getNavigator().navigateTo(NavigateTo1);
+                    UI.getCurrent().getNavigator().navigateTo(navigateToOne);
                 }
             }
         });

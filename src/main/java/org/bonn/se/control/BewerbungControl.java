@@ -14,14 +14,20 @@ import org.bonn.se.services.util.Roles;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BewerbungControl {
+
+    private BewerbungControl(){
+
+    }
 
     public static void bewerbungLoeschen(BewerbungDTO bewerbung) throws DatabaseException {
         try {
             BewerbungDAO.bewerbungLoeschen(bewerbung);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
             throw new DatabaseException("Die Bewerbung ist nicht vorhanden!");
         }
 
@@ -36,29 +42,29 @@ public class BewerbungControl {
         }
     }
 
-    public static void statusAendern(int bew_id, int status){
+    public static void statusAendern(int bewId, int status){
         try{
-            BewerbungDAO.statusAendern( bew_id, status);
+            BewerbungDAO.statusAendern( bewId, status);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
     }
 
-    public static boolean markierungAendern(int bew_id) throws DatabaseException {
-        return BewerbungDAO.markierungAendern(bew_id);
+    public static boolean markierungAendern(int bewId) throws DatabaseException {
+        return BewerbungDAO.markierungAendern(bewId);
     }
 
-    public static void statusNeuBewAendern(int bew_id)  {
+    public static void statusNeuBewAendern(int bewId)  {
            try{
-               BewerbungDAO.statusNeuBewAendern( bew_id);
+               BewerbungDAO.statusNeuBewAendern( bewId);
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
 
     }
 
-    public static StreamResource downloadLebenslauf(int student_id) throws DatabaseException {
-        return BewerbungDAO.downloadLebenslauf(student_id);
+    public static StreamResource downloadLebenslauf(int studentId) throws DatabaseException {
+        return BewerbungDAO.downloadLebenslauf(studentId);
     }
 
     public static void checkDeletedAnzeige() throws DatabaseException, SQLException {
@@ -94,7 +100,7 @@ public class BewerbungControl {
                 return;
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -111,7 +117,7 @@ public class BewerbungControl {
                     " (SELECT student_id FROM lacasa.tab_student WHERE email = '"
                     + ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).getEmail() + "')");
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }

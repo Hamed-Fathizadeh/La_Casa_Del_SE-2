@@ -10,6 +10,7 @@ import org.bonn.se.control.ProfilControl;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.DatenStudentProfil;
 import org.bonn.se.services.util.ImageConverter;
@@ -18,9 +19,11 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProfilVerwaltenStudentView extends GridLayout implements View {
-    static GridLayout GridAnzeig = null;
+    static GridLayout gridAnzeig = null;
     Button cancel;
     Button save;
     Button bearbeitenButton;
@@ -32,11 +35,11 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
 
 
     public static GridLayout getGridAnzeig() {
-        return GridAnzeig;
+        return gridAnzeig;
     }
 
     public static void setGridAnzeig(GridLayout gridAnzeig) {
-        GridAnzeig = gridAnzeig;
+        gridAnzeig = gridAnzeig;
     }
 
 
@@ -63,18 +66,10 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         save= new Button("Speichern");
 
 
-        //
-        /*
-
-        //Column2
-        ProfilStudentTextField tfberufs = new ProfilStudentTextField("Berufstätigkeiten", "Muster");
-        gridLayout.addComponent(tfberufs, 1,1);
-        */
-
 
 
         //Erzeugung von TextField: mit Student Daten ausfüllen
-        //Column 0
+
         Image profilbild = ImageConverter.convertImagetoProfil(student.getPicture());
         ProfilStudentTextField tfvorname = new ProfilStudentTextField("Vorname", student.getVorname());
         ProfilStudentTextField tfnachname = new ProfilStudentTextField("Nachname", student.getNachname());
@@ -333,7 +328,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
             } catch (DatabaseException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             }
 
         }

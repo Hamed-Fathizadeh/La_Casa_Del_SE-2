@@ -11,10 +11,14 @@ import java.util.Collection;
 
 public class JobTitelControl {
 
+    private JobTitelControl(){
+
+    }
+
 
         public static Collection<String> getJobTitelList () throws DatabaseException {
             ResultSet set;
-            Collection<String> jobtitel = new ArrayList<String>();
+            Collection<String> jobtitel = new ArrayList<>();
 
             try {
                 Statement statement = JDBCConnection.getInstance().getStatement();
