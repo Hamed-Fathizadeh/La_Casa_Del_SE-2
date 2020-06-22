@@ -74,7 +74,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         }else{
             this.setWidth("1500px");
         }
-        this.setHeight("500px");
+        this.setHeight("800px");
 
         // Allow column reordering wir können es auch ändern
         this.setColumnReorderingAllowed(true);
