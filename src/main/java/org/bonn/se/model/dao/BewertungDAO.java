@@ -14,17 +14,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BewertungDAO extends AbstractDAO {
-    public static BewertungDAO dao = null;
 
-    private BewertungDAO() {
 
-    }
+    private static BewertungDAO instance;
 
     public static BewertungDAO getInstance() {
-        if (dao == null) {
-            dao = new BewertungDAO();
-        }
-        return dao;
+        return instance == null ? instance = new BewertungDAO() : instance;
     }
 
     public static void bewertung(BewerbungDTO bewerbung) {

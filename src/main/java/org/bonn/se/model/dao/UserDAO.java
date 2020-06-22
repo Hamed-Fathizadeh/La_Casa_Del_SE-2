@@ -16,19 +16,11 @@ import java.util.logging.Logger;
 
 public class UserDAO  extends AbstractDAO {
 
-    public static UserDAO dao = null;
-
-    private UserDAO() {
-
-    }
+    private static UserDAO instance;
 
     public static UserDAO getInstance() {
-        if (dao == null) {
-            dao = new UserDAO();
-        }
-        return dao;
+        return instance == null ? instance = new UserDAO() : instance;
     }
-
 
 
     public User getUser(String email) throws DatabaseException {

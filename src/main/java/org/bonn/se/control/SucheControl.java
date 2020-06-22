@@ -6,14 +6,14 @@ import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.db.exception.DatabaseException;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class SucheControl  implements Suche<Serializable, Number>,SucheServce {
+public class SucheControl  implements Suche {
 
 
     private static SucheControl instance;
+    List<StellenanzeigeDTO> stellenanzeigeDTOS = null;
 
     public static SucheControl getInstance() {
         return instance == null ? instance = new SucheControl() : instance;
@@ -21,67 +21,29 @@ public class SucheControl  implements Suche<Serializable, Number>,SucheServce {
 
     static int rowsCount;
 
-    public static int getRowsCount() {
+
+    @Override
+    public int getRowsCount() {
         return rowsCount;
     }
 
-    public DataProvider<StellenanzeigeDTO,Void> getData(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche) {
-
-        List<StellenanzeigeDTO> stellenanzeigeDTOS = SucheControl.getInstance().fetchStellenanzeigen1(0,5,
-                suchbegriff, ort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum,  branche);
-
-        rowsCount = stellenanzeigeDTOS.size();
-        CallbackDataProvider<StellenanzeigeDTO,Void> dataProvider = DataProvider.fromCallbacks(query -> {
-            int offset = query.getOffset();
-            int limit = query.getLimit();
-
-            return stellenanzeigeDTOS.stream().skip(offset).limit(limit);
-
-        } ,query ->rowsCount );
-
-        return dataProvider;
-    }
-
-
-    public List<StellenanzeigeDTO> einfacheSuche1(int offset, int limit, String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche) {
+    @Override
+    public DataProvider<StellenanzeigeDTO,Void> einfacheSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche) {
         try {
-            return ContainerAnzDAO.getInstance().loadSuche1(offset,limit,
-                    suchbegriff, ort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum,  branche
-            );
+            stellenanzeigeDTOS = ContainerAnzDAO.getInstance().loadSuche(
+                    suchbegriff, ort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum,  branche);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
+        rowsCount = stellenanzeigeDTOS.size();
 
+        CallbackDataProvider<StellenanzeigeDTO,Void> dataProvider = DataProvider.fromCallbacks(query -> {
+            int offset = query.getOffset();
+            int limit = query.getLimit();
+            return stellenanzeigeDTOS.stream().skip(offset).limit(limit);
+        } ,query ->getRowsCount() );
 
-        return null;
-    }
+        return dataProvider;
 
-    @Override
-    public List<StellenanzeigeDTO> einfacheSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche) {
-        return null;
-    }
-
-    @Override
-    public void erweiterteSuche() {
-
-    }
-
-
-
-    public List<StellenanzeigeDTO> fetchStellenanzeigen1(int offset, int limit, String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, java.util.Date ab_Datum, String branche) {
-
-            return  einfacheSuche1(offset, limit,suchbegriff, ort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum,  branche);
-
-
-    }
-
-    @Override
-    public List<StellenanzeigeDTO> fetchStellenanzeigen(int offset, int limit) {
-        return null;
-    }
-
-    @Override
-    public int getStellenanzeigenCount() {
-        return 19;
-    }
+     }
 }

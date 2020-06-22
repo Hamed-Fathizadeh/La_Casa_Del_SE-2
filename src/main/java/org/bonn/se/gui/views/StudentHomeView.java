@@ -10,9 +10,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
-import org.bonn.se.control.BewerbungControl;
-import org.bonn.se.control.FeatureToggleControl;
-import org.bonn.se.control.SucheControl;
+import org.bonn.se.control.*;
 import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.OrtField;
@@ -25,6 +23,7 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.BrancheService;
@@ -67,6 +66,8 @@ public class StudentHomeView extends VerticalLayout implements View {
     static ContainerNeuigkeiten containerOnFly = ContainerNeuigkeiten.getInstance();
     ///Test
     List<StellenanzeigeDTO> stellenanzeigeDTOS;
+    Suche suche = new SucheControlProxy();
+
 
     public void setUp() throws DatabaseException, SQLException {
 
@@ -166,7 +167,7 @@ public class StudentHomeView extends VerticalLayout implements View {
 
                 //EVENTUELL NOCH FOR-SCHLEIFE HIER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 comboEinstellungsart.addValueChangeListener((HasValue.ValueChangeListener<String>) event1 -> {
-                    DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
+                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
                     grid1.setDataProvider(dataProvider);
                 });
 
@@ -174,7 +175,7 @@ public class StudentHomeView extends VerticalLayout implements View {
 
                 });
                 wann_datum.addValueChangeListener((HasValue.ValueChangeListener<LocalDate>) event2 -> {
-                    DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
+                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
 
                     grid1.setDataProvider(dataProvider);
                 });
@@ -218,26 +219,27 @@ public class StudentHomeView extends VerticalLayout implements View {
             ((ComboBox)searchGrid.getComponent(i+2,1)).addValueChangeListener((HasValue.ValueChangeListener) event -> {
 
                 //Datenabfrage
-                DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
+
+                DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
                 grid1.setDataProvider(dataProvider);
-                grid1.setCaption("Anzahl der Ergebisse: " + SucheControl.getRowsCount());
+                grid1.setCaption("Anzahl der Ergebisse: " + suche.getRowsCount());
                 grid1.setVisible(true);
 
             });
         }
+        SingleSelect<StellenanzeigeDTO> selection = grid1.asSingleSelect();
 
         //Selektieren der Anzeige
-        SingleSelect<StellenanzeigeDTO> selection = grid1.asSingleSelect();
         grid1.addSelectionListener((SelectionListener<StellenanzeigeDTO>) event -> {
-
+           StellenanzeigeDTO temp = selection.getValue();
+            Unternehmen unternehmen = null;
             try {
-                UI.getCurrent().addWindow(new StellenanzeigeWindow(selection.getValue(),
-                        UserDAO.getInstance().getUnternehmenByStellAnz(selection.getValue())) );
+                unternehmen =  UserDAO.getUnternehmenByStellAnz(temp);
             } catch (DatabaseException e) {
                 e.printStackTrace();
-            } finally {
-                selection.clear();
             }
+
+          UI.getCurrent().addWindow(new StellenanzeigeWindow(temp,unternehmen));
 
         });
 

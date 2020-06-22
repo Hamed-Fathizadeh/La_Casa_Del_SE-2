@@ -24,7 +24,7 @@ public class TopPanelUser extends GridLayout {
 
         this.setRows(1);
         this.setColumns(10);
-        this.setStyleName("toppanel");
+        this.setStyleName("toppanelUser");
 
 
         this.setMargin(false);

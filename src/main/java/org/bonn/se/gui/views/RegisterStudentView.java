@@ -6,11 +6,15 @@ import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.*;
-import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.server.ThemeResource;
+import com.vaadin.server.UserError;
+import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.bonn.se.control.UserSearchControl;
-import org.bonn.se.gui.component.*;
+import org.bonn.se.gui.component.RegistrationPasswordField;
+import org.bonn.se.gui.component.RegistrationTextField;
+import org.bonn.se.gui.component.TopPanel;
 import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Student;
@@ -42,7 +46,7 @@ public class RegisterStudentView extends GridLayout implements View {
         topPanel.addStyleName("toppanel");
         //this.addComponent(new TopPanel("Für Unternehmen"));
         // this.addComponent(new Label(""));
-        Label head = new Label("<h2><span style=\"color: blue;\"> Willkommen bei Lacolsco Registrieren Sie sich jetzt.... !!!.</span></h2>", ContentMode.HTML);
+        Label head = new Label("Willkommen bei Lacolsco Registrieren Sie sich jetzt.... !!!");
 
         FormLayout form = new FormLayout();
         form.setMargin(true);

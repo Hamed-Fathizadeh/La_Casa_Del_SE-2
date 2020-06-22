@@ -16,17 +16,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BewerbungDAO extends AbstractDAO{
-    public static BewerbungDAO dao = null;
 
-    private BewerbungDAO() {
 
-    }
+    private static BewerbungDAO instance;
 
     public static BewerbungDAO getInstance() {
-        if (dao == null) {
-            dao = new BewerbungDAO();
-        }
-        return dao;
+        return instance == null ? instance = new BewerbungDAO() : instance;
     }
 
     public static void statusAendern(int bew_id, int status) throws DatabaseException {

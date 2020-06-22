@@ -7,17 +7,10 @@ import org.bonn.se.services.db.exception.DatabaseException;
 public class UserSearchControl {
 
 
-    private UserSearchControl(){}
-
-
-
-    public static UserSearchControl search = null;
+    private static UserSearchControl instance;
 
     public static UserSearchControl getInstance() {
-        if(search == null) {
-            search = new UserSearchControl();
-        }
-        return search;
+        return instance == null ? instance = new UserSearchControl() : instance;
     }
 
     public boolean existUser(String email )  {
