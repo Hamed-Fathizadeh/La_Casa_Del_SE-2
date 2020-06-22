@@ -11,6 +11,7 @@ import org.bonn.se.gui.window.StellenanzeigeConfWindow;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
@@ -18,6 +19,8 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class StellenbeschreibungView extends GridLayout implements View {
     StellenanzeigeDTO sa;
@@ -159,7 +162,7 @@ public class StellenbeschreibungView extends GridLayout implements View {
             } catch (DatabaseException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             }
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();

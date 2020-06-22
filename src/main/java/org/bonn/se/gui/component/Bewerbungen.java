@@ -80,8 +80,8 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 Button bewerten = new Button("Bewertung abgeben");
                 subContent.addComponent(bewerten,0,1);
 
-                Button Loeschen = new Button("Löschen");
-                subContent.addComponent(Loeschen,1,1);
+                Button loeschen = new Button("Löschen");
+                subContent.addComponent(loeschen,1,1);
                 BewerbungDTO bewDTOtemp = selection.getValue();
                 bewerten.addClickListener(new Button.ClickListener() {
                     @Override
@@ -92,7 +92,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                     }
                 });
 
-                Loeschen.addClickListener(new Button.ClickListener() {
+                loeschen.addClickListener(new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent clickEvent) {
 
@@ -164,15 +164,13 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         orange.setDescription("Entwurf");
         ThemeResource resource4 = new ThemeResource("img/Anzeigen/makierung.png");
 
-        //RatingStars ratingStars = new RatingStars();
-        //ratingStars.setMaxValue(5);
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Logo");
             this.addColumn(BewerbungDTO::getUnternehmenName).setCaption("Unternehmen").setWidth(150);
             this.addColumn(BewerbungDTO::getTitel).setCaption("Titel");
             this.addColumn(BewerbungDTO::getDatum).setCaption("Beginn");
-            this.addColumn(Be -> (Be.getStatus() == 1 || Be.getStatus() == 9 ? "gesendet" : Be.getStatus() == 2 ? "abgelehnt" :  "gesendet")).setCaption("Status");
+            this.addColumn(be -> (be.getStatus() == 1 || be.getStatus() == 9 ? "gesendet" : be.getStatus() == 2 ? "abgelehnt" :  "gesendet")).setCaption("Status");
             this.addComponentColumn(p -> {
                 RatingStars rating = new RatingStars();
                 rating.setMaxValue(5);
@@ -191,8 +189,8 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             this.addColumn(BewerbungDTO::getStudent_studiengang).setCaption("Studiengang");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
-            this.addComponentColumn(Bew -> (Bew.isBewerbung_markiert() ? new Image(null, resource4) : null)).setCaption("Markiert");
-            this.addComponentColumn(Bew -> (Bew.getStatus() == 9 ? new Label(" <style>p { color:red ; font-weight:bold;  font-size: 18px; }</style><p>Neu</p>", ContentMode.HTML): null)).setCaption("");
+            this.addComponentColumn(bew -> (bew.isBewerbung_markiert() ? new Image(null, resource4) : null)).setCaption("Markiert");
+            this.addComponentColumn(bew -> (bew.getStatus() == 9 ? new Label(" <style>p { color:red ; font-weight:bold;  font-size: 18px; }</style><p>Neu</p>", ContentMode.HTML): null)).setCaption("");
 
         } new Label("<b>Unternehmensname</b>", ContentMode.HTML);
 

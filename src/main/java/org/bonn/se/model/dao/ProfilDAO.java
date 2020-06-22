@@ -6,6 +6,8 @@ import org.bonn.se.services.db.exception.DatabaseException;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProfilDAO extends AbstractDAO{
 
@@ -68,7 +70,7 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(13,student.getEmail());
             statement.executeUpdate();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
 
         } finally {
@@ -102,7 +104,7 @@ public class ProfilDAO extends AbstractDAO{
                 statement.executeUpdate();
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         } finally {
             JDBCConnection.getInstance().closeConnection();
@@ -150,7 +152,7 @@ public class ProfilDAO extends AbstractDAO{
             }
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         } finally {
             JDBCConnection.getInstance().closeConnection();
@@ -193,7 +195,7 @@ public class ProfilDAO extends AbstractDAO{
             statement.executeUpdate();
 
         }catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");
         }finally {
             JDBCConnection.getInstance().closeConnection();
@@ -234,7 +236,7 @@ public class ProfilDAO extends AbstractDAO{
 
 
         } catch (SQLException  throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -281,7 +283,7 @@ public class ProfilDAO extends AbstractDAO{
 
             }
         } catch (SQLException  throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
@@ -307,7 +309,7 @@ public class ProfilDAO extends AbstractDAO{
                 student.setTaetigkeit(taetigkeit);
             }
         } catch (SQLException  throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
@@ -333,7 +335,7 @@ public class ProfilDAO extends AbstractDAO{
                 }
             }
         } catch (SQLException  throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
@@ -355,7 +357,7 @@ public class ProfilDAO extends AbstractDAO{
             }
             return student;
         } catch (SQLException  throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -403,7 +405,7 @@ public class ProfilDAO extends AbstractDAO{
             statement.executeUpdate();
 
         }catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");
         }finally {
             JDBCConnection.getInstance().closeConnection();

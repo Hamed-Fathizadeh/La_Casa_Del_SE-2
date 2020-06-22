@@ -17,8 +17,14 @@ import org.bonn.se.services.util.Views;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginControl {
+
+    private LoginControl(){
+
+    }
 
     private static LoginControl instance;
 
@@ -83,7 +89,7 @@ public class LoginControl {
                 throw new DatabaseException("Fehler Passwort oder Email ist falsch!");
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }

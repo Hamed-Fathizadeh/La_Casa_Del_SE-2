@@ -3,7 +3,7 @@ import com.vaadin.ui.TextField;
 
 
 public class PopUpTextField extends TextField {
-    private String caption;
+
 
     public PopUpTextField(String caption){
         this.setHeight("56px");

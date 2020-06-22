@@ -3,9 +3,6 @@ package org.bonn.se.control;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.Socket;
-
 
 public class CheckSMTP {
 
@@ -23,17 +20,7 @@ public class CheckSMTP {
             }
         }
     }
-    private static boolean isReachable(String addr, int openPort, int timeOutMillis) {
 
-        try {
-            try (Socket soc = new Socket()) {
-                soc.connect(new InetSocketAddress(addr, openPort), timeOutMillis);
-            }
-            return true;
-        } catch (IOException ex) {
-            return false;
-        }
-    }
 }
 
 

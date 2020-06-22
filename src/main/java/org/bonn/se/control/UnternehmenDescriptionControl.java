@@ -9,6 +9,8 @@ import org.bonn.se.services.util.Roles;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UnternehmenDescriptionControl extends AbstractDAO {
     private UnternehmenDescriptionControl(){}
@@ -35,7 +37,7 @@ public class UnternehmenDescriptionControl extends AbstractDAO {
             statement.setString(2,((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getEmail());
             statement.executeUpdate();
     } catch (SQLException throwables) {
-        throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
     } finally {
             JDBCConnection.getInstance().closeConnection();

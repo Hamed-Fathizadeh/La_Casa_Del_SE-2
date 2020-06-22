@@ -10,6 +10,8 @@ import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContainerAnzDAO extends AbstractDAO{
 
@@ -54,7 +56,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -149,7 +151,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -194,7 +196,7 @@ public class ContainerAnzDAO extends AbstractDAO{
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -239,7 +241,7 @@ public class ContainerAnzDAO extends AbstractDAO{
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -302,7 +304,7 @@ public class ContainerAnzDAO extends AbstractDAO{
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -357,7 +359,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
 
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
                 throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
             } finally {
                 JDBCConnection.getInstance().closeConnection();
@@ -386,12 +388,12 @@ public class ContainerAnzDAO extends AbstractDAO{
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }
         try {
             JavaMailUtil.sendMailToStudents(unternehmen, liste);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
         }
 
     }
@@ -408,7 +410,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         try {
             statement.executeUpdate();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         } finally {
             JDBCConnection.getInstance().closeConnection();
@@ -441,7 +443,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         try {
             statement.executeUpdate();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         } finally {
             JDBCConnection.getInstance().closeConnection();

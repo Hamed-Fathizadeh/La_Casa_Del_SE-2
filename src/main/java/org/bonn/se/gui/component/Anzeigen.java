@@ -86,9 +86,9 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
 
             // Speichert den aktuell angewählten Wert bei klick auf die Zeile in der Var. "selected"
             StellenanzeigeDTO sa =  selection.getValue();
-            Unternehmen unternehmen_data = null;
+            Unternehmen unternehmenData = null;
             try {
-                unternehmen_data = UserDAO.getInstance().getUnternehmenByStellAnz(sa);
+                unternehmenData = UserDAO.getInstance().getUnternehmenByStellAnz(sa);
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
@@ -109,7 +109,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
                 MyUI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
             } else {
                 StellenanzeigeWindow stellenanzeigeWindow = null;
-                stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmen_data);
+                stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmenData);
                 UI.getCurrent().addWindow(stellenanzeigeWindow);
             }
         });
@@ -122,8 +122,6 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     }
     public void setUp(){
 
-
-        //this.setCaption("Anzahl Anzeigen " + container.getAnzahl());
         this.setItems( data);
 
         ThemeResource resource = new ThemeResource("img/Anzeigen/rot.png");
@@ -135,7 +133,6 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         ThemeResource resource3 = new ThemeResource("img/Anzeigen/orange.png");
         Image orange = new Image(null, resource3);
         orange.setDescription("Entwurf");
-        String day ="";
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.addComponentColumn(im ->{
@@ -159,8 +156,8 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
-            this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status").setId("Status");
-            this.addComponentColumn(Sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setGesamtNeuBewerbungen(Sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
+            this.addComponentColumn(sa -> (sa.getStatus() == 1 ? new Image(null, resource2) : sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status").setId("Status");
+            this.addComponentColumn(sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setGesamtNeuBewerbungen(sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
         }
 
     }

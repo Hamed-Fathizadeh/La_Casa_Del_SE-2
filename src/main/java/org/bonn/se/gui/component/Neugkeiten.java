@@ -13,19 +13,15 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Neugkeiten extends GridLayout {
-    Image Ulogo;
+    Image uLogo;
 
     public Neugkeiten(ContainerNeuigkeiten container){
        super(1, container.getAnzahl()==0 ? 1:container.getAnzahl() );
-      // this.setMargin(true);
 
        if(container.getAnzahl()> 0) {
            for (int i = 0; i < container.getAnzahl(); i++) {
                StellenanzeigeDTO sa = container.getAnzeige(i);
                GridLayout glayout = new GridLayout(2, 1);
-               //glayout.setMargin(true);
-              // glayout.addStyleName("whiteBackground");
-
 
                Unternehmen unternehmen = null;
                try {
@@ -43,7 +39,7 @@ public class Neugkeiten extends GridLayout {
                    day = "Heute";
                }else if( div == 1){
                    day = "1 Tag";
-               }else if (div > 1 & div <= 30){
+               }else if (div > 1 && div <= 30){
                    day = div +" Tagen";
                }else{
                    day = " mehr als 30 Tagen";
@@ -57,28 +53,28 @@ public class Neugkeiten extends GridLayout {
                               );
                txArea.setReadOnly(true);
                if(unternehmen.getLogo() != null) {
-                   Ulogo= ImageConverter.convertImagetoMenu(unternehmen.getLogo());
+                   uLogo= ImageConverter.convertImagetoMenu(unternehmen.getLogo());
                }
-              // Ulogo.setHeight("130px");
-               Ulogo.addStyleName("whiteBackground");
+
+               uLogo.addStyleName("whiteBackground");
                glayout.addComponent(txArea,1,0,1,0);
-              // glayout.addComponent(Ulogo,0,0,0,0);
+
 
                glayout.setComponentAlignment(txArea, Alignment.BOTTOM_CENTER);
-              // glayout.setComponentAlignment(Ulogo, Alignment.MIDDLE_CENTER);
+
                glayout.setId(Integer.toString(sa.getId()));
 
                glayout.addLayoutClickListener(event -> {
 
-                   Unternehmen unternehmen_data = null;
+                   Unternehmen unternehmenData = null;
                    try {
-                       unternehmen_data = UserDAO.getInstance().getUnternehmenByStellAnz(sa);
+                       unternehmenData = UserDAO.getInstance().getUnternehmenByStellAnz(sa);
                    } catch (DatabaseException e) {
                        e.printStackTrace();
                    }
                    StellenanzeigeWindow stellenanzeigeWindow = null;
 
-                       stellenanzeigeWindow = new StellenanzeigeWindow(sa,unternehmen_data);
+                       stellenanzeigeWindow = new StellenanzeigeWindow(sa,unternehmenData);
 
                    UI.getCurrent().addWindow(stellenanzeigeWindow);
 
@@ -87,7 +83,6 @@ public class Neugkeiten extends GridLayout {
                
                this.addComponent(glayout, 0, i, 0, i);
                this.setComponentAlignment(glayout, Alignment.BOTTOM_CENTER);
-              // this.addStyleName("whiteBackground");
            }
        }else{
            TextArea txArea = new TextArea();

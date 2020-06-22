@@ -5,6 +5,8 @@ import org.bonn.se.services.util.Password;
 
 import java.sql.*;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class JDBCConnection {
     private static JDBCConnection connection = null;
@@ -29,7 +31,7 @@ public class JDBCConnection {
         try {
             DriverManager.registerDriver(new org.postgresql.Driver());
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
 
         }
         this.openConnection();
@@ -47,7 +49,7 @@ public class JDBCConnection {
             String url = "jdbc:postgresql://dumbo.inf.h-brs.de/tfelle2s";
             this.conn = DriverManager.getConnection(url, props);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler beim Zugriff auf die Datenbank! Sichere Verbindung vorhanden?");
 
         }
@@ -61,7 +63,7 @@ public class JDBCConnection {
             }
             return this.conn.createStatement();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler beim Zugriff auf die Datenbank! Sichere Verbindung vorhanden?");
         }
     }
@@ -73,7 +75,7 @@ public class JDBCConnection {
             }
             return this.conn.prepareStatement(sql);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler beim Zugriff auf die Datenbank! Sichere Verbindung vorhanden?");
         }
     }
@@ -82,7 +84,7 @@ public class JDBCConnection {
         try {
             this.conn.close();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }
     }
 }

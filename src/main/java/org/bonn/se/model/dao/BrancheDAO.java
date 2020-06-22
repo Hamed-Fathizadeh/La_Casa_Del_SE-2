@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BrancheDAO {
 
@@ -43,7 +45,7 @@ public class BrancheDAO {
 
             }
         }catch (SQLException  throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }finally {
             try {
                 JDBCConnection.getInstance().closeConnection();

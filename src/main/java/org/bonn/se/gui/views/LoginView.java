@@ -37,7 +37,7 @@ public class LoginView extends VerticalLayout implements View {
         hLayout.setComponentAlignment(regStudent,Alignment.TOP_RIGHT);
         hLayout.setComponentAlignment(regUnternehmen,Alignment.TOP_RIGHT);
 
-        //this.addComponent(new Label(""));
+
 //Gesamtgröße des Bildschirms auf komplette Größe beziehen
         this.setSizeFull();
 
@@ -53,17 +53,17 @@ public class LoginView extends VerticalLayout implements View {
         passwordField.setWidth("310px");
 
 
-        GridLayout Maingrid = new GridLayout(1, 5);
-        Maingrid.setSizeFull();
-        Maingrid.setStyleName("login_bg");
+        GridLayout mainGrid = new GridLayout(1, 5);
+        mainGrid.setSizeFull();
+        mainGrid.setStyleName("login_bg");
 
 
 //Vertikales Layout + Hinzufügen der Textfelder
         VerticalLayout layout = new VerticalLayout();
 //        String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
   //      FileResource resource = new FileResource(new File(basepath + "/VAADIN/themes/demo/img/RegisterStudent/Logo_Login.png"));
-  //      Image Logo = new Image("", resource);
-//        layout.addComponent(Logo);
+  //      Image logo = new Image("", resource);
+//        layout.addComponent(logo);
 
 
 
@@ -84,21 +84,7 @@ public class LoginView extends VerticalLayout implements View {
         layout.addComponent(buttonLogin);
         layout.setComponentAlignment(buttonLogin, Alignment.MIDDLE_CENTER);
 
-        //layout.addComponent(link4);
-        //layout.setComponentAlignment(link4, Alignment.MIDDLE_CENTER);
 
-        //Button für Passwort vergessen.
-        /*
-        Button buttonPassVerg = new Button("Passwort vergessen?");
-        buttonPassVerg.addClickListener(e -> {
-            PassChangeWindow pcWindow = new PassChangeWindow();
-            UI.getCurrent().addWindow(pcWindow);
-
-        });
-
-        layout.addComponent(buttonPassVerg);
-        layout.setComponentAlignment(buttonPassVerg, Alignment.MIDDLE_CENTER);
-         */
         //Erstellen und Hinzufügen eines Panels + Platzierung in die Mitte
         Panel panel = new Panel( "");
         panel.setWidth("40px");
@@ -125,15 +111,15 @@ public class LoginView extends VerticalLayout implements View {
             }
         });
 
-        Maingrid.addComponent(hLayout,0,0,0,0);
-        Maingrid.addComponent(panel,0,2,0,2);
+        mainGrid.addComponent(hLayout,0,0,0,0);
+        mainGrid.addComponent(panel,0,2,0,2);
 
 
-        Maingrid.setComponentAlignment(hLayout,Alignment.TOP_RIGHT);
-        Maingrid.setComponentAlignment(panel,Alignment.BOTTOM_CENTER);
+        mainGrid.setComponentAlignment(hLayout,Alignment.TOP_RIGHT);
+        mainGrid.setComponentAlignment(panel,Alignment.BOTTOM_CENTER);
 
-        this.addComponent(Maingrid);
-        this.setComponentAlignment(Maingrid,Alignment.MIDDLE_CENTER);
+        this.addComponent(mainGrid);
+        this.setComponentAlignment(mainGrid,Alignment.MIDDLE_CENTER);
 
     }
 
