@@ -18,7 +18,6 @@ import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.gui.window.ErweiterteSucheWindow;
 import org.bonn.se.gui.window.StellenanzeigeWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
@@ -71,13 +70,10 @@ public class StudentHomeView extends VerticalLayout implements View {
 
     public void setUp() throws DatabaseException, SQLException {
 
-        //Maingrid = new GridLayout(2, 5);
         mainGrid = new GridLayout(2, 7);
         mainGrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
-        String ganzerOrt = "Ganzer Ort";
 
-        containerOnFly.loadSuche(null, null, null, ganzerOrt, "Normal", null, null, null);
 
 
 // spruch oben
@@ -90,125 +86,63 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         Label lSpruch = new Label(ls3, ContentMode.HTML);
 
-// add search bottom
         GridLayout searchGrid = new GridLayout(7, 4);
         searchGrid.setMargin(true);
         searchGrid.setSizeFull();
 
-// add combobox
+//--------------------------------------------SUCHE------------------------------------------------------------
+        String ganzerOrt = "Ganzer Ort";
+        //Titel
         ComboBox<String> comboNachWas = new ComboBox<>();
         comboNachWas.setPlaceholder("Nach was suchen Sie?");
         comboNachWas.setWidth(300.0f, Unit.PIXELS);
-
-/*
-        comboNachWas.addValueChangeListener(event -> {
-            mainGrid.removeComponent(gridAnzeige);
-
-            stellenSuchenOnFly( "",comboNachWas.getValue(),null,null,null );
-
-            mainGrid.addComponent(gridAnzeige, 0, 2, 1, 2);
-            mainGrid.setComponentAlignment(gridAnzeige, Alignment.MIDDLE_CENTER);
-
-        });
-
-
- */
         SuchbegrifService Sservice = new SuchbegrifService();
         comboNachWas.setDataProvider(Sservice::fetch, Sservice::count);
 
-// add combobox ortBund
+        //Ort
         OrtField comboOrtBund = new OrtField("Ort");
         comboOrtBund.setWidth(300.0f, Unit.PIXELS);
 
-
-        /*
-        comboOrtBund.addValueChangeListener(event -> {
-            mainGrid.removeComponent(gridAnzeig);
-            stellenSuchenOnFly(comboOrtBund.getValue(), "",null,null,null);
-
-            mainGrid.addComponent(gridAnzeig, 0, 2, 1, 2);
-            mainGrid.setComponentAlignment(gridAnzeig, Alignment.MIDDLE_CENTER);
-
-        });
-
-         */
-
-
-
-// add combobox
+        //Umkreis
         ComboBox<String> comboUmkreis = new ComboBox<>();
         comboUmkreis.setWidth(200.0f, Unit.PIXELS);
         comboUmkreis.setPlaceholder("Umkreis");
         comboUmkreis.setItems(ganzerOrt, "+10 km", "+25 km", "+50 km", "+75 km","+100 km");
         comboUmkreis.setValue(ganzerOrt);
 
-
-        Button buttonSearch = new Button("Job finden!", VaadinIcons.SEARCH);
-
+        //Erweiterte Suche
         CheckBox erwSuche = new CheckBox("Erweiterte Suche");
-
-
-
-
-        buttonSearch.addClickListener(
-                event -> {
-                    mainGrid.removeComponent(gridAnzeige);
-
-                    stellenSuchen( comboNachWas.getValue(), comboOrtBund.getOrt(), comboOrtBund.getBundesland(),comboUmkreis.getValue(), "Normal", null, null, null);
-
-                    mainGrid.addComponent(gridAnzeige, 0, 2, 1, 2);
-                    mainGrid.setComponentAlignment(gridAnzeige, Alignment.MIDDLE_CENTER);
-                });
-
-
-
-//job erwiterte suche button
-        Button buttonErwitertSuche= new Button("Erweiterte Suche");
-        buttonErwitertSuche.addStyleName("buttonErwitertSuche");
-
-// add components in searchGrid
-
-        searchGrid.addComponent(lSpruch,0,0,6,0);
-        searchGrid.addComponent(comboNachWas,2,1);
-        searchGrid.addComponent(comboOrtBund,3,1);
-        searchGrid.addComponent(comboUmkreis,4,1);
-
-        HorizontalLayout horizontalLayout1 = new HorizontalLayout();
-
-
-
-
-        //   searchGrid.addComponent(buttonSearch,6,1,6,1);
-
-       // searchGrid.addComponent(horizontalLayout1,0,2,6,2);
-
-        searchGrid.addComponent(erwSuche,6,3);
-        searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
-        searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_LEFT);
-        searchGrid.setComponentAlignment(comboUmkreis, Alignment.BOTTOM_LEFT);
-
-        //  searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
-        searchGrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
         ComboBox<String> comboEinstellungsart = new ComboBox<>();
         ComboBox<String> ComboBranche = new ComboBox<>();
         DateField wann_datum = new DateField();
-        Grid<StellenanzeigeDTO> grid1 = new Grid<>();
-
-        searchGrid.addComponent(comboEinstellungsart,2,2);
-        searchGrid.addComponent(ComboBranche,3,2);
-        searchGrid.addComponent(wann_datum,4,2);
         comboEinstellungsart.setVisible(false);
         ComboBranche.setVisible(false);
         wann_datum.setVisible(false);
 
-       /*
-        horizontalLayout1.addComponents(comboEinstellungsart,ComboBranche,wann_datum);
-        horizontalLayout1.setVisible(false);
+        //GridLayout Suche
+        searchGrid.addComponent(lSpruch,0,0,6,0);
+        searchGrid.addComponent(comboNachWas,2,1);
+        searchGrid.addComponent(comboOrtBund,3,1);
+        searchGrid.addComponent(comboUmkreis,4,1);
+        searchGrid.addComponent(erwSuche,6,3);
+        searchGrid.addComponent(comboEinstellungsart,2,2);
+        searchGrid.addComponent(ComboBranche,3,2);
+        searchGrid.addComponent(wann_datum,4,2);
 
-        */
+        searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
+        searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_LEFT);
+        searchGrid.setComponentAlignment(comboUmkreis, Alignment.BOTTOM_LEFT);
+        searchGrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
+
+        //Ergebnis Tabelle
+        Grid<StellenanzeigeDTO> grid1 = new Grid<>();
+
+        //Erweiterte Suche An/Aus
         erwSuche.addValueChangeListener((HasValue.ValueChangeListener<Boolean>) event -> {
             if(erwSuche.getValue()) {
                 suchArt = "Erweitert";
+
+                //Art
                 comboEinstellungsart.setItems("Feste Anstellung","Befristeter Vertrag","Praktikum","Werkstudent",
                         "Praktikum/Werkstudent","Trainee","Ausbildung/Studium",
                         "Bachelor-/Master-/Diplom-Arbeiten","Promotion/Habilitation","Freie Mitarbeit/Projektmitarbeit");
@@ -216,9 +150,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 comboEinstellungsart.setHeight("56px");
                 comboEinstellungsart.setWidth("300px");
 
-
-
-
+                //Branche
                 ComboBranche.setPlaceholder("Branche");
                 ComboBranche.setHeight("56px");
                 ComboBranche.setWidth("300px");
@@ -231,15 +163,14 @@ public class StudentHomeView extends VerticalLayout implements View {
                 wann_datum.setPlaceholder("ab Wann? dd.mm.yyyy");
                 LocalDate emptyDate = LocalDate.parse("0001-01-01");
 
+
+                //EVENTUELL NOCH FOR-SCHLEIFE HIER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 comboEinstellungsart.addValueChangeListener((HasValue.ValueChangeListener<String>) event1 -> {
                     DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
-
                     grid1.setDataProvider(dataProvider);
-
                 });
 
                 ComboBranche.addValueChangeListener((HasValue.ValueChangeListener<String>) event1 -> {
-
 
                 });
                 wann_datum.addValueChangeListener((HasValue.ValueChangeListener<LocalDate>) event2 -> {
@@ -247,34 +178,71 @@ public class StudentHomeView extends VerticalLayout implements View {
 
                     grid1.setDataProvider(dataProvider);
                 });
-
-
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
                 comboEinstellungsart.setVisible(true);
                 ComboBranche.setVisible(true);
                 wann_datum.setVisible(true);
             } else {
-
                 comboEinstellungsart.setVisible(false);
                 ComboBranche.setVisible(false);
                 wann_datum.setVisible(false);
-
                 comboEinstellungsart.clear();
                 ComboBranche.clear();
                 wann_datum.clear();
-
                 suchArt = "Einfache";
             }
         });
 
-        buttonErwitertSuche.addClickListener(
-                event -> {
-                    //mainGrid.removeComponent(gridAnzeige);
-                    //comboNachWas.clear();comboOrtBund.clear(); comboUmkreis.clear();
-                    ErweiterteSucheWindow window = new ErweiterteSucheWindow();
-                    UI.getCurrent().addWindow(window);
-                });
+        //Layout für Margin
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setWidthFull();
+        verticalLayout.setMargin(true);
+        mainGrid.addComponent(verticalLayout,0,2,1,2);
+        verticalLayout.addComponent(grid1);
+
+        //Spalten hinzufügen
+        grid1.setWidthFull();
+        grid1.setVisible(false);
+        grid1.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Logo").setWidth(80.0);
+        grid1.addColumn(StellenanzeigeDTO::getFirmenname).setCaption("Firmenname");
+        grid1.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
+        grid1.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
+        grid1.addColumn(StellenanzeigeDTO::getSuchbegriff).setCaption("Berufsbezeichnung");
+        grid1.addColumn(StellenanzeigeDTO::getStandort).setCaption("Standort");
+        grid1.addColumn(StellenanzeigeDTO::getDatum).setCaption("Einstellungsdatum").setWidth(150.0);
+
+        //ValueChangeListener für Suche
+        for (int i = 0; i < 3; i++) {
+            ((ComboBox)searchGrid.getComponent(i+2,1)).addValueChangeListener((HasValue.ValueChangeListener) event -> {
+
+                //Datenabfrage
+                DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
+                grid1.setDataProvider(dataProvider);
+                grid1.setCaption("Anzahl der Ergebisse: " + SucheControl.getRowsCount());
+                grid1.setVisible(true);
+
+            });
+        }
+
+        //Selektieren der Anzeige
+        SingleSelect<StellenanzeigeDTO> selection = grid1.asSingleSelect();
+        grid1.addSelectionListener((SelectionListener<StellenanzeigeDTO>) event -> {
+
+            try {
+                UI.getCurrent().addWindow(new StellenanzeigeWindow(selection.getValue(),
+                        UserDAO.getInstance().getUnternehmenByStellAnz(selection.getValue())) );
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            } finally {
+                selection.clear();
+            }
+
+        });
+
+//---------------SUCHE ENDE ------------------------------------------------------------------------------------------
+
 
         ContainerNeuigkeiten containerNeuigkeiten = ContainerNeuigkeiten.getInstance();
         containerNeuigkeiten.loadNeuigkeiten("Alle");
@@ -351,131 +319,6 @@ public class StudentHomeView extends VerticalLayout implements View {
         loadProfil();
 
         //FeatureToggle
-
-
-
-        VerticalLayout verticalLayout = new VerticalLayout();
-        verticalLayout.setWidthFull();
-        verticalLayout.setMargin(true);
-        mainGrid.addComponent(verticalLayout,0,2,1,2);
-        verticalLayout.addComponent(grid1);
-        grid1.setWidthFull();
-        grid1.setVisible(false);
-
-        grid1.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Logo").setWidth(80.0);
-        grid1.addColumn(StellenanzeigeDTO::getFirmenname).setCaption("Firmenname");
-        grid1.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
-        grid1.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
-        grid1.addColumn(StellenanzeigeDTO::getSuchbegriff).setCaption("Berufsbezeichnung");
-        grid1.addColumn(StellenanzeigeDTO::getStandort).setCaption("Standort");
-        grid1.addColumn(StellenanzeigeDTO::getDatum).setCaption("Einstellungsdatum").setWidth(150.0);
-
-
-        for (int i = 0; i < 3; i++) {
-            ((ComboBox)searchGrid.getComponent(i+2,1)).addValueChangeListener((HasValue.ValueChangeListener) event -> {
-                DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
-
-                grid1.setDataProvider(dataProvider);
-                grid1.setCaption("Anzahl der Ergebisse: " + SucheControl.getRowsCount());
-                grid1.setVisible(true);
-
-            });
-        }
-        SingleSelect<StellenanzeigeDTO> selection = grid1.asSingleSelect();
-
-
-        grid1.addSelectionListener((SelectionListener<StellenanzeigeDTO>) event -> {
-            StellenanzeigeDTO temp = selection.getValue();
-            try {
-                UI.getCurrent().addWindow(new StellenanzeigeWindow(temp,
-                        UserDAO.getInstance().getUnternehmenByStellAnz(temp)) );
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
-        });
-
-        /*
-        comboNachWas.addValueChangeListener((HasValue.ValueChangeListener<String>) event -> {
-
-        });
-
-        comboOrtBund.addValueChangeListener((HasValue.ValueChangeListener<String>) event -> {
-            DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),null,null,null,null);
-
-            grid1.setDataProvider(dataProvider);
-            grid1.setVisible(true);
-        });
-
-        comboUmkreis.addValueChangeListener((HasValue.ValueChangeListener<String>) event -> {
-            DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),null,null,null,null);
-
-            grid1.setDataProvider(dataProvider);
-            grid1.setVisible(true);
-        });
-
-
-                 */
-/*
-        comboNachWas.addValueChangeListener((HasValue.ValueChangeListener<String>) event -> {
-            CallbackDataProvider<StellenanzeigeDTO,Void>  dataProvider = DataProvider.fromCallbacks(query -> {
-                int offset = query.getOffset();
-                int limit = query.getLimit();
-                stellenanzeigeDTOS = SucheControl.getInstance().fetchStellenanzeigen1(offset,limit,
-                        comboNachWas.getValue(),textField1.getValue(),textField2.getValue(),textField3.getValue(),null,null,null,null);
-
-                return stellenanzeigeDTOS.stream().skip(offset).limit(limit);
-
-            },query -> 4);
-            grid1.setDataProvider(dataProvider);
-            grid1.setVisible(true);
-        });
-
- */
-
-
-
-
-
-
-
-/*
-    CallbackDataProvider<StellenanzeigeDTO,Void> dataProvider = DataProvider.fromCallbacks(
-        query -> (stellenanzeigeDTOS.stream()),
-        query -> (SucheControl.getInstance().getStellenanzeigenCount()));
-
-
- */
-        //grid1.setDataProvider(dataProvider);
-        /*
-        ListDataProvider<StellenanzeigeDTO> listDataProvider = DataProvider.ofCollection(stellenanzeigeDTOS);
-        grid1.setDataProvider(listDataProvider);
-
-
-         */
-
-
-/*
-        for (int i = 0; i <4 ; i++) {
-            ((TextField)horizontalLayout1.getComponent(i)).addValueChangeListener((HasValue.ValueChangeListener<String>) event -> {
-                dataProvider = DataProvider.fromCallbacks(query -> {
-                    int offset = query.getOffset();
-                    int limit = query.getLimit();
-                    List<StellenanzeigeDTO> stellenanzeigeDTOS = SucheControl.getInstance().fetchStellenanzeigen1(offset,limit,
-                            textField.getValue(),textField1.getValue(),textField2.getValue(),textField3.getValue(),null,null,null,null);
-
-                    return stellenanzeigeDTOS.stream();
-
-
-                },query -> SucheControl.getInstance().getStellenanzeigenCount());
-                Maingrid.removeComponent(grid1);
-                Maingrid.addComponent(grid1,0,6,1,6);
-
-                grid1.setDataProvider(dataProvider);
-            }) ;
-        }
-
- */
-
 
 
         if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
