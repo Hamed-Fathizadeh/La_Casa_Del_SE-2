@@ -224,10 +224,12 @@ public class StudentHomeView extends VerticalLayout implements View {
         bottomGridBewNeu.setComponentAlignment(gAnzeigen,Alignment.TOP_CENTER);
         bottomGridBewNeu.setComponentAlignment(alleNeuigkeiten,Alignment.BOTTOM_CENTER);
         bottomGridBewNeu.setComponentAlignment(meineAbos,Alignment.BOTTOM_CENTER);
+        Label lPatzhalter2 = new Label("&nbsp", ContentMode.HTML);
 
         mainGrid.addComponent(topPanel, 0, 0, 1, 0);
         mainGrid.addComponent(searchGrid, 0, 1, 1, 1);
-        mainGrid.addComponent(horizontalLayout, 0, 3, 1, 3);
+        mainGrid.addComponent(lPatzhalter2, 0, 3, 1, 3);
+        mainGrid.addComponent(horizontalLayout, 0, 4, 1, 4);
 
         mainGrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
         mainGrid.setComponentAlignment(searchGrid, Alignment.TOP_CENTER);
@@ -268,7 +270,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 bottomGridBewNeu_2.addComponent(alleBewerbungen,0,3,1,3);
                 bottomGridBewNeu_2.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
                 horizontalLayout.addComponent(bottomGridBewNeu_2,0);
-                horizontalLayout.setComponentAlignment(bottomGridBewNeu_2,Alignment.MIDDLE_CENTER);
+                horizontalLayout.setComponentAlignment(bottomGridBewNeu_2,Alignment.TOP_CENTER);
                 alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> {
                     UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
                 });
