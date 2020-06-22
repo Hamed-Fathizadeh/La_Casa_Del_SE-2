@@ -1,6 +1,9 @@
 
 package org.bonn.se.gui.views;
 
+import com.vaadin.data.HasValue;
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -9,25 +12,29 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.BewerbungControl;
 import org.bonn.se.control.FeatureToggleControl;
+import org.bonn.se.control.SucheControl;
 import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.ErweiterteSucheWindow;
+import org.bonn.se.gui.window.StellenanzeigeWindow;
+import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Student;
-import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.BrancheService;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.SuchbegrifService;
 import org.bonn.se.services.util.Views;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,11 +43,11 @@ import java.util.stream.Collectors;
 
 public class StudentHomeView extends VerticalLayout implements View {
 
-    static Grid gridAnzeig = null;
+    static Grid gridAnzeige = null;
     static GridLayout mainGrid = new GridLayout(2, 5);
 
-    public static Grid getGridAnzeig() {
-        return gridAnzeig;
+    public static Grid getGridAnzeige() {
+        return gridAnzeige;
     }
 
     public static void setGridAnzeig(Grid gridAnzeig) {
@@ -57,14 +64,15 @@ public class StudentHomeView extends VerticalLayout implements View {
 
 
     static GridLayout bottomGridBewNeu;
-
+    private String suchArt = "Einfache";
     static ContainerNeuigkeiten containerOnFly = ContainerNeuigkeiten.getInstance();
-
-
+    ///Test
+    List<StellenanzeigeDTO> stellenanzeigeDTOS;
 
     public void setUp() throws DatabaseException, SQLException {
 
-        mainGrid = new GridLayout(2, 5);
+        //Maingrid = new GridLayout(2, 5);
+        mainGrid = new GridLayout(2, 7);
         mainGrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
         String ganzerOrt = "Ganzer Ort";
@@ -83,7 +91,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         Label lSpruch = new Label(ls3, ContentMode.HTML);
 
 // add search bottom
-        GridLayout searchGrid = new GridLayout(7, 3);
+        GridLayout searchGrid = new GridLayout(7, 4);
         searchGrid.setMargin(true);
         searchGrid.setSizeFull();
 
@@ -92,24 +100,28 @@ public class StudentHomeView extends VerticalLayout implements View {
         comboNachWas.setPlaceholder("Nach was suchen Sie?");
         comboNachWas.setWidth(300.0f, Unit.PIXELS);
 
-
+/*
         comboNachWas.addValueChangeListener(event -> {
-            mainGrid.removeComponent(gridAnzeig);
+            mainGrid.removeComponent(gridAnzeige);
 
             stellenSuchenOnFly( "",comboNachWas.getValue(),null,null,null );
 
-            mainGrid.addComponent(gridAnzeig, 0, 2, 1, 2);
-            mainGrid.setComponentAlignment(gridAnzeig, Alignment.MIDDLE_CENTER);
+            mainGrid.addComponent(gridAnzeige, 0, 2, 1, 2);
+            mainGrid.setComponentAlignment(gridAnzeige, Alignment.MIDDLE_CENTER);
 
         });
 
-        SuchbegrifService sService = new SuchbegrifService();
-        comboNachWas.setDataProvider(sService::fetch, sService::count);
+
+ */
+        SuchbegrifService Sservice = new SuchbegrifService();
+        comboNachWas.setDataProvider(Sservice::fetch, Sservice::count);
 
 // add combobox ortBund
         OrtField comboOrtBund = new OrtField("Ort");
         comboOrtBund.setWidth(300.0f, Unit.PIXELS);
 
+
+        /*
         comboOrtBund.addValueChangeListener(event -> {
             mainGrid.removeComponent(gridAnzeig);
             stellenSuchenOnFly(comboOrtBund.getValue(), "",null,null,null);
@@ -119,24 +131,33 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         });
 
+         */
+
 
 
 // add combobox
         ComboBox<String> comboUmkreis = new ComboBox<>();
         comboUmkreis.setWidth(200.0f, Unit.PIXELS);
+        comboUmkreis.setPlaceholder("Umkreis");
         comboUmkreis.setItems(ganzerOrt, "+10 km", "+25 km", "+50 km", "+75 km","+100 km");
         comboUmkreis.setValue(ganzerOrt);
 
+
         Button buttonSearch = new Button("Job finden!", VaadinIcons.SEARCH);
+
+        CheckBox erwSuche = new CheckBox("Erweiterte Suche");
+
+
+
 
         buttonSearch.addClickListener(
                 event -> {
-                    mainGrid.removeComponent(gridAnzeig);
+                    mainGrid.removeComponent(gridAnzeige);
 
                     stellenSuchen( comboNachWas.getValue(), comboOrtBund.getOrt(), comboOrtBund.getBundesland(),comboUmkreis.getValue(), "Normal", null, null, null);
 
-                    mainGrid.addComponent(gridAnzeig, 0, 2, 1, 2);
-                    mainGrid.setComponentAlignment(gridAnzeig, Alignment.MIDDLE_CENTER);
+                    mainGrid.addComponent(gridAnzeige, 0, 2, 1, 2);
+                    mainGrid.setComponentAlignment(gridAnzeige, Alignment.MIDDLE_CENTER);
                 });
 
 
@@ -148,22 +169,109 @@ public class StudentHomeView extends VerticalLayout implements View {
 // add components in searchGrid
 
         searchGrid.addComponent(lSpruch,0,0,6,0);
-        searchGrid.addComponent(comboNachWas,2,1,2,1);
-        searchGrid.addComponent(comboOrtBund,3,1,3,1);
-        searchGrid.addComponent(comboUmkreis,5,1,5,1);
-        searchGrid.addComponent(buttonErwitertSuche,2,2,2,2);
+        searchGrid.addComponent(comboNachWas,2,1);
+        searchGrid.addComponent(comboOrtBund,3,1);
+        searchGrid.addComponent(comboUmkreis,4,1);
+
+        HorizontalLayout horizontalLayout1 = new HorizontalLayout();
 
 
+
+
+        //   searchGrid.addComponent(buttonSearch,6,1,6,1);
+
+       // searchGrid.addComponent(horizontalLayout1,0,2,6,2);
+
+        searchGrid.addComponent(erwSuche,6,3);
         searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_LEFT);
-        searchGrid.setComponentAlignment(comboUmkreis, Alignment.BOTTOM_CENTER);
-        searchGrid.setComponentAlignment(buttonErwitertSuche, Alignment.BOTTOM_LEFT);
+        searchGrid.setComponentAlignment(comboUmkreis, Alignment.BOTTOM_LEFT);
+
+        //  searchGrid.setComponentAlignment(buttonSearch, Alignment.BOTTOM_CENTER);
         searchGrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
+        ComboBox<String> comboEinstellungsart = new ComboBox<>();
+        ComboBox<String> ComboBranche = new ComboBox<>();
+        DateField wann_datum = new DateField();
+        Grid<StellenanzeigeDTO> grid1 = new Grid<>();
+
+        searchGrid.addComponent(comboEinstellungsart,2,2);
+        searchGrid.addComponent(ComboBranche,3,2);
+        searchGrid.addComponent(wann_datum,4,2);
+        comboEinstellungsart.setVisible(false);
+        ComboBranche.setVisible(false);
+        wann_datum.setVisible(false);
+
+       /*
+        horizontalLayout1.addComponents(comboEinstellungsart,ComboBranche,wann_datum);
+        horizontalLayout1.setVisible(false);
+
+        */
+        erwSuche.addValueChangeListener((HasValue.ValueChangeListener<Boolean>) event -> {
+            if(erwSuche.getValue()) {
+                suchArt = "Erweitert";
+                comboEinstellungsart.setItems("Feste Anstellung","Befristeter Vertrag","Praktikum","Werkstudent",
+                        "Praktikum/Werkstudent","Trainee","Ausbildung/Studium",
+                        "Bachelor-/Master-/Diplom-Arbeiten","Promotion/Habilitation","Freie Mitarbeit/Projektmitarbeit");
+                comboEinstellungsart.setPlaceholder("Einstellungsart");
+                comboEinstellungsart.setHeight("56px");
+                comboEinstellungsart.setWidth("300px");
+
+
+
+
+                ComboBranche.setPlaceholder("Branche");
+                ComboBranche.setHeight("56px");
+                ComboBranche.setWidth("300px");
+                BrancheService SserviceBranche = new BrancheService();
+                ComboBranche.setDataProvider(SserviceBranche::fetch, SserviceBranche::count);
+
+                //Datum
+                wann_datum.setHeight("56px");
+                wann_datum.setWidth("200px");
+                wann_datum.setPlaceholder("ab Wann? dd.mm.yyyy");
+                LocalDate emptyDate = LocalDate.parse("0001-01-01");
+
+                comboEinstellungsart.addValueChangeListener((HasValue.ValueChangeListener<String>) event1 -> {
+                    DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
+
+                    grid1.setDataProvider(dataProvider);
+
+                });
+
+                ComboBranche.addValueChangeListener((HasValue.ValueChangeListener<String>) event1 -> {
+
+
+                });
+                wann_datum.addValueChangeListener((HasValue.ValueChangeListener<LocalDate>) event2 -> {
+                    DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
+
+                    grid1.setDataProvider(dataProvider);
+                });
+
+
+
+
+                comboEinstellungsart.setVisible(true);
+                ComboBranche.setVisible(true);
+                wann_datum.setVisible(true);
+            } else {
+
+                comboEinstellungsart.setVisible(false);
+                ComboBranche.setVisible(false);
+                wann_datum.setVisible(false);
+
+                comboEinstellungsart.clear();
+                ComboBranche.clear();
+                wann_datum.clear();
+
+                suchArt = "Einfache";
+            }
+        });
 
         buttonErwitertSuche.addClickListener(
                 event -> {
-                    mainGrid.removeComponent(gridAnzeig);
-                    comboNachWas.clear();comboOrtBund.clear(); comboUmkreis.clear();
+                    //mainGrid.removeComponent(gridAnzeige);
+                    //comboNachWas.clear();comboOrtBund.clear(); comboUmkreis.clear();
                     ErweiterteSucheWindow window = new ErweiterteSucheWindow();
                     UI.getCurrent().addWindow(window);
                 });
@@ -225,9 +333,11 @@ public class StudentHomeView extends VerticalLayout implements View {
         bottomGridBewNeu.setComponentAlignment(alleNeuigkeiten,Alignment.BOTTOM_CENTER);
         bottomGridBewNeu.setComponentAlignment(meineAbos,Alignment.BOTTOM_CENTER);
 
+
+
         mainGrid.addComponent(topPanel, 0, 0, 1, 0);
         mainGrid.addComponent(searchGrid, 0, 1, 1, 1);
-        mainGrid.addComponent(horizontalLayout, 0, 3, 1, 3);
+        mainGrid.addComponent(horizontalLayout, 0, 4, 1, 4);
 
         mainGrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
         mainGrid.setComponentAlignment(searchGrid, Alignment.TOP_CENTER);
@@ -241,6 +351,131 @@ public class StudentHomeView extends VerticalLayout implements View {
         loadProfil();
 
         //FeatureToggle
+
+
+
+        VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.setWidthFull();
+        verticalLayout.setMargin(true);
+        mainGrid.addComponent(verticalLayout,0,2,1,2);
+        verticalLayout.addComponent(grid1);
+        grid1.setWidthFull();
+        grid1.setVisible(false);
+
+        grid1.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Logo").setWidth(80.0);
+        grid1.addColumn(StellenanzeigeDTO::getFirmenname).setCaption("Firmenname");
+        grid1.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
+        grid1.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
+        grid1.addColumn(StellenanzeigeDTO::getSuchbegriff).setCaption("Berufsbezeichnung");
+        grid1.addColumn(StellenanzeigeDTO::getStandort).setCaption("Standort");
+        grid1.addColumn(StellenanzeigeDTO::getDatum).setCaption("Einstellungsdatum").setWidth(150.0);
+
+
+        for (int i = 0; i < 3; i++) {
+            ((ComboBox)searchGrid.getComponent(i+2,1)).addValueChangeListener((HasValue.ValueChangeListener) event -> {
+                DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
+
+                grid1.setDataProvider(dataProvider);
+                grid1.setCaption("Anzahl der Ergebisse: " + SucheControl.getRowsCount());
+                grid1.setVisible(true);
+
+            });
+        }
+        SingleSelect<StellenanzeigeDTO> selection = grid1.asSingleSelect();
+
+
+        grid1.addSelectionListener((SelectionListener<StellenanzeigeDTO>) event -> {
+            StellenanzeigeDTO temp = selection.getValue();
+            try {
+                UI.getCurrent().addWindow(new StellenanzeigeWindow(temp,
+                        UserDAO.getInstance().getUnternehmenByStellAnz(temp)) );
+            } catch (DatabaseException e) {
+                e.printStackTrace();
+            }
+        });
+
+        /*
+        comboNachWas.addValueChangeListener((HasValue.ValueChangeListener<String>) event -> {
+
+        });
+
+        comboOrtBund.addValueChangeListener((HasValue.ValueChangeListener<String>) event -> {
+            DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),null,null,null,null);
+
+            grid1.setDataProvider(dataProvider);
+            grid1.setVisible(true);
+        });
+
+        comboUmkreis.addValueChangeListener((HasValue.ValueChangeListener<String>) event -> {
+            DataProvider<StellenanzeigeDTO,Void> dataProvider = SucheControl.getInstance().getData(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),null,null,null,null);
+
+            grid1.setDataProvider(dataProvider);
+            grid1.setVisible(true);
+        });
+
+
+                 */
+/*
+        comboNachWas.addValueChangeListener((HasValue.ValueChangeListener<String>) event -> {
+            CallbackDataProvider<StellenanzeigeDTO,Void>  dataProvider = DataProvider.fromCallbacks(query -> {
+                int offset = query.getOffset();
+                int limit = query.getLimit();
+                stellenanzeigeDTOS = SucheControl.getInstance().fetchStellenanzeigen1(offset,limit,
+                        comboNachWas.getValue(),textField1.getValue(),textField2.getValue(),textField3.getValue(),null,null,null,null);
+
+                return stellenanzeigeDTOS.stream().skip(offset).limit(limit);
+
+            },query -> 4);
+            grid1.setDataProvider(dataProvider);
+            grid1.setVisible(true);
+        });
+
+ */
+
+
+
+
+
+
+
+/*
+    CallbackDataProvider<StellenanzeigeDTO,Void> dataProvider = DataProvider.fromCallbacks(
+        query -> (stellenanzeigeDTOS.stream()),
+        query -> (SucheControl.getInstance().getStellenanzeigenCount()));
+
+
+ */
+        //grid1.setDataProvider(dataProvider);
+        /*
+        ListDataProvider<StellenanzeigeDTO> listDataProvider = DataProvider.ofCollection(stellenanzeigeDTOS);
+        grid1.setDataProvider(listDataProvider);
+
+
+         */
+
+
+/*
+        for (int i = 0; i <4 ; i++) {
+            ((TextField)horizontalLayout1.getComponent(i)).addValueChangeListener((HasValue.ValueChangeListener<String>) event -> {
+                dataProvider = DataProvider.fromCallbacks(query -> {
+                    int offset = query.getOffset();
+                    int limit = query.getLimit();
+                    List<StellenanzeigeDTO> stellenanzeigeDTOS = SucheControl.getInstance().fetchStellenanzeigen1(offset,limit,
+                            textField.getValue(),textField1.getValue(),textField2.getValue(),textField3.getValue(),null,null,null,null);
+
+                    return stellenanzeigeDTOS.stream();
+
+
+                },query -> SucheControl.getInstance().getStellenanzeigenCount());
+                Maingrid.removeComponent(grid1);
+                Maingrid.addComponent(grid1,0,6,1,6);
+
+                grid1.setDataProvider(dataProvider);
+            }) ;
+        }
+
+ */
+
 
 
         if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
@@ -309,7 +544,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",container.getListe());
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("1000px");
-        gridAnzeig = gAnzeigen;
+        gridAnzeige = gAnzeigen;
 
     }
 
@@ -330,7 +565,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",data);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("1000px");
-        gridAnzeig = gAnzeigen;
+        gridAnzeige = gAnzeigen;
 
     }
 

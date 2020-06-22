@@ -90,8 +90,8 @@ public class ErweiterteSucheWindow extends Window {
                              ErweiterteSucheWindow.this.close();
                              UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
 
-                            StudentHomeView.getMaingrid().addComponent(StudentHomeView.getGridAnzeig(), 0, 2, 1, 2);
-                            StudentHomeView.getMaingrid().setComponentAlignment(StudentHomeView.getGridAnzeig(), Alignment.MIDDLE_CENTER);
+                            StudentHomeView.getMaingrid().addComponent(StudentHomeView.getGridAnzeige(), 0, 2, 1, 2);
+                            StudentHomeView.getMaingrid().setComponentAlignment(StudentHomeView.getGridAnzeige(), Alignment.MIDDLE_CENTER);
                          });
 
         Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
