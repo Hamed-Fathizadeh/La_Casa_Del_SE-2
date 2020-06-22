@@ -62,7 +62,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
         beginn.setPlaceholder("Beginn");
 
         ComboBox<String> art = new ComboBox<>();
-        art.setItems(DatenUnternehmenProfil.einstellungsart);
+        art.setItems(DatenUnternehmenProfil.getEinstellungsart());
         art.setHeight("56px");
         art.setWidth("350px");
         art.setPlaceholder("Art der Einstellung");

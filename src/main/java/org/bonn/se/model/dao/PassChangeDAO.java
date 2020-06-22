@@ -10,13 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PassChangeDAO extends AbstractDAO{
-    public static PassChangeDAO dao = null;
+    private static PassChangeDAO instance;
 
-    public static PassChangeDAO getInstance(){
-        if(dao == null){
-            dao = new PassChangeDAO();
-        }
-        return dao;
+    public static PassChangeDAO getInstance() {
+        return instance == null ? instance = new PassChangeDAO() : instance;
     }
 
     public boolean changePass(PassChangeRequest dto){

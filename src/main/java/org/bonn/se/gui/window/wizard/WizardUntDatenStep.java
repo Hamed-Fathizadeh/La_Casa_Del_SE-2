@@ -70,7 +70,7 @@ public class WizardUntDatenStep implements WizardStep {
             PlaceHolderField place2 = new PlaceHolderField();
 
 
-            branche = new ComboBox<>("", DatenUnternehmenProfil.branche1);
+            branche = new ComboBox<>("", DatenUnternehmenProfil.getBranche1());
             branche.setPlaceholder("Branche");
             branche.setHeight("56px");
             branche.setWidth("300px");

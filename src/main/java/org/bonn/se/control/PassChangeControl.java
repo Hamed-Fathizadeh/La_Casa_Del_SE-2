@@ -7,13 +7,10 @@ import org.bonn.se.model.objects.dto.PassChangeRequest;
 
 public class PassChangeControl {
 
-    public static PassChangeControl passChangeControl = null;
+    private static PassChangeControl instance;
 
-    public static PassChangeControl getInstance(){
-        if(passChangeControl == null){
-            passChangeControl = new PassChangeControl();
-        }
-        return passChangeControl;
+    public static PassChangeControl getInstance() {
+        return instance == null ? instance = new PassChangeControl() : instance;
     }
 
     public void changePass(PassChangeRequest request){

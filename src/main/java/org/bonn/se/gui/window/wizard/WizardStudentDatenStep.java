@@ -112,7 +112,7 @@ public class WizardStudentDatenStep implements WizardStep {
             ausbildung = new PopUpTextField("Ausbildung (optional)");
 
 
-            abschluss = new ComboBox<>("", DatenStudentProfil.collection);
+            abschluss = new ComboBox<>("", DatenStudentProfil.getCollection());
             abschluss.setPlaceholder("Wähle den höchsten Abschluss...");
             abschluss.setHeight("56px");
             abschluss.setWidth("300px");

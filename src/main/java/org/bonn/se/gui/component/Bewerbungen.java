@@ -24,7 +24,7 @@ import java.util.List;
 
 public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
     List<T> data;
-    public BewerbungDTO bewerbungDTO;
+    private BewerbungDTO bewerbungDTO;
 
 // --Commented out by Inspection START (22.06.20, 23:17):
 //    public BewerbungDTO getBewerbungDTO() {

@@ -81,7 +81,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         ProfilStudentTextField tkontaktnr = new ProfilStudentTextField("Kontaktnr", student.getKontakt_nr());
         ProfilStudentTextField tfausbildung = new ProfilStudentTextField("Ausbildung", student.getAusbildung());
         ProfilStudentTextField tfstudium = new ProfilStudentTextField("Studium", student.getStudiengang());
-        ComboBox<String> tfabschluss = new ComboBox<>("", DatenStudentProfil.collection);
+        ComboBox<String> tfabschluss = new ComboBox<>("", DatenStudentProfil.getCollection());
         tfabschluss.setCaption("Abschluss");
         tfabschluss.setPlaceholder("Abschluss");
         tfabschluss.setHeight("37px");

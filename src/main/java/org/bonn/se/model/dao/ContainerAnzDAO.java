@@ -162,7 +162,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }

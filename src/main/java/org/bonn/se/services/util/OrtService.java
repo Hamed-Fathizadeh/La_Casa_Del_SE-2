@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class OrtService {
-    public static OrtService dao = null;
+    private static OrtService dao = null;
     private static List<String> listeOrt = new ArrayList<>();
 
     public OrtService( String str) {

@@ -29,12 +29,11 @@ public class JavaMailUtil {
         properties.put("mail.smtp.port","587");
 
         String myAccountEmail = "lacolsco.webpage@gmail.com";
-        String password = "P#A2dL9g";
 
        Session session = Session.getInstance(properties, new Authenticator(){
           @Override
           protected  PasswordAuthentication getPasswordAuthentication(){
-              return new PasswordAuthentication(myAccountEmail,password);
+              return new PasswordAuthentication(myAccountEmail,Password.MAILPASSWORD);
             }
         });
 
@@ -58,12 +57,11 @@ public class JavaMailUtil {
         properties.put("mail.smtp.port","587");
 
         String myAccountEmail = "lacolsco.webpage@gmail.com";
-        String password = "P#A2dL9g";
 
         Session session = Session.getInstance(properties, new Authenticator(){
             @Override
             protected  PasswordAuthentication getPasswordAuthentication(){
-                return new PasswordAuthentication(myAccountEmail,password);
+                return new PasswordAuthentication(myAccountEmail,Password.MAILPASSWORD);
             }
         });
 

@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class SuchbegrifService extends AbstractDAO {
 
-    public static SuchbegrifService dao = null;
+    private static SuchbegrifService dao = null;
     private static List< String> listeBeg = new ArrayList<>();
 
     public SuchbegrifService() {

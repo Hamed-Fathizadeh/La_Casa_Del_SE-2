@@ -13,16 +13,10 @@ import java.util.logging.Logger;
 
 public class BrancheDAO {
 
-    public static BrancheDAO dao = null;
+    private static BrancheDAO instance;
 
-    public BrancheDAO() {
-
-    }
     public static BrancheDAO getInstance() {
-        if (dao == null) {
-            dao = new BrancheDAO();
-        }
-        return dao;
+        return instance == null ? instance = new BrancheDAO() : instance;
     }
 
     public List<String> getBranche() {
