@@ -9,18 +9,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class JDBCConnection {
-    private static JDBCConnection connection = null;
     private Connection conn;
     private final String login = "tfelle2s";
     private final String password = Password.PASSWORD;
 
+    private static JDBCConnection instance;
+
     public static JDBCConnection getInstance() throws DatabaseException {
-
-        if (connection == null) {
-            connection = new JDBCConnection();
-        }
-
-        return connection;
+        return instance == null ? instance = new JDBCConnection() : instance;
     }
 
     private JDBCConnection() throws DatabaseException {

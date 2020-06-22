@@ -15,18 +15,12 @@ import java.util.logging.Logger;
 
 public class ContainerAnzDAO extends AbstractDAO{
 
-    public static ContainerAnzDAO dao = null;
-
-    private ContainerAnzDAO() {
-
-    }
+    private static ContainerAnzDAO instance;
 
     public static ContainerAnzDAO getInstance() {
-        if (dao == null) {
-            dao = new ContainerAnzDAO();
-        }
-        return dao;
+        return instance == null ? instance = new ContainerAnzDAO() : instance;
     }
+
     public List<StellenanzeigeDTO> load() throws DatabaseException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;

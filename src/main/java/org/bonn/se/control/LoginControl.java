@@ -31,7 +31,6 @@ public class LoginControl {
     public static LoginControl getInstance() {
         return instance == null ? instance = new LoginControl() : instance;
     }
-
     public void checkAuthentication ( String login , String password) throws NoSuchUserOrPassword, DatabaseException {
 
 //DB-Zugriff

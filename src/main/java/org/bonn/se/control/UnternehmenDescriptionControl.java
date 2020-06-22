@@ -13,17 +13,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UnternehmenDescriptionControl extends AbstractDAO {
-    private UnternehmenDescriptionControl(){}
 
 
-
-    public static UnternehmenDescriptionControl descriptionControl = null;
+    private static UnternehmenDescriptionControl instance;
 
     public static UnternehmenDescriptionControl getInstance() {
-        if(descriptionControl == null) {
-            descriptionControl = new UnternehmenDescriptionControl();
-        }
-        return descriptionControl;
+        return instance == null ? instance = new UnternehmenDescriptionControl() : instance;
     }
 
 

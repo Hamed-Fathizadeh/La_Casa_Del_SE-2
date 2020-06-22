@@ -11,17 +11,10 @@ import java.util.logging.Logger;
 
 public class ProfilDAO extends AbstractDAO{
 
-    public static ProfilDAO dao = null;
-
-    private ProfilDAO() {
-
-    }
+    private static ProfilDAO instance;
 
     public static ProfilDAO getInstance() {
-        if (dao == null) {
-            dao = new ProfilDAO();
-        }
-        return dao;
+        return instance == null ? instance = new ProfilDAO() : instance;
     }
     public void createStudentProfil1(Student student) throws DatabaseException {
 

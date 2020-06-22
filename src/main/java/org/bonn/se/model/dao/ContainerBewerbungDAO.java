@@ -18,18 +18,12 @@ import java.util.logging.Logger;
 
 public class ContainerBewerbungDAO {
 
-    public static ContainerBewerbungDAO dao = null;
-
-    private ContainerBewerbungDAO() {
-
-    }
+    private static ContainerBewerbungDAO instance;
 
     public static ContainerBewerbungDAO getInstance() {
-        if (dao == null) {
-            dao = new ContainerBewerbungDAO();
-        }
-        return dao;
+        return instance == null ? instance = new ContainerBewerbungDAO() : instance;
     }
+
     public static List<BewerbungDTO> loadNeueBewerbungen()throws DatabaseException{
         List<BewerbungDTO> liste = new ArrayList<>();
         ResultSet set;

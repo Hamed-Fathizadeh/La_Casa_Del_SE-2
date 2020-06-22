@@ -7,16 +7,11 @@ import org.bonn.se.model.dao.SuchbegriffDAO;
 import java.util.List;
 
 public class ComponentControl {
-    private ComponentControl(){
-    }
 
-    public static ComponentControl search = null;
+    private static ComponentControl instance;
 
     public static ComponentControl getInstance() {
-        if(search == null) {
-            search = new ComponentControl();
-        }
-        return search;
+        return instance == null ? instance = new ComponentControl() : instance;
     }
 
     public List<String> getSuchbegriffe () {

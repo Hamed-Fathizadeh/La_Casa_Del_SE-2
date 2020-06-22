@@ -12,16 +12,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OrtDAO extends AbstractDAO{
-    public static OrtDAO dao = null;
 
-    private OrtDAO() {
+    private static OrtDAO instance;
 
-    }
     public static OrtDAO getInstance() {
-        if (dao == null) {
-            dao = new OrtDAO();
-        }
-        return dao;
+        return instance == null ? instance = new OrtDAO() : instance;
     }
 
     public List<String> getOrt() {

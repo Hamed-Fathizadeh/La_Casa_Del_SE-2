@@ -12,19 +12,14 @@ import java.util.stream.Stream;
 public class ContainerNeuigkeiten {
 
     private List<StellenanzeigeDTO> liste;
-
     private ArrayList<StellenanzeigeDTO> liste2;
-
-    private static ContainerNeuigkeiten instance = new ContainerNeuigkeiten();
     private ContainerAnzDAO containerAnzDAO = ContainerAnzDAO.getInstance();
 
-    public static synchronized ContainerNeuigkeiten getInstance() {
-        if (instance == null) {
-            instance = new ContainerNeuigkeiten();
-        }
-        return instance;
-    }
+    private static ContainerNeuigkeiten instance;
 
+    public static ContainerNeuigkeiten getInstance() {
+        return instance == null ? instance = new ContainerNeuigkeiten() : instance;
+    }
     private ContainerNeuigkeiten(){
         liste = new ArrayList<StellenanzeigeDTO>();
 

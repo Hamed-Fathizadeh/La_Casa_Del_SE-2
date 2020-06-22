@@ -11,13 +11,11 @@ import java.util.List;
 public class ContainerAnzeigen {
     private List<StellenanzeigeDTO> liste;
 
-    private static ContainerAnzeigen instance = new ContainerAnzeigen();
     private ContainerAnzDAO containerAnzDAO  = ContainerAnzDAO.getInstance();
-    public static synchronized ContainerAnzeigen getInstance() {
-        if (instance == null) {
-            instance = new ContainerAnzeigen();
-        }
-        return instance;
+    private static ContainerAnzeigen instance;
+
+    public static ContainerAnzeigen getInstance() {
+        return instance == null ? instance = new ContainerAnzeigen() : instance;
     }
 
     private ContainerAnzeigen(){

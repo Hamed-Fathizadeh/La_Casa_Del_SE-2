@@ -11,13 +11,10 @@ public class ContainerLetztenBewerbungen {
 
     private List<BewerbungDTO> liste;
 
-    private static ContainerLetztenBewerbungen instance = new ContainerLetztenBewerbungen();
+    private static ContainerLetztenBewerbungen instance;
 
-    public static synchronized ContainerLetztenBewerbungen getInstance() {
-        if (instance == null) {
-            instance = new ContainerLetztenBewerbungen();
-        }
-        return instance;
+    public static ContainerLetztenBewerbungen getInstance() {
+        return instance == null ? instance = new ContainerLetztenBewerbungen() : instance;
     }
 
     private ContainerLetztenBewerbungen(){

@@ -5,17 +5,10 @@ import java.sql.Statement;
 
 public class RegisterDAO extends AbstractDAO{
 
-    public static  RegisterDAO dao = null;
-
-    private RegisterDAO() {
-
-    }
+    private static RegisterDAO instance;
 
     public static RegisterDAO getInstance() {
-        if(dao == null){
-            dao = new RegisterDAO();
-        }
-        return dao;
+        return instance == null ? instance = new RegisterDAO() : instance;
     }
 
     public void registerUser() {

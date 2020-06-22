@@ -12,7 +12,6 @@ public class UserSearchControl {
     public static UserSearchControl getInstance() {
         return instance == null ? instance = new UserSearchControl() : instance;
     }
-
     public boolean existUser(String email )  {
         try {
             return UserDAO.getInstance().getUserbyEmail(email);

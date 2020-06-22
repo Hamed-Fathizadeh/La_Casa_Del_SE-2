@@ -14,18 +14,11 @@ import java.util.logging.Logger;
 
 public class SuchbegriffDAO extends AbstractDAO {
 
-    public static SuchbegriffDAO dao = null;
+    private static SuchbegriffDAO instance;
 
-    private SuchbegriffDAO() {
-
-    }
     public static SuchbegriffDAO getInstance() {
-        if (dao == null) {
-            dao = new SuchbegriffDAO();
-        }
-        return dao;
+        return instance == null ? instance = new SuchbegriffDAO() : instance;
     }
-
     public List<String> getSuchbegriffe() {
 
         ResultSet set = null;
