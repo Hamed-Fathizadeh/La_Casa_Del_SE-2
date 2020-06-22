@@ -13,11 +13,14 @@ import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.TopPanelUser;
+import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.ErweiterteSucheWindow;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
+import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.SuchbegrifService;
@@ -252,7 +255,8 @@ public class StudentHomeView extends VerticalLayout implements View {
                 bottomGridBewNeu_2.setComponentAlignment(lBewerbung,Alignment.TOP_CENTER);
 
                 ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
-                containerBewerbungen.load("Top 5");
+                Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student));
+                containerBewerbungen.load("Top 5",student.getEmail());
                 Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen,"StudentHomeView");
                 gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
                 gBewerbungen.setWidth("705px");
