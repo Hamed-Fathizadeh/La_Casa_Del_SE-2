@@ -24,7 +24,7 @@ public class MockitoTest {
 
 
     public static final String USERNAME = "s@s.de";
-    public static final String PASSWORD = "12345678";
+    public static final String login = "12345678";
 
     @Mock
     private UI ui;
@@ -45,8 +45,8 @@ public class MockitoTest {
     @Test
     public void buttonClick() throws DatabaseException, NoSuchUserOrPassword {
         LoginControl loginControl = Mockito.mock(LoginControl.class);
-        Mockito.doCallRealMethod().when(loginControl).checkAuthentication(USERNAME,PASSWORD);
-        LoginControl.getInstance().checkAuthentication(USERNAME,PASSWORD);
+        Mockito.doCallRealMethod().when(loginControl).checkAuthentication(USERNAME,login);
+        LoginControl.getInstance().checkAuthentication(USERNAME,login);
         when(vaadinSession.getAttribute(Roles.Student)).thenReturn(true);
 //        Mockito.verify(ui.getSession()).getAttribute(Roles.Student);
 

@@ -20,7 +20,7 @@ public class TestDAOs {
     String vorname = "Vjunit";
     String nachname = "Njunit";
     String email = "11junit@junit.de";
-    String password = "11111111";
+    String login = "11111111";
     String hauptsitz = "Bonn - Nordrhein-Westfalen";
     String cname = "Firma-JUNIT";
     User student;

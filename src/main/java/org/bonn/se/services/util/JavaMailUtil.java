@@ -33,7 +33,7 @@ public class JavaMailUtil {
        Session session = Session.getInstance(properties, new Authenticator(){
           @Override
           protected  PasswordAuthentication getPasswordAuthentication(){
-              return new PasswordAuthentication(myAccountEmail,Password.MAILPASSWORD);
+              return new PasswordAuthentication(myAccountEmail,Password.mail);
             }
         });
 
@@ -61,7 +61,7 @@ public class JavaMailUtil {
         Session session = Session.getInstance(properties, new Authenticator(){
             @Override
             protected  PasswordAuthentication getPasswordAuthentication(){
-                return new PasswordAuthentication(myAccountEmail,Password.MAILPASSWORD);
+                return new PasswordAuthentication(myAccountEmail,Password.mail);
             }
         });
 
