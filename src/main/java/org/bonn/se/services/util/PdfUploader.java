@@ -4,8 +4,11 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
 import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.services.db.JDBCConnection;
 
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     static File file ;
@@ -40,7 +43,7 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
         try {
             fos = new FileOutputStream(file);
         } catch (final IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
             return null;
         }
         return fos;
@@ -68,7 +71,7 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
             fis.close();
 
         }catch(IOException ioExp){
-            ioExp.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ioExp);
         }
         return bArray;
     }

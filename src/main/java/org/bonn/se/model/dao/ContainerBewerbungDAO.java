@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContainerBewerbungDAO {
 
@@ -56,7 +58,7 @@ public class ContainerBewerbungDAO {
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -65,10 +67,9 @@ public class ContainerBewerbungDAO {
     }
 
 
-    public static List<BewerbungDTO> load(String str) throws DatabaseException {
+    public static List<BewerbungDTO> load(String str, String email ) throws DatabaseException {
         List<BewerbungDTO> liste = new ArrayList<>();
         ResultSet set;
-        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
         try {
               String limit = " ";
               if(str.equals("Alle")) {
@@ -77,7 +78,7 @@ public class ContainerBewerbungDAO {
               }
                  Statement statement = JDBCConnection.getInstance().getStatement();
                  set = statement.executeQuery("select * from lacasa.view_bewerbung \n" +
-                                                  "where email ='"+student.getEmail()+"' and status = 1 or status = 9 order by datum desc \n" +limit
+                                                  "where email ='"+ email +"' and (status = 1 or status = 9) order by datum desc \n" +limit
                                              );
 
         } catch (SQLException | DatabaseException throwables) {
@@ -98,7 +99,7 @@ public class ContainerBewerbungDAO {
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -157,7 +158,7 @@ public class ContainerBewerbungDAO {
             }
 
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }

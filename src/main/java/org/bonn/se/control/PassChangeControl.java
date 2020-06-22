@@ -5,6 +5,8 @@ import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.dao.PassChangeDAO;
 import org.bonn.se.model.objects.dto.PassChangeRequest;
 
+import java.util.logging.Logger;
+
 public class PassChangeControl {
 
     public static PassChangeControl passChangeControl = null;

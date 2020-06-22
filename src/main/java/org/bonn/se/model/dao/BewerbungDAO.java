@@ -12,6 +12,8 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BewerbungDAO extends AbstractDAO{
     public static BewerbungDAO dao = null;
@@ -34,7 +36,7 @@ public class BewerbungDAO extends AbstractDAO{
         try {
             statement.executeUpdate();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -46,7 +48,7 @@ public class BewerbungDAO extends AbstractDAO{
         try {
             statement.executeUpdate();
         }catch(NullPointerException | SQLException e){
-            e.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
         }finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -78,7 +80,7 @@ public class BewerbungDAO extends AbstractDAO{
                UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
            }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         } finally {
             JDBCConnection.getInstance().closeConnection();
@@ -107,7 +109,7 @@ public class BewerbungDAO extends AbstractDAO{
             }
 
         } catch (SQLException  throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }
 
         System.out.println("bewDAO"+bMarkierung );
@@ -117,7 +119,7 @@ public class BewerbungDAO extends AbstractDAO{
         try {
             statement.executeUpdate();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -134,7 +136,7 @@ public class BewerbungDAO extends AbstractDAO{
         try {
             statement.executeUpdate();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }finally {
             JDBCConnection.getInstance().closeConnection();
         }
@@ -167,7 +169,7 @@ public class BewerbungDAO extends AbstractDAO{
                 }, student_id+" Lebenslauf.pdf");
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }

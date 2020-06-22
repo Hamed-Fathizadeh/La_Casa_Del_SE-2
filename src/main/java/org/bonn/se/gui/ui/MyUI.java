@@ -4,8 +4,8 @@ import com.vaadin.annotations.*;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
+import org.bonn.se.gui.views.LoginView;
 import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.gui.views.*;
 import org.bonn.se.model.objects.entitites.User;
@@ -39,14 +39,13 @@ public class MyUI extends UI {
     }
 
     @Override
-    protected void init(VaadinRequest vaadinRequest) {
+    public void init(VaadinRequest vaadinRequest) {
         this.setSizeFull();
 
-        System.out.println("LOG: neues UI-Objekt erzeugt!" + VaadinSession.getCurrent().toString());
 
         Navigator navi = new Navigator(this , this );
         navi.addView(RegisterStudent, RegisterStudentView.class);
-        navi.addView(MainView, LoginView.class);
+        navi.addView(LoginView, LoginView.class);
         navi.addView(RegisterUnternehmen, RegisterUnternehmerView.class);
         navi.addView(StudentHomeView, StudentHomeView.class);
         navi.addView(UnternehmenHomeView, org.bonn.se.gui.views.UnternehmenHomeView.class);

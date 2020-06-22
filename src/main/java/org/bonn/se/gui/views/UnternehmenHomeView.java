@@ -14,6 +14,7 @@ import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
@@ -21,19 +22,22 @@ import org.bonn.se.services.util.Views;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 
 public class UnternehmenHomeView extends VerticalLayout implements View {
-    private final StellenanzeigeDTO selected = null;
-    private final int anzahl = 0;
+
+
     private TabSheet.Tab bewerbung;
     public void setUp() throws DatabaseException, SQLException {
 
+
         TopPanelUser topPanel = new TopPanelUser();
 
-        GridLayout Maingrid = new GridLayout(3, 3);
-        Maingrid.setSizeFull();
+        GridLayout mainGrid = new GridLayout(3, 3);
+        mainGrid.setSizeFull();
 
         Button buttonAnzeigeErstellen= new Button("Anzeige erstellen");
         buttonAnzeigeErstellen.addClickListener(new Button.ClickListener() {
@@ -109,30 +113,28 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         bottomGridBewNeu.setSizeFull();
         bottomGridBewNeu.setMargin(true);
 
-       // bottomGridBewNeu.addStyleName("AnzeigeUnternehmen");
 
 
+        mainGrid.addComponent(topPanel, 0, 0, 2, 0);
+        mainGrid.addComponent(vlayoutButton, 1, 1, 1, 1);
+        mainGrid.addComponent(bottomGridBewNeu, 0, 2, 2, 2);
 
 
-                      Maingrid.addComponent(topPanel, 0, 0, 2, 0);
-        Maingrid.addComponent(vlayoutButton, 1, 1, 1, 1);
-              Maingrid.addComponent(bottomGridBewNeu, 0, 2, 2, 2);
+        mainGrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(vlayoutButton, Alignment.MIDDLE_CENTER);
+        mainGrid.setComponentAlignment(bottomGridBewNeu, Alignment.BOTTOM_CENTER);
 
 
-        Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
-        Maingrid.setComponentAlignment(vlayoutButton, Alignment.MIDDLE_CENTER);
-        Maingrid.setComponentAlignment(bottomGridBewNeu, Alignment.BOTTOM_CENTER);
-
-
-        this.addComponent(Maingrid);
-        this.setComponentAlignment(Maingrid, Alignment.MIDDLE_CENTER);
+        this.addComponent(mainGrid);
+        this.setComponentAlignment(mainGrid, Alignment.MIDDLE_CENTER);
         this.setMargin(false);
         this.addStyleName("grid");
 
-        gAnzeigen.removeColumn("Anzahl neue Bewerbungen");
-        gAnzeigenOnline.removeColumn("Anzahl neue Bewerbungen");
-        gAnzeigenOffline.removeColumn("Anzahl neue Bewerbungen");
-        gAnzeigenEntwurf.removeColumn("Anzahl neue Bewerbungen");
+        String anzahlNeueBewerbungen = "Anzahl neue Bewerbungen";
+        gAnzeigen.removeColumn(anzahlNeueBewerbungen);
+        gAnzeigenOnline.removeColumn(anzahlNeueBewerbungen);
+        gAnzeigenOffline.removeColumn(anzahlNeueBewerbungen);
+        gAnzeigenEntwurf.removeColumn(anzahlNeueBewerbungen);
 
         if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
@@ -171,12 +173,12 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
             } catch (DatabaseException e) {
                 e.printStackTrace();
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             }
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
         }
     }
 }

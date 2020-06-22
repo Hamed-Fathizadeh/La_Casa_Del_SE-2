@@ -16,14 +16,14 @@ import org.bonn.se.services.util.Roles;
 import java.sql.SQLException;
 
 public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
-    static GridLayout GridAnzeig = null;
+    static GridLayout gridAnzeig = null;
 
     public static GridLayout getGridAnzeig() {
-        return GridAnzeig;
+        return gridAnzeig;
     }
 
     public static void setGridAnzeig(GridLayout gridAnzeig) {
-        GridAnzeig = gridAnzeig;
+        gridAnzeig = gridAnzeig;
     }
 
 

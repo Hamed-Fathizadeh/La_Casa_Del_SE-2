@@ -19,10 +19,11 @@ import org.bonn.se.services.util.*;
 import java.sql.SQLException;
 
 public class AnzeigeErstellenView extends GridLayout implements View {
-        private OrtField ort;
+
 
     public void setUp() throws DatabaseException, SQLException {
 
+        OrtField ort;
 
         this.setRows(4);
         this.setColumns(10);
@@ -175,7 +176,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
                 e.printStackTrace();
             }
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
         }
     }
 

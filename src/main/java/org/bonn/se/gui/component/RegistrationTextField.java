@@ -5,8 +5,6 @@ import com.vaadin.ui.TextField;
 
 public class RegistrationTextField extends TextField {
 
-    private String caption;
-
     public RegistrationTextField(String caption) {
 
         this.setHeight("56px");

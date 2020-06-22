@@ -17,10 +17,22 @@ import org.bonn.se.services.util.Views;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginControl {
 
-    public static void checkAuthentication ( String login , String password) throws NoSuchUserOrPassword, DatabaseException {
+    private LoginControl(){
+
+    }
+
+    private static LoginControl instance;
+
+    public static LoginControl getInstance() {
+        return instance == null ? instance = new LoginControl() : instance;
+    }
+
+    public void checkAuthentication ( String login , String password) throws NoSuchUserOrPassword, DatabaseException {
 
 //DB-Zugriff
         ResultSet set;
@@ -77,12 +89,12 @@ public class LoginControl {
                 throw new DatabaseException("Fehler Passwort oder Email ist falsch!");
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
         }
 
-        UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
     }
 
     public static void logoutUser() {
@@ -90,7 +102,7 @@ public class LoginControl {
         VaadinSession vaadinSession = UI.getCurrent().getSession();
         vaadinSession.setAttribute(Roles.Student,null);
         vaadinSession.setAttribute(Roles.Unternehmen,null);
-        UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
     }
 
 

@@ -55,7 +55,7 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
         wizard.setVisible(false);
         this.close();
         UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,null);
-        UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class RegisterUnternehmenWindow extends Window implements WizardProgressL
                         wizard.setVisible(false);
                         RegisterUnternehmenWindow.this.close();
                         UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,null);
-                        UI.getCurrent().getNavigator().navigateTo(Views.MainView);
+                        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
                     }
                 });
     }
