@@ -9,18 +9,15 @@ import org.bonn.se.control.LoginControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
-import java.sql.SQLException;
-
 public class TopPanelUser extends GridLayout {
-        MenuBar bar;
+        final MenuBar bar;
         MenuBar.MenuItem item1;
 
-    public TopPanelUser() throws DatabaseException, SQLException {
+    public TopPanelUser() {
 
         this.setRows(1);
         this.setColumns(10);
@@ -37,14 +34,11 @@ public class TopPanelUser extends GridLayout {
         imagePropertyInfo.setStyleName(ValoTheme.BUTTON_BORDERLESS);
 
 
-        imagePropertyInfo.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-                    UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-                }else{
-                    UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
-                }
+        imagePropertyInfo.addClickListener((Button.ClickListener) clickEvent -> {
+            if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+                UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+            }else{
+                UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
             }
         });
 
@@ -74,53 +68,21 @@ public class TopPanelUser extends GridLayout {
 
 
 
-        item1.addItem("Mein Profil", VaadinIcons.USER, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem menuItem) {
-                MyUI.getCurrent().getNavigator().navigateTo(Views.ProfilVerwaltenStudent);
-            }
-        });
+        item1.addItem("Mein Profil", VaadinIcons.USER, (MenuBar.Command) menuItem -> MyUI.getCurrent().getNavigator().navigateTo(Views.ProfilVerwaltenStudent));
 
-        item1.addItem("Neuigkeiten", VaadinIcons.INFO_CIRCLE, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem menuItem) {
-                LoginControl.logoutUser();
-            }
-        });
+        item1.addItem("Neuigkeiten", VaadinIcons.INFO_CIRCLE, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
 
 
-            item1.addItem("Settings", VaadinIcons.COG, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem menuItem) {
-                UI.getCurrent().getNavigator().navigateTo(Views.Settings);
-            }
-        });
+            item1.addItem("Settings", VaadinIcons.COG, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.Settings));
 
         item1.addSeparator();
-        item1.addItem("Logout", VaadinIcons.SIGN_OUT, new MenuBar.Command() {
-            @Override
-            public void menuSelected(MenuBar.MenuItem menuItem) {
-                LoginControl.logoutUser();
-            }
-        });
+        item1.addItem("Logout", VaadinIcons.SIGN_OUT, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
         this.addComponent(bar,9,0,9,0);
         this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
 
         if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
-            UI.getCurrent().access(new Runnable() {
-                @Override
-                public void run() {
-
-                    item1.addItemBefore("Letzte Bewerbungen", VaadinIcons.CLIPBOARD_TEXT, new MenuBar.Command() {
-                        @Override
-                        public void menuSelected(MenuBar.MenuItem menuItem) {
-                            LoginControl.logoutUser();
-                        }
-                    },item1.getChildren().get(2));
-                }
-
-            });
+            UI.getCurrent().access(() -> item1.addItemBefore("Letzte Bewerbungen", VaadinIcons.CLIPBOARD_TEXT, (MenuBar.Command) menuItem -> LoginControl.logoutUser(),item1.getChildren().get(2)));
         }
     }
 }

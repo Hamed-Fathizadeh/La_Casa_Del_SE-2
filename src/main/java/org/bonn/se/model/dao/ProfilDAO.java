@@ -33,12 +33,10 @@ public class ProfilDAO extends AbstractDAO{
             statement.setBytes(5,student.getPicture());
             statement.setBytes(6,student.getLebenslauf());
             if (String.valueOf(student.getG_datum()).equals("null")) {
-                assert statement != null;
                 statement.setDate(1,null);
 
             } else{
                 Date geburtsdatum = Date.valueOf(student.getG_datum());
-                assert statement != null;
                 statement.setDate(1,geburtsdatum);
             }
 

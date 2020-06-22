@@ -18,7 +18,7 @@ public class ContainerLetztenBewerbungen {
     }
 
     private ContainerLetztenBewerbungen(){
-        liste = new ArrayList<BewerbungDTO>();
+        liste = new ArrayList<>();
 
     }
     public int getAnzahl(){
@@ -27,7 +27,7 @@ public class ContainerLetztenBewerbungen {
 
     public void load(String email){
         try {
-            liste = ContainerBewerbungDAO.load("Alle", email);
+            liste = ContainerBewerbungDAO.getInstance().load("Alle", email);
         }
         catch( DatabaseException throwables){
             throwables.getMessage();
@@ -37,24 +37,26 @@ public class ContainerLetztenBewerbungen {
 
     public void load(String str, String email){
         try {
-            liste = ContainerBewerbungDAO.load(str, email);
+            liste = ContainerBewerbungDAO.getInstance().load(str, email);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadNeueBewerbungen(){
-        try {
-            liste = ContainerBewerbungDAO.loadNeueBewerbungen();
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-        }
-    }
+// --Commented out by Inspection START (22.06.20, 23:35):
+//    public void loadNeueBewerbungen(){
+//        try {
+//            liste = ContainerBewerbungDAO.getInstance().loadNeueBewerbungen();
+//        } catch (DatabaseException e) {
+//            e.printStackTrace();
+//        }
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:35)
 
 
     public void loadByStellenAnzeigeID(String str, int saID){
         try {
-            liste = ContainerBewerbungDAO.loadByStellenAnzeigeID(str,saID);
+            liste = ContainerBewerbungDAO.getInstance().loadByStellenAnzeigeID(str,saID);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
@@ -67,11 +69,13 @@ public class ContainerLetztenBewerbungen {
     public List<BewerbungDTO> getListe(){
         return liste;
     }
-    public void printAll(){
-        for(BewerbungDTO b :liste){
-            System.out.println(b.toString());
-        }
-    }
+// --Commented out by Inspection START (22.06.20, 23:35):
+//    public void printAll(){
+//        for(BewerbungDTO b :liste){
+//            System.out.println(b.toString());
+//        }
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:35)
 
    // public static void main(String [] args){
         // ContainerLetztenBewerbungen ins= ContainerLetztenBewerbungen.getInstance();

@@ -27,7 +27,6 @@ public class RegisterStudentView extends GridLayout implements View {
 
     public void setUp() {
 
-        boolean status = true;
 
 
         System.out.println("LOG: get UI-Objekt in RegisterStudent!" + VaadinSession.getCurrent().toString());

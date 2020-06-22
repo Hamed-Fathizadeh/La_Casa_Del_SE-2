@@ -37,23 +37,25 @@ public class JobTitelControl {
             return jobtitel;
         }
 
-    public static boolean isJobTitelList (String string) throws DatabaseException {
-        ResultSet set;
-        boolean result = false;
-        try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
-
-            set = statement.executeQuery("SELECT '" + string + "' FROM lacasa.tab_suchbegriff");
-
-            while (set.next()) {
-                result = true;
-            }
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        } finally {
-            JDBCConnection.getInstance().closeConnection();
-        }
-        return result;
-    }
+// --Commented out by Inspection START (22.06.20, 23:54):
+//    public static boolean isJobTitelList (String string) throws DatabaseException {
+//        ResultSet set;
+//        boolean result = false;
+//        try {
+//            Statement statement = JDBCConnection.getInstance().getStatement();
+//
+//            set = statement.executeQuery("SELECT '" + string + "' FROM lacasa.tab_suchbegriff");
+//
+//            while (set.next()) {
+//                result = true;
+//            }
+//        } catch (SQLException | DatabaseException throwables) {
+//            throwables.printStackTrace();
+//            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+//        } finally {
+//            JDBCConnection.getInstance().closeConnection();
+//        }
+//        return result;
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:54)
 }

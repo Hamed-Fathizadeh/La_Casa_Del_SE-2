@@ -3,10 +3,8 @@ package org.bonn.se.model.dao;
 import com.vaadin.ui.UI;
 import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
-import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.Roles;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -22,9 +20,8 @@ public class BewertungDAO extends AbstractDAO {
         return instance == null ? instance = new BewertungDAO() : instance;
     }
 
-    public static void bewertung(BewerbungDTO bewerbung) {
+    public void bewertung(BewerbungDTO bewerbung) {
         ResultSet set = null;
-        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
 
 
         try {

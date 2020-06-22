@@ -62,7 +62,7 @@ public class UserDAO  extends AbstractDAO {
 
     public boolean getUserbyEmail(String email) throws DatabaseException {
 
-        ResultSet set = null;
+        ResultSet set;
 
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();

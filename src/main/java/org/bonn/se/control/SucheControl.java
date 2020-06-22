@@ -1,6 +1,5 @@
 package org.bonn.se.control;
 
-import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.data.provider.DataProvider;
 import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
@@ -37,13 +36,11 @@ public class SucheControl  implements Suche {
         }
         rowsCount = stellenanzeigeDTOS.size();
 
-        CallbackDataProvider<StellenanzeigeDTO,Void> dataProvider = DataProvider.fromCallbacks(query -> {
+        return DataProvider.fromCallbacks(query -> {
             int offset = query.getOffset();
             int limit = query.getLimit();
             return stellenanzeigeDTOS.stream().skip(offset).limit(limit);
         } ,query ->getRowsCount() );
-
-        return dataProvider;
 
      }
 }

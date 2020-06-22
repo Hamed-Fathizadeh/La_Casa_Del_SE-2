@@ -31,7 +31,7 @@ public class FeatureToggleDAO {
                     " FROM lacasa.tab_toggle_configuration" +
                     " WHERE feature_name = '" + feature + "' AND status = TRUE");
 
-            if (set.next() == false) {
+            if (!set.next()) {
                 return false;
 
             }

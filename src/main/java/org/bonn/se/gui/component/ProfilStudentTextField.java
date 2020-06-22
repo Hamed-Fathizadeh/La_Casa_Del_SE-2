@@ -4,9 +4,6 @@ import com.vaadin.ui.TextField;
 
 public class ProfilStudentTextField extends TextField  {
 
-    //eingabe wert
-    private String caption;
-    private String value;
 
     //TextField Direkt nehmen, value set erst in Klasse ProfilVerwalten
     public ProfilStudentTextField(String caption, String value){

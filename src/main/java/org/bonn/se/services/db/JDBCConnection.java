@@ -10,8 +10,6 @@ import java.util.logging.Logger;
 
 public class JDBCConnection {
     private Connection conn;
-    private final String login = "tfelle2s";
-    private final String password = Password.PASSWORD;
 
     private static JDBCConnection instance;
 

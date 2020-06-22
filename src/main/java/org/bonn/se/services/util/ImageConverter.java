@@ -6,7 +6,6 @@ import com.vaadin.ui.Image;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
 
 public class ImageConverter {
 
@@ -31,12 +30,8 @@ public class ImageConverter {
         } else {
             Image image;
 
-            StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
-                public InputStream getStream() {
-                    return new ByteArrayInputStream(
-                            bild);
-                }
-            };
+            StreamResource.StreamSource streamSource = (StreamResource.StreamSource) () -> new ByteArrayInputStream(
+                    bild);
 
             image = new Image(
                     null, new StreamResource(
@@ -55,12 +50,8 @@ public class ImageConverter {
         } else {
             Image image;
 
-            StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
-                public InputStream getStream() {
-                    return new ByteArrayInputStream(
-                            bild);
-                }
-            };
+            StreamResource.StreamSource streamSource = (StreamResource.StreamSource) () -> new ByteArrayInputStream(
+                    bild);
 
             image = new Image(
                     null, new StreamResource(

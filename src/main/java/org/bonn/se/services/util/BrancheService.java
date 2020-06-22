@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class BrancheService { public static SuchbegrifService dao = null;
-    private static List< String> listeBranche =  new ArrayList<String>();
+public class BrancheService { // --Commented out by Inspection (22.06.20, 23:29):public static SuchbegrifService dao = null;
+    private static List< String> listeBranche = new ArrayList<>();
 
     public BrancheService() {
         listeBranche = ComponentControl.getInstance().getBranche();
@@ -17,9 +17,11 @@ public class BrancheService { public static SuchbegrifService dao = null;
         return listeBranche;
     }
 
-    public int count() {
-        return listeBranche.size();
-    }
+// --Commented out by Inspection START (22.06.20, 23:29):
+//    public int count() {
+//        return listeBranche.size();
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:29)
 
     public int count(String filter) {
         return (int) getSuchbegriffe().stream()

@@ -48,25 +48,16 @@ public class StudentHomeView extends VerticalLayout implements View {
         return gridAnzeige;
     }
 
-    public static void setGridAnzeig(Grid gridAnzeig) {
-        gridAnzeig = gridAnzeig;
-    }
 
     public static GridLayout getMaingrid() {
         return mainGrid;
     }
 
-    public static void setMaingrid(GridLayout maingrid) {
-        mainGrid = maingrid;
-    }
-
 
     static GridLayout bottomGridBewNeu;
     private String suchArt = "Einfache";
-    static ContainerNeuigkeiten containerOnFly = ContainerNeuigkeiten.getInstance();
     ///Test
-    List<StellenanzeigeDTO> stellenanzeigeDTOS;
-    Suche suche = new SucheControlProxy();
+    final Suche suche = new SucheControlProxy();
 
 
     public void setUp() throws DatabaseException, SQLException {
@@ -251,7 +242,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         List<StellenanzeigeDTO> dataTop5 = containerNeuigkeiten.getListe().stream().limit(5)
                 .collect(Collectors.toList());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",dataTop5);
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new Anzeigen<>("Student", dataTop5);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("705px");
 
@@ -337,7 +328,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
                 Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student));
                 containerBewerbungen.load("Top 5",student.getEmail());
-                Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<BewerbungDTO>(containerBewerbungen,"StudentHomeView");
+                Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<>(containerBewerbungen, "StudentHomeView");
                 gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
                 gBewerbungen.setWidth("705px");
                 bottomGridBewNeu_2.addComponent(gBewerbungen,0,1,1,1);
@@ -349,14 +340,12 @@ public class StudentHomeView extends VerticalLayout implements View {
                 bottomGridBewNeu_2.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
                 horizontalLayout.addComponent(bottomGridBewNeu_2,0);
                 horizontalLayout.setComponentAlignment(bottomGridBewNeu_2,Alignment.MIDDLE_CENTER);
-                alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> {
-                    UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView);
-                });
+                alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView));
             });
         }
     }
 
-    public void loadProfil() throws DatabaseException, SQLException {
+    public void loadProfil() throws DatabaseException {
         BewerbungControl.checkDeletedAnzeige();
     }
 
@@ -386,32 +375,34 @@ public class StudentHomeView extends VerticalLayout implements View {
         container.loadSuche(fachgebiet, standort, bundesland, umkreis, artSuche, einstellungsart, abDatum, branche);
 
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",container.getListe());
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new Anzeigen<>("Student", container.getListe());
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setWidth("1000px");
         gridAnzeige = gAnzeigen;
 
     }
 
-    public static void stellenSuchenOnFly(String ortBund, String suchbegrif, String art, String branche, String beginDatum) {
-
-        List<StellenanzeigeDTO> data = containerOnFly.getListe().stream().peek(c -> {
-            if (c.getSuchbegriff() == null){c.setSuchbegriff("");}
-            if (c.getStandortBundesland() == null){c.setStandort("");}
-            if (c.getArt() == null){c.setArt("");}
-            if (c.getBranche() == null){c.setBranche("");}
-
-        }).filter( suche -> suche.getStandortBundesland().equals(ortBund) || suche.getStandortBundesland().equals("")
-                         || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals(""))
-                         || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals("")) && suche.getStandortBundesland().equals(ortBund) || suche.getStandortBundesland().equals("")
-                 ).collect(Collectors.toList());
-
-
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",data);
-        gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
-        gAnzeigen.setWidth("1000px");
-        gridAnzeige = gAnzeigen;
-
-    }
+// --Commented out by Inspection START (22.06.20, 23:45):
+//    public static void stellenSuchenOnFly(String ortBund, String suchbegrif, String art, String branche, String beginDatum) {
+//
+//        List<StellenanzeigeDTO> data = containerOnFly.getListe().stream().peek(c -> {
+//            if (c.getSuchbegriff() == null){c.setSuchbegriff("");}
+//            if (c.getStandortBundesland() == null){c.setStandort("");}
+//            if (c.getArt() == null){c.setArt("");}
+//            if (c.getBranche() == null){c.setBranche("");}
+//
+//        }).filter( suche -> suche.getStandortBundesland().equals(ortBund) || suche.getStandortBundesland().equals("")
+//                         || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals(""))
+//                         || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals("")) && suche.getStandortBundesland().equals(ortBund) || suche.getStandortBundesland().equals("")
+//                 ).collect(Collectors.toList());
+//
+//
+//        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",data);
+//        gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
+//        gAnzeigen.setWidth("1000px");
+//        gridAnzeige = gAnzeigen;
+//
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:45)
 
 }

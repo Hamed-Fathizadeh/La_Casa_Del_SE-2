@@ -8,20 +8,14 @@ import com.vaadin.ui.*;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
-import org.bonn.se.model.objects.entitites.*;
-import org.bonn.se.services.db.JDBCConnection;
-import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
-
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class AlleBewerbungenView extends VerticalLayout implements View {
 
     static GridLayout mainGrid = new GridLayout(2, 5);
-    public void setUp() throws DatabaseException, SQLException {
+    public void setUp() {
 
         mainGrid = new GridLayout(1, 5);
         mainGrid.setSizeFull();
@@ -41,7 +35,7 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
 
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungen.load("Alle");
-        @SuppressWarnings("unchecked") Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"AlleBewerbungenView");
+        Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"AlleBewerbungenView");
         bewerbungen.setHeightMode(HeightMode.UNDEFINED);
 
         GridLayout bottomGridBewNeu = new GridLayout(1, 1);
@@ -76,13 +70,7 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
 
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            try {
                 this.setUp();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            } catch (SQLException throwables) {
-                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
-            }
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {

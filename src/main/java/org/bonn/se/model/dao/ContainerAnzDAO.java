@@ -62,15 +62,13 @@ public class ContainerAnzDAO extends AbstractDAO{
 
     public List<StellenanzeigeDTO> loadSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, java.util.Date ab_Datum, String branche) throws DatabaseException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
-        ResultSet set = null;
+        ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
 
             //Bundesland und fachgebiet mussen noch überarbeitet werden
 
             StringBuilder sbSuchbeg = new StringBuilder(suchbegriff == null ? " " : " and a.suchbegriff = '" + suchbegriff + "' ");
-            StringBuilder sbOrt = new StringBuilder( ort == null ? " " : " and a.ort =  '" +  ort + "' ");
-            StringBuilder sbBund = new StringBuilder(bundesland == null? " " : " and a.bundesland =  '" +  bundesland + "' ");
             StringBuilder sBumkreis = new StringBuilder();
             StringBuilder sbEinstellungsart = new StringBuilder(" ");
             StringBuilder sbAb_Datum = new StringBuilder(" ");
@@ -120,7 +118,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "  FROM lacasa.tab_stellen_anzeige a\n" +
                     "  join lacasa.tab_unternehmen u\n" +
                     "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
-                    " where status = 1" + sbOrt+ sbBund+ sbSuchbeg  + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis 
+                    " where status = 1" + (ort == null ? " " : " and a.ort =  '" + ort + "' ") + (bundesland == null ? " " : " and a.bundesland =  '" + bundesland + "' ") + sbSuchbeg  + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis
                  );
 /*
                      " OFFSET "+ offtset  +
@@ -260,16 +258,13 @@ public class ContainerAnzDAO extends AbstractDAO{
             JDBCConnection.getInstance().closeConnection();
         }
 
-        Collections.sort(liste, new Comparator<StellenanzeigeDTO>() {
-            @Override
-            public int compare(StellenanzeigeDTO o1, StellenanzeigeDTO o2) {
-                if (o1.getId() < o2.getId()) {
-                    return -1;
-                } else if (o1.getId() == o2.getId()) {
-                    return 0;
-                }
-                return 1;
+        liste.sort((o1, o2) -> {
+            if (o1.getId() < o2.getId()) {
+                return -1;
+            } else if (o1.getId() == o2.getId()) {
+                return 0;
             }
+            return 1;
         });
 
 
@@ -323,16 +318,13 @@ public class ContainerAnzDAO extends AbstractDAO{
             JDBCConnection.getInstance().closeConnection();
         }
 
-        Collections.sort(liste, new Comparator<StellenanzeigeDTO>() {
-            @Override
-            public int compare(StellenanzeigeDTO o1, StellenanzeigeDTO o2) {
-                if (o1.getId() < o2.getId()) {
-                    return -1;
-                } else if (o1.getId() == o2.getId()) {
-                    return 0;
-                }
-                return 1;
+        liste.sort((o1, o2) -> {
+            if (o1.getId() < o2.getId()) {
+                return -1;
+            } else if (o1.getId() == o2.getId()) {
+                return 0;
             }
+            return 1;
         });
 
 
@@ -381,7 +373,7 @@ public class ContainerAnzDAO extends AbstractDAO{
     }
 
     public void sendEmail(Unternehmen unternehmen) throws DatabaseException {
-        HashMap<String, String> liste = new HashMap<String, String>();
+        HashMap<String, String> liste = new HashMap<>();
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
@@ -439,18 +431,18 @@ public class ContainerAnzDAO extends AbstractDAO{
             result = statement.execute("" +
                     "SELECT lacasa.tab_bewerbung.s_anzeige_id " +
                     "FROM lacasa.tab_bewerbung " +
-                    "WHERE lacasa.tab_bewerbung.s_anzeige_id = \'"+ stellenanzeige.getId() + "\'");
+                    "WHERE lacasa.tab_bewerbung.s_anzeige_id = '" + stellenanzeige.getId() + "'");
         } catch (SQLException | DatabaseException throwables) {
             throwables.printStackTrace();
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         }
 
-        if(result == false) {
+        if(!result) {
             sql = "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
         } else {
             sql ="UPDATE lacasa.tab_bewerbung SET s_anzeige_id = '-1'" +
-                    "WHERE lacasa.tab_bewerbung.s_anzeige_id = \'"+ stellenanzeige.getId()+ "\';" +
-                    "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = \'" + stellenanzeige.getId()+ "\';";
+                    "WHERE lacasa.tab_bewerbung.s_anzeige_id = '" + stellenanzeige.getId()+ "';" +
+                    "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
         }
         PreparedStatement statement = getPreparedStatement(sql);
 

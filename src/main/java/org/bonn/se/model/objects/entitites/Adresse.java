@@ -53,7 +53,7 @@ public class Adresse {
     public void setPlz(String plz) {
         int length = String.valueOf(plz).length();
         if (length > 5) {
-            throw new IllegalException("Illegale  plz");
+            throw new IllegalException();
         } else
             this.plz=plz;
     }

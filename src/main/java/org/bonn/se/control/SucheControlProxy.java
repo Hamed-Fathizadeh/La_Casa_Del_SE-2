@@ -8,14 +8,13 @@ import java.util.Date;
 public class SucheControlProxy implements Suche {
 
     private  SucheControl implSucheControl;
-    static int rowsCount;
 
     @Override
     public int getRowsCount() {
         if(implSucheControl == null) {
             implSucheControl = new SucheControl();
         }
-        return implSucheControl.rowsCount;
+        return SucheControl.rowsCount;
     }
 
     @Override

@@ -15,9 +15,11 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     static byte[] myByte;
     static String path = null;
 
-    public static String getPath() {
-        return path;
-    }
+// --Commented out by Inspection START (23.06.20, 00:16):
+//    public static String getPath() {
+//        return path;
+//    }
+// --Commented out by Inspection STOP (23.06.20, 00:16)
 
     public static void setPath(String path) {
         PdfUploader.path = path;
@@ -61,7 +63,7 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
         return myByte;
     }
     private static byte[] readFileToByteArray(File file){
-        FileInputStream fis = null;
+        FileInputStream fis;
         // Creating a byte array using the length of the file
         // file.length returns long which is cast to int
         byte[] bArray = new byte[(int) file.length()];

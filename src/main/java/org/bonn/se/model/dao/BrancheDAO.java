@@ -36,7 +36,7 @@ public class BrancheDAO {
             throwables.printStackTrace();
 
         }
-        List<String> liste = new ArrayList<String>();
+        List<String> liste = new ArrayList<>();
         try {
             while (true) {
                 assert set != null;

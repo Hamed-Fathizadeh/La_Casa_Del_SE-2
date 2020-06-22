@@ -53,7 +53,7 @@ public class LoginControl {
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         }
 
-        User user = null;
+        User user;
         try {
             if ( set.next()) {
 

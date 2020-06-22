@@ -24,7 +24,7 @@ public class BewerbungDAO extends AbstractDAO{
         return instance == null ? instance = new BewerbungDAO() : instance;
     }
 
-    public static void statusAendern(int bew_id, int status) throws DatabaseException {
+    public void statusAendern(int bew_id, int status) throws DatabaseException {
         String sql = "update lacasa.tab_bewerbung set status ="+ status + " where bewerbung_id = "+bew_id;
         PreparedStatement statement = getPreparedStatement(sql);
 
@@ -36,11 +36,12 @@ public class BewerbungDAO extends AbstractDAO{
             JDBCConnection.getInstance().closeConnection();
         }
     }
-    public static void bewerbungLoeschen(BewerbungDTO bewerbung) throws SQLException, DatabaseException {
+    public void bewerbungLoeschen(BewerbungDTO bewerbung) throws DatabaseException {
         String sql = "DELETE FROM lacasa.tab_bewerbung WHERE bewerbung_id = "+bewerbung.getBewerbungID();
 
         PreparedStatement statement = getPreparedStatement(sql);
         try {
+            assert statement != null;
             statement.executeUpdate();
         }catch(NullPointerException | SQLException e){
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
@@ -50,7 +51,7 @@ public class BewerbungDAO extends AbstractDAO{
 
     }
 
-    public static void bewerben(BewerbungDTO bewerbung) throws DatabaseException {
+    public void bewerben(BewerbungDTO bewerbung) throws DatabaseException {
         String sql = "INSERT INTO lacasa.tab_bewerbung (datum, description, lebenslauf, status, student_id, s_anzeige_id)"+
                 "select ?,?,?,?,?,? "+
                 " WHERE NOT EXISTS( SELECT bewerbung_id from lacasa.tab_bewerbung where student_id = ? and s_anzeige_id = ? and ( status = 1 or status = 9) ) LIMIT 1";
@@ -84,7 +85,7 @@ public class BewerbungDAO extends AbstractDAO{
 
     }
 
-    public static boolean markierungAendern(int bew_id) throws DatabaseException{
+    public boolean markierungAendern(int bew_id) throws DatabaseException{
         ResultSet set;
         boolean bMarkierung= false;
 
@@ -112,6 +113,7 @@ public class BewerbungDAO extends AbstractDAO{
         PreparedStatement statement = getPreparedStatement(sql);
 
         try {
+            assert statement != null;
             statement.executeUpdate();
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
@@ -123,12 +125,13 @@ public class BewerbungDAO extends AbstractDAO{
 
     }
 
-    public static void statusNeuBewAendern(int bew_id) throws DatabaseException{
+    public void statusNeuBewAendern(int bew_id) throws DatabaseException{
 
         String sql = "update lacasa.tab_bewerbung set status = 1 where bewerbung_id = "+bew_id +" and status = 9";
         PreparedStatement statement = getPreparedStatement(sql);
 
         try {
+            assert statement != null;
             statement.executeUpdate();
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
@@ -139,7 +142,7 @@ public class BewerbungDAO extends AbstractDAO{
     }
 
 
-    public static StreamResource downloadLebenslauf(int student_id) throws DatabaseException {
+    public StreamResource downloadLebenslauf(int student_id) throws DatabaseException {
 
         ResultSet set;
 
@@ -155,13 +158,7 @@ public class BewerbungDAO extends AbstractDAO{
             while (set.next()) {
                 InputStream   targetStream = new ByteArrayInputStream(set.getBytes(1));
 
-                return  new StreamResource(new StreamResource.StreamSource() {
-                    @Override
-                    public InputStream getStream() {
-
-                        return targetStream;
-                    }
-                }, student_id+" Lebenslauf.pdf");
+                return  new StreamResource((StreamResource.StreamSource) () -> targetStream, student_id+" Lebenslauf.pdf");
             }
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);

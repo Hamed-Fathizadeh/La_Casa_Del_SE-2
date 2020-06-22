@@ -176,9 +176,7 @@ public class BewerbungWindow extends Window {
                 bewerbungDTO.setLebenslauf(PdfUploader.getByte());
                 bewerbungDTO.setStatus(9);
                 bewerbungDTO.setStudentID(st.getStudent_id());
-                if(userType.equals("Student")) {
-                    bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
-                }
+                bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
                 BewerbungWindow.this.close();
                 try {
                     BewerbungControl.bewerben(bewerbungDTO);
@@ -203,8 +201,7 @@ public class BewerbungWindow extends Window {
 
 
 
-            Image picMarkierung = null;
-            boolean markiert = bewerbung.isBewerbung_markiert();
+            Image picMarkierung;
             if( bewerbung.isBewerbung_markiert()){
                 ThemeResource resource3 = new ThemeResource("img/Anzeigen/makierung.png");
                 picMarkierung = new Image(null, resource3);
@@ -267,15 +264,13 @@ public class BewerbungWindow extends Window {
                 BewerbungWindow.this.close();
             });
 
-            if(bewerbung != null) {
-                try {
+            try {
 
-                    StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID());
-                    FileDownloader fileDownloader = new FileDownloader(myResource);
-                    fileDownloader.extend(downloadLebnslauf);
-                } catch (DatabaseException e) {
-                    e.printStackTrace();
-                }
+                StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID());
+                FileDownloader fileDownloader = new FileDownloader(myResource);
+                fileDownloader.extend(downloadLebnslauf);
+            } catch (DatabaseException e) {
+                e.printStackTrace();
             }
 
             downloadLebnslauf.addClickListener((Button.ClickListener) event -> {

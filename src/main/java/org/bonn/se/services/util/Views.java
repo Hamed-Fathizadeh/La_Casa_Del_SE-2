@@ -12,7 +12,6 @@ public class Views {
     public static final String ProfilVerwaltenStudent = "ProfilVerwaltenStudent";
     public static final String AlleBewerbungenView = "AlleBewerbungenView";
     public static final String Settings = "Settings";
-    public static final String ProfilTest = "ProfilTest";
 
 
 }

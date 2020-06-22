@@ -6,7 +6,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-
 import org.bonn.se.control.JobTitelControl;
 import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.RegistrationTextField;
@@ -14,14 +13,14 @@ import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.*;
-
-import java.sql.SQLException;
+import org.bonn.se.services.util.DatenUnternehmenProfil;
+import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.Views;
 
 public class AnzeigeErstellenView extends GridLayout implements View {
 
 
-    public void setUp() throws DatabaseException, SQLException {
+    public void setUp() throws DatabaseException {
 
         OrtField ort;
 
@@ -172,7 +171,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             try {
                 this.setUp();
-            } catch (DatabaseException | SQLException e) {
+            } catch (DatabaseException e) {
                 e.printStackTrace();
             }
         } else {
