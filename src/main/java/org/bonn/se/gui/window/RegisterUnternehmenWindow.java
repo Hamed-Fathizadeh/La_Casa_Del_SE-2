@@ -1,8 +1,8 @@
 package org.bonn.se.gui.window;
 
 import com.vaadin.ui.UI;
-import org.bonn.se.gui.component.CustomWizard;
 import org.bonn.se.gui.component.CustomWindow;
+import org.bonn.se.gui.component.CustomWizard;
 import org.bonn.se.gui.window.wizard.WizardStepFertigWindow;
 import org.bonn.se.gui.window.wizard.WizardStepRegisterSuccessWindow;
 import org.bonn.se.gui.window.wizard.WizardUntBeschreibungStep;
@@ -16,10 +16,10 @@ import org.vaadin.teemu.wizards.event.*;
 
 public class RegisterUnternehmenWindow extends CustomWindow implements WizardProgressListener {
 
-    private static Wizard  wizard = CustomWizard.getWizard();
+    private static Wizard  wizard ;
 
     public RegisterUnternehmenWindow() {
-
+        wizard = CustomWizard.getWizard();
         wizard.addListener(this);
         wizard.addStep(new WizardStepRegisterSuccessWindow(), "Erfolgreich");
         wizard.addStep(new WizardUntDatenStep(), "Daten");
