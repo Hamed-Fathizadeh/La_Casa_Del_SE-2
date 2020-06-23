@@ -1,6 +1,5 @@
 package org.bonn.se.gui.component;
 
-import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
@@ -10,6 +9,7 @@ import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.teemu.ratingstars.RatingStars;
@@ -122,22 +122,13 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         data = (List<T>) dataInput;
         setUp();
 
-
-
     }
     public void setUp(){
 
         this.setItems( data);
 
-        ThemeResource resource = new ThemeResource("img/Anzeigen/rot.png");
-        Image rot = new Image(null, resource);
-        rot.setDescription("Offline");
-        ThemeResource resource2 = new ThemeResource("img/Anzeigen/gruen.png");
-        Image gruen = new Image(null, resource2);
-        gruen.setDescription("Online");
-        ThemeResource resource3 = new ThemeResource("img/Anzeigen/orange.png");
-        Image orange = new Image(null, resource3);
-        orange.setDescription("Entwurf");
+
+
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.addComponentColumn(im ->{
@@ -161,7 +152,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
-            this.addComponentColumn(sa -> (sa.getStatus() == 1 ? new Image(null, resource2) : sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status").setId("Status");
+            this.addComponentColumn(sa -> (sa.getStatus() == 1 ? ImageConverter.getStatus_gruen(): sa.getStatus() == 2 ? ImageConverter.getStatus_rot() : ImageConverter.getStatus_orange())).setCaption("Status").setId("Status");
             this.addComponentColumn(sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setGesamtNeuBewerbungen(sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
         }
 
