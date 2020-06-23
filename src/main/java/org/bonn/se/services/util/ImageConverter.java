@@ -18,6 +18,15 @@ public class ImageConverter {
     private static ThemeResource status_rot = new ThemeResource("img/Anzeigen/rot.png");
     private static ThemeResource status_gruen = new ThemeResource("img/Anzeigen/gruen.png");
     private static ThemeResource status_orange = new ThemeResource("img/Anzeigen/orange.png");
+    private static ThemeResource markierung = new ThemeResource("img/Anzeigen/makierung.png");
+
+
+    public static Image getMarkierung() {
+        Image marker = new Image(null, markierung);
+
+        return marker;
+    }
+
 
     public static Image getStatus_rot() {
         Image rot = new Image(null, status_rot);
