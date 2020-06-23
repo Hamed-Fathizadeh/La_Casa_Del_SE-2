@@ -10,6 +10,7 @@ import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.dao.BewertungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.teemu.ratingstars.RatingStars;
@@ -226,7 +227,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 Logger.getLogger(Bewerbungen.class.getName()).log(Level.SEVERE,null,e);
 
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE,null,throwables);
             }
 
             // Open it in the UI

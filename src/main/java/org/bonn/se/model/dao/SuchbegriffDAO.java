@@ -42,7 +42,7 @@ public class SuchbegriffDAO extends AbstractDAO {
             try {
                 set.close();
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE,null,throwables);
             }
             try {
                 JDBCConnection.getInstance().closeConnection();
