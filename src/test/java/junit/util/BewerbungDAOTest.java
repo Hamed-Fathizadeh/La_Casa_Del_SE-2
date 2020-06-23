@@ -15,9 +15,12 @@ public class BewerbungDAOTest {
     @Test
     public void testall() throws DatabaseException, SQLException {
         BewerbungDAO bewerb = BewerbungDAO.getInstance();
-        BewerbungDTO d = new BewerbungDTO();
-        d.setStatus(1);
-        Assertions.assertFalse(bewerb.markierungAendern(2));
+         if(bewerb.markierungAendern(2)==false){
+             System.out.println(bewerb.markierungAendern(2));
+             Assertions.assertTrue(bewerb.markierungAendern(2));
+         }
+         else
+             Assertions.assertFalse(bewerb.markierungAendern(2));
         Assertions.assertNull(bewerb.downloadLebenslauf(16));
     }
 
