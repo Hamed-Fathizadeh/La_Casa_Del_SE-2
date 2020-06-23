@@ -10,7 +10,7 @@ public class DTOFactory {
 
     }
 
-    public BewerbungDTO createBewerbungDTO(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
+    public static BewerbungDTO createBewerbungDTO(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
                                            String unternehmenName,String unternehmenHauptsitz, byte[] unternehmenLogo,String emailStudent, String s_titel,
                                            java.sql.Date student_g_datum,String student_studiengang, String student_ausbildung,String  student_kontakt_nr,int student_benachrichtigung,
                                            byte[] student_picture,String student_hoester_abschluss,String student_vorname,String student_nachname,double rating, boolean bewerbung_markiert
@@ -21,6 +21,21 @@ public class DTOFactory {
                                                           student_picture, student_hoester_abschluss, student_vorname, student_nachname, rating,  bewerbung_markiert
                                                         );
             return bewerbungDTO;
+    }
+
+    public static BewerbungDTO createBewerbungDTO(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
+                                           String unternehmenName,String unternehmenHauptsitz, byte[] unternehmenLogo,String emailStudent, String s_titel, double rating
+                                          ){
+        BewerbungDTO bewerbungDTO = new BewerbungDTO(bewerbungID, datum, description, lebenslauf, status, studentID, anzeigeID, unternehmenName,
+                                                    unternehmenHauptsitz,  unternehmenLogo, emailStudent,  s_titel,  rating
+                                                    );
+        return bewerbungDTO;
+    }
+
+    public static BewerbungDTO createBewerbungDTO( byte[] unternehmenLogo,String unternehmenName, Date datum, int status ,int bewerbungID, String s_titel){
+        BewerbungDTO bewerbungDTO = new BewerbungDTO( unternehmenLogo, unternehmenName, datum, status , bewerbungID, s_titel
+                                                    );
+        return bewerbungDTO;
     }
 
 }
