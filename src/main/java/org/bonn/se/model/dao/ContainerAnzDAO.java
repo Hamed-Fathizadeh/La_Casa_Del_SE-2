@@ -23,7 +23,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
     public List<StellenanzeigeDTO> load() throws DatabaseException, SQLException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
-        ResultSet set;
+        ResultSet set = null;
         Statement statement = JDBCConnection.getInstance().getStatement();
 
         try {
@@ -47,7 +47,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
-            statement.close();
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
 
@@ -58,7 +58,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
     public List<StellenanzeigeDTO> loadSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, java.util.Date ab_Datum, String branche) throws DatabaseException, SQLException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
-        ResultSet set;
+        ResultSet set = null;
         Statement statement = JDBCConnection.getInstance().getStatement();
         try {
 
@@ -154,7 +154,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
-            statement.close();
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return liste;
@@ -163,7 +163,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
     public List<StellenanzeigeDTO> loadNeuigkeiten(String str) throws DatabaseException, SQLException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
-        ResultSet set;
+        ResultSet set = null;
         Statement statement = JDBCConnection.getInstance().getStatement();
 
         try {
@@ -196,7 +196,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
-            statement.close();
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
 
@@ -206,7 +206,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
     public List<StellenanzeigeDTO> loadUnternehmenAnzeigen(String email) throws DatabaseException, SQLException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
-        ResultSet set;
+        ResultSet set = null;
         Statement statement = JDBCConnection.getInstance().getStatement();
 
         try {
@@ -236,7 +236,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
-            statement.close();
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
 
@@ -351,7 +351,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
     public void sendEmail(Unternehmen unternehmen) throws DatabaseException, SQLException {
         HashMap<String, String> liste = new HashMap<>();
-        ResultSet set;
+        ResultSet set = null;
         Statement statement = JDBCConnection.getInstance().getStatement();
 
         try {
@@ -369,7 +369,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
-            statement.close();
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         try {

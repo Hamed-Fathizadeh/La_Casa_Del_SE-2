@@ -196,7 +196,7 @@ public class ProfilDAO extends AbstractDAO{
 
 
 
-    public Unternehmen getUnternehmenProfil(Unternehmen unternehmen) throws DatabaseException {
+    public Unternehmen getUnternehmenProfil(Unternehmen unternehmen) throws DatabaseException, SQLException {
         ResultSet set;
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
@@ -229,6 +229,7 @@ public class ProfilDAO extends AbstractDAO{
         } catch (SQLException  throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return null;

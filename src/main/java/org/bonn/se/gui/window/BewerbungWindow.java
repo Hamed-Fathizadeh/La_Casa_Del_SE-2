@@ -14,6 +14,8 @@ import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.*;
 
+import java.sql.SQLException;
+
 public class BewerbungWindow extends Window {
 
     public BewerbungWindow(StellenanzeigeDTO stellenanzeige, String userType, BewerbungDTO bewerbung )  {
@@ -233,7 +235,7 @@ public class BewerbungWindow extends Window {
             markieren.addClickListener((Button.ClickListener) event -> {
                 try {
                    bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
-                } catch (DatabaseException e) {
+                } catch (DatabaseException | SQLException e) {
                     e.printStackTrace();
                 }
                 BewerbungWindow bewerbungWindow = new BewerbungWindow(null,"Unternehmen", bewerbung);
@@ -254,7 +256,7 @@ public class BewerbungWindow extends Window {
                 if(bewerbung.isBewerbung_markiert()) {
                     try {
                         bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
-                    } catch (DatabaseException e) {
+                    } catch (DatabaseException | SQLException e) {
                         e.printStackTrace();
                     }
                 }
@@ -269,7 +271,7 @@ public class BewerbungWindow extends Window {
                 StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID());
                 FileDownloader fileDownloader = new FileDownloader(myResource);
                 fileDownloader.extend(downloadLebnslauf);
-            } catch (DatabaseException e) {
+            } catch (DatabaseException | SQLException e) {
                 e.printStackTrace();
             }
 

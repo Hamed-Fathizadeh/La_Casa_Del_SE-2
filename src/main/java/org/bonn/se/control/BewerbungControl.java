@@ -44,7 +44,7 @@ public class BewerbungControl {
         }
     }
 
-    public static boolean markierungAendern(int bewId) throws DatabaseException {
+    public static boolean markierungAendern(int bewId) throws DatabaseException, SQLException {
         return BewerbungDAO.getInstance().markierungAendern(bewId);
     }
 
@@ -57,7 +57,7 @@ public class BewerbungControl {
 
     }
 
-    public static StreamResource downloadLebenslauf(int studentId) throws DatabaseException {
+    public static StreamResource downloadLebenslauf(int studentId) throws DatabaseException, SQLException {
         return BewerbungDAO.getInstance().downloadLebenslauf(studentId);
     }
 

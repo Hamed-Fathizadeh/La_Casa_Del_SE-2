@@ -19,36 +19,30 @@ public class BrancheDAO {
         return instance == null ? instance = new BrancheDAO() : instance;
     }
 
-    public List<String> getBranche() {
+    public List<String> getBranche() throws SQLException, DatabaseException {
 
         ResultSet set = null;
-
-        try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
-            set = statement.executeQuery("SELECT name FROM lacasa.tab_branche ");
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-
-        }
+        Statement statement = JDBCConnection.getInstance().getStatement();
         List<String> liste = new ArrayList<>();
+
         try {
+            set = statement.executeQuery("SELECT name FROM lacasa.tab_branche ");
+
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
                 liste.add(set.getString(1));
-
             }
-        }catch (SQLException  throwables) {
+        } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
-        }finally {
-            try {
-                JDBCConnection.getInstance().closeConnection();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
+        } finally {
+            set.close();
+            JDBCConnection.getInstance().closeConnection();
         }
-
         return liste;
+
     }
 }
+
+
 

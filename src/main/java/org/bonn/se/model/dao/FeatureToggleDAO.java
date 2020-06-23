@@ -18,8 +18,8 @@ public class FeatureToggleDAO {
         return instance == null ? instance = new FeatureToggleDAO() : instance;
     }
 
-    public boolean featureIsEnabled(String feature) throws DatabaseException {
-        ResultSet set;
+    public boolean featureIsEnabled(String feature) throws DatabaseException, SQLException {
+        ResultSet set = null;
         Statement statement = null;
         try {
             statement = JDBCConnection.getInstance().getStatement();
@@ -38,6 +38,7 @@ public class FeatureToggleDAO {
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return true;

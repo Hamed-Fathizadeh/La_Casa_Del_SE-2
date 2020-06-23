@@ -4,6 +4,7 @@ import com.vaadin.ui.UI;
 import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.dao.PassChangeDAO;
 import org.bonn.se.model.objects.dto.PassChangeRequest;
+import org.bonn.se.services.db.exception.DatabaseException;
 
 public class PassChangeControl {
 
@@ -13,7 +14,7 @@ public class PassChangeControl {
         return instance == null ? instance = new PassChangeControl() : instance;
     }
 
-    public void changePass(PassChangeRequest request){
+    public void changePass(PassChangeRequest request) throws DatabaseException {
 
         boolean bRes = PassChangeDAO.getInstance().changePass(request);
         if(bRes){

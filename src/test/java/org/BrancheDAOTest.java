@@ -7,6 +7,8 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.sql.SQLException;
+
 public class BrancheDAOTest {
 
     //public static BrancheDAO bd = null;
@@ -20,7 +22,7 @@ public class BrancheDAOTest {
     }
 
     @Test
-    public void getBranche(){
+    public void getBranche() throws DatabaseException, SQLException {
         System.out.println(bd.getBranche());
         Assert.assertEquals(bd.getBranche().size(),bd1.getBranche().size());
     }

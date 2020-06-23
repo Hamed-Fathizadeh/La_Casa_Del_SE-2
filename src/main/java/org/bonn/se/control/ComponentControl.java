@@ -3,7 +3,9 @@ package org.bonn.se.control;
 import org.bonn.se.model.dao.BrancheDAO;
 import org.bonn.se.model.dao.OrtDAO;
 import org.bonn.se.model.dao.SuchbegriffDAO;
+import org.bonn.se.services.db.exception.DatabaseException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ComponentControl {
@@ -19,7 +21,7 @@ public class ComponentControl {
         return SuchbegriffDAO.getInstance().getSuchbegriffe();
     }
 
-    public List<String> getBranche () {
+    public List<String> getBranche () throws DatabaseException, SQLException {
         return BrancheDAO.getInstance().getBranche();
     }
 

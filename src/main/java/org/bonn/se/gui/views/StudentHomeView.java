@@ -10,7 +10,10 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
-import org.bonn.se.control.*;
+import org.bonn.se.control.BewerbungControl;
+import org.bonn.se.control.FeatureToggleControl;
+import org.bonn.se.control.Suche;
+import org.bonn.se.control.SucheControlProxy;
 import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.OrtField;
@@ -146,7 +149,14 @@ public class StudentHomeView extends VerticalLayout implements View {
                 ComboBranche.setPlaceholder("Branche");
                 ComboBranche.setHeight("56px");
                 ComboBranche.setWidth("300px");
-                BrancheService SserviceBranche = new BrancheService();
+                BrancheService SserviceBranche = null;
+                try {
+                    SserviceBranche = new BrancheService();
+                } catch (DatabaseException e) {
+                    Logger.getLogger(StudentHomeView.class.getName()).log(Level.SEVERE,null,e);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
                 ComboBranche.setDataProvider(SserviceBranche::fetch, SserviceBranche::count);
 
                 //Datum

@@ -85,20 +85,15 @@ public class BewerbungDAO extends AbstractDAO{
 
     }
 
-    public boolean markierungAendern(int bew_id) throws DatabaseException{
-        ResultSet set;
+    public boolean markierungAendern(int bew_id) throws DatabaseException, SQLException {
+        ResultSet set = null;
         boolean bMarkierung= false;
+        Statement statement = JDBCConnection.getInstance().getStatement();
 
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("select markiert from lacasa.tab_bewerbung where bewerbung_id = "+bew_id);
             System.out.println("bewDAO"+set.toString());
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
 
-        try {
             while(set.next()){
 
             bMarkierung =  set.getBoolean(1);
@@ -106,15 +101,18 @@ public class BewerbungDAO extends AbstractDAO{
 
         } catch (SQLException  throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+            JDBCConnection.getInstance().closeConnection();
+            set.close();
         }
 
         System.out.println("bewDAO"+bMarkierung );
         String sql = "update lacasa.tab_bewerbung set markiert ="+ !bMarkierung + " where bewerbung_id = "+bew_id;
-        PreparedStatement statement = getPreparedStatement(sql);
+        PreparedStatement preparedStatement = getPreparedStatement(sql);
 
         try {
             assert statement != null;
-            statement.executeUpdate();
+            preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }finally {
@@ -142,19 +140,14 @@ public class BewerbungDAO extends AbstractDAO{
     }
 
 
-    public StreamResource downloadLebenslauf(int student_id) throws DatabaseException {
+    public StreamResource downloadLebenslauf(int student_id) throws DatabaseException, SQLException {
 
-        ResultSet set;
+        ResultSet set = null;
+        Statement statement = JDBCConnection.getInstance().getStatement();
 
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("select lebenslauf from lacasa.tab_student where student_id = " + student_id);
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-        //InputStream targetStream = null;
-        try {
+
             while (set.next()) {
                 InputStream   targetStream = new ByteArrayInputStream(set.getBytes(1));
 
@@ -163,6 +156,7 @@ public class BewerbungDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return null;

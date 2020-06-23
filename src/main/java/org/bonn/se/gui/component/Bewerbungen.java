@@ -4,7 +4,6 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
-
 import org.bonn.se.control.BewerbungControl;
 import org.bonn.se.gui.window.BewerbungWindow;
 import org.bonn.se.gui.window.ConfirmationWindow;
@@ -15,11 +14,10 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
+import java.sql.SQLException;
 import java.util.List;
-
-
-
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
@@ -222,8 +220,14 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
         bewerten.addClickListener((Button.ClickListener) clickEvent -> {
             inBew.setRating(rating.getValue());
-            BewertungDAO.getInstance().bewertung(inBew);
+            try {
+                BewertungDAO.getInstance().bewertung(inBew);
+            } catch (DatabaseException e) {
+                Logger.getLogger(Bewerbungen.class.getName()).log(Level.SEVERE,null,e);
 
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
 
             // Open it in the UI
             subWindow.close();

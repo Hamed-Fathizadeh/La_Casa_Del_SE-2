@@ -11,6 +11,7 @@ import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.*;
@@ -160,7 +161,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkandGetUnternehmenProfilWithDescription() throws DatabaseException {
+    public void checkandGetUnternehmenProfilWithDescription() throws DatabaseException, SQLException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);

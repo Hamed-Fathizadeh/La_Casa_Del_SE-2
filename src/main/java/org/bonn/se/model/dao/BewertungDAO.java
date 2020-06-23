@@ -20,7 +20,7 @@ public class BewertungDAO extends AbstractDAO {
         return instance == null ? instance = new BewertungDAO() : instance;
     }
 
-    public void bewertung(BewerbungDTO bewerbung) {
+    public void bewertung(BewerbungDTO bewerbung) throws DatabaseException, SQLException {
         ResultSet set = null;
 
 
@@ -31,40 +31,36 @@ public class BewertungDAO extends AbstractDAO {
                     "  FROM lacasa.tab_bewertung\n" +
                     " where student_id = "+bewerbung.getStudentID()+" \n" +
                     "   and firmenname = '"+bewerbung.getUnternehmenName()+"' and hauptsitz = '"+bewerbung.getUnternehmenHauptsitz()+"'");
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-          }
-        try {
+
             while (!set.next()) {
                 String sql = "INSERT INTO lacasa.tab_bewertung (datum, anzahl_sterne, firmenname, hauptsitz, student_id) " +
                         "VALUES(?,?,?,?,?);";
-                PreparedStatement statement = getPreparedStatement(sql);
-                try {
-                    assert statement != null;
-                    statement.setDate(1, Date.valueOf(LocalDate.now()));
-                    statement.setDouble(2, bewerbung.getRating());
-                    statement.setString(3, bewerbung.getUnternehmenName());
-                    statement.setString(4, bewerbung.getUnternehmenHauptsitz());
-                    statement.setInt(5, bewerbung.getStudentID());
-                    statement.executeUpdate();
+                PreparedStatement preparedStatement = getPreparedStatement(sql);
 
+                assert statement != null;
+                preparedStatement.setDate(1, Date.valueOf(LocalDate.now()));
+                preparedStatement.setDouble(2, bewerbung.getRating());
+                preparedStatement.setString(3, bewerbung.getUnternehmenName());
+                preparedStatement.setString(4, bewerbung.getUnternehmenHauptsitz());
+                preparedStatement.setInt(5, bewerbung.getStudentID());
+                preparedStatement.executeUpdate();
+            }
                 } catch (SQLException throwables) {
                     Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
                     throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
                 } finally {
+                    set.close();
                     JDBCConnection.getInstance().closeConnection();
                 }
                 UI.getCurrent().addWindow(new ConfirmationWindow("Vielen Dank für Ihre bewertung!"));
-                return;
+                  UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben schon für "+bewerbung.getUnternehmenName()+" bewertet!"));
+
+                     return;
             }
 
-        } catch (DatabaseException | SQLException e) {
-            e.printStackTrace();
-        }
-        UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben schon für "+bewerbung.getUnternehmenName()+" bewertet!"));
 
-    }
-}
+ }
+
 
 
 
