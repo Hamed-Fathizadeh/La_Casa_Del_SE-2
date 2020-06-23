@@ -45,7 +45,7 @@ public class RegisterStudentView extends GridLayout implements View {
         topPanel.addStyleName("toppanel");
         //this.addComponent(new TopPanel("Für Unternehmen"));
         // this.addComponent(new Label(""));
-        Label head = new Label("Willkommen bei Lacolsco Registrieren Sie sich jetzt.... !!!");
+        Label head = new Label("» Willkommen bei Lacolsco Registrieren Sie sich jetzt!");
 
         FormLayout form = new FormLayout();
         form.setMargin(true);
