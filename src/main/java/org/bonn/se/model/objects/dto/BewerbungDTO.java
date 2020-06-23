@@ -29,12 +29,14 @@ public class BewerbungDTO {
     private String student_nachname;//noty
     private boolean bewerbung_markiert;//
 
-    public Image getStudent_picture_klein() {
-        Image res = student_picture;
-        res.setWidth("50%");
-        res.setHeight("50%");
-        return res;
-    }
+// --Commented out by Inspection START (22.06.20, 23:17):
+//    public Image getStudent_picture_klein() {
+//        Image res = student_picture;
+//        res.setWidth("50%");
+//        res.setHeight("50%");
+//        return res;
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:17)
 
 
     public boolean isBewerbung_markiert() {
@@ -45,9 +47,11 @@ public class BewerbungDTO {
         this.bewerbung_markiert = bewerbung_markiert;
     }
 
+
     public Date getStudent_g_datum() {
         return student_g_datum;
     }
+
 
     public void setStudent_g_datum(Date student_g_datum) {
         this.student_g_datum = student_g_datum;
@@ -87,9 +91,6 @@ public class BewerbungDTO {
 
     public Image getStudent_picture() {
         return student_picture;
-    }
-
-    public void setStudent_picture(byte[] student_picture) {
     }
 
     public String getStudent_hoester_abschluss() {
@@ -157,9 +158,6 @@ public class BewerbungDTO {
         return unternehmenLogo;
     }
 
-    public void setUnternehmenLogo(byte[] unternehmenLogo) {
-    }
-
     public BewerbungDTO(){
 
     }
@@ -217,14 +215,16 @@ public class BewerbungDTO {
 
 
 
-    public BewerbungDTO( byte[] unternehmenLogo,String unternehmenName, Date datum, int status ,int bewerbungID, String s_titel) {
-        this.datum = datum;
-        this.status = status;
-        this.unternehmenName = unternehmenName;
-        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
-        this.bewerbungID = bewerbungID;
-        this.s_titel = s_titel;
-    }
+// --Commented out by Inspection START (22.06.20, 23:17):
+//    public BewerbungDTO( byte[] unternehmenLogo,String unternehmenName, Date datum, int status ,int bewerbungID, String s_titel) {
+//        this.datum = datum;
+//        this.status = status;
+//        this.unternehmenName = unternehmenName;
+//        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
+//        this.bewerbungID = bewerbungID;
+//        this.s_titel = s_titel;
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:17)
 
     private int anzeigeID;
 

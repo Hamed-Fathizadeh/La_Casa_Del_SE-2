@@ -5,8 +5,6 @@ import org.bonn.se.services.util.OrtService;
 
 public class OrtField extends ComboBox<String> {
 
-    String ort;
-    String bundesland;
 
     public OrtField(String caption) {
         this.setHeight("56px");

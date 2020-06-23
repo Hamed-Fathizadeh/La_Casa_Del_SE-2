@@ -70,9 +70,11 @@ public class Bewerbung {
         this.studentID = studentID;
     }
 
-    public int getAnzeigeID() {
-        return anzeigeID;
-    }
+// --Commented out by Inspection START (22.06.20, 23:14):
+//    public int getAnzeigeID() {
+//        return anzeigeID;
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:14)
 
     public void setAnzeigeID(int anzeigeID) {
         this.anzeigeID = anzeigeID;

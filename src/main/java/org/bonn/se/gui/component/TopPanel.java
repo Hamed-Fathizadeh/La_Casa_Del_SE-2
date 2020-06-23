@@ -22,23 +22,13 @@ public class TopPanel  extends GridLayout {
             buttonTwo = "Login";
             navigateToOne = LoginView;
             navigateToTwo = RegisterUnternehmen;
-            logo.addClickListener(new MouseEvents.ClickListener() {
-                @Override
-                public void click(MouseEvents.ClickEvent event) {
-                    UI.getCurrent().getNavigator().navigateTo(RegisterUnternehmen);
-                }
-            });
+            logo.addClickListener((MouseEvents.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(RegisterUnternehmen));
         }else if(usertyp.equals("Studenten")){
             buttonOne = "Studenten";
             buttonTwo = "Login";
             navigateToOne = LoginView;
             navigateToTwo = RegisterStudent;
-            logo.addClickListener(new MouseEvents.ClickListener() {
-                @Override
-                public void click(MouseEvents.ClickEvent event) {
-                    UI.getCurrent().getNavigator().navigateTo(RegisterStudent);
-                }
-            });
+            logo.addClickListener((MouseEvents.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(RegisterStudent));
         }else{
             buttonOne = "Registrierung Unternehmen";
             buttonTwo = "Registrierung Student";
@@ -56,24 +46,16 @@ public class TopPanel  extends GridLayout {
 
         Button login = new Button(buttonTwo);
 
-        switchUnternehmen.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
+        switchUnternehmen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(navigateToTwo));
+
+
+
+        login.addClickListener((Button.ClickListener) event -> {
+            if(login.getCaption().equals("Registrierung Student")){
                 UI.getCurrent().getNavigator().navigateTo(navigateToTwo);
-            }
-        });
+            }else {
 
-
-
-        login.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                if(login.getCaption().equals("Registrierung Student")){
-                    UI.getCurrent().getNavigator().navigateTo(navigateToTwo);
-                }else {
-
-                    UI.getCurrent().getNavigator().navigateTo(navigateToOne);
-                }
+                UI.getCurrent().getNavigator().navigateTo(navigateToOne);
             }
         });
 

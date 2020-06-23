@@ -1,15 +1,13 @@
 package org.bonn.se.services.util;
 
-import com.itextpdf.text.log.SysoCounter;
 import org.bonn.se.control.ComponentControl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Stream;
 
 public class OrtService {
-    public static OrtService dao = null;
+    private static OrtService dao = null;
     private static List<String> listeOrt = new ArrayList<>();
 
     public OrtService( String str) {
@@ -21,12 +19,12 @@ public class OrtService {
     }
 
 
-    public static List<String> OrtService(){
+    public static List<String> getOrte(){
         return listeOrt;
     }
 
     public int count(String filter) {
-        return (int) OrtService().stream()
+        return (int) getOrte().stream()
                 .filter(begrif -> filter == null || begrif
                         .toLowerCase().startsWith(filter.toLowerCase())
                         //||begrif.toLowerCase().contains(filter.toLowerCase())
@@ -35,7 +33,7 @@ public class OrtService {
     }
 
     public Stream<String> fetch(String filter, int offset, int limit) {
-        return OrtService().stream()
+        return getOrte().stream()
                 .filter(begrif -> filter == null || begrif
                         .toLowerCase().startsWith(filter.toLowerCase())
                         //|| begrif.toLowerCase().contains(filter.toLowerCase())

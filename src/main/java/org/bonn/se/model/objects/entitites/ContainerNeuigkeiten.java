@@ -4,29 +4,24 @@ import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.db.exception.DatabaseException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class ContainerNeuigkeiten {
 
     private List<StellenanzeigeDTO> liste;
+    // --Commented out by Inspection (22.06.20, 23:32):private ArrayList<StellenanzeigeDTO> liste2;
+    final private ContainerAnzDAO containerAnzDAO = ContainerAnzDAO.getInstance();
 
-    private ArrayList<StellenanzeigeDTO> liste2;
+    private static ContainerNeuigkeiten instance;
 
-    private static ContainerNeuigkeiten instance = new ContainerNeuigkeiten();
-    private ContainerAnzDAO containerAnzDAO = ContainerAnzDAO.getInstance();
-
-    public static synchronized ContainerNeuigkeiten getInstance() {
-        if (instance == null) {
-            instance = new ContainerNeuigkeiten();
-        }
-        return instance;
+    public static ContainerNeuigkeiten getInstance() {
+        return instance == null ? instance = new ContainerNeuigkeiten() : instance;
     }
-
     private ContainerNeuigkeiten(){
-        liste = new ArrayList<StellenanzeigeDTO>();
+        liste = new ArrayList<>();
 
     }
     public int getAnzahl(){
@@ -37,7 +32,7 @@ public class ContainerNeuigkeiten {
         try {
             liste = containerAnzDAO.load();
         }
-        catch( DatabaseException throwables){
+        catch(DatabaseException | SQLException throwables){
             throwables.getMessage();
         }
 
@@ -46,7 +41,7 @@ public class ContainerNeuigkeiten {
     public void loadNeuigkeiten(String str){
         try {
             liste = containerAnzDAO.loadNeuigkeiten(str);
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -54,7 +49,7 @@ public class ContainerNeuigkeiten {
     public void loadUnternehmenAnzeigen(String email){
         try {
             liste = containerAnzDAO.loadUnternehmenAnzeigen(email);
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -62,7 +57,7 @@ public class ContainerNeuigkeiten {
     public void loadNeuBewerbungen(Unternehmen unternehmen){
         try {
             liste = containerAnzDAO.loadNeuBewerbungen(unternehmen);
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -80,26 +75,30 @@ public class ContainerNeuigkeiten {
         try {
             liste = containerAnzDAO.loadSuche(suchbegriff_id, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
         }
-        catch( DatabaseException throwables){
+        catch(DatabaseException | SQLException throwables){
             throwables.getMessage();
         }
 
     }
 
 
-    public Stream<StellenanzeigeDTO> fetchNachwas(StellenanzeigeDTO filter, int offset, int limit) {
-        return getListe().stream()
-                .filter(begrif -> filter == null || begrif.getSuchbegriff()
-                        .toLowerCase().startsWith(filter.getSuchbegriff().toLowerCase())
-                )
-                .skip(offset).limit(limit);
-    }
-    public Stream<StellenanzeigeDTO> fetchOrtBund(StellenanzeigeDTO filter, int offset, int limit) {
-        return getListe().stream()
-                .filter(begrif -> filter == null || begrif.getStandort()
-                        .toLowerCase().startsWith(filter.getStandort().toLowerCase())
-                )
-                .skip(offset).limit(limit);
-    }
+// --Commented out by Inspection START (22.06.20, 23:32):
+// --Commented out by Inspection START (22.06.20, 23:32):
+////    public Stream<StellenanzeigeDTO> fetchNachwas(StellenanzeigeDTO filter, int offset, int limit) {
+////        return getListe().stream()
+////                .filter(begrif -> filter == null || begrif.getSuchbegriff()
+////                        .toLowerCase().startsWith(filter.getSuchbegriff().toLowerCase())
+////                )
+////                .skip(offset).limit(limit);
+////    }
+//// --Commented out by Inspection STOP (22.06.20, 23:32)
+//    public Stream<StellenanzeigeDTO> fetchOrtBund(StellenanzeigeDTO filter, int offset, int limit) {
+//        return getListe().stream()
+//                .filter(begrif -> filter == null || begrif.getStandort()
+//                        .toLowerCase().startsWith(filter.getStandort().toLowerCase())
+//                )
+//                .skip(offset).limit(limit);
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:32)
 
 }

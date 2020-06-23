@@ -33,7 +33,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         this.addStyleName("grid");
         this.setSizeFull();
 
-        Label head = new Label("<h2><span style=\"color: blue;\"> Willkommen bei Lacolsco Registrieren Sie sich jetzt.... !!!.</span></h2>", ContentMode.HTML);
+        Label head = new Label("<h1><span style=\"color: #000000;\"><strong> » Willkommen bei Lacolsco Registrieren Sie sich jetzt !</strong></span></h1>", ContentMode.HTML);
         this.setMargin(false);
         this.addStyleName("grid");
 
@@ -90,13 +90,10 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         User user = new User();
         binder.setBean(user);
         Button test = new Button("Test PopUp");
-        test.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                System.out.println(hauptsitz.getOrt());
-                System.out.println(hauptsitz.getBundesland());
+        test.addClickListener((Button.ClickListener) event -> {
+            System.out.println(hauptsitz.getOrt());
+            System.out.println(hauptsitz.getBundesland());
 
-            }
         });
         ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
 

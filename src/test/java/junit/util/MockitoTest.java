@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.sql.SQLException;
+
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,7 +26,7 @@ public class MockitoTest {
 
 
     public static final String USERNAME = "s@s.de";
-    public static final String PASSWORD = "12345678";
+    public static final String login = "12345678";
 
     @Mock
     private UI ui;
@@ -43,10 +45,10 @@ public class MockitoTest {
     }
 
     @Test
-    public void buttonClick() throws DatabaseException, NoSuchUserOrPassword {
+    public void buttonClick() throws DatabaseException, NoSuchUserOrPassword, SQLException {
         LoginControl loginControl = Mockito.mock(LoginControl.class);
-        Mockito.doCallRealMethod().when(loginControl).checkAuthentication(USERNAME,PASSWORD);
-        LoginControl.getInstance().checkAuthentication(USERNAME,PASSWORD);
+        Mockito.doCallRealMethod().when(loginControl).checkAuthentication(USERNAME,login);
+        LoginControl.getInstance().checkAuthentication(USERNAME,login);
         when(vaadinSession.getAttribute(Roles.Student)).thenReturn(true);
 //        Mockito.verify(ui.getSession()).getAttribute(Roles.Student);
 
