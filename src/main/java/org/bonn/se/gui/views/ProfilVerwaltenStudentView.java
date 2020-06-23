@@ -58,7 +58,6 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
 
 
 
-        //Erzeugung von TextField: mit Student Daten ausfüllen
 
         Image profilbild = ImageConverter.convertImagetoProfil(student.getPicture());
         ProfilStudentTextField tfvorname = new ProfilStudentTextField("Vorname", student.getVorname());
@@ -216,98 +215,6 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         }
 
 
-
-
-
-/*
-        //Erzeugung von TextField: mit Student Daten ausfüllen
-        //Column 1
-        ProfilStudentTextField tfberufs = new ProfilStudentTextField("Berufstätigkeiten", "Muster");
-        beginn.setReadOnly(true);
-        ende.setReadOnly(true);
-        ProfilStudentTextField tfanhänge = new ProfilStudentTextField("Anhänge", "Muster");
-            //Niveau
-
-        //Erzeugung von TextField: mit Student Daten ausfüllen
-        //Column 2
-        ProfilStudentTextField tfitkenntnis = new ProfilStudentTextField("IT-Kentnisse", "Muster");
-        ProfilStudentTextField tfsprache= new ProfilStudentTextField("Sprachkenntnisse", "Muster");
-            //Niveau
-
-
-
-        //Erzeugung von Button: Mit Button Caption
-
-
-
-
-
-
-        //Anordnung von TextField
-        //Column 1-->2
-        gridLayout.addComponent(tfberufs, 1,0);
-        gridLayout.addComponent(tfanhänge, 1,6);
-        gridLayout.addComponent(horizontalLayout,1,1);
-
-
-        //Anordnung von TextField
-        //Column 2
-        gridLayout.addComponent(tfitkenntnis, 2,0);
-        gridLayout.addComponent(tfsprache, 2,2);
-
-        //Anordnung von Button
-        this.addComponent(abbrechenButton,7,2,7,2);
-        this.addComponent(bearbeitenButton,8,2,8,2);
-        this.addComponent(fertigButton,9,2,9,2);
-
-        //student.getTaetigkeitenListe().size();
-
-        for (int i = 0; i <= 9; i++) {
-            gridLayout.setComponentAlignment(gridLayout.getComponent(0,i),Alignment.MIDDLE_CENTER);
-        }
-
-
-        //Anordnung von Button
-        this.addComponent(abbrechenButton,7,2,7,2);
-        this.addComponent(bearbeitenButton,8,2,8,2);
-        this.addComponent(fertigButton,9,2,9,2);
-
-
-        this.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
-        this.setMargin(false);
-        this.addComponent(gridLayout,0,1,9,1);
-
-        bearbeitenButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-               for (int i = 0; i < 10 ; i++) {
-                    if (gridLayout.getComponent(0,i) instanceof TextField ) {
-                        ((TextField) gridLayout.getComponent(0, i)).setReadOnly(false);
-                    }
-                }
-                beginn.setReadOnly(false);
-                ende.setReadOnly(false);
-                /*
-                tfnachname.setReadOnly(false);
-
-                email.setReadOnly(true);
-                telnr.setReadOnly(false);
-                ausbildung.setReadOnly(false);
-                studium.setReadOnly(false);
-                abschluss.setReadOnly(false);
-
-            }
-
-        });
-
-//abschluss.addValueChangeListener() farbe zu basteln
-        abbrechenButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent clickEvent) {
-                UI.getCurrent().getNavigator().navigateTo(Views.RegisterStudent);
-            }
-        });
-        */
     }
         @Override
         public void enter (ViewChangeListener.ViewChangeEvent event){

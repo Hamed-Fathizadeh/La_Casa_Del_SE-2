@@ -1,14 +1,10 @@
 package junit;
 
-import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.window.wizard.WizardStudentKenntnisStep;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.IOException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 public class WizardStudentKenntnisStepTest {
@@ -31,17 +27,5 @@ public class WizardStudentKenntnisStepTest {
     public void onBackTest(){
         Assertions.assertEquals(true, wz.onBack());
     }
-
-
-
-    // diese methode kann nicht getestet werden, wegen UI.getCurrent()
-    /*
-    @Test
-    public void onAdvanceTest(){
-        Assertions.assertDoesNotThrow(
-                ()-> wz.onAdvance()
-        );
-    }
-*/
 
 }

@@ -22,8 +22,7 @@ import java.util.logging.Logger;
 
 public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     List<T> data;
-    // --Commented out by Inspection (22.06.20, 23:28):static int anzahlNeuBewerbungen = 0;//jumlah pelamar
-    static int gesamtNeuBewerbungen = 0;//jumal pelamar keseluran
+    static int gesamtNeuBewerbungen = 0;
 
     public int getGesamtNeuBewerbungen() {
 
@@ -35,20 +34,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         return gesamtNeuBew;
     }
 
-// --Commented out by Inspection START (22.06.20, 23:13):
-//    public int getAnzahlNeuBewerbungen() {
-//        return anzahlNeuBewerbungen;
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:13)
 
-// --Commented out by Inspection START (22.06.20, 23:13):
-//    public int setAnzahlNeuBewerbungen(int anzahlNeuBewerbungen) {
-//
-//        Anzeigen.anzahlNeuBewerbungen = anzahlNeuBewerbungen;
-//        setGesamtNeuBewerbungen(Anzeigen.anzahlNeuBewerbungen);
-//        return Anzeigen.anzahlNeuBewerbungen;
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:13)
 
     @Override
     public List<T> getData() {

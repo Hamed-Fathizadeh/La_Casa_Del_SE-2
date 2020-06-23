@@ -31,12 +31,6 @@ public class StellenanzeigeDTO {
         this.branche = branche;
     }
 
-// --Commented out by Inspection START (23.06.20, 00:14):
-//    public String getStandortBundesland() {
-//        return standort+", "+bundesland;
-//    }
-// --Commented out by Inspection STOP (23.06.20, 00:14)
-
     public int getanzahlNeuBewerbung() {
         return anzahlNeuBewerbung;
     }

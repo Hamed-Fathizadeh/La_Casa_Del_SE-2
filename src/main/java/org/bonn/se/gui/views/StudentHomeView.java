@@ -59,7 +59,6 @@ public class StudentHomeView extends VerticalLayout implements View {
 
     static GridLayout bottomGridBewNeu;
     private String suchArt = "Einfache";
-    ///Test
     final Suche suche = new SucheControlProxy();
 
 
@@ -69,9 +68,6 @@ public class StudentHomeView extends VerticalLayout implements View {
         mainGrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
 
-
-
-// spruch oben
         String ls3 = "<p class=MsoNormal><b><span style='font-size:20.0pt;line-height:107%;\n" +
                 "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
                 "minor-bidi;mso-bidi-theme-font:minor-bidi;color:#2F5597;mso-themecolor:accent1;\n" +
@@ -392,28 +388,4 @@ public class StudentHomeView extends VerticalLayout implements View {
         gridAnzeige = gAnzeigen;
 
     }
-
-// --Commented out by Inspection START (22.06.20, 23:45):
-//    public static void stellenSuchenOnFly(String ortBund, String suchbegrif, String art, String branche, String beginDatum) {
-//
-//        List<StellenanzeigeDTO> data = containerOnFly.getListe().stream().peek(c -> {
-//            if (c.getSuchbegriff() == null){c.setSuchbegriff("");}
-//            if (c.getStandortBundesland() == null){c.setStandort("");}
-//            if (c.getArt() == null){c.setArt("");}
-//            if (c.getBranche() == null){c.setBranche("");}
-//
-//        }).filter( suche -> suche.getStandortBundesland().equals(ortBund) || suche.getStandortBundesland().equals("")
-//                         || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals(""))
-//                         || (suche.getSuchbegriff().equals(suchbegrif) ||  suche.getSuchbegriff().equals("")) && suche.getStandortBundesland().equals(ortBund) || suche.getStandortBundesland().equals("")
-//                 ).collect(Collectors.toList());
-//
-//
-//        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Student",data);
-//        gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
-//        gAnzeigen.setWidth("1000px");
-//        gridAnzeige = gAnzeigen;
-//
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:45)
-
 }

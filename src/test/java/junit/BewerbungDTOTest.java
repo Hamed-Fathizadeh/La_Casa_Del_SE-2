@@ -1,11 +1,7 @@
 package junit;
-import com.vaadin.ui.Image;
-import org.bonn.se.model.objects.dto.*;
-import org.bonn.se.services.util.IllegalException;
-import org.junit.Assert;
+import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.support.events.AbstractWebDriverEventListener;
 
 import java.sql.Date;
 
@@ -20,7 +16,6 @@ public class BewerbungDTOTest {
     private String emailStudent = "salma.hassouni@outlook.com";
     private int AnzeigeID = 2;
     private Date datum = null;
-    //from here
     private String unternehmenName="ONCP";
     private Date student_g_datum=null;
     private String student_studiengang="Reseaux informatique";
@@ -53,10 +48,10 @@ public class BewerbungDTOTest {
         bewerb.setStudent_ausbildung(student_ausbildung);
         bewerb.setStudent_kontakt_nr(student_kontakt_nr);
         bewerb.setStudent_benachrichtigung(student_benachrichtigung);
-        bewerb.setStudent_hoester_abschluss(student_hoester_abschluss);//done
-        bewerb.setStudent_vorname(student_vorname);//pass
-        bewerb.setStudent_nachname(student_nachname);//pass
-        bewerb.setBewerbung_markiert(bewerbung_markiert);//pass
+        bewerb.setStudent_hoester_abschluss(student_hoester_abschluss);
+        bewerb.setStudent_vorname(student_vorname);
+        bewerb.setStudent_nachname(student_nachname);
+        bewerb.setBewerbung_markiert(bewerbung_markiert);
 
         Assertions.assertEquals("Reseaux informatique",bewerb.getStudent_studiengang());
         Assertions.assertEquals("genie Logiciel",bewerb.getStudent_ausbildung());

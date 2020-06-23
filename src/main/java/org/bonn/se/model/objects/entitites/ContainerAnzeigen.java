@@ -22,35 +22,6 @@ public class ContainerAnzeigen {
         liste = new ArrayList<>();
 
     }
-// --Commented out by Inspection START (22.06.20, 23:29):
-//    public int getAnzahl(){
-//        return liste.size();
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:29)
-
-// --Commented out by Inspection START (22.06.20, 23:30):
-//    public void load(){
-//        try {
-//            liste = containerAnzDAO.load();
-//        }
-//        catch( DatabaseException throwables){
-//            throwables.getMessage();
-//        }
-//
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:30)
-
-// --Commented out by Inspection START (22.06.20, 23:30):
-//    public void loadSuche(String suchbegriff_id, String standort, String bundesland, String umkreis,String artSuche, String einstellungsart, Date ab_Datum,String branche){
-//        try {
-//            liste = containerAnzDAO.loadSuche(suchbegriff_id, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
-//        }
-//        catch( DatabaseException throwables){
-//            throwables.getMessage();
-//        }
-//
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:30)
 
     public void setAnzeige(Unternehmen user){
         try {
@@ -80,12 +51,5 @@ public class ContainerAnzeigen {
         }
 
     }
-
-// --Commented out by Inspection START (22.06.20, 23:29):
-//    public StellenanzeigeDTO getAnzeige(int i){
-//        return liste.get(i);
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:29)
-
 
 }

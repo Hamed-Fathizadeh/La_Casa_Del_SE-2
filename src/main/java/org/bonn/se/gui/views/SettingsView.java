@@ -29,7 +29,6 @@ public class SettingsView extends VerticalLayout implements View {
         mainGrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
         String dimensionSet= "200px";
-// spruch oben
 
         String ls3 = "<p class=MsoNormal><b><span style='font-size:28.0pt;line-height:107%;\n" +
                 "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
@@ -122,7 +121,6 @@ public class SettingsView extends VerticalLayout implements View {
                 ConfirmDialog.show(MyUI.getCurrent(), "Möchten Sie ihr Konto wirklich löschen?",
                         (ConfirmDialog.Listener) dialog -> {
                             if (dialog.isConfirmed()) {
-                                //SQL-BEFEHL
                                 if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null){
                                     Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
                                     try {

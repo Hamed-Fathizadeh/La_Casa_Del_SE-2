@@ -9,9 +9,7 @@ public class TopPanelUserTest {
     
     @Test
     public void getTest() throws DatabaseException, SQLException {
-       /*TopPanelUser tpu;
-        assertThrows(TopPanelUser.class, tpu = new TopPanelUser());
-    */
+
     }
 
 }

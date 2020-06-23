@@ -23,7 +23,6 @@ public class PassChangeControl {
         if(bRes){
             UI.getCurrent().addWindow(new ConfirmationWindow("Passwort wurde gändert! "));
         }else{
-            //Fehlerhandling
             System.out.println("Fehler Pass könnte nicht gändert werden");
         }
     }

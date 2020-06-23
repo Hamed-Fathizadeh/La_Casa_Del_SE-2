@@ -76,7 +76,6 @@ public class WizardStudentDatenStep implements WizardStep {
             form1.setWidth("300px");
             form1.setMargin(true);
 
-            //Geburtsdatum
             g_datum = new DateField();
             g_datum.setHeight("56px");
             g_datum.setWidth("300px");

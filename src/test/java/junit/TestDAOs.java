@@ -140,15 +140,6 @@ public class TestDAOs {
         UserDAO.deleteUser(unternehmen.getEmail());
 
     }
-    /*
-    @Test
-    public void checkUnternehmenProfilWithoutBranche() throws DatabaseException {
-        Unternehmen unternehmen = userTestFactory.getProfilUnternehmenWithoutBranche();
-        UserDAO.registerUser(unternehmen);
-        ProfilDAO.createUnternehmenProfil(unternehmen);
-        UserDAO.deleteUser(unternehmen.getEmail());
-    }
-    */
 
     @Test
     public void checkUnternehmenProfilWithDescription() throws DatabaseException, SQLException {
@@ -253,51 +244,5 @@ public class TestDAOs {
 
         assertTrue(UserDAO.getInstance().getUserType("abc") == null);
     }
-/*
-    @Test
-    public void testGetUserException() throws DatabaseException {
-        User expected = userTestFactory.registerStudent();
-        expected.setEmail("'ad'jh'");
-        Assertions.assertThrows(DatabaseException.class, () -> {
-            UserDAO.getInstance().getUser(expected.getEmail());
-        });
-        assertThrows(DatabaseException.class,() -> {
-            UserDAO.getInstance().getUserbyEmail(expected.getEmail());
-        });
-        assertThrows(DatabaseException.class,() -> {
-            UserDAO.getInstance().getUserType(expected.getEmail());
-        });
-        assertThrows(DatabaseException.class,() -> {
-            User user = new User();
-            user.setType("S");
-            UserDAO.getInstance().registerUser(user);
 
-        });
-    }
-
- */
-
-/*
-    @Test
-    public void checkRegisterStudentWithBuilder() throws DatabaseException {
-      Student student = new StudentBuilder(gen.nextEMail()).withVorname(gen.nextString()).withNachname(gen.nextString())
-              .withPasswort("12345678").createStudent();
-      UserDAO.registerUser(student);
-      UserDAO.deleteUser(student.getEmail());
-    }
-
-    @Test
-    public void checkStudentKenntnisse() throws DatabaseException {
-        Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
-        itKenntnis.setKenntnis(gen.nextString());
-        itKenntnis.setNiveau("Sehr Gut");
-
-      Student student = new StudentBuilder(gen.nextEMail()).withVorname(gen.nextString()).withNachname(gen.nextString())
-              .withPasswort("12345678").withItKenntnis(itKenntnis).withItKenntnis(itKenntnis).createStudent();
-      UserDAO.registerUser(student);
-      ProfilDAO.createStudentProfil3(student);
-      UserDAO.deleteUser(student.getEmail());
-
-    }
- */
 }

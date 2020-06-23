@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 
 import static org.bonn.se.services.util.Views.RegisterUnternehmen;
 
-//LoginSeite
 public class LoginView extends VerticalLayout implements View {
 
     public void setUp(){
@@ -45,8 +44,7 @@ public class LoginView extends VerticalLayout implements View {
         hLayout.setComponentAlignment(regStudent,Alignment.TOP_RIGHT);
         hLayout.setComponentAlignment(regUnternehmen,Alignment.TOP_RIGHT);
 
-        //this.addComponent(new Label(""));
-//Gesamtgröße des Bildschirms auf komplette Größe beziehen
+
         this.setSizeFull();
 
 

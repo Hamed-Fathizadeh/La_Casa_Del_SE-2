@@ -33,7 +33,6 @@ public class UserTestFactory {
         student.setG_datum(randomString.nextDate());
         student.setKontakt_nr(randomString.nextString());
 
-        //Adresse
         Adresse adresse = new Adresse();
         adresse.setStrasse(randomString.nextString());
         adresse.setPlz(String.valueOf(randomString.nextInt()));
@@ -78,7 +77,6 @@ public class UserTestFactory {
     public Unternehmen getProfilUnternehmen() throws DatabaseException {
         unternehmen = registerUnternehmen();
         unternehmen.setKontaktnummer(String.valueOf(randomString.nextInt()));
-//      Adresse
         Adresse adresse = new Adresse();
         adresse.setStrasse(randomString.nextString());
         adresse.setPlz(String.valueOf(randomString.nextInt()));
@@ -95,7 +93,6 @@ public class UserTestFactory {
         unternehmen = registerUnternehmen();
         unternehmen.setKontaktnummer(String.valueOf(randomString.nextInt()));
 
-//      Adresse
         Adresse adresse = new Adresse();
 
         unternehmen.setAdresse(adresse);

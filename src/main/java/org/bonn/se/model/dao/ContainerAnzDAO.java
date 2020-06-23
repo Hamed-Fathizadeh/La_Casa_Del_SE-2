@@ -32,7 +32,6 @@ public class ContainerAnzDAO extends AbstractDAO{
                     " FROM lacasa.tab_stellen_anzeige st where status = 1 ");
 
             while (set.next()) {
-// taghir mikhad 100
                 StellenanzeigeDTO sa_load = new StellenanzeigeDTO(
                         set.getInt(1),
                         set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
@@ -64,7 +63,6 @@ public class ContainerAnzDAO extends AbstractDAO{
         Statement statement = JDBCConnection.getInstance().getStatement();
         try {
 
-            //Bundesland und fachgebiet mussen noch überarbeitet werden
 
             StringBuilder sbSuchbeg = new StringBuilder(suchbegriff == null ? " " : " and a.suchbegriff = '" + suchbegriff + "' ");
             StringBuilder sBumkreis = new StringBuilder();
@@ -118,27 +116,6 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
                     " where status = 1" + (ort == null ? " " : " and a.ort =  '" + ort + "' ") + (bundesland == null ? " " : " and a.bundesland =  '" + bundesland + "' ") + sbSuchbeg  + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis
                  );
-/*
-                     " OFFSET "+ offtset  +
-                     " FETCH NEXT 5 ROWS  ONLY");
-
-
- */
-
-
-/*
-            set = statement.executeQuery("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
-                    "      ,a.ort, a.bundesland, a.firmenname, a.hauptsitz, a.suchbegriff, a.art, u.logo ,  \n" +
-                    "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = u.firmenname and bew.hauptsitz = u.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
-                    ", u.branch_name"+
-                    "  FROM lacasa.tab_stellen_anzeige a\n" +
-                    "  join lacasa.tab_unternehmen u\n" +
-                    "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
-                    " where status = 1" + sbSuchbeg  + sbOrt + sbBund + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis );
-
-
-
- */
             while (set.next()) {
                 StellenanzeigeDTO sa_suche = new StellenanzeigeDTO(
                         set.getInt(1),
@@ -341,12 +318,8 @@ public class ContainerAnzDAO extends AbstractDAO{
                     statement.setString(9, user.getStellenanzeigeDTO().getHauptsitz());
                     statement.setString(10, user.getStellenanzeigeDTO().getSuchbegriff());
                     statement.setString(11, user.getStellenanzeigeDTO().getArt());
-                    //statement.setString(8,user.getCname());
-                    //statement.setString(9,user.getHauptsitz());
 
                     statement.executeUpdate();
-
-                    //email senden
                     sendEmail(user);
 
 

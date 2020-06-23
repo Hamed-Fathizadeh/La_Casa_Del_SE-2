@@ -14,7 +14,6 @@ public class TopPanel  extends GridLayout {
         String buttonOne;
         String navigateToOne;
         String navigateToTwo;
-        //Logo
         ThemeResource resource = new ThemeResource("img/RegisterStudent/logo.png");
         Image logo = new Image(null,resource);
         if(usertyp.equals("Unternehmen")){

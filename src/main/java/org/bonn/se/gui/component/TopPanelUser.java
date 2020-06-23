@@ -63,7 +63,6 @@ public class TopPanelUser extends GridLayout {
                     firmaLogo.getSource(),
                     null);
         }
-//create menubar
 
 
 

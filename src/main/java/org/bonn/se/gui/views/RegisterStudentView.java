@@ -30,8 +30,6 @@ public class RegisterStudentView extends GridLayout implements View {
 
 
         System.out.println("LOG: get UI-Objekt in RegisterStudent!" + VaadinSession.getCurrent().toString());
-        // this.setSizeFull();
-        // this.setSpacing(true);
 
         this.setColumns(10);
         this.setRows(10);
@@ -43,8 +41,7 @@ public class RegisterStudentView extends GridLayout implements View {
 
         TopPanel topPanel_Student =  new TopPanel("Unternehmen");
         topPanel_Student.addStyleName("toppanel");
-        //this.addComponent(new TopPanel("Für Unternehmen"));
-        // this.addComponent(new Label(""));
+
         Label head = new Label("» Willkommen bei Lacolsco Registrieren Sie sich jetzt!");
 
         FormLayout form_Student = new FormLayout();
@@ -58,7 +55,6 @@ public class RegisterStudentView extends GridLayout implements View {
         nachname.setValue(VaadinService.getCurrent().getBaseDirectory().getAbsolutePath());
         RegistrationTextField email = new RegistrationTextField("E-Mail");
         RegistrationPasswordField passwort = new RegistrationPasswordField("Passwort");
-      //  RegistrationPasswordField Vnummer = new RegistrationPasswordField("Verifizierungscode");
 
         Button registerStudentButton = new Button("Registrieren");
         registerStudentButton.setEnabled(false);
@@ -67,7 +63,6 @@ public class RegisterStudentView extends GridLayout implements View {
         vNummerButton.setEnabled(false);
 
         form_Student.addComponents(head,vorname,nachname,email,passwort,registerStudentButton);
-        //this.addComponent(form_Student);
         Binder<User> binder = new Binder<>(User.class);
 
         binder.forField(vorname)
@@ -91,25 +86,7 @@ public class RegisterStudentView extends GridLayout implements View {
 
         binder.setBean(user);
 
-        /*
-        binder.forField(Vnummer)
-                .asRequired("Verification Nummer")
-                .withValidator(new StringLengthValidator(
-                        "Verification Nummer ist falsch!", 5, 5));
-        */
-        /*
-        Button test = new Button("Test PopUp");
-        test.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                ProfilStudentWindow window = new ProfilStudentWindow(null);
-                UI.getCurrent().addWindow(window);
-            }
-        });
-
-         */
         ThemeResource resource = new ThemeResource("img/RegisterStudent/student_pic.png");
-//        ThemeResource resource1 = new ThemeResource("img/RegisterStudent/jobfinden.png");
 
 
         Image bild_Student = new Image(null,resource);
@@ -136,19 +113,9 @@ public class RegisterStudentView extends GridLayout implements View {
                             email.setValue("");
                             email.setPlaceholder("E-Mail existiert schon!");
                             email.setComponentError(new UserError("Bitte eine andere E-Mail verwenden."));
-                        }
-                        /*
-                        else if(!vnummer.equals(Vnummer.getValue())){
-                            UI.getCurrent().addWindow(new ConfirmationWindow("Verifizierungscode ist falsch!"));
-                            Vnummer.clear();
-                        }
-
-                         */
-                        else {
+                        } else {
                             user.setType("S");
                             UserDAO.getInstance().registerUser(user);
-
-                           // UserDAO.registerStudent(student.getEmail(),student.getPasswort(),student.getVorname(),student.getNachname() ,'s');
                             registerStudentButton.setEnabled(false);
                             Student student = new Student();
                             student.setEmail(user.getEmail());
@@ -173,49 +140,6 @@ public class RegisterStudentView extends GridLayout implements View {
 
         binder.addStatusChangeListener(
                 event -> registerStudentButton.setEnabled(binder.isValid()));
-
-
-        //hafa change#########################################################
-        /*
-
-        Binder<User> binder2 = new Binder<>(User.class);
-
-        binder2.forField(vorname)
-                .asRequired("Vorname muss angegeben werden!")
-                .bind(User::getVorname, User::setVorname);
-
-        binder2.forField(nachname)
-                .asRequired("Nachname muss angegeben werden!")
-                .bind(User::getNachname, User::setNachname);
-
-        binder2.forField(email)
-                .asRequired("Password may not be empty")
-                .withValidator(new StringLengthValidator(
-                        "Passwort muss mindestens 8 Zeichen lang sein", 8, null))
-                .bind(User::getPasswort, User::setPasswort);
-        binder2.forField(passwort)
-                .asRequired("Password may not be empty")
-                .withValidator(new StringLengthValidator(
-                        "Passwort muss mindestens 8 Zeichen lang sein", 8, null))
-                .bind(User::getPasswort, User::setPasswort);
-
-        VnummerButton.addClickListener(
-                event -> {
-                    try {
-
-                        JavaMailUtil.sendMail(email.getValue(),getVnummer(),vorname.getValue());
-                        //Notification.show("Wir haben Ihnen einen Email gesendet!");
-                        UI.getCurrent().addWindow(new ConfirmationWindow("Wir haben einen Email an diese Adresse gesendet: "+email.getValue()));
-                    } catch (Exception e) {
-                        UI.getCurrent().addWindow(new ConfirmationWindow("Fehler beim email senden!"));
-                        e.printStackTrace();
-                    }
-
-                });
-
-        binder2.addStatusChangeListener(
-                event -> VnummerButton.setEnabled(binder2.isValid()));
-         */
 
     }
 

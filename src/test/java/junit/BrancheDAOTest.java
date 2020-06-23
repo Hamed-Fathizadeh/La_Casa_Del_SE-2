@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 public class BrancheDAOTest {
 
-    //public static BrancheDAO bd = null;
 
     BrancheDAO bd= BrancheDAO.getInstance();
     BrancheDAO bd1= new BrancheDAO() ;

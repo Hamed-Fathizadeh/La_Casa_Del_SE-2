@@ -58,7 +58,6 @@ public class TestStellenAnzeigeDTO {
 
     public void createStellenAnzeige() throws DatabaseException {
 
-        //Setter und Getter Test
         stanz.setId(id);
         stanz.setDatum(datum);
         stanz.setZeitstempel(zeitstempel);

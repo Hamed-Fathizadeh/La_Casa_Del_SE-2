@@ -29,7 +29,6 @@ public class RegisterStudentWindow extends CustomWindow implements WizardProgres
         wizard.addStep(new WizardStepFertigWindow(),"Fertig");
         wizard.getBackButton().setVisible(false);
         setContent(wizard);
-        //setUp();
     }
 
     public Wizard getWizard(){

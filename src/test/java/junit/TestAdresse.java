@@ -1,8 +1,6 @@
 package junit;
 
 import org.bonn.se.model.objects.entitites.Adresse;
-import org.bonn.se.services.util.IllegalException;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -45,14 +43,6 @@ public class TestAdresse {
         Assertions.assertEquals(adr.getBundesland(), adr3.getBundesland());
     }
 
-/*
-    @Test
-    public void testException() {
-        Assert.assertThrows(IllegalException.class, () -> {
-            adr.setPlz("1234567");
-        });
-    }
 
- */
 }
 

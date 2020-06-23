@@ -3,21 +3,12 @@ package junit;
 
 
 import com.vaadin.server.FileResource;
-import com.vaadin.server.Resource;
-import org.bonn.se.model.dao.UserDAO;
-import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.ImageConverter;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.Assertions;
-import com.vaadin.server.FileResource;
-import java.io.File;
 import com.vaadin.ui.Image;
-import java.awt.image.BufferedImage;
+import org.bonn.se.services.util.ImageConverter;
+import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
-import javax.imageio.ImageIO;
-import java.sql.SQLException;
+import java.io.File;
 
 
 public class TestImageConverter {
@@ -57,14 +48,3 @@ public class TestImageConverter {
     }
 
 }
-    /*
-    @Test
-    void convertImagetoProfil() {
-    }
-
-    @Test
-    void convertImagetoMenu() {
-    }
-
- */
-

@@ -65,7 +65,6 @@ public class StellenanzeigeBewerbungenWindow extends CustomWindow {
 
 
 
-     //add TabSheet
             TabSheet tabSheet = new TabSheet();
             tabSheet.setHeight("700px");
             tabSheet.setWidth("1000px");

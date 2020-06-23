@@ -27,7 +27,6 @@ public class OrtService {
         return (int) getOrte().stream()
                 .filter(begrif -> filter == null || begrif
                         .toLowerCase().startsWith(filter.toLowerCase())
-                        //||begrif.toLowerCase().contains(filter.toLowerCase())
                 )
                 .count();
     }
@@ -36,7 +35,6 @@ public class OrtService {
         return getOrte().stream()
                 .filter(begrif -> filter == null || begrif
                         .toLowerCase().startsWith(filter.toLowerCase())
-                        //|| begrif.toLowerCase().contains(filter.toLowerCase())
                 )
                 .skip(offset).limit(limit);
 

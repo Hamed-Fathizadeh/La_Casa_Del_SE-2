@@ -36,8 +36,6 @@ public class BewerbungWindow extends CustomWindow {
 
         back.addClickListener((Button.ClickListener) event -> {
             BewerbungWindow.this.close();
-           // UI.getCurrent().getPage().reload();
-
         });
 
         GridLayout mainGridLayout = new GridLayout(6, 16);

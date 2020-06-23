@@ -19,7 +19,6 @@ public class BewertungTest {
 
         Bewertung bwt = new Bewertung();
 
-        //Setter und Getter Methode Test
 
     @Test
     public void getDatum() {
@@ -29,7 +28,6 @@ public class BewertungTest {
         bwt.setHauptsitz(hauptsitz);
         bwt.setStudentID(studentID);
 
-        //Test
         Bewertung bwt1 = new Bewertung(datum, anzahlSterne,firmenname,hauptsitz,studentID);
         Assert.assertEquals(bwt.getDatum(), bwt1.getDatum());
         Assert.assertEquals(bwt.getAnzahlSterne(), bwt1.getAnzahlSterne());

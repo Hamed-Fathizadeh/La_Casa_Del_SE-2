@@ -123,7 +123,6 @@ public class PassChangeWindow extends Window {
                    try {
 
                        JavaMailUtil.sendMail(email.getValue(),getVnummer(),"");
-                       //Notification.show("Wir haben Ihnen einen Email gesendet!");
                        UI.getCurrent().addWindow(new ConfirmationWindow("Wir haben einen Email an diese Adresse gesendet: "+email.getValue()));
                    } catch (Exception e) {
                        UI.getCurrent().addWindow(new ConfirmationWindow("Fehler beim Email senden!"));

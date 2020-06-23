@@ -61,15 +61,6 @@ public class User implements Serializable {
         return passwort;
     }
     public void setPasswort(String passwort){
-    /*      Wirft noch Exception
-    String regex="[a-z][A-Z][0-9][?*')(#]";
-		if(!passwort.matches(regex)) {
-            throw new IllegalException(" passwort ist nicht stark!bitte versuchen sie noch mal mit dieser Form [aZ0?*#]");
-    }
-		else
-            this.passwort=passwort;
-   }
-   */
         this.passwort = passwort;
     }
 

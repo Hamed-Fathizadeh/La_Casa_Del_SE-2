@@ -11,9 +11,4 @@ public class DatabaseException extends Exception {
         return reason;
     }
 
-// --Commented out by Inspection START (22.06.20, 23:33):
-//    public void setReason(String reason) {
-//        this.reason = reason;
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:33)
 }

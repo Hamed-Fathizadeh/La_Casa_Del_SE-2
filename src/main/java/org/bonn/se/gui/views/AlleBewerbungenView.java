@@ -21,7 +21,6 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
         mainGrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
 
-// spruch oben
         String ls3 = "<p class=MsoNormal><b><span style='font-size:28.0pt;line-height:107%;\n" +
                 "font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
                 "minor-bidi;mso-bidi-theme-font:minor-bidi;color:#ffffff;mso-themecolor:accent1;\n" +

@@ -19,12 +19,6 @@ public class BrancheService { // --Commented out by Inspection (22.06.20, 23:29)
         return listeBranche;
     }
 
-// --Commented out by Inspection START (22.06.20, 23:29):
-//    public int count() {
-//        return listeBranche.size();
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:29)
-
     public int count(String filter) {
         return (int) getSuchbegriffe().stream()
                 .filter(begrif -> filter == null || begrif

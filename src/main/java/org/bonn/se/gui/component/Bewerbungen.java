@@ -25,11 +25,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
     List<T> data;
     private BewerbungDTO bewerbungDTO;
 
-// --Commented out by Inspection START (22.06.20, 23:17):
-//    public BewerbungDTO getBewerbungDTO() {
-//        return bewerbungDTO;
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:17)
 
     public void setBewerbungDTO(BewerbungDTO bewerbungDTO) {
         this.bewerbungDTO = bewerbungDTO;
@@ -38,18 +33,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
     public List<T> getData() {
         return data;
     }
-
-// --Commented out by Inspection START (22.06.20, 23:17):
-//    public void setData(List<T> liste) {
-//        this.data = liste;
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:17)
-
-// --Commented out by Inspection START (22.06.20, 23:17):
-//    public int getAnzahlRow() {
-//        return data.size();
-//    }
-// --Commented out by Inspection STOP (22.06.20, 23:17)
 
     public Bewerbungen(ContainerLetztenBewerbungen container, String viewName){
         super();
@@ -61,13 +44,11 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         this.setHeight("100%");
         this.setCaption("Treffer: "+ container.getAnzahl());
 
-        //Das ist ein Test @Hbajwa
-        // Allow column reordering
+
         this.setColumnReorderingAllowed(true);
 
         @SuppressWarnings("unchecked") SingleSelect<BewerbungDTO> selection = (SingleSelect<BewerbungDTO>) this.asSingleSelect();
 
-        // Der Event Listener für den Grid
         this.addSelectionListener(event -> {
 
             if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
@@ -112,10 +93,8 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 });
 
 
-                // Center it in the browser window
                 subWindow.center();
 
-                // Open it in the UI
                 UI.getCurrent().addWindow(subWindow);
 
 
@@ -219,15 +198,12 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE,null,throwables);
             }
 
-            // Open it in the UI
             subWindow.close();
         });
 
 
-        // Center it in the browser window
         subWindow.center();
 
-        // Open it in the UI
         UI.getCurrent().addWindow(subWindow);
 
     }

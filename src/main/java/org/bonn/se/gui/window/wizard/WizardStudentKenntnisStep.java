@@ -263,10 +263,6 @@ public class WizardStudentKenntnisStep implements WizardStep {
             registerStudentWindow.getWizard().getNextButton().setEnabled(false);
 
 
-            //     binder.addStatusChangeListener(event -> wizard.getNextButton().setEnabled(binder.isValid()));
-            //    binder1.addStatusChangeListener(event -> wizard.getNextButton().setEnabled(binder.isValid()));
-
-
             return gl_KenntnisStep;
         }
 

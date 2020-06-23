@@ -36,7 +36,6 @@ public class LoginControl {
     }
     public void checkAuthentication ( String login , String password) throws NoSuchUserOrPassword, DatabaseException, SQLException {
 
-//DB-Zugriff
         ResultSet set;
         Statement statement = null;
 

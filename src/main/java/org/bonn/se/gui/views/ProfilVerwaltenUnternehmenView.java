@@ -15,13 +15,9 @@ public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
     public void setUp()  {
         User user = new User();
 
-        //Für Test
         user.setEmail("test1@test.de");
         user.setType("C");
 
-
-
-        //Grid Einstellungen und Top Panel
         TopPanelUser topPanel;
 
         topPanel = new TopPanelUser();

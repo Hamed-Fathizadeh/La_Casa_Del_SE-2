@@ -24,7 +24,6 @@ public class TestRegisterStudent1 {
         assertEquals(student,student);
         RegisterStudentView test1 = Mockito.mock(RegisterStudentView.class);
         RegisterStudentView test2 = Mockito.mock(RegisterStudentView.class);
-       // assertEquals(,test2.setColumns(10));
 
     }
 }

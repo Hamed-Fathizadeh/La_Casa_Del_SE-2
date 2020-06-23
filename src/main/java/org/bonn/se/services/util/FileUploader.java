@@ -23,7 +23,6 @@ public class FileUploader implements Upload.Receiver, Upload.SucceededListener {
     }
 
     public OutputStream receiveUpload(String filename, String mimeType) {
-        // Create and return a file output stream
         FileOutputStream fos;
 
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();

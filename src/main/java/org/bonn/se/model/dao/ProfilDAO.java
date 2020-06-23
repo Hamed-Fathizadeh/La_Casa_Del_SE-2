@@ -81,7 +81,6 @@ public class ProfilDAO extends AbstractDAO{
 
                 Date begin = null;
                 Date ende = null;
-                //String sql = "INSERT INTO lacasa.tab_student VALUES(DEFAULT,?,?,?,DEFAULT,DEFAULT,?,?) WHERE email = \'" + email + "\';         INSERT INTO lacasa.tab_adresse VALUES(DEFAULT,?,?,?,?);"  ;
                 PreparedStatement statement = getPreparedStatement(sql);
                 if(taetigkeit.getBeginn() != null || taetigkeit.getEnde() != null ) {
                     begin = Date.valueOf(taetigkeit.getBeginn());
@@ -114,7 +113,6 @@ public class ProfilDAO extends AbstractDAO{
                             "FROM lacasa.tab_student" +
                             " WHERE lacasa.tab_student.email = ?));";
 
-                    //String sql = "INSERT INTO lacasa.tab_student VALUES(DEFAULT,?,?,?,DEFAULT,DEFAULT,?,?) WHERE email = \'" + email + "\';         INSERT INTO lacasa.tab_adresse VALUES(DEFAULT,?,?,?,?);"  ;
                     PreparedStatement statement = getPreparedStatement(sql);
 
 
@@ -268,7 +266,6 @@ public class ProfilDAO extends AbstractDAO{
                 Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"), set.getString("bundesland"));
                 student.setAdresse(adresse);
                 student.setPicture(set.getBytes("picture"));
-                //nur um zu checken ob der student einen lebenslauf hochgeladen hat
                 student.setHasLebenslauf(set.getBytes("lebenslauf") != null);
             }
             } catch (SQLException  throwables) {
