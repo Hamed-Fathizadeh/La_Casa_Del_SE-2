@@ -265,7 +265,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
     public List<StellenanzeigeDTO> loadNeuBewerbungen(Unternehmen unternehmen) throws DatabaseException, SQLException {
 
-        List<StellenanzeigeDTO> liste = new ArrayList<>();
+        List<StellenanzeigeDTO> listeStellenanzeigenBew = new ArrayList<>();
         ResultSet set = null;
         Statement statement = JDBCConnection.getInstance().getStatement();
 
@@ -291,7 +291,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getString(12),set.getInt(13)
                 );
 
-                liste.add(sa_loadNeueBewerbungen);
+                listeStellenanzeigenBew.add(sa_loadNeueBewerbungen);
 
 
             }
@@ -304,7 +304,7 @@ public class ContainerAnzDAO extends AbstractDAO{
             JDBCConnection.getInstance().closeConnection();
         }
 
-        liste.sort((o1, o2) -> {
+        listeStellenanzeigenBew.sort((o1, o2) -> {
             if (o1.getId() < o2.getId()) {
                 return -1;
             } else if (o1.getId() == o2.getId()) {
@@ -314,7 +314,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         });
 
 
-        return liste;
+        return listeStellenanzeigenBew;
     }
 
 

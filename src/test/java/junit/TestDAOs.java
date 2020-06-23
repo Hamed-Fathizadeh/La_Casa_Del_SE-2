@@ -253,12 +253,12 @@ public class TestDAOs {
 
         assertTrue(UserDAO.getInstance().getUserType("abc") == null);
     }
-
+/*
     @Test
     public void testGetUserException() throws DatabaseException {
         User expected = userTestFactory.registerStudent();
         expected.setEmail("'ad'jh'");
-        assertThrows(DatabaseException.class, () -> {
+        Assertions.assertThrows(DatabaseException.class, () -> {
             UserDAO.getInstance().getUser(expected.getEmail());
         });
         assertThrows(DatabaseException.class,() -> {
@@ -274,6 +274,8 @@ public class TestDAOs {
 
         });
     }
+
+ */
 
 /*
     @Test
