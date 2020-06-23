@@ -91,8 +91,8 @@ public class StudentHomeView extends VerticalLayout implements View {
         ComboBox<String> comboNachWas = new ComboBox<>();
         comboNachWas.setPlaceholder("Nach was suchen Sie?");
         comboNachWas.setWidth(300.0f, Unit.PIXELS);
-        SuchbegrifService Sservice = new SuchbegrifService();
-        comboNachWas.setDataProvider(Sservice::fetch, Sservice::count);
+        SuchbegrifService sService = new SuchbegrifService();
+        comboNachWas.setDataProvider(sService::fetch, sService::count);
 
         //Ort
         OrtField comboOrtBund = new OrtField("Ort");
@@ -108,11 +108,11 @@ public class StudentHomeView extends VerticalLayout implements View {
         //Erweiterte Suche
         CheckBox erwSuche = new CheckBox("Erweiterte Suche");
         ComboBox<String> comboEinstellungsart = new ComboBox<>();
-        ComboBox<String> ComboBranche = new ComboBox<>();
-        DateField wann_datum = new DateField();
+        ComboBox<String> comboBranche = new ComboBox<>();
+        DateField wannDatum = new DateField();
         comboEinstellungsart.setVisible(false);
-        ComboBranche.setVisible(false);
-        wann_datum.setVisible(false);
+        comboBranche.setVisible(false);
+        wannDatum.setVisible(false);
 
         //GridLayout Suche
         searchGrid.addComponent(lSpruch,0,0,6,0);
@@ -121,8 +121,8 @@ public class StudentHomeView extends VerticalLayout implements View {
         searchGrid.addComponent(comboUmkreis,4,1);
         searchGrid.addComponent(erwSuche,6,3);
         searchGrid.addComponent(comboEinstellungsart,2,2);
-        searchGrid.addComponent(ComboBranche,3,2);
-        searchGrid.addComponent(wann_datum,4,2);
+        searchGrid.addComponent(comboBranche,3,2);
+        searchGrid.addComponent(wannDatum,4,2);
 
         searchGrid.setComponentAlignment(comboNachWas, Alignment.BOTTOM_LEFT);
         searchGrid.setComponentAlignment(comboOrtBund, Alignment.BOTTOM_LEFT);
@@ -146,37 +146,37 @@ public class StudentHomeView extends VerticalLayout implements View {
                 comboEinstellungsart.setWidth("300px");
 
                 //Branche
-                ComboBranche.setPlaceholder("Branche");
-                ComboBranche.setHeight("56px");
-                ComboBranche.setWidth("300px");
-                BrancheService SserviceBranche = null;
+                comboBranche.setPlaceholder("Branche");
+                comboBranche.setHeight("56px");
+                comboBranche.setWidth("300px");
+                BrancheService sServiceBranche = null;
                 try {
-                    SserviceBranche = new BrancheService();
+                    sServiceBranche = new BrancheService();
                 } catch (DatabaseException e) {
                     Logger.getLogger(StudentHomeView.class.getName()).log(Level.SEVERE,null,e);
                 } catch (SQLException throwables) {
                     Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE,null,throwables);
                 }
-                ComboBranche.setDataProvider(SserviceBranche::fetch, SserviceBranche::count);
+                comboBranche.setDataProvider(sServiceBranche::fetch, sServiceBranche::count);
 
                 //Datum
-                wann_datum.setHeight("56px");
-                wann_datum.setWidth("200px");
-                wann_datum.setPlaceholder("ab Wann? dd.mm.yyyy");
+                wannDatum.setHeight("56px");
+                wannDatum.setWidth("200px");
+                wannDatum.setPlaceholder("ab Wann? dd.mm.yyyy");
                 LocalDate emptyDate = LocalDate.parse("0001-01-01");
 
 
                 //EVENTUELL NOCH FOR-SCHLEIFE HIER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 comboEinstellungsart.addValueChangeListener((HasValue.ValueChangeListener<String>) event1 -> {
-                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
+                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,comboBranche.getValue());
                     grid1.setDataProvider(dataProvider);
                 });
 
-                ComboBranche.addValueChangeListener((HasValue.ValueChangeListener<String>) event1 -> {
+                comboBranche.addValueChangeListener((HasValue.ValueChangeListener<String>) event1 -> {
 
                 });
-                wann_datum.addValueChangeListener((HasValue.ValueChangeListener<LocalDate>) event2 -> {
-                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
+                wannDatum.addValueChangeListener((HasValue.ValueChangeListener<LocalDate>) event2 -> {
+                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,comboBranche.getValue());
 
                     grid1.setDataProvider(dataProvider);
                 });
@@ -184,15 +184,15 @@ public class StudentHomeView extends VerticalLayout implements View {
 
 
                 comboEinstellungsart.setVisible(true);
-                ComboBranche.setVisible(true);
-                wann_datum.setVisible(true);
+                comboBranche.setVisible(true);
+                wannDatum.setVisible(true);
             } else {
                 comboEinstellungsart.setVisible(false);
-                ComboBranche.setVisible(false);
-                wann_datum.setVisible(false);
+                comboBranche.setVisible(false);
+                wannDatum.setVisible(false);
                 comboEinstellungsart.clear();
-                ComboBranche.clear();
-                wann_datum.clear();
+                comboBranche.clear();
+                wannDatum.clear();
                 suchArt = "Einfache";
             }
         });
@@ -221,7 +221,7 @@ public class StudentHomeView extends VerticalLayout implements View {
 
                 //Datenabfrage
 
-                DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,ComboBranche.getValue());
+                DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,comboBranche.getValue());
                 grid1.setDataProvider(dataProvider);
                 grid1.setCaption("Anzahl der Ergebisse: " + suche.getRowsCount());
                 grid1.setVisible(true);
@@ -327,14 +327,14 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
             UI.getCurrent().access(() -> {
-                GridLayout bottomGridBewNeu_2 = new GridLayout(2, 4);
-                bottomGridBewNeu_2.setMargin(true);
-                bottomGridBewNeu_2.setSizeFull();
+                GridLayout bottomGridBewNeuTwo = new GridLayout(2, 4);
+                bottomGridBewNeuTwo.setMargin(true);
+                bottomGridBewNeuTwo.setSizeFull();
                 Label lBewerbung = new Label(ls1, ContentMode.HTML);
                 Label lPatzhalter1 = new Label("&nbsp", ContentMode.HTML);
 
-                bottomGridBewNeu_2.addComponent(lBewerbung,0,0,1,0);
-                bottomGridBewNeu_2.setComponentAlignment(lBewerbung,Alignment.TOP_CENTER);
+                bottomGridBewNeuTwo.addComponent(lBewerbung,0,0,1,0);
+                bottomGridBewNeuTwo.setComponentAlignment(lBewerbung,Alignment.TOP_CENTER);
 
                 ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
                 Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student));
@@ -342,15 +342,15 @@ public class StudentHomeView extends VerticalLayout implements View {
                 Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<>(containerBewerbungen, "StudentHomeView");
                 gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
                 gBewerbungen.setWidth("705px");
-                bottomGridBewNeu_2.addComponent(gBewerbungen,0,1,1,1);
-                bottomGridBewNeu_2.setComponentAlignment(gBewerbungen,Alignment.TOP_CENTER);
+                bottomGridBewNeuTwo.addComponent(gBewerbungen,0,1,1,1);
+                bottomGridBewNeuTwo.setComponentAlignment(gBewerbungen,Alignment.TOP_CENTER);
 
                 Button alleBewerbungen = new Button("Alle Bewerbungen", VaadinIcons.SEARCH);
-                bottomGridBewNeu_2.addComponent(lPatzhalter1,0,2,1,2);
-                bottomGridBewNeu_2.addComponent(alleBewerbungen,0,3,1,3);
-                bottomGridBewNeu_2.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
-                horizontalLayout.addComponent(bottomGridBewNeu_2,0);
-                horizontalLayout.setComponentAlignment(bottomGridBewNeu_2,Alignment.TOP_CENTER);
+                bottomGridBewNeuTwo.addComponent(lPatzhalter1,0,2,1,2);
+                bottomGridBewNeuTwo.addComponent(alleBewerbungen,0,3,1,3);
+                bottomGridBewNeuTwo.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
+                horizontalLayout.addComponent(bottomGridBewNeuTwo,0);
+                horizontalLayout.setComponentAlignment(bottomGridBewNeuTwo,Alignment.TOP_CENTER);
                 alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView));
             });
         }

@@ -11,7 +11,10 @@ public class PassChangeControl {
     private static PassChangeControl instance;
 
     public static PassChangeControl getInstance() {
-        return instance == null ? instance = new PassChangeControl() : instance;
+        if (instance == null){
+            instance = new PassChangeControl();
+        }
+        return instance ;
     }
 
     public void changePass(PassChangeRequest request) throws DatabaseException {

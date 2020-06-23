@@ -10,7 +10,6 @@ import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.dialogs.ConfirmDialog;

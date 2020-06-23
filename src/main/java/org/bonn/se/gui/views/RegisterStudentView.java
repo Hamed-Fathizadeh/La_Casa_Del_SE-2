@@ -63,8 +63,8 @@ public class RegisterStudentView extends GridLayout implements View {
         Button registerStudentButton = new Button("Registrieren");
         registerStudentButton.setEnabled(false);
 
-        Button VnummerButton = new Button("Verifikation");
-        VnummerButton.setEnabled(false);
+        Button vNummerButton = new Button("Verifikation");
+        vNummerButton.setEnabled(false);
 
         form_Student.addComponents(head,vorname,nachname,email,passwort,registerStudentButton);
         //this.addComponent(form_Student);

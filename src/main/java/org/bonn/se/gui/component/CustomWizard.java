@@ -4,12 +4,12 @@ import org.vaadin.teemu.wizards.Wizard;
 
 public class CustomWizard  {
 
-    private static Wizard wizard;
 
 
+    private CustomWizard(){}
 
     public static Wizard getWizard(){
-        wizard   = new Wizard();
+        Wizard wizard = new Wizard();
         wizard.setUriFragmentEnabled(true);
         wizard.getBackButton().setCaption("Zurück");
         wizard.getFinishButton().setCaption("Fertig");
