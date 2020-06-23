@@ -12,7 +12,6 @@ import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.DatenUnternehmenProfil;
 import org.bonn.se.services.util.Roles;

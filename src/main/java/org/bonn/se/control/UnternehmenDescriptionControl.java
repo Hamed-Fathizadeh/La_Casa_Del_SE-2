@@ -18,7 +18,10 @@ public class UnternehmenDescriptionControl extends AbstractDAO {
     private static UnternehmenDescriptionControl instance;
 
     public static UnternehmenDescriptionControl getInstance() {
-        return instance == null ? instance = new UnternehmenDescriptionControl() : instance;
+        if (instance == null){
+            instance = new UnternehmenDescriptionControl();
+        }
+        return instance ;
     }
 
 

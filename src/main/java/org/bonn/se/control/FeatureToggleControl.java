@@ -11,7 +11,10 @@ public class FeatureToggleControl {
     private static FeatureToggleControl instance;
 
     public static FeatureToggleControl getInstance() {
-        return instance == null ? instance = new FeatureToggleControl() : instance;
+        if(instance == null){
+            instance = new FeatureToggleControl();
+        }
+        return instance ;
     }
 
    public boolean featureIsEnabled(String feature) {

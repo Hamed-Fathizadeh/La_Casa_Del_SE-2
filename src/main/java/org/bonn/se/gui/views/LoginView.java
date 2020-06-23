@@ -70,8 +70,8 @@ public class LoginView extends VerticalLayout implements View {
         VerticalLayout layout = new VerticalLayout();
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
         FileResource resource = new FileResource(new File(basepath + "/VAADIN/themes/demo/img/RegisterStudent/Logo_Login.png"));
-        Image Logo = new Image("", resource);
-        layout.addComponent(Logo);
+        Image logo = new Image("", resource);
+        layout.addComponent(logo);
 
 
 

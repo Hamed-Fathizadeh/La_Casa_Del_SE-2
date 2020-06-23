@@ -15,7 +15,10 @@ public class ComponentControl {
     private static ComponentControl instance;
 
     public static ComponentControl getInstance() {
-        return instance == null ? instance = new ComponentControl() : instance;
+        if (instance == null){
+            instance = new ComponentControl();
+        }
+        return instance ;
     }
 
     public List<String> getSuchbegriffe () {

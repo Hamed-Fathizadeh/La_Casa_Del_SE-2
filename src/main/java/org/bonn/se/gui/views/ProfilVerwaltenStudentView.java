@@ -9,7 +9,6 @@ import com.vaadin.ui.*;
 import org.bonn.se.control.ProfilControl;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.DatenStudentProfil;
