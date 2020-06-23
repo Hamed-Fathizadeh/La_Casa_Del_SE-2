@@ -32,10 +32,5 @@ public class DTOFactory {
         return bewerbungDTO;
     }
 
-    public static BewerbungDTO createBewerbungDTO( byte[] unternehmenLogo,String unternehmenName, Date datum, int status ,int bewerbungID, String s_titel){
-        BewerbungDTO bewerbungDTO = new BewerbungDTO( unternehmenLogo, unternehmenName, datum, status , bewerbungID, s_titel
-                                                    );
-        return bewerbungDTO;
-    }
 
 }

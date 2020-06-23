@@ -350,7 +350,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 bottomGridBewNeu_2.addComponent(alleBewerbungen,0,3,1,3);
                 bottomGridBewNeu_2.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
                 horizontalLayout.addComponent(bottomGridBewNeu_2,0);
-                horizontalLayout.setComponentAlignment(bottomGridBewNeu_2,Alignment.MIDDLE_CENTER);
+                horizontalLayout.setComponentAlignment(bottomGridBewNeu_2,Alignment.TOP_CENTER);
                 alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView));
             });
         }

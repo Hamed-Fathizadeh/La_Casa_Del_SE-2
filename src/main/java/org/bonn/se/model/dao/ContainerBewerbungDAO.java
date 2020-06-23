@@ -3,6 +3,7 @@ package org.bonn.se.model.dao;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.DTOFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -75,7 +76,7 @@ public class ContainerBewerbungDAO {
 
 
             while (set.next()) {
-                BewerbungDTO bewerbung = new BewerbungDTO(set.getInt(1),set.getDate(2),set.getString(3),
+                BewerbungDTO bewerbung = DTOFactory.createBewerbungDTO(set.getInt(1),set.getDate(2),set.getString(3),
                                                           set.getBytes(4),set.getInt(5),set.getInt(6),
                                                           set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
                                                           set.getString(11),set.getString(12),set.getDouble(22)
@@ -131,7 +132,7 @@ public class ContainerBewerbungDAO {
 
 
             while (set.next()) {
-                BewerbungDTO bewerbung = new BewerbungDTO(
+                BewerbungDTO bewerbung = DTOFactory.createBewerbungDTO(
                                                             set.getInt(1),set.getDate(2),set.getString(3),
                                                             set.getBytes(4),set.getInt(5),set.getInt(6),
                                                             set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
