@@ -121,7 +121,8 @@ div .onoffswitch-slider.on:before {
   background-color: #3D82AB !important;
 }
 
-.v-label v-widget v-label-undef-w{
+.demo .v-label-undef-w{
+  white-space: nowrap;
   font-size: x-large;
   font-weight: 800;
   color: black;
