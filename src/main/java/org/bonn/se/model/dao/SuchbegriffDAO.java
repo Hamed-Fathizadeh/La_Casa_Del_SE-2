@@ -22,19 +22,18 @@ public class SuchbegriffDAO extends AbstractDAO {
     public List<String> getSuchbegriffe() {
 
         ResultSet set = null;
-        List<String> liste = new ArrayList<>();
+        List<String> suchbegriff_list = new ArrayList<>();
 
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT suchbegriff FROM lacasa.tab_suchbegriff ");
-
-
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
-                liste.add(set.getString(1));
 
+                suchbegriff_list.add(set.getString(1));
             }
+
         }catch (SQLException | DatabaseException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
          }finally {
@@ -51,7 +50,7 @@ public class SuchbegriffDAO extends AbstractDAO {
             }
         }
 
-        return liste;
+        return suchbegriff_list;
     }
 
 }

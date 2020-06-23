@@ -5,27 +5,22 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.bonn.se.gui.component.Bewerbungen;
+import org.bonn.se.gui.component.CustomWindow;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.services.util.Views;
 
-public class StellenanzeigeBewerbungenWindow extends Window {
+public class StellenanzeigeBewerbungenWindow extends CustomWindow {
 
     public StellenanzeigeBewerbungenWindow(StellenanzeigeDTO stellenanzeige) {
         setUp(stellenanzeige);
     }
 
     public void setUp(StellenanzeigeDTO stellenanzeige) {
-        this.center();
-        this.setWidth("80%");
-        this.setHeight("90%");
-        this.setModal(true);
-        this.setResizable(false);
-        this.setClosable(false);
 
-        Panel panel = new Panel();
-        panel.setWidthFull();
+        Panel panel_sa = new Panel();
+        panel_sa.setWidthFull();
 
         Button back = new Button("Zurück");
 
@@ -94,7 +89,7 @@ public class StellenanzeigeBewerbungenWindow extends Window {
         });
 
 
-        panel.setContent(mainGridLayout);
+        panel_sa.setContent(mainGridLayout);
         this.setContent(mainGridLayout);
 
 

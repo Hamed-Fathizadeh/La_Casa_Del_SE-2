@@ -3,7 +3,7 @@ package org.bonn.se.gui.window;
 import com.vaadin.server.Page;
 import com.vaadin.ui.UI;
 import org.bonn.se.gui.component.CustomWizard;
-import org.bonn.se.gui.component.RegisterWindow;
+import org.bonn.se.gui.component.CustomWindow;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.wizard.*;
 import org.bonn.se.services.util.Roles;
@@ -13,7 +13,7 @@ import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.event.*;
 
-public class RegisterStudentWindow extends RegisterWindow implements WizardProgressListener {
+public class RegisterStudentWindow extends CustomWindow implements WizardProgressListener {
 
     private static Wizard  wizard = CustomWizard.getWizard();
 

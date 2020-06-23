@@ -41,14 +41,14 @@ public class RegisterStudentView extends GridLayout implements View {
 
 
 
-        TopPanel topPanel =  new TopPanel("Unternehmen");
-        topPanel.addStyleName("toppanel");
+        TopPanel topPanel_Student =  new TopPanel("Unternehmen");
+        topPanel_Student.addStyleName("toppanel");
         //this.addComponent(new TopPanel("Für Unternehmen"));
         // this.addComponent(new Label(""));
         Label head = new Label("» Willkommen bei Lacolsco Registrieren Sie sich jetzt!");
 
-        FormLayout form = new FormLayout();
-        form.setMargin(true);
+        FormLayout form_Student = new FormLayout();
+        form_Student.setMargin(true);
         RegistrationTextField vorname = new RegistrationTextField("Vorname");
         vorname.selectAll();
         vorname.setValue(VaadinService.getCurrent().getBaseDirectory().toString());
@@ -60,14 +60,14 @@ public class RegisterStudentView extends GridLayout implements View {
         RegistrationPasswordField passwort = new RegistrationPasswordField("Passwort");
       //  RegistrationPasswordField Vnummer = new RegistrationPasswordField("Verifizierungscode");
 
-        Button registerButton = new Button("Registrieren");
-        registerButton.setEnabled(false);
+        Button registerStudentButton = new Button("Registrieren");
+        registerStudentButton.setEnabled(false);
 
         Button VnummerButton = new Button("Verifikation");
         VnummerButton.setEnabled(false);
 
-        form.addComponents(head,vorname,nachname,email,passwort,registerButton);
-        //this.addComponent(form);
+        form_Student.addComponents(head,vorname,nachname,email,passwort,registerStudentButton);
+        //this.addComponent(form_Student);
         Binder<User> binder = new Binder<>(User.class);
 
         binder.forField(vorname)
@@ -112,26 +112,22 @@ public class RegisterStudentView extends GridLayout implements View {
 //        ThemeResource resource1 = new ThemeResource("img/RegisterStudent/jobfinden.png");
 
 
-        Image bild = new Image(null,resource);
-//        Image bild1 = new Image(null,resource1);
+        Image bild_Student = new Image(null,resource);
 
+        form_Student.setMargin(false);
+        this.addComponent(topPanel_Student, 0, 0, 9, 1);
+        this.addComponent(form_Student, 0, 5, 0, 5);
+        this.addComponent(bild_Student, 9, 5, 9, 5);
+        this.setComponentAlignment(topPanel_Student, Alignment.TOP_LEFT);
+        this.setComponentAlignment(form_Student, Alignment.MIDDLE_LEFT);
 
+        this.setComponentAlignment(bild_Student, Alignment.MIDDLE_RIGHT);
 
-        form.setMargin(false);
-
-        this.addComponent(topPanel, 0, 0, 9, 1);
-        this.addComponent(form, 0, 5, 0, 5);
-        this.addComponent(bild, 9, 5, 9, 5);
-//        this.addComponent(bild1, 9, 7, 9, 7);
-
-
-        this.setComponentAlignment(topPanel, Alignment.TOP_LEFT);
-        this.setComponentAlignment(form, Alignment.MIDDLE_LEFT);
-        this.setComponentAlignment(bild, Alignment.MIDDLE_RIGHT);
-//        this.setComponentAlignment(bild1, Alignment.MIDDLE_CENTER);
 
         this.setMargin(false);
-        registerButton.addClickListener(
+
+
+        registerStudentButton.addClickListener(
                 event -> {
 
                     try {
@@ -153,7 +149,7 @@ public class RegisterStudentView extends GridLayout implements View {
                             UserDAO.getInstance().registerUser(user);
 
                            // UserDAO.registerStudent(student.getEmail(),student.getPasswort(),student.getVorname(),student.getNachname() ,'s');
-                            registerButton.setEnabled(false);
+                            registerStudentButton.setEnabled(false);
                             Student student = new Student();
                             student.setEmail(user.getEmail());
                             student.setVorname(user.getVorname());
@@ -176,7 +172,7 @@ public class RegisterStudentView extends GridLayout implements View {
 
 
         binder.addStatusChangeListener(
-                event -> registerButton.setEnabled(binder.isValid()));
+                event -> registerStudentButton.setEnabled(binder.isValid()));
 
 
         //hafa change#########################################################

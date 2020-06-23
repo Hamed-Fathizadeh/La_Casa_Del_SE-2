@@ -2,11 +2,11 @@ package org.bonn.se.gui.component;
 
 import com.vaadin.ui.Window;
 
-public class RegisterWindow extends Window {
+public class CustomWindow extends Window {
 
 
 
-    public RegisterWindow() {
+    public CustomWindow() {
         this.center();
         this.setDraggable(false);
         this.setResizable(false);
