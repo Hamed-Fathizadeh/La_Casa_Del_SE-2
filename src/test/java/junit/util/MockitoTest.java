@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.sql.SQLException;
+
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -43,7 +45,7 @@ public class MockitoTest {
     }
 
     @Test
-    public void buttonClick() throws DatabaseException, NoSuchUserOrPassword {
+    public void buttonClick() throws DatabaseException, NoSuchUserOrPassword, SQLException {
         LoginControl loginControl = Mockito.mock(LoginControl.class);
         Mockito.doCallRealMethod().when(loginControl).checkAuthentication(USERNAME,login);
         LoginControl.getInstance().checkAuthentication(USERNAME,login);

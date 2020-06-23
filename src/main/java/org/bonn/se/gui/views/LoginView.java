@@ -13,11 +13,15 @@ import org.bonn.se.control.LoginControl;
 import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 import java.io.File;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.bonn.se.services.util.Views.RegisterUnternehmen;
 
@@ -126,6 +130,8 @@ public class LoginView extends VerticalLayout implements View {
                 Notification.show("DB-Fehler", ex.getReason(), Notification.Type.ERROR_MESSAGE);
                 userLogin.clear();
                 passwordField.clear();
+            } catch (SQLException throwables) {
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             }
         });
 

@@ -64,15 +64,14 @@ public class BewerbungControl {
     public static void checkDeletedAnzeige() throws DatabaseException {
 
         Statement statement = JDBCConnection.getInstance().getStatement();
-
+        ResultSet set = null;
         try {
-            ResultSet set =  statement.executeQuery(
+                set =  statement.executeQuery(
                     "SELECT datum " +
                     " FROM lacasa.tab_bewerbung" +
                     " WHERE (student_id = (SELECT student_id FROM lacasa.tab_student WHERE email = '" +
                     ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).getEmail() + "')" +
                     " AND s_anzeige_id = '-1')");
-
             if (!set.next()) {
             } else {
                 StringBuilder msg = new StringBuilder("<p>Die Stellenanzeige/n deiner Bewerbung/en vom <br>");

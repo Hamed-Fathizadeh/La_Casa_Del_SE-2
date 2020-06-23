@@ -4,6 +4,7 @@ import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.db.exception.DatabaseException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class ContainerAnzeigen {
         try {
             ContainerAnzDAO.deleteAnzeige(stellenanzeigeDTO);
         }
-        catch( DatabaseException throwables){
+        catch(DatabaseException | SQLException throwables){
             throwables.getMessage();
         }
 

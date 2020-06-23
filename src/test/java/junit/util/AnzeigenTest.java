@@ -2,6 +2,7 @@ package junit.util;
 
 import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.services.db.JDBCConnection;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,6 +10,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AnzeigenTest {
     //public Anzeigen(String str, List<StellenanzeigeDTO> dataInput){
@@ -65,7 +68,7 @@ public class AnzeigenTest {
 
             System.out.println(anz.setGesamtNeuBewerbungen(10));
         }catch (NullPointerException e){
-            e.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
             System.out.println("ini catch");
         }
 

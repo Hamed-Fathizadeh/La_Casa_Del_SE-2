@@ -5,8 +5,11 @@ import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.db.exception.DatabaseException;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SucheControl  implements Suche {
 
@@ -31,8 +34,8 @@ public class SucheControl  implements Suche {
         try {
             stellenanzeigeDTOS = ContainerAnzDAO.getInstance().loadSuche(
                     suchbegriff, ort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum,  branche);
-        } catch (DatabaseException e) {
-            e.printStackTrace();
+        } catch (DatabaseException | SQLException e) {
+            Logger.getLogger(SucheControl.class.getName()).log(Level.SEVERE,null,e);
         }
         rowsCount = stellenanzeigeDTOS.size();
 

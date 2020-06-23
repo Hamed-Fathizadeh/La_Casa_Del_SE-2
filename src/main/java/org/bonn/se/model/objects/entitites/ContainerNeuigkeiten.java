@@ -4,6 +4,7 @@ import org.bonn.se.model.dao.ContainerAnzDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.db.exception.DatabaseException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +32,7 @@ public class ContainerNeuigkeiten {
         try {
             liste = containerAnzDAO.load();
         }
-        catch( DatabaseException throwables){
+        catch(DatabaseException | SQLException throwables){
             throwables.getMessage();
         }
 
@@ -40,7 +41,7 @@ public class ContainerNeuigkeiten {
     public void loadNeuigkeiten(String str){
         try {
             liste = containerAnzDAO.loadNeuigkeiten(str);
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -48,7 +49,7 @@ public class ContainerNeuigkeiten {
     public void loadUnternehmenAnzeigen(String email){
         try {
             liste = containerAnzDAO.loadUnternehmenAnzeigen(email);
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -56,7 +57,7 @@ public class ContainerNeuigkeiten {
     public void loadNeuBewerbungen(Unternehmen unternehmen){
         try {
             liste = containerAnzDAO.loadNeuBewerbungen(unternehmen);
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             e.printStackTrace();
         }
     }
@@ -74,7 +75,7 @@ public class ContainerNeuigkeiten {
         try {
             liste = containerAnzDAO.loadSuche(suchbegriff_id, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
         }
-        catch( DatabaseException throwables){
+        catch(DatabaseException | SQLException throwables){
             throwables.getMessage();
         }
 

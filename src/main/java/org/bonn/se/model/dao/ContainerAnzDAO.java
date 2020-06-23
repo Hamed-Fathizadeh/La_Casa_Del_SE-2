@@ -21,19 +21,15 @@ public class ContainerAnzDAO extends AbstractDAO{
         return instance == null ? instance = new ContainerAnzDAO() : instance;
     }
 
-    public List<StellenanzeigeDTO> load() throws DatabaseException {
+    public List<StellenanzeigeDTO> load() throws DatabaseException, SQLException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
+        Statement statement = JDBCConnection.getInstance().getStatement();
+
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT st.*, " +
                     "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = st.firmenname and bew.hauptsitz = st.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
                     " FROM lacasa.tab_stellen_anzeige st where status = 1 ");
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-        try {
 
             while (set.next()) {
 // taghir mikhad 100
@@ -48,10 +44,10 @@ public class ContainerAnzDAO extends AbstractDAO{
                    liste.add(sa);
             }
 
-
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            statement.close();
             JDBCConnection.getInstance().closeConnection();
         }
 
@@ -60,11 +56,11 @@ public class ContainerAnzDAO extends AbstractDAO{
 
 
 
-    public List<StellenanzeigeDTO> loadSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, java.util.Date ab_Datum, String branche) throws DatabaseException {
+    public List<StellenanzeigeDTO> loadSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, java.util.Date ab_Datum, String branche) throws DatabaseException, SQLException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
+        Statement statement = JDBCConnection.getInstance().getStatement();
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
 
             //Bundesland und fachgebiet mussen noch überarbeitet werden
 
@@ -141,12 +137,6 @@ public class ContainerAnzDAO extends AbstractDAO{
 
 
  */
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-        try {
-
             while (set.next()) {
                 StellenanzeigeDTO sa = new StellenanzeigeDTO(
                         set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate()
@@ -164,33 +154,29 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            statement.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return liste;
     }
 
 
-    public List<StellenanzeigeDTO> loadNeuigkeiten(String str) throws DatabaseException {
+    public List<StellenanzeigeDTO> loadNeuigkeiten(String str) throws DatabaseException, SQLException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
+        Statement statement = JDBCConnection.getInstance().getStatement();
+
         try {
             String limit ="";
             if(!str.equals("Alle")) {
                 limit = " LIMIT 5";
             }
-                    Statement statement = JDBCConnection.getInstance().getStatement();
                     set = statement.executeQuery("select sa.*, u.logo, \n" +
                             "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = u.firmenname and bew.hauptsitz = u.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
                             ",u.branch_name"+
                             "  from lacasa.tab_stellen_anzeige sa\n" +
                             "  join lacasa.tab_unternehmen u\n" +
                             "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz and sa.status = 1 order by sa.zeitstempel desc "+limit);
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-
-        try {
 
             while (set.next()) {
                 StellenanzeigeDTO sa = new StellenanzeigeDTO(
@@ -210,6 +196,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            statement.close();
             JDBCConnection.getInstance().closeConnection();
         }
 
@@ -217,11 +204,12 @@ public class ContainerAnzDAO extends AbstractDAO{
 
     }
 
-    public List<StellenanzeigeDTO> loadUnternehmenAnzeigen(String email) throws DatabaseException {
+    public List<StellenanzeigeDTO> loadUnternehmenAnzeigen(String email) throws DatabaseException, SQLException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
+        Statement statement = JDBCConnection.getInstance().getStatement();
+
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("select sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung," +
                     " sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art ,null \n" +
                     "  from lacasa.tab_stellen_anzeige sa\n" +
@@ -229,13 +217,6 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "    on u.firmenname = sa.firmenname\n" +
                     "   and u.hauptsitz = sa.hauptsitz\n" +
                     " where u.email = '" + email + "'");
-
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-
-        try {
 
             while (set.next()) {
 
@@ -255,6 +236,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            statement.close();
             JDBCConnection.getInstance().closeConnection();
         }
 
@@ -273,12 +255,13 @@ public class ContainerAnzDAO extends AbstractDAO{
 
 
 
-    public List<StellenanzeigeDTO> loadNeuBewerbungen(Unternehmen unternehmen) throws DatabaseException {
+    public List<StellenanzeigeDTO> loadNeuBewerbungen(Unternehmen unternehmen) throws DatabaseException, SQLException {
 
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set;
+        Statement statement = JDBCConnection.getInstance().getStatement();
+
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
 
             set = statement.executeQuery("SELECT sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung, \n" +
                                                 "       sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art, count( b.bewerbung_id) anzahlBewerbung\n" +
@@ -289,13 +272,6 @@ public class ContainerAnzDAO extends AbstractDAO{
                                                 "   and b.status = 9\n" +
                                                 " group by sa.s_anzeige_id  "
                                          );
-
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-
-        try {
 
             while (set.next()) {
 
@@ -315,6 +291,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            statement.close();
             JDBCConnection.getInstance().closeConnection();
         }
 
@@ -372,11 +349,12 @@ public class ContainerAnzDAO extends AbstractDAO{
             }
     }
 
-    public void sendEmail(Unternehmen unternehmen) throws DatabaseException {
+    public void sendEmail(Unternehmen unternehmen) throws DatabaseException, SQLException {
         HashMap<String, String> liste = new HashMap<>();
         ResultSet set;
+        Statement statement = JDBCConnection.getInstance().getStatement();
+
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("select email ,vorname  \n" +
                     "  from lacasa.tab_user\n" +
                     " where email in (\n" +
@@ -384,24 +362,21 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "from lacasa.tab_student\n" +
                     "where benachrichtigung = 1 )");
 
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-        try {
             while (set.next()) {
                 liste.put(set.getString(1),set.getString(2));
             }
 
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+            statement.close();
+            JDBCConnection.getInstance().closeConnection();
         }
         try {
             JavaMailUtil.sendMailToStudents(unternehmen, liste);
         } catch (Exception e) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
         }
-
     }
 
     public void updateAnzeige(StellenanzeigeDTO stellenanzeige) throws DatabaseException {
@@ -423,19 +398,16 @@ public class ContainerAnzDAO extends AbstractDAO{
         }
     }
 
-    public static void deleteAnzeige(StellenanzeigeDTO stellenanzeige) throws DatabaseException {
+    public static void deleteAnzeige(StellenanzeigeDTO stellenanzeige) throws DatabaseException, SQLException {
         boolean result;
         String sql;
+        Statement statement = JDBCConnection.getInstance().getStatement();
+
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             result = statement.execute("" +
                     "SELECT lacasa.tab_bewerbung.s_anzeige_id " +
                     "FROM lacasa.tab_bewerbung " +
                     "WHERE lacasa.tab_bewerbung.s_anzeige_id = '" + stellenanzeige.getId() + "'");
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
 
         if(!result) {
             sql = "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
@@ -444,14 +416,14 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "WHERE lacasa.tab_bewerbung.s_anzeige_id = '" + stellenanzeige.getId()+ "';" +
                     "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
         }
-        PreparedStatement statement = getPreparedStatement(sql);
+        PreparedStatement preparedStatement = getPreparedStatement(sql);
 
-        try {
-            statement.executeUpdate();
+            preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         } finally {
+            statement.close();
             JDBCConnection.getInstance().closeConnection();
         }
     }
