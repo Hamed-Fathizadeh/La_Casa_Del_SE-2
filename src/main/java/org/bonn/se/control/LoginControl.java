@@ -90,7 +90,7 @@ public class LoginControl {
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
-            statement.close();
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
 
