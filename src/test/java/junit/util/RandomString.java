@@ -26,9 +26,9 @@ public class RandomString {
     }
     public LocalDate nextDate() {
 
-        int day  = random.nextInt(30) + 1;
+        int day  = random.nextInt(28) + 1;
         int month  = random.nextInt(12) + 1;
-        int year  = random.nextInt(500) + 1950;
+        int year  = random.nextInt(30) + 1990;
         return LocalDate.of(year,month,day);
     }
     public int nextInt() {
