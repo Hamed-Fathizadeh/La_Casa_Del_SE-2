@@ -234,7 +234,7 @@ public class ProfilDAO extends AbstractDAO{
         }
         return null;
     }
-
+/*
     public Student getStudent(String email) throws DatabaseException, SQLException {
         ResultSet set = null;
         ResultSet set2 = null;
@@ -333,6 +333,99 @@ public class ProfilDAO extends AbstractDAO{
         }
         return null;
     }
+ */
+public Student getStudent(String email) throws DatabaseException, SQLException {
+    ResultSet set = null;
+    ResultSet set2 = null;
+    ResultSet set3 = null;
+    ResultSet set4 = null;
+    Statement statement = JDBCConnection.getInstance().getStatement();
+
+    try {
+        set = statement.executeQuery("SELECT s.*, a.strasse, a.plz, a.ort, a.bundesland, u.vorname, u.nachname, u.benutzertyp\n" +
+                "  FROM lacasa.tab_student s\n" +
+                "  join lacasa.tab_user u\n" +
+                "    on  s.email = u.email\n" +
+                "  left outer join lacasa.tab_adresse a\n" +
+                "    on s.email = a.email WHERE s.email = '" + email + "'");
+
+        Student student = new Student();
+
+        while (set.next()) {
+            student.setStudent_id(set.getInt("student_id"));
+            student.setVorname(set.getString("vorname"));
+            student.setNachname(set.getString("nachname"));
+            student.setEmail(set.getString("email"));
+            student.setKontakt_nr(set.getString("kontakt_nr"));
+            student.setStudiengang(set.getString("studiengang"));
+            LocalDate localDate = set.getDate("g_datum") == null ? null : set.getDate("g_datum").toLocalDate();
+            student.setG_datum(localDate);
+            student.setAusbildung(set.getString("ausbildung"));
+            student.setAbschluss(set.getString("hoester_abschluss"));
+            student.setBenachrichtigung(set.getInt("benachrichtigung"));
+            student.setType(set.getString("benutzertyp"));
+            Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"),set.getString("bundesland"));
+            student.setAdresse(adresse);
+            student.setPicture(set.getBytes("picture"));
+            //nur um zu checken ob der student einen lebenslauf hochgeladen hat
+            student.setHasLebenslauf(set.getBytes("lebenslauf") != null);
+
+        }
+
+        set = statement.executeQuery("SELECT t.art, t.beginn_datum, t.end_datum\n" +
+                "  FROM lacasa.tab_taetigkeiten t\n" +
+                "  join lacasa.tab_student s\n" +
+                "    on s.student_id = t.student_id\n" +
+                "WHERE s.email  = '" + email + "'");
+
+        while (set.next()) {
+            Taetigkeit taetigkeit = new Taetigkeit();
+            taetigkeit.setTaetigkeitName(set2.getString("art"));
+            LocalDate beginn = set2.getDate("beginn_datum") == null ? null : set2.getDate("beginn_datum").toLocalDate();
+            LocalDate ende = set2.getDate("end_datum") == null ? null : set2.getDate("end_datum").toLocalDate();
+            taetigkeit.setBeginn(beginn);
+            taetigkeit.setEnde(ende);
+            student.setTaetigkeit(taetigkeit);
+        }
+
+        set = statement.executeQuery("SELECT k.kompetenz_name, k.niveau_it \n" +
+                "  FROM lacasa.tab_it_kenntnisse k\n" +
+                "  join lacasa.tab_student s\n" +
+                "    on s.student_id = k.student_id\n" +
+                "WHERE s.email  = '" + email + "'");
+
+        while (set.next()) {
+
+            Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
+            itKenntnis.setKenntnis(set3.getString("kompetenz_name"));
+            itKenntnis.setNiveau(set3.getString("niveau_it"));
+            if (itKenntnis.getKenntnis() != null) {
+                student.setITKenntnis(itKenntnis);
+            }
+        }
+
+        set = statement.executeQuery("SELECT sp.sprache, sp.niveau_sprache\n" +
+                "  FROM lacasa.tab_sprachen sp\n" +
+                "  join lacasa.tab_student s\n" +
+                "    on s.student_id = sp.student_id\n" +
+                "WHERE s.email  = '" + email + "'");
+
+        while (set.next()) {
+            Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
+            sprachKenntnis.setKenntnis(set4.getString("sprache"));
+            sprachKenntnis.setNiveau(set4.getString("niveau_sprache"));
+            student.setSprachKenntnis(sprachKenntnis);
+        }
+        return student;
+    } catch (SQLException  throwables) {
+        Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+    } finally {
+        assert set != null;
+        set.close();
+        JDBCConnection.getInstance().closeConnection();
+    }
+    return null;
+}
 
 
     public void updateStudent(Student student) throws DatabaseException {
