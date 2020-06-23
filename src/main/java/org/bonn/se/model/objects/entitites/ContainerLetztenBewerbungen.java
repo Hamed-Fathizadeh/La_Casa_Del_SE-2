@@ -2,10 +2,14 @@ package org.bonn.se.model.objects.entitites;
 
 import org.bonn.se.model.dao.ContainerBewerbungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContainerLetztenBewerbungen {
 
@@ -29,8 +33,8 @@ public class ContainerLetztenBewerbungen {
         try {
             liste = ContainerBewerbungDAO.getInstance().load("Alle", email);
         }
-        catch( DatabaseException throwables){
-            throwables.getMessage();
+        catch(DatabaseException | SQLException throwables){
+            Logger.getLogger(ContainerLetztenBewerbungen.class.getName()).log(Level.SEVERE, null, throwables);
         }
 
     }
@@ -38,8 +42,8 @@ public class ContainerLetztenBewerbungen {
     public void load(String str, String email){
         try {
             liste = ContainerBewerbungDAO.getInstance().load(str, email);
-        } catch (DatabaseException e) {
-            e.printStackTrace();
+        } catch (DatabaseException | SQLException e) {
+            Logger.getLogger(ContainerLetztenBewerbungen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -57,8 +61,8 @@ public class ContainerLetztenBewerbungen {
     public void loadByStellenAnzeigeID(String str, int saID){
         try {
             liste = ContainerBewerbungDAO.getInstance().loadByStellenAnzeigeID(str,saID);
-        } catch (DatabaseException e) {
-            e.printStackTrace();
+        } catch (DatabaseException | SQLException e) {
+            Logger.getLogger(ContainerLetztenBewerbungen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 

@@ -12,7 +12,7 @@ public class OrtPlzTextField extends HorizontalLayout {
     final TextField plz ;
     final OrtField comboBund;
 
-    public OrtPlzTextField(){
+    public OrtPlzTextField() {
 
         plz = new TextField();
         new NumeralFieldFormatter("","",5,0,false).extend(plz);

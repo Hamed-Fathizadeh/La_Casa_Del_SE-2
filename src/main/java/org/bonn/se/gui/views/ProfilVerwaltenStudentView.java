@@ -9,12 +9,18 @@ import com.vaadin.ui.*;
 import org.bonn.se.control.ProfilControl;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.DatenStudentProfil;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
+
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProfilVerwaltenStudentView extends GridLayout implements View {
     static final GridLayout gridAnzeig = null;
@@ -28,7 +34,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
 
 
 
-    public void setUp() {
+    public void setUp() throws DatabaseException, SQLException {
 
         Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student));
 
@@ -306,7 +312,13 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
     }
         @Override
         public void enter (ViewChangeListener.ViewChangeEvent event){
-            setUp();
+            try {
+                setUp();
+            } catch (DatabaseException e) {
+                Logger.getLogger(ProfilVerwaltenStudentView.class.getName()).log(Level.SEVERE, null, e);
+            } catch (SQLException throwables) {
+                Logger.getLogger(ProfilVerwaltenStudentView.class.getName()).log(Level.SEVERE, null, throwables);
+            }
         }
 
 }

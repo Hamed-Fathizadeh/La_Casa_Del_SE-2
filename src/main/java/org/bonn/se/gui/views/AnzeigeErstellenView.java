@@ -12,15 +12,20 @@ import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.DatenUnternehmenProfil;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class AnzeigeErstellenView extends GridLayout implements View {
 
 
-    public void setUp() throws DatabaseException {
+    public void setUp() throws DatabaseException, SQLException {
 
         OrtField ort;
 
@@ -171,8 +176,8 @@ public class AnzeigeErstellenView extends GridLayout implements View {
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             try {
                 this.setUp();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
+            } catch (DatabaseException | SQLException e) {
+                Logger.getLogger(AnzeigeErstellenView.class.getName()).log(Level.SEVERE, null, e);
             }
         } else {
             UI.getCurrent().getNavigator().navigateTo(Views.LoginView);

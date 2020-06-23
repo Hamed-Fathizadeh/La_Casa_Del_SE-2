@@ -16,8 +16,8 @@ public class JobTitelControl {
     }
 
 
-        public static Collection<String> getJobTitelList () throws DatabaseException {
-            ResultSet set;
+        public static Collection<String> getJobTitelList () throws DatabaseException, SQLException {
+            ResultSet set = null;
             Collection<String> jobtitel = new ArrayList<>();
 
             try {
@@ -32,6 +32,7 @@ public class JobTitelControl {
                 throwables.printStackTrace();
                 throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
             } finally {
+                set.close();
                 JDBCConnection.getInstance().closeConnection();
             }
             return jobtitel;

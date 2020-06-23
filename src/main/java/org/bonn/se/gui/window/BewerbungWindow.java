@@ -12,9 +12,13 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.*;
+import org.bonn.se.services.util.ImageConverter;
+import org.bonn.se.services.util.PdfUploader;
+import org.bonn.se.services.util.Roles;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BewerbungWindow extends Window {
 
@@ -53,8 +57,8 @@ public class BewerbungWindow extends Window {
             try {
 
                 student = ProfilDAO.getInstance().getStudent(bewerbung.getEmailStudent());
-            } catch (DatabaseException e) {
-                e.printStackTrace();
+            } catch (DatabaseException | SQLException e) {
+                Logger.getLogger(BewerbungWindow.class.getName()).log(Level.SEVERE, null, e);
             }
         }
         profilbild = ImageConverter.convertImagetoProfil(student.getPicture());

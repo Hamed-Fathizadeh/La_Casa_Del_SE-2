@@ -48,7 +48,6 @@ public class TopPanelUser extends GridLayout {
         bar = new MenuBar();
 
         bar.addStyleName("user-menu");
-        item1 = null;
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
            Image profilbild = ImageConverter.convertImagetoMenu(((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture());
@@ -69,12 +68,8 @@ public class TopPanelUser extends GridLayout {
 
 
         item1.addItem("Mein Profil", VaadinIcons.USER, (MenuBar.Command) menuItem -> MyUI.getCurrent().getNavigator().navigateTo(Views.ProfilVerwaltenStudent));
-
         item1.addItem("Neuigkeiten", VaadinIcons.INFO_CIRCLE, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
-
-
-            item1.addItem("Settings", VaadinIcons.COG, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.Settings));
-
+        item1.addItem("Settings", VaadinIcons.COG, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.Settings));
         item1.addSeparator();
         item1.addItem("Logout", VaadinIcons.SIGN_OUT, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
         this.addComponent(bar,9,0,9,0);

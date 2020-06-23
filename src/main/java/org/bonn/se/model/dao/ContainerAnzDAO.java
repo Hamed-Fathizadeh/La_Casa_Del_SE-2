@@ -47,6 +47,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }
@@ -154,6 +155,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }
@@ -196,6 +198,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }
@@ -236,6 +239,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }
@@ -258,7 +262,7 @@ public class ContainerAnzDAO extends AbstractDAO{
     public List<StellenanzeigeDTO> loadNeuBewerbungen(Unternehmen unternehmen) throws DatabaseException, SQLException {
 
         List<StellenanzeigeDTO> liste = new ArrayList<>();
-        ResultSet set;
+        ResultSet set = null;
         Statement statement = JDBCConnection.getInstance().getStatement();
 
         try {
@@ -291,7 +295,8 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
-            statement.close();
+            assert set != null;
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
 
@@ -369,6 +374,7 @@ public class ContainerAnzDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }

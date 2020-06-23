@@ -23,23 +23,17 @@ public class UserDAO  extends AbstractDAO {
     }
 
 
-    public User getUser(String email) throws DatabaseException {
+    public User getUser(String email) throws DatabaseException, SQLException {
 
-        ResultSet set;
+        ResultSet set = null;
+        Statement statement = JDBCConnection.getInstance().getStatement();
 
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT * "
                     + "FROM lacasa.tab_user "
                     + "WHERE upper(lacasa.tab_user.email) = '" + email.toUpperCase() + "'");
-        } catch (DatabaseException | SQLException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
 
-        boolean exist;
         User user = null;
-        try {
 
             while (set.next()) {
 
@@ -55,32 +49,31 @@ public class UserDAO  extends AbstractDAO {
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return null;
     }
 
-    public boolean getUserbyEmail(String email) throws DatabaseException {
+    public boolean getUserbyEmail(String email) throws DatabaseException, SQLException {
 
-        ResultSet set;
+        ResultSet set = null;
+        Statement statement = JDBCConnection.getInstance().getStatement();
 
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT * "
                     + "FROM lacasa.tab_user "
                     + "WHERE upper(lacasa.tab_user.email) = '" + email.toUpperCase() + "'");
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-        boolean exist;
-        try {
+
             while (set.next()) {
                 return set.getString(1).equalsIgnoreCase(email);
             }
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return false;
@@ -121,10 +114,11 @@ public class UserDAO  extends AbstractDAO {
             JDBCConnection.getInstance().closeConnection();
         }
     }
-    public String getUserType(String email) throws DatabaseException {
-        ResultSet set;
+    public String getUserType(String email) throws DatabaseException, SQLException {
+        ResultSet set = null;
+        Statement statement = JDBCConnection.getInstance().getStatement();
+
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT * "
                     + "FROM lacasa.tab_user "
                     + "WHERE lacasa.tab_user.email = '" + email + "'");
@@ -133,12 +127,14 @@ public class UserDAO  extends AbstractDAO {
                 return set.getString("benutzertyp");
             }
         } catch (SQLException throwables) {
+            assert set != null;
+            set.close();
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("UserTyp nicht vorhanden");
         }
      return null;
     }
-    public static void deleteUser(String email) throws DatabaseException {
+    public static void deleteUser(String email) throws DatabaseException, SQLException {
         String sql;
         if(UserDAO.getInstance().getUserType(email).equals("S")) {
             sql = "DELETE FROM lacasa.tab_student WHERE email = '" + email + "'; DELETE FROM lacasa.tab_user WHERE email = '" + email + "'";
@@ -160,10 +156,11 @@ public class UserDAO  extends AbstractDAO {
 
     }
 
-    public static Unternehmen getUnternehmenByStellAnz(StellenanzeigeDTO stellenanzeige) throws DatabaseException {
-        ResultSet set;
+    public static Unternehmen getUnternehmenByStellAnz(StellenanzeigeDTO stellenanzeige) throws DatabaseException, SQLException {
+        ResultSet set = null;
+        Statement statement = JDBCConnection.getInstance().getStatement();
+
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT * FROM lacasa.tab_unternehmen " +
                     "JOIN lacasa.tab_user " +
                     "USING(email)" +
@@ -183,9 +180,11 @@ public class UserDAO  extends AbstractDAO {
 
                 return unternehmen;
             }
-        } catch (SQLException | DatabaseException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(LoginControl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
+            assert set != null;
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return null;

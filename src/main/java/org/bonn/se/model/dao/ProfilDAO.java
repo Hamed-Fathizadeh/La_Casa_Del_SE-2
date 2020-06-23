@@ -235,25 +235,23 @@ public class ProfilDAO extends AbstractDAO{
         return null;
     }
 
-    public Student getStudent(String email) throws DatabaseException {
-        ResultSet set;
-        ResultSet set2;
-        ResultSet set3;
-        ResultSet set4;
+    public Student getStudent(String email) throws DatabaseException, SQLException {
+        ResultSet set = null;
+        ResultSet set2 = null;
+        ResultSet set3 = null;
+        ResultSet set4 = null;
+        Statement statement = JDBCConnection.getInstance().getStatement();
+
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT s.*, a.strasse, a.plz, a.ort, a.bundesland, u.vorname, u.nachname, u.benutzertyp\n" +
                     "  FROM lacasa.tab_student s\n" +
                     "  join lacasa.tab_user u\n" +
                     "    on  s.email = u.email\n" +
                     "  left outer join lacasa.tab_adresse a\n" +
                     "    on s.email = a.email WHERE s.email = '" + email + "'");
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
+
         Student student = new Student();
-        try {
+
             while (set.next()) {
                 student.setStudent_id(set.getInt("student_id"));
                 student.setVorname(set.getString("vorname"));
@@ -274,22 +272,12 @@ public class ProfilDAO extends AbstractDAO{
                 student.setHasLebenslauf(set.getBytes("lebenslauf") != null);
 
             }
-        } catch (SQLException  throwables) {
-            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
-        }
-        try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
+
             set2 = statement.executeQuery("SELECT t.art, t.beginn_datum, t.end_datum\n" +
                     "  FROM lacasa.tab_taetigkeiten t\n" +
                     "  join lacasa.tab_student s\n" +
                     "    on s.student_id = t.student_id\n" +
                     "WHERE s.email  = '" + email + "'");
-
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-        try{
 
             while (set2.next()) {
                 Taetigkeit taetigkeit = new Taetigkeit();
@@ -300,23 +288,13 @@ public class ProfilDAO extends AbstractDAO{
                 taetigkeit.setEnde(ende);
                 student.setTaetigkeit(taetigkeit);
             }
-        } catch (SQLException  throwables) {
-            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
-        }
-        try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
+
             set3 = statement.executeQuery("SELECT k.kompetenz_name, k.niveau_it \n" +
                     "  FROM lacasa.tab_it_kenntnisse k\n" +
                     "  join lacasa.tab_student s\n" +
                     "    on s.student_id = k.student_id\n" +
                     "WHERE s.email  = '" + email + "'");
 
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-
-        try{
             while (set3.next()) {
 
                 Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
@@ -326,21 +304,13 @@ public class ProfilDAO extends AbstractDAO{
                     student.setITKenntnis(itKenntnis);
                 }
             }
-        } catch (SQLException  throwables) {
-            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
-        }
-        try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
+
             set4 = statement.executeQuery("SELECT sp.sprache, sp.niveau_sprache\n" +
                     "  FROM lacasa.tab_sprachen sp\n" +
                     "  join lacasa.tab_student s\n" +
                     "    on s.student_id = sp.student_id\n" +
                     "WHERE s.email  = '" + email + "'");
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-        try{
+
             while (set4.next()) {
                 Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
                 sprachKenntnis.setKenntnis(set4.getString("sprache"));
@@ -351,9 +321,17 @@ public class ProfilDAO extends AbstractDAO{
         } catch (SQLException  throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
+            set.close();
+            assert set2 != null;
+            set2.close();
+            assert set3 != null;
+            set3.close();
+            assert set4 != null;
+            set4.close();
             JDBCConnection.getInstance().closeConnection();
         }
-        return student;
+        return null;
     }
 
 

@@ -104,7 +104,9 @@ public class WizardStudentDatenStep implements WizardStep {
             form2.setMargin(true);
             PlaceHolderField place1 = new PlaceHolderField();
             strasse = new PopUpTextField("Strasse");
-            ort = new OrtPlzTextField();
+
+                ort = new OrtPlzTextField();
+
 
 
             PlaceHolderField place2 = new PlaceHolderField();

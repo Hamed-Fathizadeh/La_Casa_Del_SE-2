@@ -7,6 +7,8 @@ import org.bonn.se.services.db.exception.DatabaseException;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ComponentControl {
 
@@ -26,11 +28,26 @@ public class ComponentControl {
     }
 
     public List<String> getOrt () {
-        return OrtDAO.getInstance().getOrt();
+
+        try {
+            return OrtDAO.getInstance().getOrt();
+        } catch (DatabaseException e) {
+            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, e);
+        } catch (SQLException throwables) {
+            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, throwables);
+        }
+        return null;
     }
 
-    public List<String> getBund () {
-        return OrtDAO.getInstance().getBund();
+    public List<String> getBund ()  {
+        try {
+            return OrtDAO.getInstance().getBund();
+        } catch (DatabaseException e) {
+            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, e);
+        } catch (SQLException throwables) {
+            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, throwables);
+        }
+        return null;
     }
 
 }

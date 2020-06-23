@@ -14,8 +14,11 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     List<T> data;
@@ -93,8 +96,8 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
             try {
                 UserDAO.getInstance();
                 unternehmenData = UserDAO.getUnternehmenByStellAnz(sa);
-            } catch (DatabaseException e) {
-                e.printStackTrace();
+            } catch (DatabaseException | SQLException e) {
+                Logger.getLogger(Anzeigen.class.getName()).log(Level.SEVERE, null, e);
             }
             if(sa.getStatus() == 3) {
                 for (StellenanzeigeDTO temp : ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO()) {

@@ -116,6 +116,7 @@ public class BewerbungDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }finally {
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
 

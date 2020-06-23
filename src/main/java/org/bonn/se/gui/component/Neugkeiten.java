@@ -9,8 +9,11 @@ import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Neugkeiten extends GridLayout {
     Image uLogo;
@@ -27,8 +30,8 @@ public class Neugkeiten extends GridLayout {
                try {
                    UserDAO.getInstance();
                    unternehmen = UserDAO.getUnternehmenByStellAnz(sa);
-               } catch (DatabaseException e) {
-                   e.printStackTrace();
+               } catch (DatabaseException | SQLException e) {
+                   Logger.getLogger(Neugkeiten.class.getName()).log(Level.SEVERE, null, e);
                }
 
                TextArea txArea = new TextArea();
@@ -53,6 +56,7 @@ public class Neugkeiten extends GridLayout {
                                "Online seit "+ day
                               );
                txArea.setReadOnly(true);
+               assert unternehmen != null;
                if(unternehmen.getLogo() != null) {
                    uLogo= ImageConverter.convertImagetoMenu(unternehmen.getLogo());
                }
@@ -71,8 +75,8 @@ public class Neugkeiten extends GridLayout {
                    try {
                        UserDAO.getInstance();
                        unternehmenData = UserDAO.getUnternehmenByStellAnz(sa);
-                   } catch (DatabaseException e) {
-                       e.printStackTrace();
+                   } catch (DatabaseException | SQLException e) {
+                       Logger.getLogger(Neugkeiten.class.getName()).log(Level.SEVERE, null, e);
                    }
                    StellenanzeigeWindow stellenanzeigeWindow;
 

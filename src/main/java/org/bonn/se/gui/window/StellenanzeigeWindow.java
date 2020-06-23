@@ -11,7 +11,6 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
@@ -168,11 +167,9 @@ public class StellenanzeigeWindow extends Window {
                     stellenanzeige.setStatus(2);
                     Notification.show("Anzeige offline!");
                 }
-                try {
+
                     AnzStatusControl.changeStatus(stellenanzeige);
-                } catch (DatabaseException e) {
-                    e.printStackTrace();
-                }
+
 
                 System.out.println("OnOffSwitch checked : " + checked);
 

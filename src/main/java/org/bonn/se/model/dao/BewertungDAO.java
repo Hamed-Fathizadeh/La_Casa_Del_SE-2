@@ -49,6 +49,7 @@ public class BewertungDAO extends AbstractDAO {
                     Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
                     throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
                 } finally {
+                    assert set != null;
                     set.close();
                     JDBCConnection.getInstance().closeConnection();
                 }

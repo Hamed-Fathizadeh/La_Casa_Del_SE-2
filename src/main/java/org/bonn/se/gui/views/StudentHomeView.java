@@ -236,8 +236,9 @@ public class StudentHomeView extends VerticalLayout implements View {
             Unternehmen unternehmen = null;
             try {
                 unternehmen =  UserDAO.getUnternehmenByStellAnz(temp);
-            } catch (DatabaseException e) {
-                e.printStackTrace();
+            } catch (DatabaseException | SQLException e) {
+                Logger.getLogger(StudentHomeView.class.getName()).log(Level.SEVERE, null, e);
+
             }
 
           UI.getCurrent().addWindow(new StellenanzeigeWindow(temp,unternehmen));
@@ -355,7 +356,7 @@ public class StudentHomeView extends VerticalLayout implements View {
         }
     }
 
-    public void loadProfil() throws DatabaseException {
+    public void loadProfil() throws DatabaseException, SQLException {
         BewerbungControl.checkDeletedAnzeige();
     }
 

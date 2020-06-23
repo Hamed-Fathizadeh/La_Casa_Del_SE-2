@@ -38,6 +38,7 @@ public class FeatureToggleDAO {
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }

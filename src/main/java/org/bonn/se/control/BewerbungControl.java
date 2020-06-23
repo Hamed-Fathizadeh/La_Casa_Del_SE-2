@@ -61,7 +61,7 @@ public class BewerbungControl {
         return BewerbungDAO.getInstance().downloadLebenslauf(studentId);
     }
 
-    public static void checkDeletedAnzeige() throws DatabaseException {
+    public static void checkDeletedAnzeige() throws DatabaseException, SQLException {
 
         Statement statement = JDBCConnection.getInstance().getStatement();
         ResultSet set = null;
@@ -93,6 +93,7 @@ public class BewerbungControl {
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
 

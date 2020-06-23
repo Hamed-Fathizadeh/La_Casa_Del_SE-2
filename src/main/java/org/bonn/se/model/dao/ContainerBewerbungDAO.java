@@ -59,9 +59,9 @@ public class ContainerBewerbungDAO {
 // --Commented out by Inspection STOP (22.06.20, 23:40)
 
 
-    public List<BewerbungDTO> load(String str, String email ) throws DatabaseException {
+    public List<BewerbungDTO> load(String str, String email ) throws DatabaseException, SQLException {
         List<BewerbungDTO> liste = new ArrayList<>();
-        ResultSet set;
+        ResultSet set = null;
         try {
               String limit = " ";
               if(str.equals("Alle")) {
@@ -73,11 +73,6 @@ public class ContainerBewerbungDAO {
                                                   "where email ='"+ email +"' and (status = 1 or status = 9) order by datum desc \n" +limit
                                              );
 
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-        try {
 
             while (set.next()) {
                 BewerbungDTO bewerbung = new BewerbungDTO(set.getInt(1),set.getDate(2),set.getString(3),
@@ -93,15 +88,17 @@ public class ContainerBewerbungDAO {
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return liste;
     }
 
 
-    public List<BewerbungDTO> loadByStellenAnzeigeID(String str, int saID) throws DatabaseException {
+    public List<BewerbungDTO> loadByStellenAnzeigeID(String str, int saID) throws DatabaseException, SQLException {
         List<BewerbungDTO> liste = new ArrayList<>();
-        ResultSet set;
+        ResultSet set = null;
         try {
                     Statement statement = JDBCConnection.getInstance().getStatement();
             switch (str) {
@@ -132,11 +129,6 @@ public class ContainerBewerbungDAO {
                     break;
             }
 
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-        }
-        try {
 
             while (set.next()) {
                 BewerbungDTO bewerbung = new BewerbungDTO(
@@ -156,6 +148,8 @@ public class ContainerBewerbungDAO {
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return liste;

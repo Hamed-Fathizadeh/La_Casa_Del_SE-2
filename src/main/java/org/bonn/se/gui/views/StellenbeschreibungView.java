@@ -11,7 +11,6 @@ import org.bonn.se.gui.window.StellenanzeigeConfWindow;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
 import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -60,13 +59,11 @@ public class StellenbeschreibungView extends GridLayout implements View {
                             stellenanzeigeDTO.setBeschreibung(richTextArea.getValue());
                             if (dialog.isConfirmed()) {
                                 if (stellenanzeigeDTO.getStatus() == 3) {
-                                    try {
+
                                         stellenanzeigeDTO.setStatus(1);
                                         AnzStatusControl.changeStatus(stellenanzeigeDTO);
                                         ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeigeDTO);
-                                    } catch (DatabaseException e) {
-                                        e.printStackTrace();
-                                    }
+
                                 } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
                                     ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
                                             .getStellenanzeigeDTO().setStatus(1);
@@ -74,13 +71,11 @@ public class StellenbeschreibungView extends GridLayout implements View {
                                 }
                             } else {
                                 if (stellenanzeigeDTO.getStatus() == 3) {
-                                    try {
+
                                         stellenanzeigeDTO.setStatus(2);
                                         AnzStatusControl.changeStatus(stellenanzeigeDTO);
                                         ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeigeDTO);
-                                    } catch (DatabaseException e) {
-                                        e.printStackTrace();
-                                    }
+
                                 } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
                                     ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
                                             .getStellenanzeigeDTO().setStatus(2);

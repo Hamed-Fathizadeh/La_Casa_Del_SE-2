@@ -1,21 +1,15 @@
 package selenium;
 
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.junit.Assert.*;
-
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.junit.Test;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.concurrent.TimeUnit;
+import java.sql.SQLException;
 
 public class SeleniumWebTest {
 
@@ -45,7 +39,11 @@ public class SeleniumWebTest {
         driver.findElement(By.cssSelector("html>body>div>div>div:nth-of-type(2)>div:nth-of-type(3)>div>table>tbody>tr:nth-of-type(6)>td:nth-of-type(3)>div>span>span")).click();
 
 
-        UserDAO.deleteUser(email);
+        try {
+            UserDAO.deleteUser(email);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
         driver.close();
 

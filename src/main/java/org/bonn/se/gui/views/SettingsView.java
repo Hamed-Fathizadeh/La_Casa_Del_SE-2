@@ -10,10 +10,15 @@ import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
+
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class SettingsView extends VerticalLayout implements View {
@@ -123,16 +128,16 @@ public class SettingsView extends VerticalLayout implements View {
                                     Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
                                     try {
                                         UserDAO.deleteUser(student.getEmail());
-                                    } catch (DatabaseException e) {
-                                        e.printStackTrace();
+                                    } catch (DatabaseException | SQLException e) {
+                                        Logger.getLogger(SettingsView.class.getName()).log(Level.SEVERE, null, e);
                                     }
                                 }
                                 else{
                                    Unternehmen unternehmen= (Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
                                     try {
                                         UserDAO.deleteUser(unternehmen.getEmail());
-                                    } catch (DatabaseException e) {
-                                        e.printStackTrace();
+                                    } catch (DatabaseException | SQLException e) {
+                                        Logger.getLogger(SettingsView.class.getName()).log(Level.SEVERE, null, e);
                                     }
                                 }
 

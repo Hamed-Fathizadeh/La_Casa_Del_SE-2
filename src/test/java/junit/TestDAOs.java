@@ -87,7 +87,7 @@ public class TestDAOs {
 
      */
     @Test
-    public void registerStudentWithCheck() throws DatabaseException {
+    public void registerStudentWithCheck() throws DatabaseException, SQLException {
         Student student = userTestFactory.registerStudent();
         UserDAO.getInstance().registerUser(student);
         assertEquals("S",UserDAO.getInstance().getUserType(student.getEmail()));
@@ -97,7 +97,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkStudentProfil() throws DatabaseException {
+    public void checkStudentProfil() throws DatabaseException, SQLException {
        Student student = userTestFactory.getProfilStudent();
         UserDAO.getInstance().registerUser(student);
         ProfilDAO.getInstance().createStudentProfil1(student);
@@ -105,7 +105,7 @@ public class TestDAOs {
 
     }
     @Test
-    public void checkStudentProfilWithAdresse() throws DatabaseException {
+    public void checkStudentProfilWithAdresse() throws DatabaseException, SQLException {
         Student student = userTestFactory.getProfilStudentWithoutAdress();
         UserDAO.getInstance().registerUser(student);
         ProfilDAO.getInstance().createStudentProfil1(student);
@@ -114,7 +114,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void registerUnternehmenWithCheck() throws DatabaseException {
+    public void registerUnternehmenWithCheck() throws DatabaseException, SQLException {
         Unternehmen unternehmen = userTestFactory.registerUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         assertEquals("C",UserDAO.getInstance().getUserType(unternehmen.getEmail()));
@@ -124,7 +124,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkUnternehmenProfil() throws DatabaseException {
+    public void checkUnternehmenProfil() throws DatabaseException, SQLException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
@@ -133,7 +133,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkUnternehmenProfilWithAdresse() throws DatabaseException {
+    public void checkUnternehmenProfilWithAdresse() throws DatabaseException, SQLException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmenWithoutAdresss();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
@@ -151,7 +151,7 @@ public class TestDAOs {
     */
 
     @Test
-    public void checkUnternehmenProfilWithDescription() throws DatabaseException {
+    public void checkUnternehmenProfilWithDescription() throws DatabaseException, SQLException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
@@ -182,7 +182,7 @@ public class TestDAOs {
 
     }
     @Test
-    public void checkStudentProfil2() throws DatabaseException {
+    public void checkStudentProfil2() throws DatabaseException, SQLException {
         Student student = userTestFactory.getProfilStudent();
         UserDAO.getInstance().registerUser(student);
         ProfilDAO.getInstance().createStudentProfil1(student);
@@ -202,7 +202,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkStudentWithKenntnisse() throws DatabaseException {
+    public void checkStudentWithKenntnisse() throws DatabaseException, SQLException {
         Student student = userTestFactory.registerStudent();
         UserDAO.getInstance().registerUser(student);
 
@@ -239,7 +239,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void testGetUser() throws DatabaseException {
+    public void testGetUser() throws DatabaseException, SQLException {
         User expected = userTestFactory.registerStudent();
         UserDAO.getInstance().registerUser(expected);
         User actual = UserDAO.getInstance().getUser(expected.getEmail());

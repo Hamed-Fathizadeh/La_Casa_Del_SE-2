@@ -36,7 +36,7 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     public OutputStream receiveUpload(String filename,
                                       String mimeType) {
         // Create and return a file output stream
-        FileOutputStream fos;
+        FileOutputStream fos = null;
 
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
         file = new File(basepath + "/VAADIN/themes/demo/PDF/" + student.getEmail()+filename);
@@ -45,7 +45,12 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
         try {
             fos = new FileOutputStream(file);
         } catch (final IOException e) {
-            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
+            assert fos != null;
+            try {
+                fos.close();
+            } catch (IOException ioException) {
+                Logger.getLogger(PdfUploader.class.getName()).log(Level.SEVERE, null, e);
+            }
             return null;
         }
         return fos;
@@ -68,7 +73,8 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
         // file.length returns long which is cast to int
         byte[] bArray = new byte[(int) file.length()];
         try{
-            fis = new FileInputStream(file);
+            try (FileInputStream fileInputStream = fis = new FileInputStream(file)) {
+            }
             fis.read(bArray);
             fis.close();
 
