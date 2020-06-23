@@ -1,4 +1,4 @@
-package junit.util;
+package junit;
 
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;

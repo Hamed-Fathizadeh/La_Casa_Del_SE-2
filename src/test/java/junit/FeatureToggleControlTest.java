@@ -1,4 +1,4 @@
-package junit.util;
+package junit;
 import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.model.dao.FeatureToggleDAO;
 import org.bonn.se.services.db.exception.DatabaseException;

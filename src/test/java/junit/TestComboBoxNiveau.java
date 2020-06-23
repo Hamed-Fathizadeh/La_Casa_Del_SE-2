@@ -1,4 +1,4 @@
-package junit.util;
+package junit;
 
 
 import org.bonn.se.gui.component.ComboBoxNiveau;

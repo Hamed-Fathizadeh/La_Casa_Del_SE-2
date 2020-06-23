@@ -1,13 +1,7 @@
-package junit.util;
+package junit;
 
-import com.itextpdf.text.log.SysoCounter;
 import org.bonn.se.control.ComponentControl;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.bonn.se.services.util.OrtService;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 

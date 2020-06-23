@@ -1,5 +1,5 @@
 
-package junit.util;
+package junit;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.junit.Assert;

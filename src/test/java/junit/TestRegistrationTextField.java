@@ -1,16 +1,16 @@
-package junit.util;
+package junit;
 
-import org.bonn.se.gui.component.NumeralField;
+
+import org.bonn.se.gui.component.RegistrationTextField;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-public class TestNumeralField {
+public class TestRegistrationTextField {
     @Test
     public void testKonstruktor(){
         String caption = "caption";
-
         Assertions.assertDoesNotThrow(
-                () -> new NumeralField(caption)
+                () -> new RegistrationTextField(caption)
         );
 
 

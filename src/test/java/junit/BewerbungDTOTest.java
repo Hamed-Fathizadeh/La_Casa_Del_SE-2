@@ -1,4 +1,4 @@
-package junit.util;
+package junit;
 import com.vaadin.ui.Image;
 import org.bonn.se.model.objects.dto.*;
 import org.bonn.se.services.util.IllegalException;

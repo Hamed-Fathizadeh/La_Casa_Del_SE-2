@@ -1,4 +1,4 @@
-package junit.util;
+package junit;
 
 import org.bonn.se.control.FeatureToggleControl;
 import org.junit.Test;

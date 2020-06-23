@@ -1,4 +1,4 @@
-package Mockito;
+package junit.Mockito;
 import org.bonn.se.gui.views.RegisterStudentView;
 import org.bonn.se.model.objects.entitites.User;
 import org.junit.Test;

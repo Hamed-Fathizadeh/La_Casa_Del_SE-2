@@ -1,4 +1,4 @@
-package org;
+package junit;
 
 import junit.util.UserTestFactory;
 import org.bonn.se.model.dao.BrancheDAO;
