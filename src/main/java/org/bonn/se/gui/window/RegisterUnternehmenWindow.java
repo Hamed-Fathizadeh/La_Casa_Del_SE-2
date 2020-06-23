@@ -47,13 +47,17 @@ public class RegisterUnternehmenWindow extends CustomWindow implements WizardPro
 
     @Override
     public void wizardCancelled(WizardCancelledEvent wizardCancelledEvent) {
-        ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
+        ConfirmDialog.Factory bestaetigung_Unt = new DefaultConfirmDialogFactory(){
             @Override
             public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
                 return super.create("Beenden", message, "Ja", "Nein", notOkCaption);
             }
         } ;
-        ConfirmDialog.setFactory(df);
+
+
+        ConfirmDialog.setFactory(bestaetigung_Unt);
+
+
         ConfirmDialog.show(UI.getCurrent(), "Profilvervollständigung wirklich abbrechen und zum Login?",
                 (ConfirmDialog.Listener) dialog -> {
                     if (dialog.isConfirmed()) {
