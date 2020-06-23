@@ -227,7 +227,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             while (set.next()) {
 
-                StellenanzeigeDTO sa = new StellenanzeigeDTO(
+                StellenanzeigeDTO sa_loadUnternehmenAnzeigen = new StellenanzeigeDTO(
                         set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
                         set.getDate(3), set.getString(4), set.getString(5),
                         set.getInt(6), set.getString(7), set.getString(8),
@@ -235,7 +235,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getString(12),set.getInt(13)
                 );
 
-                liste.add(sa);
+                liste.add(sa_loadUnternehmenAnzeigen);
 
 
             }
@@ -283,7 +283,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             while (set.next()) {
 
-                StellenanzeigeDTO sa = new StellenanzeigeDTO(
+                StellenanzeigeDTO sa_loadNeueBewerbungen = new StellenanzeigeDTO(
                         set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
                         set.getDate(3), set.getString(4), set.getString(5),
                         set.getInt(6), set.getString(7), set.getString(8),
@@ -291,7 +291,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getString(12),set.getInt(13)
                 );
 
-                liste.add(sa);
+                liste.add(sa_loadNeueBewerbungen);
 
 
             }
