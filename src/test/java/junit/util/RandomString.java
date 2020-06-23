@@ -11,6 +11,9 @@ public class RandomString {
     /**
      * Generate a random string.
      */
+    //To fix SonarQube bugs due to random
+    private Random random = new Random() ;
+
     public String nextString() {
         for (int idx = 0; idx < buf.length; ++idx)
             buf[idx] = symbols[random.nextInt(symbols.length)];
@@ -23,7 +26,7 @@ public class RandomString {
     }
     public LocalDate nextDate() {
 
-        Random random = new Random();
+        //Random random = new Random();
         int day  = random.nextInt(30) + 1;
         int month  = random.nextInt(12) + 1;
         int year  = random.nextInt(500) + 1950;
@@ -31,7 +34,7 @@ public class RandomString {
     }
     public int nextInt() {
 
-     Random random = new Random();
+     //Random random = new Random();
 
      return random.nextInt(99999);
     }
@@ -44,8 +47,6 @@ public class RandomString {
     public static final String digits = "0123456789";
 
     public static final String alphanum = upper + lower + digits;
-
-    private final Random random;
 
     private final char[] symbols;
 
