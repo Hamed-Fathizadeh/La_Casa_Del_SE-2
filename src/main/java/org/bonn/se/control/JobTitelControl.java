@@ -32,6 +32,7 @@ public class JobTitelControl {
                 throwables.printStackTrace();
                 throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
             } finally {
+                assert set != null;
                 set.close();
                 JDBCConnection.getInstance().closeConnection();
             }

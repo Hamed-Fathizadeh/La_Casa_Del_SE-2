@@ -103,6 +103,7 @@ public class BewerbungDAO extends AbstractDAO{
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             JDBCConnection.getInstance().closeConnection();
+            assert set != null;
             set.close();
         }
 
@@ -157,6 +158,7 @@ public class BewerbungDAO extends AbstractDAO{
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            assert set != null;
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }

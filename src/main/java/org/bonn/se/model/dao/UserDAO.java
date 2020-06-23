@@ -127,10 +127,13 @@ public class UserDAO  extends AbstractDAO {
                 return set.getString("benutzertyp");
             }
         } catch (SQLException throwables) {
-            assert set != null;
-            set.close();
+
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("UserTyp nicht vorhanden");
+        } finally {
+            assert set != null;
+            set.close();
+            JDBCConnection.getInstance().closeConnection();
         }
      return null;
     }
