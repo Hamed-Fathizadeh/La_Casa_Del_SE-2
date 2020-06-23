@@ -68,3 +68,6 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 /src/test/java/selenium/
 styles.scss.cache
+/src/test/java/selenium/
+/src/test/java/selenium/
+/src/test/java/selenium/SeleniumWebTest.java
