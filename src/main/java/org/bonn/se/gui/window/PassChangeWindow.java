@@ -12,6 +12,7 @@ import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.model.objects.dto.PassChangeRequest;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.JDBCConnection;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.JavaMailUtil;
 import org.bonn.se.services.util.VerifikationNummer;
 
@@ -83,7 +84,13 @@ public class PassChangeWindow extends Window {
                            PassChangeRequest request = new PassChangeRequest();
                            request.setEmail(email.getValue());
                            request.setNewPass(neuPasswort.getValue());
-                           PassChangeControl.getInstance().changePass(request);
+                           try {
+                               PassChangeControl.getInstance().changePass(request);
+                           } catch (DatabaseException e) {
+                               Logger.getLogger(PassChangeWindow.class.getName()).log(Level.SEVERE,null,e);
+
+
+                           }
                            this.close();
                        }
                        else {

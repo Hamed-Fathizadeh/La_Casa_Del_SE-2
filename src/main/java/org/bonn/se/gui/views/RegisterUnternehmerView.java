@@ -90,13 +90,10 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         User user = new User();
         binder.setBean(user);
         Button test = new Button("Test PopUp");
-        test.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                System.out.println(hauptsitz.getOrt());
-                System.out.println(hauptsitz.getBundesland());
+        test.addClickListener((Button.ClickListener) event -> {
+            System.out.println(hauptsitz.getOrt());
+            System.out.println(hauptsitz.getBundesland());
 
-            }
         });
         ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
 

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Unternehmen extends User {
        private int unt_id;
-       private String ansprechpartner;
        private String hauptsitz;
        private ArrayList<StellenanzeigeDTO> stellenanzeigenDTOliste;
        private byte[] logo;
@@ -15,19 +14,14 @@ public class Unternehmen extends User {
        private String branche;
        private String kontaktnummer;
        private Adresse adresse;
+       private StellenanzeigeDTO stellenanzeigeDTO;
 
-
-    public ArrayList<StellenanzeigeDTO> getStellenanzeigenDTOliste() {
-        return stellenanzeigenDTOliste;
-    }
 
     public StellenanzeigeDTO getStellenanzeigeDTO() { return stellenanzeigenDTOliste.get(stellenanzeigenDTOliste.size()-1); }
 
-
-    public void setStellenanzeigeDTO(StellenanzeigeDTO stellenanzeigeDTO) {
+    public void setStellenanzeigeDTO(StellenanzeigeDTO stellenanzeigeDTO) { 
+        this.stellenanzeigeDTO = stellenanzeigeDTO;
     }
-
-
 
     public String getBundesland() {
         return bundesland;
@@ -66,16 +60,14 @@ public class Unternehmen extends User {
            super.setType("C");
            setStellenanzeigenDTOliste(stellenanzeigenDTOliste);
        }
-       public int getUnt_id(){
-           return unt_id;
-       }
+
        public void setUnt_id(int unt_id){
            int length = String.valueOf(unt_id).length();
            if(length<=0) {
-               throw new IllegalException("unt_id field is leer");
+               throw new IllegalException();
            }
            if(length>5){
-               throw  new IllegalException("Illegale unt_id");
+               throw  new IllegalException();
            }
            else
                this.unt_id=unt_id;

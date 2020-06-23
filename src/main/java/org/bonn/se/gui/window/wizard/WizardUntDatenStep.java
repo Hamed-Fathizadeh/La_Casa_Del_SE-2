@@ -66,11 +66,13 @@ public class WizardUntDatenStep implements WizardStep {
             form2.setMargin(true);
             PlaceHolderField place1 = new PlaceHolderField();
             strasse = new PopUpTextField("Strasse");
+
             ort = new OrtPlzTextField();
+
             PlaceHolderField place2 = new PlaceHolderField();
 
 
-            branche = new ComboBox<>("", DatenUnternehmenProfil.branche1);
+            branche = new ComboBox<>("", DatenUnternehmenProfil.getBranche1());
             branche.setPlaceholder("Branche");
             branche.setHeight("56px");
             branche.setWidth("300px");

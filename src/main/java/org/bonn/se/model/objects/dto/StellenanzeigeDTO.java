@@ -16,7 +16,6 @@ public class StellenanzeigeDTO {
     private int status;
     private String standort;
     private String bundesland;
-    private String standortBundesland;
     private String firmenname;
     private String hauptsitz;
     private Image unternehmenLogo;
@@ -32,9 +31,11 @@ public class StellenanzeigeDTO {
         this.branche = branche;
     }
 
-    public String getStandortBundesland() {
-        return standort+", "+bundesland;
-    }
+// --Commented out by Inspection START (23.06.20, 00:14):
+//    public String getStandortBundesland() {
+//        return standort+", "+bundesland;
+//    }
+// --Commented out by Inspection STOP (23.06.20, 00:14)
 
     public int getanzahlNeuBewerbung() {
         return anzahlNeuBewerbung;

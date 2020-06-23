@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 public class SettingsView extends VerticalLayout implements View {
 
     static GridLayout mainGrid = new GridLayout(2, 5);
-    public void setUp() throws DatabaseException, SQLException {
+    public void setUp() {
 
         mainGrid = new GridLayout(1, 5);
         mainGrid.setSizeFull();
@@ -121,42 +121,39 @@ public class SettingsView extends VerticalLayout implements View {
 
                 ConfirmDialog.setFactory(df);
                 ConfirmDialog.show(MyUI.getCurrent(), "Möchten Sie ihr Konto wirklich löschen?",
-                        new ConfirmDialog.Listener() {
-
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    //SQL-BEFEHL
-                                    if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null){
-                                        Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
-                                        try {
-                                            UserDAO.deleteUser(student.getEmail());
-                                        } catch (DatabaseException e) {
-                                            e.printStackTrace();
-                                        }
+                        (ConfirmDialog.Listener) dialog -> {
+                            if (dialog.isConfirmed()) {
+                                //SQL-BEFEHL
+                                if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null){
+                                    Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
+                                    try {
+                                        UserDAO.deleteUser(student.getEmail());
+                                    } catch (DatabaseException | SQLException e) {
+                                        Logger.getLogger(SettingsView.class.getName()).log(Level.SEVERE, null, e);
                                     }
-                                    else{
-                                       Unternehmen unternehmen= (Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
-                                        try {
-                                            UserDAO.deleteUser(unternehmen.getEmail());
-                                        } catch (DatabaseException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-
-
-
-                                    Window subWindow = new Window("Löschung Ihres Kontos");
-                                    VerticalLayout subContent = new VerticalLayout();
-                                    subWindow.setWidth("600px");
-                                    subWindow.setHeight(dimensionSet);
-                                    subWindow.setContent(subContent);
-                                    subContent.addComponent(new Label("Ihr Konto wurde erfolgreich gelöscht!"));
-                                    subWindow.center();
-                                    UI.getCurrent().addWindow(subWindow);
-
-
-                                    LoginControl.logoutUser();
                                 }
+                                else{
+                                   Unternehmen unternehmen= (Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
+                                    try {
+                                        UserDAO.deleteUser(unternehmen.getEmail());
+                                    } catch (DatabaseException | SQLException e) {
+                                        Logger.getLogger(SettingsView.class.getName()).log(Level.SEVERE, null, e);
+                                    }
+                                }
+
+
+
+                                Window subWindow = new Window("Löschung Ihres Kontos");
+                                VerticalLayout subContent = new VerticalLayout();
+                                subWindow.setWidth("600px");
+                                subWindow.setHeight(dimensionSet);
+                                subWindow.setContent(subContent);
+                                subContent.addComponent(new Label("Ihr Konto wurde erfolgreich gelöscht!"));
+                                subWindow.center();
+                                UI.getCurrent().addWindow(subWindow);
+
+
+                                LoginControl.logoutUser();
                             }
                         });
             }
@@ -170,23 +167,9 @@ public class SettingsView extends VerticalLayout implements View {
 
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            try {
                 this.setUp();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            } catch (SQLException throwables) {
-                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
-            }
-
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            try {
                 this.setUp();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            } catch (SQLException throwables) {
-                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
-            }
-
         } else {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         }

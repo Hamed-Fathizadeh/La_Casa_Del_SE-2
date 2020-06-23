@@ -19,7 +19,7 @@ public class TestComboBoxNiveau {
 
 
         Assertions.assertDoesNotThrow(
-                () -> new ComboBoxNiveau(caption, DatenStudentProfil.collection)
+                () -> new ComboBoxNiveau(caption, DatenStudentProfil.getCollection())
         );
     }
 }

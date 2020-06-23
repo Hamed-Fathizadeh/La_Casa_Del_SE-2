@@ -2,26 +2,27 @@ package org.bonn.se.model.objects.entitites;
 
 import org.bonn.se.model.dao.ContainerBewerbungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ContainerLetztenBewerbungen {
 
     private List<BewerbungDTO> liste;
 
-    private static ContainerLetztenBewerbungen instance = new ContainerLetztenBewerbungen();
+    private static ContainerLetztenBewerbungen instance;
 
-    public static synchronized ContainerLetztenBewerbungen getInstance() {
-        if (instance == null) {
-            instance = new ContainerLetztenBewerbungen();
-        }
-        return instance;
+    public static ContainerLetztenBewerbungen getInstance() {
+        return instance == null ? instance = new ContainerLetztenBewerbungen() : instance;
     }
 
     private ContainerLetztenBewerbungen(){
-        liste = new ArrayList<BewerbungDTO>();
+        liste = new ArrayList<>();
 
     }
     public int getAnzahl(){
@@ -30,36 +31,38 @@ public class ContainerLetztenBewerbungen {
 
     public void load(String email){
         try {
-            liste = ContainerBewerbungDAO.load("Alle", email);
+            liste = ContainerBewerbungDAO.getInstance().load("Alle", email);
         }
-        catch( DatabaseException throwables){
-            throwables.getMessage();
+        catch(DatabaseException | SQLException throwables){
+            Logger.getLogger(ContainerLetztenBewerbungen.class.getName()).log(Level.SEVERE, null, throwables);
         }
 
     }
 
     public void load(String str, String email){
         try {
-            liste = ContainerBewerbungDAO.load(str, email);
-        } catch (DatabaseException e) {
-            e.printStackTrace();
+            liste = ContainerBewerbungDAO.getInstance().load(str, email);
+        } catch (DatabaseException | SQLException e) {
+            Logger.getLogger(ContainerLetztenBewerbungen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
-    public void loadNeueBewerbungen(){
-        try {
-            liste = ContainerBewerbungDAO.loadNeueBewerbungen();
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-        }
-    }
+// --Commented out by Inspection START (22.06.20, 23:35):
+//    public void loadNeueBewerbungen(){
+//        try {
+//            liste = ContainerBewerbungDAO.getInstance().loadNeueBewerbungen();
+//        } catch (DatabaseException e) {
+//            e.printStackTrace();
+//        }
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:35)
 
 
     public void loadByStellenAnzeigeID(String str, int saID){
         try {
-            liste = ContainerBewerbungDAO.loadByStellenAnzeigeID(str,saID);
-        } catch (DatabaseException e) {
-            e.printStackTrace();
+            liste = ContainerBewerbungDAO.getInstance().loadByStellenAnzeigeID(str,saID);
+        } catch (DatabaseException | SQLException e) {
+            Logger.getLogger(ContainerLetztenBewerbungen.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -70,11 +73,13 @@ public class ContainerLetztenBewerbungen {
     public List<BewerbungDTO> getListe(){
         return liste;
     }
-    public void printAll(){
-        for(BewerbungDTO b :liste){
-            System.out.println(b.toString());
-        }
-    }
+// --Commented out by Inspection START (22.06.20, 23:35):
+//    public void printAll(){
+//        for(BewerbungDTO b :liste){
+//            System.out.println(b.toString());
+//        }
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:35)
 
    // public static void main(String [] args){
         // ContainerLetztenBewerbungen ins= ContainerLetztenBewerbungen.getInstance();

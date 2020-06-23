@@ -9,8 +9,8 @@ import com.vaadin.ui.*;
 import org.bonn.se.control.ProfilControl;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.Student;
-import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.DatenStudentProfil;
 import org.bonn.se.services.util.ImageConverter;
@@ -23,24 +23,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ProfilVerwaltenStudentView extends GridLayout implements View {
-    static GridLayout gridAnzeig = null;
+    static final GridLayout gridAnzeig = null;
     Button cancel;
     Button save;
     Button bearbeitenButton;
-    Button plus = new Button("", VaadinIcons.PLUS);
-    Button minus = new Button("", VaadinIcons.MINUS);
+    final Button plus = new Button("", VaadinIcons.PLUS);
+    final Button minus = new Button("", VaadinIcons.MINUS);
     HorizontalLayout buttonsBar;
     ProfilStudentTaetigkeit taetigkeit;
 
-
-
-    public static GridLayout getGridAnzeig() {
-        return gridAnzeig;
-    }
-
-    public static void setGridAnzeig(GridLayout gridAnzeig) {
-        gridAnzeig = gridAnzeig;
-    }
 
 
     public void setUp() throws DatabaseException, SQLException {
@@ -96,7 +87,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         ProfilStudentTextField tkontaktnr = new ProfilStudentTextField("Kontaktnr", student.getKontakt_nr());
         ProfilStudentTextField tfausbildung = new ProfilStudentTextField("Ausbildung", student.getAusbildung());
         ProfilStudentTextField tfstudium = new ProfilStudentTextField("Studium", student.getStudiengang());
-        ComboBox<String> tfabschluss = new ComboBox<>("", DatenStudentProfil.collection);
+        ComboBox<String> tfabschluss = new ComboBox<>("", DatenStudentProfil.getCollection());
         tfabschluss.setCaption("Abschluss");
         tfabschluss.setPlaceholder("Abschluss");
         tfabschluss.setHeight("37px");
@@ -207,9 +198,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         for (int i = 0; i < formLayout.getComponentCount() ; i++) {
             if(formLayout.getComponent(i) instanceof ProfilStudentTextField) {
                 ((ProfilStudentTextField) formLayout.getComponent(i)).addValueChangeListener(
-                        (HasValue.ValueChangeListener<String>) event -> {
-                            save.setEnabled(true);
-                        }
+                        (HasValue.ValueChangeListener<String>) event -> save.setEnabled(true)
                 );
             }
         }
@@ -326,11 +315,10 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
             try {
                 setUp();
             } catch (DatabaseException e) {
-                e.printStackTrace();
+                Logger.getLogger(ProfilVerwaltenStudentView.class.getName()).log(Level.SEVERE, null, e);
             } catch (SQLException throwables) {
-                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+                Logger.getLogger(ProfilVerwaltenStudentView.class.getName()).log(Level.SEVERE, null, throwables);
             }
-
         }
 
 }

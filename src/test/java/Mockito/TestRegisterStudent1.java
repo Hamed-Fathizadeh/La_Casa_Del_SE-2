@@ -1,14 +1,11 @@
 package Mockito;
-import com.vaadin.server.VaadinService;
-import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.views.RegisterStudentView;
-import org.junit.Test;
-import static org.junit.Assert.*;
-
-import org.mockito.Matchers;
-import org.mockito.Mockito;
 import org.bonn.se.model.objects.entitites.User;
-import org.bonn.se.control.RegistrierenControl;
+import org.junit.Test;
+import org.mockito.Mockito;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 
 public class TestRegisterStudent1 {
@@ -19,8 +16,7 @@ public class TestRegisterStudent1 {
         Mockito.when(student.getNachname()).thenReturn("Müller");
         Mockito.when(student.getEmail()).thenReturn("jan@mueller.de");
         Mockito.when(student.getPasswort()).thenReturn("12345678");
-        RegistrierenControl test = Mockito.mock(RegistrierenControl.class);
-        test.add(student);
+
         assertTrue(student.getVorname() == "Jan");
         assertTrue(student.getNachname() == "Müller");
         assertTrue(student.getEmail() == "jan@mueller.de");

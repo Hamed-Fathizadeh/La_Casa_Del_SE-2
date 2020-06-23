@@ -1,10 +1,9 @@
 package junit.util;
 
-import com.vaadin.server.FileResource;
-import com.vaadin.server.StreamResource;
-import com.vaadin.ui.Image;
-
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class ImageConverter {
 
@@ -20,6 +19,7 @@ public class ImageConverter {
         for (int readNum; (readNum = fis.read(buf)) != -1; ){
         bos.write(buf, 0, readNum);
         System.out.println("read " + readNum + " bytes,");
+        fis.close();
         }
         return bos.toByteArray();
     }

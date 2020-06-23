@@ -23,8 +23,8 @@ public class StellenanzeigeConfWindow extends Window {
         GridLayout gridLayout = new GridLayout(1, 3);
         gridLayout.setHeight("100%");
         gridLayout.setWidth("100%");
-        Label head = null;
-        Label message = null;
+        Label head;
+        Label message;
         if(stellenanzeige.getStatus() == 1) {
              head = new Label("<h1><p><font color=\"blue\">Herzlichen Glückwunsch!</font></p></h1>", ContentMode.HTML);
              message = new Label("<h2><p><font color=\"blue\">Ihre Stellenbeschreibung ist online!</font></p></21>", ContentMode.HTML);

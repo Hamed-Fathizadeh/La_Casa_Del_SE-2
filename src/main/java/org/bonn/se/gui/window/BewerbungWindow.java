@@ -12,7 +12,13 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.*;
+import org.bonn.se.services.util.ImageConverter;
+import org.bonn.se.services.util.PdfUploader;
+import org.bonn.se.services.util.Roles;
+
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BewerbungWindow extends Window {
 
@@ -51,8 +57,8 @@ public class BewerbungWindow extends Window {
             try {
 
                 student = ProfilDAO.getInstance().getStudent(bewerbung.getEmailStudent());
-            } catch (DatabaseException e) {
-                e.printStackTrace();
+            } catch (DatabaseException | SQLException e) {
+                Logger.getLogger(BewerbungWindow.class.getName()).log(Level.SEVERE, null, e);
             }
         }
         profilbild = ImageConverter.convertImagetoProfil(student.getPicture());
@@ -176,9 +182,7 @@ public class BewerbungWindow extends Window {
                 bewerbungDTO.setLebenslauf(PdfUploader.getByte());
                 bewerbungDTO.setStatus(9);
                 bewerbungDTO.setStudentID(st.getStudent_id());
-                if(userType.equals("Student")) {
-                    bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
-                }
+                bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
                 BewerbungWindow.this.close();
                 try {
                     BewerbungControl.bewerben(bewerbungDTO);
@@ -203,8 +207,7 @@ public class BewerbungWindow extends Window {
 
 
 
-            Image picMarkierung = null;
-            boolean markiert = bewerbung.isBewerbung_markiert();
+            Image picMarkierung;
             if( bewerbung.isBewerbung_markiert()){
                 ThemeResource resource3 = new ThemeResource("img/Anzeigen/makierung.png");
                 picMarkierung = new Image(null, resource3);
@@ -236,7 +239,7 @@ public class BewerbungWindow extends Window {
             markieren.addClickListener((Button.ClickListener) event -> {
                 try {
                    bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
-                } catch (DatabaseException e) {
+                } catch (DatabaseException | SQLException e) {
                     e.printStackTrace();
                 }
                 BewerbungWindow bewerbungWindow = new BewerbungWindow(null,"Unternehmen", bewerbung);
@@ -257,7 +260,7 @@ public class BewerbungWindow extends Window {
                 if(bewerbung.isBewerbung_markiert()) {
                     try {
                         bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
-                    } catch (DatabaseException e) {
+                    } catch (DatabaseException | SQLException e) {
                         e.printStackTrace();
                     }
                 }
@@ -267,15 +270,13 @@ public class BewerbungWindow extends Window {
                 BewerbungWindow.this.close();
             });
 
-            if(bewerbung != null) {
-                try {
+            try {
 
-                    StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID());
-                    FileDownloader fileDownloader = new FileDownloader(myResource);
-                    fileDownloader.extend(downloadLebnslauf);
-                } catch (DatabaseException e) {
-                    e.printStackTrace();
-                }
+                StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID());
+                FileDownloader fileDownloader = new FileDownloader(myResource);
+                fileDownloader.extend(downloadLebnslauf);
+            } catch (DatabaseException | SQLException e) {
+                e.printStackTrace();
             }
 
             downloadLebnslauf.addClickListener((Button.ClickListener) event -> {

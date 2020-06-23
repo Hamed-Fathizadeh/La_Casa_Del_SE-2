@@ -14,13 +14,15 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
+import java.sql.SQLException;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     List<T> data;
-    static int anzahlNeuBewerbungen = 0;//jumlah pelamar
+    // --Commented out by Inspection (22.06.20, 23:28):static int anzahlNeuBewerbungen = 0;//jumlah pelamar
     static int gesamtNeuBewerbungen = 0;//jumal pelamar keseluran
 
     public int getGesamtNeuBewerbungen() {
@@ -29,20 +31,24 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     }
 
     public int setGesamtNeuBewerbungen(int gesamtNeuBew) {
-        this.gesamtNeuBewerbungen += gesamtNeuBew;
+        gesamtNeuBewerbungen += gesamtNeuBew;
         return gesamtNeuBew;
     }
 
-    public int getAnzahlNeuBewerbungen() {
-        return anzahlNeuBewerbungen;
-    }
+// --Commented out by Inspection START (22.06.20, 23:13):
+//    public int getAnzahlNeuBewerbungen() {
+//        return anzahlNeuBewerbungen;
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:13)
 
-    public int setAnzahlNeuBewerbungen(int anzahlNeuBewerbungen) {
-
-        this.anzahlNeuBewerbungen = anzahlNeuBewerbungen;
-        setGesamtNeuBewerbungen(this.anzahlNeuBewerbungen );
-        return this.anzahlNeuBewerbungen;
-    }
+// --Commented out by Inspection START (22.06.20, 23:13):
+//    public int setAnzahlNeuBewerbungen(int anzahlNeuBewerbungen) {
+//
+//        Anzeigen.anzahlNeuBewerbungen = anzahlNeuBewerbungen;
+//        setGesamtNeuBewerbungen(Anzeigen.anzahlNeuBewerbungen);
+//        return Anzeigen.anzahlNeuBewerbungen;
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:13)
 
     @Override
     public List<T> getData() {
@@ -53,11 +59,10 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         return data.size();
     }
 
-    public Grid<T> setData(List<T> data) {
+    public void setData(List<T> data) {
         this.removeAllColumns();
         this.data = data;
         setUp();
-        return this;
     }
 
     public Anzeigen(String str, List<StellenanzeigeDTO> dataInput){
@@ -79,6 +84,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         // Allow column reordering wir können es auch ändern
         this.setColumnReorderingAllowed(true);
 
+
         SingleSelect<StellenanzeigeDTO> selection = (SingleSelect<StellenanzeigeDTO>) this.asSingleSelect();
 
         // Der Event Listener für den Grid
@@ -88,18 +94,17 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
             StellenanzeigeDTO sa =  selection.getValue();
             Unternehmen unternehmenData = null;
             try {
-                unternehmenData = UserDAO.getInstance().getUnternehmenByStellAnz(sa);
-            } catch (DatabaseException e) {
-                e.printStackTrace();
+                UserDAO.getInstance();
+                unternehmenData = UserDAO.getUnternehmenByStellAnz(sa);
+            } catch (DatabaseException | SQLException e) {
+                Logger.getLogger(Anzeigen.class.getName()).log(Level.SEVERE, null, e);
             }
             if(sa.getStatus() == 3) {
-                Iterator it =((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().iterator();
-                while (it.hasNext()) {
-                    StellenanzeigeDTO temp = ((StellenanzeigeDTO)it.next());
-                    if(temp.getId() == sa.getId() ){
-                        Collections.swap(((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO(),
-                                ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().indexOf(temp),
-                                ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().size()-1);
+                for (StellenanzeigeDTO temp : ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO()) {
+                    if (temp.getId() == sa.getId()) {
+                        Collections.swap(((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO(),
+                                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().indexOf(temp),
+                                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().size() - 1);
                         break;
 
                     }
@@ -108,7 +113,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
                 ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigeDTO(sa);
                 MyUI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
             } else {
-                StellenanzeigeWindow stellenanzeigeWindow = null;
+                StellenanzeigeWindow stellenanzeigeWindow;
                 stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmenData);
                 UI.getCurrent().addWindow(stellenanzeigeWindow);
             }
