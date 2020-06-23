@@ -155,7 +155,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 } catch (DatabaseException e) {
                     Logger.getLogger(StudentHomeView.class.getName()).log(Level.SEVERE,null,e);
                 } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                    Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE,null,throwables);
                 }
                 ComboBranche.setDataProvider(SserviceBranche::fetch, SserviceBranche::count);
 

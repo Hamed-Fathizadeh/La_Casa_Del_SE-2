@@ -8,6 +8,7 @@ import java.io.IOException;
 public class ImageConverter {
 
 
+
     public static byte[] getImage(File file) throws IOException {
 
 

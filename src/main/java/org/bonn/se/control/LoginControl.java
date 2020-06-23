@@ -29,7 +29,10 @@ public class LoginControl {
     private static LoginControl instance;
 
     public static LoginControl getInstance() {
-        return instance == null ? instance = new LoginControl() : instance;
+        if (instance == null){
+            instance = new LoginControl();
+        }
+        return instance;
     }
     public void checkAuthentication ( String login , String password) throws NoSuchUserOrPassword, DatabaseException, SQLException {
 

@@ -139,16 +139,19 @@ public class ContainerAnzDAO extends AbstractDAO{
 
  */
             while (set.next()) {
-                StellenanzeigeDTO sa = new StellenanzeigeDTO(
-                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate()
+                StellenanzeigeDTO sa_suche = new StellenanzeigeDTO(
+                        set.getInt(1),
+                        set.getDate(2) == null ? null: set.getDate(2).toLocalDate()
                         ,set.getDate(3),
-                        set.getString(4), set.getString(5), set.getInt(6),
+                        set.getString(4),
+                        set.getString(5),
+                        set.getInt(6),
                         set.getString(7), set.getString(8), set.getString(9),
                         set.getString(10),set.getString(11),set.getString(12),
                         set.getBytes(13),set.getDouble(14),set.getString(15)
                 );
 
-                liste.add(sa);
+                liste.add(sa_suche);
             }
 
 

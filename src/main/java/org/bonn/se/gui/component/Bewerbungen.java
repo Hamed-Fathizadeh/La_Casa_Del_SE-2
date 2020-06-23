@@ -1,6 +1,5 @@
 package org.bonn.se.gui.component;
 
-import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
@@ -10,7 +9,9 @@ import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.dao.BewertungDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
@@ -151,17 +152,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         data = (List<T>) container.getListe();
         this.setItems( data);
 
-        ThemeResource resource = new ThemeResource("img/Anzeigen/rot.png");
-        Image rot = new Image(null, resource);
-        rot.setDescription("Offline");
-        ThemeResource resource2 = new ThemeResource("img/Anzeigen/gruen.png");
-        Image gruen = new Image(null, resource2);
-        gruen.setDescription("Online");
-        ThemeResource resource3 = new ThemeResource("img/Anzeigen/orange.png");
-        Image orange = new Image(null, resource3);
-        orange.setDescription("Entwurf");
-        ThemeResource resource4 = new ThemeResource("img/Anzeigen/makierung.png");
-
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Logo");
@@ -187,7 +177,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             this.addColumn(BewerbungDTO::getStudent_studiengang).setCaption("Studiengang");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
-            this.addComponentColumn(bew -> (bew.isBewerbung_markiert() ? new Image(null, resource4) : null)).setCaption("Markiert");
+            this.addComponentColumn(bew -> (bew.isBewerbung_markiert() ? ImageConverter.getMarkierung() : null)).setCaption("Markiert");
             this.addComponentColumn(bew -> (bew.getStatus() == 9 ? new Label(" <style>p { color:red ; font-weight:bold;  font-size: 18px; }</style><p>Neu</p>", ContentMode.HTML): null)).setCaption("");
 
         } new Label("<b>Unternehmensname</b>", ContentMode.HTML);
@@ -226,7 +216,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 Logger.getLogger(Bewerbungen.class.getName()).log(Level.SEVERE,null,e);
 
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE,null,throwables);
             }
 
             // Open it in the UI
