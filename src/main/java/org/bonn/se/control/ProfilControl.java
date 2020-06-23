@@ -9,7 +9,10 @@ public class ProfilControl {
     private static ProfilControl instance;
 
     public static ProfilControl getInstance() {
-        return instance == null ? instance = new ProfilControl() : instance;
+        if (instance == null){
+            instance = new ProfilControl();
+        }
+        return instance;
     }
 
     public void  updateStudent(Student student) {

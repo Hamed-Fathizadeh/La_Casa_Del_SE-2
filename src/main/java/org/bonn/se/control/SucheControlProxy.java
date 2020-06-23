@@ -18,10 +18,10 @@ public class SucheControlProxy implements Suche {
     }
 
     @Override
-    public DataProvider<StellenanzeigeDTO, Void> einfacheSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche) {
+    public DataProvider<StellenanzeigeDTO, Void> einfacheSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date abDatum, String branche) {
         if(implSucheControl == null) {
             implSucheControl = new SucheControl();
         }
-         return implSucheControl.einfacheSuche(suchbegriff, ort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum,  branche);
+         return implSucheControl.einfacheSuche(suchbegriff, ort, bundesland, umkreis, artSuche, einstellungsart, abDatum,  branche);
     }
 }

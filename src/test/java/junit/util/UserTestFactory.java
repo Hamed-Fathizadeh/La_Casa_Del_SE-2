@@ -25,12 +25,6 @@ public class UserTestFactory {
         student.setEmail(randomString.nextEMail());
         student.setPasswort(randomSecureString.nextString());
 
-
-        System.out.println(student.getVorname());
-        System.out.println(student.getNachname());
-        System.out.println(student.getPasswort());
-        System.out.println(student.getEmail());
-
         return  student;
     }
 
@@ -55,10 +49,6 @@ public class UserTestFactory {
             taetigkeit.setEnde(randomString.nextDate());
             student.setTaetigkeit(taetigkeit);
         }
-        System.out.println(student.toString());
-
-
-
         return student;
     }
 
@@ -70,8 +60,6 @@ public class UserTestFactory {
         student.setAdresse(adresse);
         student.setAbschluss("Diplom");
         student.setStudiengang(randomString.nextString());
-
-        System.out.println(student.toString());
 
         return student;
     }

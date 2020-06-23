@@ -12,6 +12,6 @@ public interface Suche {
 
 
     DataProvider<StellenanzeigeDTO,Void> einfacheSuche(String suchbegriff, String ort, String bundesland, String umkreis,
-                                                  String artSuche, String einstellungsart, Date ab_Datum, String branche);
+                                                  String artSuche, String einstellungsart, Date abDatum, String branche);
 
 }

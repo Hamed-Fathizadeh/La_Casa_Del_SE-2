@@ -241,6 +241,7 @@ public class ProfilDAO extends AbstractDAO{
         ResultSet set3 = null;
         ResultSet set4 = null;
         Statement statement = JDBCConnection.getInstance().getStatement();
+        Student student = new Student();
 
         try {
             set = statement.executeQuery("SELECT s.*, a.strasse, a.plz, a.ort, a.bundesland, u.vorname, u.nachname, u.benutzertyp\n" +
@@ -250,7 +251,6 @@ public class ProfilDAO extends AbstractDAO{
                     "  left outer join lacasa.tab_adresse a\n" +
                     "    on s.email = a.email WHERE s.email = '" + email + "'");
 
-        Student student = new Student();
 
             while (set.next()) {
                 student.setStudent_id(set.getInt("student_id"));
@@ -265,13 +265,20 @@ public class ProfilDAO extends AbstractDAO{
                 student.setAbschluss(set.getString("hoester_abschluss"));
                 student.setBenachrichtigung(set.getInt("benachrichtigung"));
                 student.setType(set.getString("benutzertyp"));
-                Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"),set.getString("bundesland"));
+                Adresse adresse = new Adresse(set.getString("strasse"), String.valueOf(set.getInt("plz")), set.getString("ort"), set.getString("bundesland"));
                 student.setAdresse(adresse);
                 student.setPicture(set.getBytes("picture"));
                 //nur um zu checken ob der student einen lebenslauf hochgeladen hat
                 student.setHasLebenslauf(set.getBytes("lebenslauf") != null);
-
             }
+            } catch (SQLException  throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+            } finally {
+            assert set != null;
+            set.close();
+            }
+
+        try {
 
             set2 = statement.executeQuery("SELECT t.art, t.beginn_datum, t.end_datum\n" +
                     "  FROM lacasa.tab_taetigkeiten t\n" +
@@ -288,7 +295,14 @@ public class ProfilDAO extends AbstractDAO{
                 taetigkeit.setEnde(ende);
                 student.setTaetigkeit(taetigkeit);
             }
+        } catch (SQLException  throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+            assert set2 != null;
+            set2.close();
+        }
 
+        try {
             set3 = statement.executeQuery("SELECT k.kompetenz_name, k.niveau_it \n" +
                     "  FROM lacasa.tab_it_kenntnisse k\n" +
                     "  join lacasa.tab_student s\n" +
@@ -304,7 +318,14 @@ public class ProfilDAO extends AbstractDAO{
                     student.setITKenntnis(itKenntnis);
                 }
             }
+        } catch (SQLException  throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+            assert set3 != null;
+            set3.close();
+        }
 
+        try {
             set4 = statement.executeQuery("SELECT sp.sprache, sp.niveau_sprache\n" +
                     "  FROM lacasa.tab_sprachen sp\n" +
                     "  join lacasa.tab_student s\n" +
@@ -317,22 +338,18 @@ public class ProfilDAO extends AbstractDAO{
                 sprachKenntnis.setNiveau(set4.getString("niveau_sprache"));
                 student.setSprachKenntnis(sprachKenntnis);
             }
+            set4.close();
             return student;
         } catch (SQLException  throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
-            assert set != null;
-            set.close();
-            assert set2 != null;
-            set2.close();
-            assert set3 != null;
-            set3.close();
             assert set4 != null;
             set4.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return null;
     }
+
 
 
     public void updateStudent(Student student) throws DatabaseException {

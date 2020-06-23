@@ -19,7 +19,6 @@ public class VerifikationNummer {
 
 
     public void setRandNummer(){
-        //Random r = new Random();
         int low =  10000;
         int high = 99999;
         randNummer = r.nextInt(high-low) + low;

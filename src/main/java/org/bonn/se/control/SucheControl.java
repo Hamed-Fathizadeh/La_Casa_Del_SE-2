@@ -18,7 +18,10 @@ public class SucheControl  implements Suche {
     List<StellenanzeigeDTO> stellenanzeigeDTOS = null;
 
     public static SucheControl getInstance() {
-        return instance == null ? instance = new SucheControl() : instance;
+        if (instance == null){
+            instance = new SucheControl();
+        }
+        return instance ;
     }
 
     static int rowsCount;
@@ -30,10 +33,10 @@ public class SucheControl  implements Suche {
     }
 
     @Override
-    public DataProvider<StellenanzeigeDTO,Void> einfacheSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date ab_Datum, String branche) {
+    public DataProvider<StellenanzeigeDTO,Void> einfacheSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date abDatum, String branche) {
         try {
             stellenanzeigeDTOS = ContainerAnzDAO.getInstance().loadSuche(
-                    suchbegriff, ort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum,  branche);
+                    suchbegriff, ort, bundesland, umkreis, artSuche, einstellungsart, abDatum,  branche);
         } catch (DatabaseException | SQLException e) {
             Logger.getLogger(SucheControl.class.getName()).log(Level.SEVERE,null,e);
         }

@@ -26,15 +26,12 @@ public class RandomString {
     }
     public LocalDate nextDate() {
 
-        //Random random = new Random();
-        int day  = random.nextInt(30) + 1;
+        int day  = random.nextInt(28) + 1;
         int month  = random.nextInt(12) + 1;
-        int year  = random.nextInt(500) + 1950;
+        int year  = random.nextInt(30) + 1990;
         return LocalDate.of(year,month,day);
     }
     public int nextInt() {
-
-     //Random random = new Random();
 
      return random.nextInt(99999);
     }

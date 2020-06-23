@@ -2,7 +2,7 @@ package org.bonn.se.gui.window;
 
 import com.vaadin.ui.UI;
 import org.bonn.se.gui.component.CustomWizard;
-import org.bonn.se.gui.component.RegisterWindow;
+import org.bonn.se.gui.component.CustomWindow;
 import org.bonn.se.gui.window.wizard.WizardStepFertigWindow;
 import org.bonn.se.gui.window.wizard.WizardStepRegisterSuccessWindow;
 import org.bonn.se.gui.window.wizard.WizardUntBeschreibungStep;
@@ -14,7 +14,7 @@ import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 import org.vaadin.teemu.wizards.Wizard;
 import org.vaadin.teemu.wizards.event.*;
 
-public class RegisterUnternehmenWindow extends RegisterWindow implements WizardProgressListener {
+public class RegisterUnternehmenWindow extends CustomWindow implements WizardProgressListener {
 
     private static Wizard  wizard = CustomWizard.getWizard();
 
@@ -47,13 +47,17 @@ public class RegisterUnternehmenWindow extends RegisterWindow implements WizardP
 
     @Override
     public void wizardCancelled(WizardCancelledEvent wizardCancelledEvent) {
-        ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
+        ConfirmDialog.Factory bestaetigung_Unt = new DefaultConfirmDialogFactory(){
             @Override
             public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
                 return super.create("Beenden", message, "Ja", "Nein", notOkCaption);
             }
         } ;
-        ConfirmDialog.setFactory(df);
+
+
+        ConfirmDialog.setFactory(bestaetigung_Unt);
+
+
         ConfirmDialog.show(UI.getCurrent(), "Profilvervollständigung wirklich abbrechen und zum Login?",
                 (ConfirmDialog.Listener) dialog -> {
                     if (dialog.isConfirmed()) {

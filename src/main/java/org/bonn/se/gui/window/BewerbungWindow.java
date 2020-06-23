@@ -6,6 +6,7 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.BewerbungControl;
+import org.bonn.se.gui.component.CustomWindow;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
@@ -20,7 +21,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class BewerbungWindow extends Window {
+public class BewerbungWindow extends CustomWindow {
 
     public BewerbungWindow(StellenanzeigeDTO stellenanzeige, String userType, BewerbungDTO bewerbung )  {
 
@@ -28,15 +29,9 @@ public class BewerbungWindow extends Window {
     }
 
     public void setUp(StellenanzeigeDTO stellenanzeige, String userType,BewerbungDTO bewerbung) {
-        this.center();
-        this.setWidth("80%");
-        this.setHeight("90%");
-        this.setModal(true);
-        this.setResizable(false);
-        this.setClosable(false);
 
-        Panel panel = new Panel();
-        panel.setWidthFull();
+        Panel panel_bewerbung = new Panel();
+        panel_bewerbung.setWidthFull();
         Button back = new Button("Zurück");
 
         back.addClickListener((Button.ClickListener) event -> {
@@ -286,8 +281,8 @@ public class BewerbungWindow extends Window {
 
 
         }
-        panel.setContent(mainGridLayout);
-        this.setContent(panel);
+        panel_bewerbung.setContent(mainGridLayout);
+        this.setContent(panel_bewerbung);
 
 
 

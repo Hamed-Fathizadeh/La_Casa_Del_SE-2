@@ -9,6 +9,8 @@ public class Bewerbung {
     private byte[] lebenslauf;
     private int status;
     private int studentID;
+    private int anzeigeID;
+
 
     public Bewerbung(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID) {
         this.bewerbungID = bewerbungID;
@@ -19,8 +21,7 @@ public class Bewerbung {
         this.studentID = studentID;
         this.anzeigeID = anzeigeID;
     }
-
-    private int anzeigeID;
+/*
 
     public int getBewerbungID() {
         return bewerbungID;
@@ -80,5 +81,7 @@ public class Bewerbung {
         this.anzeigeID = anzeigeID;
     }
 
+
+ */
 
 }

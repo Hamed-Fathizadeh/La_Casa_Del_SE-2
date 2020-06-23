@@ -7,7 +7,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.UserError;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 
 import org.bonn.se.control.UserSearchControl;
@@ -43,11 +42,11 @@ public class RegisterUnternehmerView extends GridLayout implements View {
 
 
 
-        TopPanel topPanel =  new TopPanel("Studenten");
-        topPanel.addStyleName("toppanel");
+        TopPanel topPanelUnt =  new TopPanel("Studenten");
+        topPanelUnt.addStyleName("toppanel");
 
-        FormLayout form = new FormLayout();
-        form.setMargin(true);
+        FormLayout form_Unt = new FormLayout();
+        form_Unt.setMargin(true);
         RegistrationTextField firmenname = new RegistrationTextField("Unternehmensname");
         firmenname.selectAll();
 
@@ -56,10 +55,10 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         RegistrationTextField email = new RegistrationTextField("E-Mail");
         RegistrationPasswordField passwort = new RegistrationPasswordField("Passwort");
 
-        Button registerButton = new Button("Registrieren");
-        registerButton.setEnabled(false);
+        Button registerUntButton = new Button("Registrieren");
+        registerUntButton.setEnabled(false);
 
-        form.addComponents(head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerButton);
+        form_Unt.addComponents(head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerUntButton);
 
         Binder<User> binder = new Binder<>(User.class);
         binder.forField(firmenname)
@@ -97,23 +96,18 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         });
         ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
 
-        Image bild = new Image(null,resource);
-
-
-        form.setMargin(false);
-
-        this.addComponent(topPanel, 0, 0, 9, 2);
-        this.addComponent(form, 0, 5, 0, 5);
-        this.addComponent(bild, 9, 5, 9, 5);
-
-        this.setComponentAlignment(topPanel, Alignment.TOP_LEFT);
-        this.setComponentAlignment(form, Alignment.MIDDLE_LEFT);
-        this.setComponentAlignment(bild, Alignment.MIDDLE_RIGHT);
+        Image bild_unt = new Image(null,resource);
+        form_Unt.setMargin(false);
+        this.addComponent(topPanelUnt, 0, 0, 9, 2);
+        this.addComponent(form_Unt, 0, 5, 0, 5);
+        this.addComponent(bild_unt, 9, 5, 9, 5);
+        this.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
+        this.setComponentAlignment(form_Unt, Alignment.MIDDLE_LEFT);
+        this.setComponentAlignment(bild_unt, Alignment.MIDDLE_RIGHT);
         this.setMargin(false);
 
-        registerButton.addClickListener(
+        registerUntButton.addClickListener(
                 event -> {
-
                     try {
 
                         if (UserSearchControl.getInstance().existUser(email.getValue())) {
@@ -123,7 +117,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
                         } else {
                             user.setType("C");
 
-                            registerButton.setEnabled(false);
+                            registerUntButton.setEnabled(false);
                             user.setHauptsitz(hauptsitz.getOrt());
                             user.setBundesland(hauptsitz.getBundesland());
                             Unternehmen unternehmen = new Unternehmen();
@@ -150,7 +144,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
 
 
         binder.addStatusChangeListener(
-                event -> registerButton.setEnabled(binder.isValid()));
+                event -> registerUntButton.setEnabled(binder.isValid()));
 
     }
     @Override

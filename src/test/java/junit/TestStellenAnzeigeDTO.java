@@ -1,28 +1,21 @@
 package junit;
 
 
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Image;
 import junit.util.ImageConverter;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
-import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.hamcrest.core.IsInstanceOf;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import junit.util.RandomString;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.concurrent.ThreadLocalRandom;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 
 public class TestStellenAnzeigeDTO {
@@ -158,7 +151,6 @@ public class TestStellenAnzeigeDTO {
         ContainerAnzeigen.getInstance().setAnzeige(unternehmen);
         ContainerAnzeigen.getInstance().updateAnzeige(stanz);
         ContainerAnzeigen.getInstance().deleteAnzeige(stanz);
-
 
     }
 

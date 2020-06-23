@@ -49,7 +49,6 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
             try {
                 fos.close();
             } catch (IOException ioException) {
-                Logger.getLogger(PdfUploader.class.getName()).log(Level.SEVERE, null, e);
             }
             return null;
         }
@@ -58,7 +57,11 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
 
     @Override
     public void uploadSucceeded(Upload.SucceededEvent event) {
-        myByte = readFileToByteArray(file);
+        try {
+            myByte = readFileToByteArray(file);
+        } catch (IOException e) {
+            Logger.getLogger(PdfUploader.class.getName()).log(Level.SEVERE, null, e);
+        }
 
     }
 
@@ -67,19 +70,21 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     public static byte[] getByte() {
         return myByte;
     }
-    private static byte[] readFileToByteArray(File file){
-        FileInputStream fis;
+    private static byte[] readFileToByteArray(File file) throws IOException {
+        FileInputStream fis = null;
         // Creating a byte array using the length of the file
         // file.length returns long which is cast to int
         byte[] bArray = new byte[(int) file.length()];
         try{
-            try (FileInputStream fileInputStream = fis = new FileInputStream(file)) {
-            }
-            fis.read(bArray);
-            fis.close();
+            fis = new FileInputStream(file);
+
+            //fis.read(bArray);
 
         }catch(IOException ioExp){
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ioExp);
+        } finally {
+            assert fis != null;
+            fis.close();
         }
         return bArray;
     }
