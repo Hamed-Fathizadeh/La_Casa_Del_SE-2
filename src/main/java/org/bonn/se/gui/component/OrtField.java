@@ -5,15 +5,13 @@ import org.bonn.se.services.util.OrtService;
 
 public class OrtField extends ComboBox<String> {
 
-    String ort;
-    String bundesland;
 
     public OrtField(String caption) {
         this.setHeight("56px");
         this.setWidth("408px");
-        OrtService Ortservice = new OrtService("Stadt, Bund");
+        OrtService ortService = new OrtService("Stadt, Bund");
 
-        this.setDataProvider(Ortservice::fetch, Ortservice::count);
+        this.setDataProvider(ortService::fetch, ortService::count);
 
         this.setPlaceholder(caption);
 

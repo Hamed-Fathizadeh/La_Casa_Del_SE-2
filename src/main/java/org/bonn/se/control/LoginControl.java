@@ -17,38 +17,46 @@ import org.bonn.se.services.util.Views;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class LoginControl {
+
+    private LoginControl(){
+
+    }
 
     private static LoginControl instance;
 
     public static LoginControl getInstance() {
-        return instance == null ? instance = new LoginControl() : instance;
+        if (instance == null){
+            instance = new LoginControl();
+        }
+        return instance;
     }
-
-    public void checkAuthentication ( String login , String password) throws NoSuchUserOrPassword, DatabaseException {
+    public void checkAuthentication ( String login , String password) throws NoSuchUserOrPassword, DatabaseException, SQLException {
 
 //DB-Zugriff
         ResultSet set;
+        Statement statement = null;
+
         String c = "'";
         if(password.indexOf('/') != -1 || password.indexOf(c.charAt(0)) != -1){
             throw new DatabaseException("Die Zeichen ' oder / sind nicht als Passwort erlaubt!.");
         }
 
         try {
-            Statement statement = JDBCConnection.getInstance().getStatement();
-
+            statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT * "
                     + "FROM lacasa.tab_user "
                     + "WHERE upper(lacasa.tab_user.email) = '" +login.toUpperCase() + "'"
                     + " AND lacasa.tab_user.passwort = '" + password + "'");
 
         } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(LoginControl.class.getName()).log(Level.SEVERE,null,throwables);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         }
-
-        User user = null;
+        User user;
         try {
             if ( set.next()) {
 
@@ -83,8 +91,9 @@ public class LoginControl {
                 throw new DatabaseException("Fehler Passwort oder Email ist falsch!");
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
 

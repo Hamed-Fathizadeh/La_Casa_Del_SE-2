@@ -18,26 +18,19 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ProfilVerwaltenStudentView extends GridLayout implements View {
-    static GridLayout GridAnzeig = null;
+    static final GridLayout gridAnzeig = null;
     Button cancel;
     Button save;
     Button bearbeitenButton;
-    Button plus = new Button("", VaadinIcons.PLUS);
-    Button minus = new Button("", VaadinIcons.MINUS);
+    final Button plus = new Button("", VaadinIcons.PLUS);
+    final Button minus = new Button("", VaadinIcons.MINUS);
     HorizontalLayout buttonsBar;
     ProfilStudentTaetigkeit taetigkeit;
 
-
-
-    public static GridLayout getGridAnzeig() {
-        return GridAnzeig;
-    }
-
-    public static void setGridAnzeig(GridLayout gridAnzeig) {
-        GridAnzeig = gridAnzeig;
-    }
 
 
     public void setUp() throws DatabaseException, SQLException {
@@ -63,18 +56,10 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         save= new Button("Speichern");
 
 
-        //
-        /*
-
-        //Column2
-        ProfilStudentTextField tfberufs = new ProfilStudentTextField("Berufstätigkeiten", "Muster");
-        gridLayout.addComponent(tfberufs, 1,1);
-        */
-
 
 
         //Erzeugung von TextField: mit Student Daten ausfüllen
-        //Column 0
+
         Image profilbild = ImageConverter.convertImagetoProfil(student.getPicture());
         ProfilStudentTextField tfvorname = new ProfilStudentTextField("Vorname", student.getVorname());
         ProfilStudentTextField tfnachname = new ProfilStudentTextField("Nachname", student.getNachname());
@@ -101,7 +86,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         ProfilStudentTextField tkontaktnr = new ProfilStudentTextField("Kontaktnr", student.getKontakt_nr());
         ProfilStudentTextField tfausbildung = new ProfilStudentTextField("Ausbildung", student.getAusbildung());
         ProfilStudentTextField tfstudium = new ProfilStudentTextField("Studium", student.getStudiengang());
-        ComboBox<String> tfabschluss = new ComboBox<>("", DatenStudentProfil.collection);
+        ComboBox<String> tfabschluss = new ComboBox<>("", DatenStudentProfil.getCollection());
         tfabschluss.setCaption("Abschluss");
         tfabschluss.setPlaceholder("Abschluss");
         tfabschluss.setHeight("37px");
@@ -212,9 +197,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         for (int i = 0; i < formLayout.getComponentCount() ; i++) {
             if(formLayout.getComponent(i) instanceof ProfilStudentTextField) {
                 ((ProfilStudentTextField) formLayout.getComponent(i)).addValueChangeListener(
-                        (HasValue.ValueChangeListener<String>) event -> {
-                            save.setEnabled(true);
-                        }
+                        (HasValue.ValueChangeListener<String>) event -> save.setEnabled(true)
                 );
             }
         }
@@ -331,11 +314,10 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
             try {
                 setUp();
             } catch (DatabaseException e) {
-                e.printStackTrace();
+                Logger.getLogger(ProfilVerwaltenStudentView.class.getName()).log(Level.SEVERE, null, e);
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                Logger.getLogger(ProfilVerwaltenStudentView.class.getName()).log(Level.SEVERE, null, throwables);
             }
-
         }
 
 }

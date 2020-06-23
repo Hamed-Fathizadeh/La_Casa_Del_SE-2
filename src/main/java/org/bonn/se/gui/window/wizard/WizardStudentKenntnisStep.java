@@ -32,22 +32,22 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
         @Override
         public Component getContent() {
-            GridLayout gridLayout = new GridLayout(5, 10);
-            gridLayout.setHeight("100%");
-            gridLayout.setWidth("100%");
+            GridLayout gl_KenntnisStep = new GridLayout(5, 10);
+            gl_KenntnisStep.setHeight("100%");
+            gl_KenntnisStep.setWidth("100%");
 
 
 
 
             Label label2 = new Label("<h3><p><font color=\"blue\">Kenntnisse</font></p></h3>", ContentMode.HTML);
             label2.setHeight("45px");
-            gridLayout.addComponent(label2,0,1,1,1);
-            gridLayout.setComponentAlignment(label2, Alignment.MIDDLE_CENTER);
+            gl_KenntnisStep.addComponent(label2,0,1,1,1);
+            gl_KenntnisStep.setComponentAlignment(label2, Alignment.MIDDLE_CENTER);
 
             itKenntnisArrayList = new ArrayList<>();
             PopUpTextField itKenntnis1 = new PopUpTextField("Bsp. MS-Office");
             itKenntnis1.setWidth("200px");
-            ComboBoxNiveau niveau1 = new ComboBoxNiveau("", DatenStudentProfil.collection3);
+            ComboBoxNiveau niveau1 = new ComboBoxNiveau("", DatenStudentProfil.getCollection());
 
 
 
@@ -67,12 +67,12 @@ public class WizardStudentKenntnisStep implements WizardStep {
                     .asRequired("Bitte Niveau ausfüllen")
                     .bind(Student.ITKenntnis::getNiveau, Student.ITKenntnis::setNiveau);
 
-            gridLayout.addComponent(itKenntnis1,0,2);
-            gridLayout.addComponent(niveau1,1,2);
-            gridLayout.addComponent(plus,0,3);
-            gridLayout.setComponentAlignment(itKenntnis1,Alignment.MIDDLE_CENTER);
-            gridLayout.setComponentAlignment(niveau1,Alignment.MIDDLE_CENTER);
-            gridLayout.setComponentAlignment(plus,Alignment.MIDDLE_CENTER);
+            gl_KenntnisStep.addComponent(itKenntnis1,0,2);
+            gl_KenntnisStep.addComponent(niveau1,1,2);
+            gl_KenntnisStep.addComponent(plus,0,3);
+            gl_KenntnisStep.setComponentAlignment(itKenntnis1,Alignment.MIDDLE_CENTER);
+            gl_KenntnisStep.setComponentAlignment(niveau1,Alignment.MIDDLE_CENTER);
+            gl_KenntnisStep.setComponentAlignment(plus,Alignment.MIDDLE_CENTER);
 
 
             final int[] i_c = {0,1,2,3,4};
@@ -88,31 +88,31 @@ public class WizardStudentKenntnisStep implements WizardStep {
                     }
                     itKenntnisArrayList.add(itKenntnis);
 
-                    gridLayout.removeComponent(plus);
-                    gridLayout.removeComponent(minus);
+                    gl_KenntnisStep.removeComponent(plus);
+                    gl_KenntnisStep.removeComponent(minus);
 
-                    gridLayout.addComponent(new PopUpTextField("Bsp. MS-Office"), i_c[0], i_r[0]);
-                    gridLayout.getComponent(i_c[0], i_r[0]).setWidth("200px");
-                    gridLayout.addComponent(new ComboBoxNiveau("",DatenStudentProfil.collection3), i_c[1], i_r[0]);
-                    gridLayout.setComponentAlignment(gridLayout.getComponent(i_c[0], i_r[0]), Alignment.MIDDLE_CENTER);
-                    gridLayout.setComponentAlignment(gridLayout.getComponent(i_c[1], i_r[0]), Alignment.MIDDLE_CENTER);
-                    ((PopUpTextField) gridLayout.getComponent(i_c[0], i_r[0])).selectAll();
+                    gl_KenntnisStep.addComponent(new PopUpTextField("Bsp. MS-Office"), i_c[0], i_r[0]);
+                    gl_KenntnisStep.getComponent(i_c[0], i_r[0]).setWidth("200px");
+                    gl_KenntnisStep.addComponent(new ComboBoxNiveau("",DatenStudentProfil.getCollection3()), i_c[1], i_r[0]);
+                    gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(i_c[0], i_r[0]), Alignment.MIDDLE_CENTER);
+                    gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(i_c[1], i_r[0]), Alignment.MIDDLE_CENTER);
+                    ((PopUpTextField) gl_KenntnisStep.getComponent(i_c[0], i_r[0])).selectAll();
 
-                    binder.forField((PopUpTextField) gridLayout.getComponent(i_c[0], i_r[0]))
+                    binder.forField((PopUpTextField) gl_KenntnisStep.getComponent(i_c[0], i_r[0]))
                             .asRequired("Bitte Feld ausfüllen!")
                             .bind(Student.ITKenntnis::getKenntnis, Student.ITKenntnis::setKenntnis);
-                    binder.forField((ComboBoxNiveau) gridLayout.getComponent(i_c[1], i_r[0]))
+                    binder.forField((ComboBoxNiveau) gl_KenntnisStep.getComponent(i_c[1], i_r[0]))
                             .asRequired("Bitte Niveau ausfüllen")
                             .bind(Student.ITKenntnis::getNiveau, Student.ITKenntnis::setNiveau);
 
 
                     if (i_r[0] <= 4) {
-                        gridLayout.addComponent(plus, i_c[0], i_r[0] + 1);
-                        gridLayout.setComponentAlignment(plus, Alignment.MIDDLE_CENTER);
+                        gl_KenntnisStep.addComponent(plus, i_c[0], i_r[0] + 1);
+                        gl_KenntnisStep.setComponentAlignment(plus, Alignment.MIDDLE_CENTER);
                     }
                     i_r[0]++;
-                    gridLayout.addComponent(minus, i_c[1], i_r[0]);
-                    gridLayout.setComponentAlignment(minus, Alignment.MIDDLE_CENTER);
+                    gl_KenntnisStep.addComponent(minus, i_c[1], i_r[0]);
+                    gl_KenntnisStep.setComponentAlignment(minus, Alignment.MIDDLE_CENTER);
 
 
                 } else {
@@ -124,25 +124,25 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
             minus.addClickListener((Button.ClickListener) event -> {
 
-                gridLayout.removeComponent(plus);
-                gridLayout.removeComponent(minus);
+                gl_KenntnisStep.removeComponent(plus);
+                gl_KenntnisStep.removeComponent(minus);
                 i_r[0]--;
-                binder.removeBinding( (PopUpTextField) gridLayout.getComponent(i_c[0], i_r[0]));
-                binder.removeBinding( ((ComboBoxNiveau) gridLayout.getComponent(i_c[1], i_r[0])));
+                binder.removeBinding( (PopUpTextField) gl_KenntnisStep.getComponent(i_c[0], i_r[0]));
+                binder.removeBinding( ((ComboBoxNiveau) gl_KenntnisStep.getComponent(i_c[1], i_r[0])));
 
                 for (int i = 0; i <= 1 ; i++) {
-                    gridLayout.removeComponent(i,i_r[0]);
+                    gl_KenntnisStep.removeComponent(i,i_r[0]);
 
                 }
 
 
 
-                gridLayout.addComponent(plus,i_c[0],i_r[0]);
+                gl_KenntnisStep.addComponent(plus,i_c[0],i_r[0]);
                 if(i_r[0] != 3) {
-                    gridLayout.addComponent(minus, i_c[1], i_r[0]);
+                    gl_KenntnisStep.addComponent(minus, i_c[1], i_r[0]);
                 }
-                gridLayout.setComponentAlignment(plus,Alignment.MIDDLE_CENTER);
-                gridLayout.setComponentAlignment(minus,Alignment.MIDDLE_CENTER);
+                gl_KenntnisStep.setComponentAlignment(plus,Alignment.MIDDLE_CENTER);
+                gl_KenntnisStep.setComponentAlignment(minus,Alignment.MIDDLE_CENTER);
                 if(binder.isValid()) {
                     itKenntnisArrayList.remove(itKenntnisArrayList.size() - 1);
                 }
@@ -152,15 +152,15 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
             Label label3 = new Label("<h3><p><font color=\"blue\">Sprachen</font></p></h3>",ContentMode.HTML);
             label3.setHeight("45px");
-            gridLayout.addComponent(label3,3,1,4,1);
-            gridLayout.setComponentAlignment(label3,Alignment.MIDDLE_CENTER);
+            gl_KenntnisStep.addComponent(label3,3,1,4,1);
+            gl_KenntnisStep.setComponentAlignment(label3,Alignment.MIDDLE_CENTER);
 
             PopUpTextField sprachKenntnis1 = new PopUpTextField("Bsp. Englisch");
             sprachKenntnis1.setWidth("200px");
 
             sprachKenntnisArrayList = new ArrayList<>();
 
-            ComboBoxNiveau niveau21 = new ComboBoxNiveau("",DatenStudentProfil.collection2);
+            ComboBoxNiveau niveau21 = new ComboBoxNiveau("",DatenStudentProfil.getCollection2());
 
 
 
@@ -181,13 +181,13 @@ public class WizardStudentKenntnisStep implements WizardStep {
                     .asRequired("Bitte Niveau ausfüllen")
                     .bind(Student.SprachKenntnis::getNiveau, Student.SprachKenntnis::setNiveau);
 
-            gridLayout.addComponent(sprachKenntnis1,3,2);
-            gridLayout.addComponent(niveau21,4,2);
-            gridLayout.addComponent(plus1,3,3);
-            gridLayout.setComponentAlignment(plus1, Alignment.MIDDLE_CENTER);
+            gl_KenntnisStep.addComponent(sprachKenntnis1,3,2);
+            gl_KenntnisStep.addComponent(niveau21,4,2);
+            gl_KenntnisStep.addComponent(plus1,3,3);
+            gl_KenntnisStep.setComponentAlignment(plus1, Alignment.MIDDLE_CENTER);
 
-            gridLayout.setComponentAlignment(sprachKenntnis1,Alignment.MIDDLE_CENTER);
-            gridLayout.setComponentAlignment(niveau21,Alignment.MIDDLE_CENTER);
+            gl_KenntnisStep.setComponentAlignment(sprachKenntnis1,Alignment.MIDDLE_CENTER);
+            gl_KenntnisStep.setComponentAlignment(niveau21,Alignment.MIDDLE_CENTER);
 
             final int[] j_c = {0,1,2,3,4};
             final int[] j_r = {3};
@@ -202,32 +202,32 @@ public class WizardStudentKenntnisStep implements WizardStep {
                     }
                     sprachKenntnisArrayList.add(sprachKenntnis);
 
-                    gridLayout.removeComponent(plus1);
-                    gridLayout.removeComponent(minus1);
+                    gl_KenntnisStep.removeComponent(plus1);
+                    gl_KenntnisStep.removeComponent(minus1);
 
-                    gridLayout.addComponent(new PopUpTextField("Bsp. Englisch"), j_c[3], j_r[0]);
-                    gridLayout.getComponent(j_c[3], j_r[0]).setWidth("200px");
-                    gridLayout.addComponent(new ComboBoxNiveau("",DatenStudentProfil.collection2), j_c[4], j_r[0]);
-                    gridLayout.setComponentAlignment(gridLayout.getComponent(j_c[3], j_r[0]), Alignment.MIDDLE_CENTER);
-                    gridLayout.setComponentAlignment(gridLayout.getComponent(j_c[4], j_r[0]), Alignment.MIDDLE_CENTER);
-                    ((PopUpTextField) gridLayout.getComponent(j_c[3], j_r[0])).selectAll();
+                    gl_KenntnisStep.addComponent(new PopUpTextField("Bsp. Englisch"), j_c[3], j_r[0]);
+                    gl_KenntnisStep.getComponent(j_c[3], j_r[0]).setWidth("200px");
+                    gl_KenntnisStep.addComponent(new ComboBoxNiveau("",DatenStudentProfil.getCollection2()), j_c[4], j_r[0]);
+                    gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(j_c[3], j_r[0]), Alignment.MIDDLE_CENTER);
+                    gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(j_c[4], j_r[0]), Alignment.MIDDLE_CENTER);
+                    ((PopUpTextField) gl_KenntnisStep.getComponent(j_c[3], j_r[0])).selectAll();
 
-                    binder1.forField((PopUpTextField) gridLayout.getComponent(j_c[3], j_r[0]))
+                    binder1.forField((PopUpTextField) gl_KenntnisStep.getComponent(j_c[3], j_r[0]))
                             .asRequired("Bitte Feld ausfüllen!")
                             .bind(Student.SprachKenntnis::getKenntnis, Student.SprachKenntnis::setKenntnis);
-                    binder1.forField((ComboBoxNiveau) gridLayout.getComponent(j_c[4], j_r[0]))
+                    binder1.forField((ComboBoxNiveau) gl_KenntnisStep.getComponent(j_c[4], j_r[0]))
                             .asRequired("Bitte Niveau ausfüllen")
                             .bind(Student.SprachKenntnis::getNiveau, Student.SprachKenntnis::setNiveau);
 
 
                     if (j_r[0] <= 4) {
-                        gridLayout.addComponent(plus1, j_c[3], j_r[0] + 1);
-                        gridLayout.setComponentAlignment(plus1, Alignment.MIDDLE_CENTER);
+                        gl_KenntnisStep.addComponent(plus1, j_c[3], j_r[0] + 1);
+                        gl_KenntnisStep.setComponentAlignment(plus1, Alignment.MIDDLE_CENTER);
                     }
                     j_r[0]++;
 
-                    gridLayout.addComponent(minus1,j_c[4],j_r[0]);
-                    gridLayout.setComponentAlignment(minus1, Alignment.MIDDLE_CENTER);
+                    gl_KenntnisStep.addComponent(minus1,j_c[4],j_r[0]);
+                    gl_KenntnisStep.setComponentAlignment(minus1, Alignment.MIDDLE_CENTER);
 
                 } else {
                     binder1.validate().getFieldValidationErrors();
@@ -235,25 +235,25 @@ public class WizardStudentKenntnisStep implements WizardStep {
             });
             minus1.addClickListener((Button.ClickListener) event -> {
 
-                gridLayout.removeComponent(plus1);
-                gridLayout.removeComponent(minus1);
+                gl_KenntnisStep.removeComponent(plus1);
+                gl_KenntnisStep.removeComponent(minus1);
                 j_r[0]--;
-                binder.removeBinding( (PopUpTextField) gridLayout.getComponent(j_c[0], j_r[0]));
-                binder.removeBinding( ((ComboBoxNiveau) gridLayout.getComponent(j_c[1], j_r[0])));
+                binder.removeBinding( (PopUpTextField) gl_KenntnisStep.getComponent(j_c[0], j_r[0]));
+                binder.removeBinding( ((ComboBoxNiveau) gl_KenntnisStep.getComponent(j_c[1], j_r[0])));
 
                 for (int i = 0; i <= 1 ; i++) {
-                    gridLayout.removeComponent(i,j_r[0]);
+                    gl_KenntnisStep.removeComponent(i,j_r[0]);
 
                 }
 
 
 
-                gridLayout.addComponent(plus1,j_c[0],j_r[0]);
+                gl_KenntnisStep.addComponent(plus1,j_c[0],j_r[0]);
                 if(j_r[0] != 3) {
-                    gridLayout.addComponent(minus1, j_c[1], j_r[0]);
+                    gl_KenntnisStep.addComponent(minus1, j_c[1], j_r[0]);
                 }
-                gridLayout.setComponentAlignment(plus1,Alignment.MIDDLE_CENTER);
-                gridLayout.setComponentAlignment(minus1,Alignment.MIDDLE_CENTER);
+                gl_KenntnisStep.setComponentAlignment(plus1,Alignment.MIDDLE_CENTER);
+                gl_KenntnisStep.setComponentAlignment(minus1,Alignment.MIDDLE_CENTER);
                 if(binder1.isValid()) {
                     sprachKenntnisArrayList.remove(sprachKenntnisArrayList.size() - 1);
                 }
@@ -267,7 +267,7 @@ public class WizardStudentKenntnisStep implements WizardStep {
             //    binder1.addStatusChangeListener(event -> wizard.getNextButton().setEnabled(binder.isValid()));
 
 
-            return gridLayout;
+            return gl_KenntnisStep;
         }
 
         @Override

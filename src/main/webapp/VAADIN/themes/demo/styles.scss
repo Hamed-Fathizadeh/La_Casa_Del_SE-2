@@ -81,6 +81,14 @@ div .onoffswitch-slider.on:before {
 .AnzeigeUnternehmen{
   background-color: #ffeeee ;
 }
+
+.toppanelUser{
+  background-color: #0f3853;
+  span.v-menubar-menuitem-caption{
+    color: white;
+  }
+
+}
 .toppanel {
   background-color: #0f3853;
 
@@ -113,7 +121,12 @@ div .onoffswitch-slider.on:before {
   background-color: #3D82AB !important;
 }
 
-
+.demo .v-label-undef-w{
+  white-space: nowrap;
+  font-size: xx-large;
+  font-weight: 800;
+  color: black;
+}
 
 .grid{
   background-color: #91d4c2

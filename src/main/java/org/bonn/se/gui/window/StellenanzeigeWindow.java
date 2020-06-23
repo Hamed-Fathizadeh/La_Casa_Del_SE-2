@@ -11,7 +11,6 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
@@ -45,7 +44,7 @@ public class StellenanzeigeWindow extends Window {
         gridLayout.setSizeFull();
         gridLayout.setMargin(true);
 
-        Image logo = null;
+        Image logo;
         if (unternehmen_data.getLogo() == null) {
             logo = ImageConverter.getUnknownProfilImage();
         } else {
@@ -133,9 +132,7 @@ public class StellenanzeigeWindow extends Window {
 
             Button back = new Button("Zurück zu Ergebnissen");
             gridLayout.addComponent(back, 4, 0, 4, 0);
-            back.addClickListener((Button.ClickListener) event -> {
-                StellenanzeigeWindow.this.close();
-            });
+            back.addClickListener((Button.ClickListener) event -> StellenanzeigeWindow.this.close());
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
 
             Button back = new Button("Zurück zu Anzeigen");
@@ -170,11 +167,9 @@ public class StellenanzeigeWindow extends Window {
                     stellenanzeige.setStatus(2);
                     Notification.show("Anzeige offline!");
                 }
-                try {
+
                     AnzStatusControl.changeStatus(stellenanzeige);
-                } catch (DatabaseException e) {
-                    e.printStackTrace();
-                }
+
 
                 System.out.println("OnOffSwitch checked : " + checked);
 
@@ -252,14 +247,11 @@ public class StellenanzeigeWindow extends Window {
             });
 
             delete.addClickListener((Button.ClickListener) event -> ConfirmDialog.show(MyUI.getCurrent(), "Bist du dir sicher?",
-                    new ConfirmDialog.Listener() {
-
-                        public void onClose(ConfirmDialog dialog) {
-                            if (dialog.isConfirmed()) {
-                                ContainerAnzeigen.getInstance().deleteAnzeige(stellenanzeige);
-                                StellenanzeigeWindow.this.close();
-                                UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
-                            }
+                    (ConfirmDialog.Listener) dialog -> {
+                        if (dialog.isConfirmed()) {
+                            ContainerAnzeigen.getInstance().deleteAnzeige(stellenanzeige);
+                            StellenanzeigeWindow.this.close();
+                            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
                         }
                     }));
 

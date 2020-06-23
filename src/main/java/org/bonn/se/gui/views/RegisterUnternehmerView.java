@@ -7,7 +7,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.UserError;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 
 import org.bonn.se.control.UserSearchControl;
@@ -33,7 +32,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         this.addStyleName("grid");
         this.setSizeFull();
 
-        Label head = new Label("<h2><span style=\"color: blue;\"> Willkommen bei Lacolsco Registrieren Sie sich jetzt.... !!!.</span></h2>", ContentMode.HTML);
+        Label head = new Label("» Willkommen bei Lacolsco Registrieren Sie sich jetzt!");
         this.setMargin(false);
         this.addStyleName("grid");
 
@@ -43,11 +42,11 @@ public class RegisterUnternehmerView extends GridLayout implements View {
 
 
 
-        TopPanel topPanel =  new TopPanel("Studenten");
-        topPanel.addStyleName("toppanel");
+        TopPanel topPanelUnt =  new TopPanel("Studenten");
+        topPanelUnt.addStyleName("toppanel");
 
-        FormLayout form = new FormLayout();
-        form.setMargin(true);
+        FormLayout form_Unt = new FormLayout();
+        form_Unt.setMargin(true);
         RegistrationTextField firmenname = new RegistrationTextField("Unternehmensname");
         firmenname.selectAll();
 
@@ -55,16 +54,12 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         RegistrationTextField nachname = new RegistrationTextField("Nachname");
         RegistrationTextField email = new RegistrationTextField("E-Mail");
         RegistrationPasswordField passwort = new RegistrationPasswordField("Passwort");
-        //     RegistrationPasswordField vnummer = new RegistrationPasswordField("Verifizierungscode");
 
-        Button registerButton = new Button("Registrieren");
-        registerButton.setEnabled(false);
-/*
-        Button VnummerButton = new Button("Verifikation");
-        VnummerButton.setEnabled(false);
-*/
-        form.addComponents(head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerButton);
-        //this.addComponent(form);
+        Button registerUntButton = new Button("Registrieren");
+        registerUntButton.setEnabled(false);
+
+        form_Unt.addComponents(head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerUntButton);
+
         Binder<User> binder = new Binder<>(User.class);
         binder.forField(firmenname)
                 .asRequired("Firmenname muss angegeben werden!")
@@ -90,42 +85,29 @@ public class RegisterUnternehmerView extends GridLayout implements View {
                 .withValidator(new StringLengthValidator(
                         "Passwort muss mindestens 8 Zeichen lang sein", 8, null))
                 .bind(User::getPasswort, User::setPasswort);
-/*
-        binder.forField(vnummer)
-                .asRequired("Verification Nummer")
-                .withValidator(new StringLengthValidator(
-                        "Verification Nummer ist falsch!", 5, 5));
-*/
+
         User user = new User();
         binder.setBean(user);
         Button test = new Button("Test PopUp");
-        test.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                System.out.println(hauptsitz.getOrt());
-                System.out.println(hauptsitz.getBundesland());
+        test.addClickListener((Button.ClickListener) event -> {
+            System.out.println(hauptsitz.getOrt());
+            System.out.println(hauptsitz.getBundesland());
 
-            }
         });
         ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
 
-        Image bild = new Image(null,resource);
-
-
-        form.setMargin(false);
-
-        this.addComponent(topPanel, 0, 0, 9, 2);
-        this.addComponent(form, 0, 5, 0, 5);
-        this.addComponent(bild, 9, 5, 9, 5);
-
-        this.setComponentAlignment(topPanel, Alignment.TOP_LEFT);
-        this.setComponentAlignment(form, Alignment.MIDDLE_LEFT);
-        this.setComponentAlignment(bild, Alignment.MIDDLE_RIGHT);
+        Image bild_unt = new Image(null,resource);
+        form_Unt.setMargin(false);
+        this.addComponent(topPanelUnt, 0, 0, 9, 2);
+        this.addComponent(form_Unt, 0, 5, 0, 5);
+        this.addComponent(bild_unt, 9, 5, 9, 5);
+        this.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
+        this.setComponentAlignment(form_Unt, Alignment.MIDDLE_LEFT);
+        this.setComponentAlignment(bild_unt, Alignment.MIDDLE_RIGHT);
         this.setMargin(false);
 
-        registerButton.addClickListener(
+        registerUntButton.addClickListener(
                 event -> {
-
                     try {
 
                         if (UserSearchControl.getInstance().existUser(email.getValue())) {
@@ -135,11 +117,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
                         } else {
                             user.setType("C");
 
-
-                            // UserDAO.registerStudent(student.getEmail(),student.getPasswort(),student.getVorname(),student.getNachname() ,'s');
-
-
-                            registerButton.setEnabled(false);
+                            registerUntButton.setEnabled(false);
                             user.setHauptsitz(hauptsitz.getOrt());
                             user.setBundesland(hauptsitz.getBundesland());
                             Unternehmen unternehmen = new Unternehmen();
@@ -166,63 +144,11 @@ public class RegisterUnternehmerView extends GridLayout implements View {
 
 
         binder.addStatusChangeListener(
-                event -> registerButton.setEnabled(binder.isValid()));
-
-        //hafa change#########################################################
-/*
-        Binder<User> binder2 = new Binder<>(User.class);
-        binder2.forField(firmenname)
-                .asRequired("Firmenname muss angegeben werden")
-                .bind(User::getCname,User::setCname);
-
-        binder2.forField(vorname)
-                .asRequired("Vorname muss angegeben werden!")
-                .bind(User::getVorname, User::setVorname);
-
-        binder2.forField(nachname)
-                .asRequired("Nachname muss angegeben werden!")
-                .bind(User::getNachname, User::setNachname);
-
-        binder2.forField(email)
-                .asRequired("Password may not be empty")
-                .withValidator(new StringLengthValidator(
-                        "Passwort muss mindestens 8 Zeichen lang sein", 8, null))
-                .bind(User::getPasswort, User::setPasswort);
-        binder2.forField(passwort)
-                .asRequired("Password may not be empty")
-                .withValidator(new StringLengthValidator(
-                        "Passwort muss mindestens 8 Zeichen lang sein", 8, null))
-                .bind(User::getPasswort, User::setPasswort);
-
-        VnummerButton.addClickListener(
-                event -> {
-                    try {
-
-                        JavaMailUtil.sendMail(email.getValue(),getVnummer(),vorname.getValue());
-                        //Notification.show("Wir haben Ihnen einen Email gesendet!");
-                        UI.getCurrent().addWindow(new ConfirmationWindow("Wir haben einen Email an diese Adresse gesendet: "+email.getValue()));
-                    } catch (Exception e) {
-                        UI.getCurrent().addWindow(new ConfirmationWindow("Fehler beim email senden!"));
-                        e.printStackTrace();
-                    }
-
-                });
-
-        binder2.addStatusChangeListener(
-                event -> VnummerButton.setEnabled(binder2.isValid()));
-
-*/
+                event -> registerUntButton.setEnabled(binder.isValid()));
 
     }
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) { this.setUp(); }
-/*
-    String vnummer;
-    public String getVnummer(){
-        vnummer = new VerifikationNummer().getRandNummer();
-        return vnummer;
-    }
-*/
 
 }
 

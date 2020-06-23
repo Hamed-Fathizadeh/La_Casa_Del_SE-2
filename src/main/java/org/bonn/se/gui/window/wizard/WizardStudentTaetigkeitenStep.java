@@ -30,9 +30,9 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
 
     @Override
     public Component getContent() {
-        GridLayout gridLayout = new GridLayout(3, 10);
-        gridLayout.setHeight("100%");
-        gridLayout.setWidth("100%");
+        GridLayout gl_taetigkeiten = new GridLayout(3, 10);
+        gl_taetigkeiten.setHeight("100%");
+        gl_taetigkeiten.setWidth("100%");
 
 
 
@@ -59,14 +59,14 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
                 .asRequired("Bitte ausfüllen")
                 .bind(Taetigkeit::getEnde,Taetigkeit::setEnde);
 
-        gridLayout.addComponent(taetigkeit1,0,1);
-        gridLayout.addComponent(t1_beginn,1,1);
-        gridLayout.addComponent(t1_ende,2,1);
-        gridLayout.setComponentAlignment(taetigkeit1, Alignment.MIDDLE_CENTER);
-        gridLayout.setComponentAlignment(t1_beginn,Alignment.MIDDLE_CENTER);
-        gridLayout.setComponentAlignment(t1_ende,Alignment.MIDDLE_CENTER);
-        gridLayout.addComponent(plus,0,2);
-        gridLayout.setComponentAlignment(plus,Alignment.MIDDLE_CENTER);
+        gl_taetigkeiten.addComponent(taetigkeit1,0,1);
+        gl_taetigkeiten.addComponent(t1_beginn,1,1);
+        gl_taetigkeiten.addComponent(t1_ende,2,1);
+        gl_taetigkeiten.setComponentAlignment(taetigkeit1, Alignment.MIDDLE_CENTER);
+        gl_taetigkeiten.setComponentAlignment(t1_beginn,Alignment.MIDDLE_CENTER);
+        gl_taetigkeiten.setComponentAlignment(t1_ende,Alignment.MIDDLE_CENTER);
+        gl_taetigkeiten.addComponent(plus,0,2);
+        gl_taetigkeiten.setComponentAlignment(plus,Alignment.MIDDLE_CENTER);
         taetigkeit1.selectAll();
 
 
@@ -83,38 +83,36 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
                 }
                 taetigkeitArrayList.add(taetigkeit);
 
-                gridLayout.removeComponent(plus);
-                gridLayout.removeComponent(minus);
+                gl_taetigkeiten.removeComponent(plus);
+                gl_taetigkeiten.removeComponent(minus);
 
-                gridLayout.addComponent(new RegistrationTextField("Tätigkeit (Optional)"), i_c[0], i_r[0]);
-                gridLayout.addComponent(new StudentDateField("Beginn"), i_c[1], i_r[0]);
-                gridLayout.addComponent(new StudentDateField("Ende"), i_c[2], i_r[0]);
-                gridLayout.setComponentAlignment(gridLayout.getComponent(i_c[0], i_r[0]), Alignment.MIDDLE_CENTER);
-                gridLayout.setComponentAlignment(gridLayout.getComponent(i_c[1], i_r[0]), Alignment.MIDDLE_CENTER);
-                gridLayout.setComponentAlignment(gridLayout.getComponent(i_c[2], i_r[0]), Alignment.MIDDLE_CENTER);
-                ((RegistrationTextField) gridLayout.getComponent(i_c[0], i_r[0])).selectAll();
+                gl_taetigkeiten.addComponent(new RegistrationTextField("Tätigkeit (Optional)"), i_c[0], i_r[0]);
+                gl_taetigkeiten.addComponent(new StudentDateField("Beginn"), i_c[1], i_r[0]);
+                gl_taetigkeiten.addComponent(new StudentDateField("Ende"), i_c[2], i_r[0]);
+                gl_taetigkeiten.setComponentAlignment(gl_taetigkeiten.getComponent(i_c[0], i_r[0]), Alignment.MIDDLE_CENTER);
+                gl_taetigkeiten.setComponentAlignment(gl_taetigkeiten.getComponent(i_c[1], i_r[0]), Alignment.MIDDLE_CENTER);
+                gl_taetigkeiten.setComponentAlignment(gl_taetigkeiten.getComponent(i_c[2], i_r[0]), Alignment.MIDDLE_CENTER);
+                ((RegistrationTextField) gl_taetigkeiten.getComponent(i_c[0], i_r[0])).selectAll();
 
-                binder.forField((RegistrationTextField) gridLayout.getComponent(i_c[0], i_r[0]))
+                binder.forField((RegistrationTextField) gl_taetigkeiten.getComponent(i_c[0], i_r[0]))
                         .asRequired("Bitte ausfüllen")
                         .bind(Taetigkeit::getTaetigkeitName, Taetigkeit::setTaetigkeitName);
 
-                binder.forField((StudentDateField) gridLayout.getComponent(i_c[1], i_r[0]))
+                binder.forField((StudentDateField) gl_taetigkeiten.getComponent(i_c[1], i_r[0]))
                         .asRequired("Bitte ausfüllen")
                         .bind(Taetigkeit::getBeginn, Taetigkeit::setBeginn);
 
-                binder.forField((StudentDateField) gridLayout.getComponent(i_c[2] , i_r[0]))
+                binder.forField((StudentDateField) gl_taetigkeiten.getComponent(i_c[2] , i_r[0]))
                         .asRequired("Bitte ausfüllen")
                         .bind(Taetigkeit::getEnde, Taetigkeit::setEnde);
 
                 if (i_r[0] <= 3) {
-                    gridLayout.addComponent(plus, i_c[0], i_r[0] + 1);
-                    gridLayout.setComponentAlignment(plus, Alignment.MIDDLE_CENTER);
+                    gl_taetigkeiten.addComponent(plus, i_c[0], i_r[0] + 1);
+                    gl_taetigkeiten.setComponentAlignment(plus, Alignment.MIDDLE_CENTER);
                 }
                 i_r[0]++;
-
-                gridLayout.addComponent(minus,i_c[1],i_r[0]);
-                gridLayout.setComponentAlignment(minus, Alignment.MIDDLE_CENTER);
-
+                gl_taetigkeiten.addComponent(minus,i_c[1],i_r[0]);
+                gl_taetigkeiten.setComponentAlignment(minus, Alignment.MIDDLE_CENTER);
             } else {
                 binder.validate().getFieldValidationErrors();
             }
@@ -123,24 +121,24 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
 
         minus.addClickListener((Button.ClickListener) event -> {
 
-            gridLayout.removeComponent(plus);
-            gridLayout.removeComponent(minus);
+            gl_taetigkeiten.removeComponent(plus);
+            gl_taetigkeiten.removeComponent(minus);
             i_r[0]--;
-            binder.removeBinding( ((StudentDateField)gridLayout.getComponent(2,i_r[0])));
-            binder.removeBinding( ((StudentDateField)gridLayout.getComponent(1,i_r[0])));
-            binder.removeBinding( ((RegistrationTextField)gridLayout.getComponent(0,i_r[0])));
+            binder.removeBinding( ((StudentDateField)gl_taetigkeiten.getComponent(2,i_r[0])));
+            binder.removeBinding( ((StudentDateField)gl_taetigkeiten.getComponent(1,i_r[0])));
+            binder.removeBinding( ((RegistrationTextField)gl_taetigkeiten.getComponent(0,i_r[0])));
 
-            for (int i = 0; i < gridLayout.getColumns() ; i++) {
-                gridLayout.removeComponent(i,i_r[0]);
+            for (int i = 0; i < gl_taetigkeiten.getColumns() ; i++) {
+                gl_taetigkeiten.removeComponent(i,i_r[0]);
 
             }
 
 
 
-            gridLayout.addComponent(plus,i_c[0],i_r[0]);
-            gridLayout.addComponent(minus,i_c[1],i_r[0]);
-            gridLayout.setComponentAlignment(plus,Alignment.MIDDLE_CENTER);
-            gridLayout.setComponentAlignment(minus,Alignment.MIDDLE_CENTER);
+            gl_taetigkeiten.addComponent(plus,i_c[0],i_r[0]);
+            gl_taetigkeiten.addComponent(minus,i_c[1],i_r[0]);
+            gl_taetigkeiten.setComponentAlignment(plus,Alignment.MIDDLE_CENTER);
+            gl_taetigkeiten.setComponentAlignment(minus,Alignment.MIDDLE_CENTER);
             if(binder.isValid()) {
                 taetigkeitArrayList.remove(taetigkeitArrayList.size() - 1);
             }
@@ -156,7 +154,7 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
 
 
 
-        return gridLayout;
+        return gl_taetigkeiten;
     }
 
     @Override

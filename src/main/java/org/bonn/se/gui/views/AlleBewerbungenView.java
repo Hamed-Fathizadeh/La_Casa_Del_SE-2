@@ -8,20 +8,17 @@ import com.vaadin.ui.*;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
-import org.bonn.se.model.objects.entitites.*;
-import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
-import java.sql.SQLException;
-
 public class AlleBewerbungenView extends VerticalLayout implements View {
 
-    static GridLayout Maingrid = new GridLayout(2, 5);
-    public void setUp() throws DatabaseException, SQLException {
+    static GridLayout mainGrid = new GridLayout(2, 5);
+    public void setUp() {
 
-        Maingrid = new GridLayout(1, 5);
-        Maingrid.setSizeFull();
+        mainGrid = new GridLayout(1, 5);
+        mainGrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
 
 // spruch oben
@@ -38,7 +35,7 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
 
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
         containerBewerbungen.load("Alle");
-        @SuppressWarnings("unchecked") Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"AlleBewerbungenView");
+        Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"AlleBewerbungenView");
         bewerbungen.setHeightMode(HeightMode.UNDEFINED);
 
         GridLayout bottomGridBewNeu = new GridLayout(1, 1);
@@ -52,17 +49,17 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
         bottomGridBewNeu.setComponentAlignment(bewerbungen,Alignment.TOP_CENTER);
 
 
-        Maingrid.addComponent(topPanel, 0, 0);
-        Maingrid.addComponent(lSpruch, 0, 1);
-        Maingrid.addComponent(bottomGridBewNeu, 0, 2);
+        mainGrid.addComponent(topPanel, 0, 0);
+        mainGrid.addComponent(lSpruch, 0, 1);
+        mainGrid.addComponent(bottomGridBewNeu, 0, 2);
 
-        Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
-        Maingrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
-        Maingrid.setComponentAlignment(bottomGridBewNeu, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(lSpruch, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(bottomGridBewNeu, Alignment.TOP_CENTER);
 
 
-        this.addComponent(Maingrid);
-        this.setComponentAlignment(Maingrid, Alignment.TOP_CENTER);
+        this.addComponent(mainGrid);
+        this.setComponentAlignment(mainGrid, Alignment.TOP_CENTER);
         this.setMargin(false);
         this.addStyleName("grid");
 
@@ -73,13 +70,7 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
 
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            try {
                 this.setUp();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {

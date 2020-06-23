@@ -11,8 +11,13 @@ import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.model.objects.dto.PassChangeRequest;
 import org.bonn.se.model.objects.entitites.User;
+import org.bonn.se.services.db.JDBCConnection;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.JavaMailUtil;
 import org.bonn.se.services.util.VerifikationNummer;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class PassChangeWindow extends Window {
@@ -79,7 +84,13 @@ public class PassChangeWindow extends Window {
                            PassChangeRequest request = new PassChangeRequest();
                            request.setEmail(email.getValue());
                            request.setNewPass(neuPasswort.getValue());
-                           PassChangeControl.getInstance().changePass(request);
+                           try {
+                               PassChangeControl.getInstance().changePass(request);
+                           } catch (DatabaseException e) {
+                               Logger.getLogger(PassChangeWindow.class.getName()).log(Level.SEVERE,null,e);
+
+
+                           }
                            this.close();
                        }
                        else {
@@ -116,7 +127,7 @@ public class PassChangeWindow extends Window {
                        UI.getCurrent().addWindow(new ConfirmationWindow("Wir haben einen Email an diese Adresse gesendet: "+email.getValue()));
                    } catch (Exception e) {
                        UI.getCurrent().addWindow(new ConfirmationWindow("Fehler beim Email senden!"));
-                       e.printStackTrace();
+                       Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
                    }
 
                });

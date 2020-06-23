@@ -8,44 +8,41 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class SuchbegriffDAO extends AbstractDAO {
 
-    public static SuchbegriffDAO dao = null;
+    private static SuchbegriffDAO instance;
 
-    private SuchbegriffDAO() {
-
-    }
     public static SuchbegriffDAO getInstance() {
-        if (dao == null) {
-            dao = new SuchbegriffDAO();
-        }
-        return dao;
+        return instance == null ? instance = new SuchbegriffDAO() : instance;
     }
-
     public List<String> getSuchbegriffe() {
 
         ResultSet set = null;
+        List<String> suchbegriff_list = new ArrayList<>();
 
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT suchbegriff FROM lacasa.tab_suchbegriff ");
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-
-        }
-        List<String> liste = new  ArrayList<String>();
-        try {
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
-                liste.add(set.getString(1));
 
+                suchbegriff_list.add(set.getString(1));
             }
-        }catch (SQLException  throwables) {
-                throwables.printStackTrace();
+
+        }catch (SQLException | DatabaseException throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
          }finally {
+            assert set != null;
+            try {
+                set.close();
+            } catch (SQLException throwables) {
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE,null,throwables);
+            }
             try {
                 JDBCConnection.getInstance().closeConnection();
             } catch (DatabaseException e) {
@@ -53,7 +50,7 @@ public class SuchbegriffDAO extends AbstractDAO {
             }
         }
 
-        return liste;
+        return suchbegriff_list;
     }
 
 }

@@ -16,17 +16,19 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class SettingsView extends VerticalLayout implements View {
 
-    static GridLayout Maingrid = new GridLayout(2, 5);
-    public void setUp() throws DatabaseException, SQLException {
+    static GridLayout mainGrid = new GridLayout(2, 5);
+    public void setUp() {
 
-        Maingrid = new GridLayout(1, 5);
-        Maingrid.setSizeFull();
+        mainGrid = new GridLayout(1, 5);
+        mainGrid.setSizeFull();
         TopPanelUser topPanel = new TopPanelUser();
-
+        String dimensionSet= "200px";
 // spruch oben
 
         String ls3 = "<p class=MsoNormal><b><span style='font-size:28.0pt;line-height:107%;\n" +
@@ -38,8 +40,8 @@ public class SettingsView extends VerticalLayout implements View {
 
 
         Label lSpruch = new Label(ls3, ContentMode.HTML);
-        lSpruch.setHeight("200px");
-        lSpruch.setWidth("200px");
+        lSpruch.setHeight(dimensionSet);
+        lSpruch.setWidth(dimensionSet);
         GridLayout vLayoutSpruch = new GridLayout(1,1);
         vLayoutSpruch.addComponent(lSpruch,0,0);
         vLayoutSpruch.addStyleName("grid");
@@ -80,7 +82,7 @@ public class SettingsView extends VerticalLayout implements View {
 
         GridLayout bottomGridBewNeu = new GridLayout(1, 1);
 
-        //bottomGridBewNeu.setHeight("700px");
+
         bottomGridBewNeu.addStyleName("bottomGridBewNeu");
         bottomGridBewNeu.setMargin(true);
         bottomGridBewNeu.setColumnExpandRatio(0,22);
@@ -91,17 +93,17 @@ public class SettingsView extends VerticalLayout implements View {
         bottomGridBewNeu.setComponentAlignment(formGrid,Alignment.TOP_CENTER);
         bottomGridBewNeu.setHeight("500px");
 
-        Maingrid.addComponent(topPanel, 0, 0);
-       Maingrid.addComponent(vLayoutSpruch, 0, 1);
-        Maingrid.addComponent(bottomGridBewNeu, 0, 2);
+        mainGrid.addComponent(topPanel, 0, 0);
+        mainGrid.addComponent(vLayoutSpruch, 0, 1);
+        mainGrid.addComponent(bottomGridBewNeu, 0, 2);
 
-        Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
-       Maingrid.setComponentAlignment(vLayoutSpruch, Alignment.TOP_CENTER);
-        Maingrid.setComponentAlignment(bottomGridBewNeu, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(vLayoutSpruch, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(bottomGridBewNeu, Alignment.TOP_CENTER);
 
 
-        this.addComponent(Maingrid);
-        this.setComponentAlignment(Maingrid, Alignment.TOP_CENTER);
+        this.addComponent(mainGrid);
+        this.setComponentAlignment(mainGrid, Alignment.TOP_CENTER);
         this.setMargin(false);
         this.addStyleName("backSeite");
 
@@ -118,42 +120,39 @@ public class SettingsView extends VerticalLayout implements View {
 
                 ConfirmDialog.setFactory(df);
                 ConfirmDialog.show(MyUI.getCurrent(), "Möchten Sie ihr Konto wirklich löschen?",
-                        new ConfirmDialog.Listener() {
-
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    //SQL-BEFEHL
-                                    if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null){
-                                        Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
-                                        try {
-                                            UserDAO.deleteUser(student.getEmail());
-                                        } catch (DatabaseException e) {
-                                            e.printStackTrace();
-                                        }
+                        (ConfirmDialog.Listener) dialog -> {
+                            if (dialog.isConfirmed()) {
+                                //SQL-BEFEHL
+                                if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null){
+                                    Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
+                                    try {
+                                        UserDAO.deleteUser(student.getEmail());
+                                    } catch (DatabaseException | SQLException e) {
+                                        Logger.getLogger(SettingsView.class.getName()).log(Level.SEVERE, null, e);
                                     }
-                                    else{
-                                       Unternehmen unternehmen= (Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
-                                        try {
-                                            UserDAO.deleteUser(unternehmen.getEmail());
-                                        } catch (DatabaseException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-
-
-
-                                    Window subWindow = new Window("Löschung Ihres Kontos");
-                                    VerticalLayout subContent = new VerticalLayout();
-                                    subWindow.setWidth("600px");
-                                    subWindow.setHeight("200px");
-                                    subWindow.setContent(subContent);
-                                    subContent.addComponent(new Label("Ihr Konto wurde erfolgreich gelöscht!"));
-                                    subWindow.center();
-                                    UI.getCurrent().addWindow(subWindow);
-
-
-                                    LoginControl.logoutUser();
                                 }
+                                else{
+                                   Unternehmen unternehmen= (Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
+                                    try {
+                                        UserDAO.deleteUser(unternehmen.getEmail());
+                                    } catch (DatabaseException | SQLException e) {
+                                        Logger.getLogger(SettingsView.class.getName()).log(Level.SEVERE, null, e);
+                                    }
+                                }
+
+
+
+                                Window subWindow = new Window("Löschung Ihres Kontos");
+                                VerticalLayout subContent = new VerticalLayout();
+                                subWindow.setWidth("600px");
+                                subWindow.setHeight(dimensionSet);
+                                subWindow.setContent(subContent);
+                                subContent.addComponent(new Label("Ihr Konto wurde erfolgreich gelöscht!"));
+                                subWindow.center();
+                                UI.getCurrent().addWindow(subWindow);
+
+
+                                LoginControl.logoutUser();
                             }
                         });
             }
@@ -167,23 +166,9 @@ public class SettingsView extends VerticalLayout implements View {
 
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            try {
                 this.setUp();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            try {
                 this.setUp();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-
         } else {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         }

@@ -14,34 +14,28 @@ import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
 public class UnternehmenHomeView extends VerticalLayout implements View {
-    private final StellenanzeigeDTO selected = null;
-    private final int anzahl = 0;
+
+
     private TabSheet.Tab bewerbung;
-    public void setUp() throws DatabaseException, SQLException {
+    public void setUp() {
+
 
         TopPanelUser topPanel = new TopPanelUser();
 
-        GridLayout Maingrid = new GridLayout(3, 3);
-        Maingrid.setSizeFull();
+        GridLayout mainGrid = new GridLayout(3, 3);
+        mainGrid.setSizeFull();
 
         Button buttonAnzeigeErstellen= new Button("Anzeige erstellen");
-        buttonAnzeigeErstellen.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getNavigator().navigateTo(Views.AnzeigeErstellen);
-            }
-        });
+        buttonAnzeigeErstellen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.AnzeigeErstellen));
         VerticalLayout vlayoutButton = new VerticalLayout();
         vlayoutButton.setMargin(true);
         vlayoutButton.addComponent(buttonAnzeigeErstellen);
@@ -55,7 +49,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         containerMeinAnzeigen.loadUnternehmenAnzeigen(unternehmen.getEmail());
         ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList<StellenanzeigeDTO>) containerMeinAnzeigen.getListe());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
+        Anzeigen<StellenanzeigeDTO> gAnzeigen = new Anzeigen<>("Alle", containerMeinAnzeigen.getListe());
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
         gAnzeigen.setSizeFull();
 
@@ -83,17 +77,17 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         tabSheet.addTab(gAnzeigen,"Alle "+gAnzeigen.getAnzahlRow());
 
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenOnline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
+        Anzeigen<StellenanzeigeDTO> gAnzeigenOnline = new Anzeigen<>("Alle", containerMeinAnzeigen.getListe());
         gAnzeigenOnline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==1).collect(Collectors.toList()));
         gAnzeigenOnline.setSizeFull();
         tabSheet.addTab(gAnzeigenOnline,"Online "+gAnzeigenOnline.getAnzahlRow());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenOffline = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
+        Anzeigen<StellenanzeigeDTO> gAnzeigenOffline = new Anzeigen<>("Alle", containerMeinAnzeigen.getListe());
         gAnzeigenOffline.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==2).collect(Collectors.toList()));
         gAnzeigenOffline.setSizeFull();
         tabSheet.addTab(gAnzeigenOffline,"Offline "+gAnzeigenOffline.getAnzahlRow());
 
-        Anzeigen<StellenanzeigeDTO> gAnzeigenEntwurf = new  Anzeigen<StellenanzeigeDTO>("Alle",containerMeinAnzeigen.getListe());
+        Anzeigen<StellenanzeigeDTO> gAnzeigenEntwurf = new Anzeigen<>("Alle", containerMeinAnzeigen.getListe());
         gAnzeigenEntwurf.setData(gAnzeigen.getData().stream().filter(c -> c.getStatus() ==3).collect(Collectors.toList()));
         gAnzeigenEntwurf.setSizeFull();
         tabSheet.addTab(gAnzeigenEntwurf,"Entwurf "+gAnzeigenEntwurf.getAnzahlRow());
@@ -109,30 +103,28 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         bottomGridBewNeu.setSizeFull();
         bottomGridBewNeu.setMargin(true);
 
-       // bottomGridBewNeu.addStyleName("AnzeigeUnternehmen");
 
 
+        mainGrid.addComponent(topPanel, 0, 0, 2, 0);
+        mainGrid.addComponent(vlayoutButton, 1, 1, 1, 1);
+        mainGrid.addComponent(bottomGridBewNeu, 0, 2, 2, 2);
 
 
-                      Maingrid.addComponent(topPanel, 0, 0, 2, 0);
-        Maingrid.addComponent(vlayoutButton, 1, 1, 1, 1);
-              Maingrid.addComponent(bottomGridBewNeu, 0, 2, 2, 2);
+        mainGrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(vlayoutButton, Alignment.MIDDLE_CENTER);
+        mainGrid.setComponentAlignment(bottomGridBewNeu, Alignment.BOTTOM_CENTER);
 
 
-        Maingrid.setComponentAlignment(topPanel, Alignment.TOP_CENTER);
-        Maingrid.setComponentAlignment(vlayoutButton, Alignment.MIDDLE_CENTER);
-        Maingrid.setComponentAlignment(bottomGridBewNeu, Alignment.BOTTOM_CENTER);
-
-
-        this.addComponent(Maingrid);
-        this.setComponentAlignment(Maingrid, Alignment.MIDDLE_CENTER);
+        this.addComponent(mainGrid);
+        this.setComponentAlignment(mainGrid, Alignment.MIDDLE_CENTER);
         this.setMargin(false);
         this.addStyleName("grid");
 
-        gAnzeigen.removeColumn("Anzahl neue Bewerbungen");
-        gAnzeigenOnline.removeColumn("Anzahl neue Bewerbungen");
-        gAnzeigenOffline.removeColumn("Anzahl neue Bewerbungen");
-        gAnzeigenEntwurf.removeColumn("Anzahl neue Bewerbungen");
+        String anzahlNeueBewerbungen = "Anzahl neue Bewerbungen";
+        gAnzeigen.removeColumn(anzahlNeueBewerbungen);
+        gAnzeigenOnline.removeColumn(anzahlNeueBewerbungen);
+        gAnzeigenOffline.removeColumn(anzahlNeueBewerbungen);
+        gAnzeigenEntwurf.removeColumn(anzahlNeueBewerbungen);
 
         if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
@@ -140,7 +132,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
                 containerMeinAnzeigen.loadNeuBewerbungen(unternehmen);
                 ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList<StellenanzeigeDTO>) containerMeinAnzeigen.getListe());
-                Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new Anzeigen<StellenanzeigeDTO>("Alle", containerMeinAnzeigen.getListe());
+                Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new Anzeigen<>("Alle", containerMeinAnzeigen.getListe());
                 gAnzeigenNeuBewerbungen.setSizeFull();
                 gAnzeigenNeuBewerbungen.removeColumn("Status");
 
@@ -166,13 +158,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            try {
                 this.setUp();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
         } else if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {

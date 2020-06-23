@@ -5,15 +5,23 @@ import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.FileResource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
+
+import java.io.File;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.bonn.se.services.util.Views.RegisterUnternehmen;
 
@@ -53,17 +61,17 @@ public class LoginView extends VerticalLayout implements View {
         passwordField.setWidth("310px");
 
 
-        GridLayout Maingrid = new GridLayout(1, 5);
-        Maingrid.setSizeFull();
-        Maingrid.setStyleName("login_bg");
+        GridLayout mainGrid = new GridLayout(1, 5);
+        mainGrid.setSizeFull();
+        mainGrid.setStyleName("login_bg");
 
 
 //Vertikales Layout + Hinzufügen der Textfelder
         VerticalLayout layout = new VerticalLayout();
-//        String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-  //      FileResource resource = new FileResource(new File(basepath + "/VAADIN/themes/demo/img/RegisterStudent/Logo_Login.png"));
-  //      Image Logo = new Image("", resource);
-//        layout.addComponent(Logo);
+        String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+        FileResource resource = new FileResource(new File(basepath + "/VAADIN/themes/demo/img/RegisterStudent/Logo_Login.png"));
+        Image logo = new Image("", resource);
+        layout.addComponent(logo);
 
 
 
@@ -122,18 +130,20 @@ public class LoginView extends VerticalLayout implements View {
                 Notification.show("DB-Fehler", ex.getReason(), Notification.Type.ERROR_MESSAGE);
                 userLogin.clear();
                 passwordField.clear();
+            } catch (SQLException throwables) {
+                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             }
         });
 
-        Maingrid.addComponent(hLayout,0,0,0,0);
-        Maingrid.addComponent(panel,0,2,0,2);
+        mainGrid.addComponent(hLayout,0,0,0,0);
+        mainGrid.addComponent(panel,0,2,0,2);
 
 
-        Maingrid.setComponentAlignment(hLayout,Alignment.TOP_RIGHT);
-        Maingrid.setComponentAlignment(panel,Alignment.BOTTOM_CENTER);
+        mainGrid.setComponentAlignment(hLayout,Alignment.TOP_RIGHT);
+        mainGrid.setComponentAlignment(panel,Alignment.BOTTOM_CENTER);
 
-        this.addComponent(Maingrid);
-        this.setComponentAlignment(Maingrid,Alignment.MIDDLE_CENTER);
+        this.addComponent(mainGrid);
+        this.setComponentAlignment(mainGrid,Alignment.MIDDLE_CENTER);
 
     }
 

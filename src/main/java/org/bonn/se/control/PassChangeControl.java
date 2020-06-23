@@ -4,19 +4,20 @@ import com.vaadin.ui.UI;
 import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.dao.PassChangeDAO;
 import org.bonn.se.model.objects.dto.PassChangeRequest;
+import org.bonn.se.services.db.exception.DatabaseException;
 
 public class PassChangeControl {
 
-    public static PassChangeControl passChangeControl = null;
+    private static PassChangeControl instance;
 
-    public static PassChangeControl getInstance(){
-        if(passChangeControl == null){
-            passChangeControl = new PassChangeControl();
+    public static PassChangeControl getInstance() {
+        if (instance == null){
+            instance = new PassChangeControl();
         }
-        return passChangeControl;
+        return instance ;
     }
 
-    public void changePass(PassChangeRequest request){
+    public void changePass(PassChangeRequest request) throws DatabaseException {
 
         boolean bRes = PassChangeDAO.getInstance().changePass(request);
         if(bRes){

@@ -1,7 +1,7 @@
 package org.bonn.se.services.db.exception;
 
 public class DatabaseException extends Exception {
-    private String reason;
+    private final String reason;
 
     public DatabaseException(String reason) {
         this.reason=reason;
@@ -11,7 +11,9 @@ public class DatabaseException extends Exception {
         return reason;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
-    }
+// --Commented out by Inspection START (22.06.20, 23:33):
+//    public void setReason(String reason) {
+//        this.reason = reason;
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:33)
 }

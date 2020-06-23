@@ -4,17 +4,22 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.Upload;
 import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.services.db.JDBCConnection;
 
 import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     static File file ;
     static byte[] myByte;
     static String path = null;
 
-    public static String getPath() {
-        return path;
-    }
+// --Commented out by Inspection START (23.06.20, 00:16):
+//    public static String getPath() {
+//        return path;
+//    }
+// --Commented out by Inspection STOP (23.06.20, 00:16)
 
     public static void setPath(String path) {
         PdfUploader.path = path;
@@ -31,7 +36,7 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     public OutputStream receiveUpload(String filename,
                                       String mimeType) {
         // Create and return a file output stream
-        FileOutputStream fos;
+        FileOutputStream fos = null;
 
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
         file = new File(basepath + "/VAADIN/themes/demo/PDF/" + student.getEmail()+filename);
@@ -40,7 +45,11 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
         try {
             fos = new FileOutputStream(file);
         } catch (final IOException e) {
-            e.printStackTrace();
+            assert fos != null;
+            try {
+                fos.close();
+            } catch (IOException ioException) {
+            }
             return null;
         }
         return fos;
@@ -48,7 +57,11 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
 
     @Override
     public void uploadSucceeded(Upload.SucceededEvent event) {
-        myByte = readFileToByteArray(file);
+        try {
+            myByte = readFileToByteArray(file);
+        } catch (IOException e) {
+            Logger.getLogger(PdfUploader.class.getName()).log(Level.SEVERE, null, e);
+        }
 
     }
 
@@ -57,18 +70,21 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     public static byte[] getByte() {
         return myByte;
     }
-    private static byte[] readFileToByteArray(File file){
+    private static byte[] readFileToByteArray(File file) throws IOException {
         FileInputStream fis = null;
         // Creating a byte array using the length of the file
         // file.length returns long which is cast to int
         byte[] bArray = new byte[(int) file.length()];
         try{
             fis = new FileInputStream(file);
-            fis.read(bArray);
-            fis.close();
+
+            //fis.read(bArray);
 
         }catch(IOException ioExp){
-            ioExp.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ioExp);
+        } finally {
+            assert fis != null;
+            fis.close();
         }
         return bArray;
     }

@@ -21,7 +21,7 @@ public class WizardUntDatenStep implements WizardStep {
         PopUpTextField strasse;
         OrtPlzTextField ort;
         ComboBox<String> branche;
-        UploadField uploadField;
+        UploadField uploadLogo;
         Image image = ImageConverter.getUnknownProfilImage();
 
         @Override
@@ -40,16 +40,16 @@ public class WizardUntDatenStep implements WizardStep {
             form1.setWidth("300px");
             form1.setMargin(true);
 
-            uploadField = new UploadField();
-            uploadField.setDisplayUpload(false);
-            uploadField.setButtonCaption("Profilbild hochladen");
-            uploadField.setClearButtonVisible(false);
-            uploadField.setAcceptFilter("image/*");
+            uploadLogo = new UploadField();
+            uploadLogo.setDisplayUpload(false);
+            uploadLogo.setButtonCaption("Profilbild hochladen");
+            uploadLogo.setClearButtonVisible(false);
+            uploadLogo.setAcceptFilter("image/*");
 
 
-            uploadField.addValueChangeListener((HasValue.ValueChangeEvent<byte[]> event) -> {
+            uploadLogo.addValueChangeListener((HasValue.ValueChangeEvent<byte[]> event) -> {
                 form1.removeComponent(image);
-                byte[] bild = uploadField.getValue();
+                byte[] bild = uploadLogo.getValue();
                 image = ImageConverter.convertImagetoProfil(bild);
                 form1.addComponent(image,0);
             });
@@ -58,7 +58,7 @@ public class WizardUntDatenStep implements WizardStep {
 
             kontaktnummer = new PopUpTextField("Kontaktnummer");
 
-            form1.addComponents( image,uploadField,kontaktnummer);
+            form1.addComponents( image, uploadLogo,kontaktnummer);
             form1.setComponentAlignment(image, Alignment.TOP_LEFT);
 
             FormLayout form2 = new FormLayout();
@@ -66,11 +66,13 @@ public class WizardUntDatenStep implements WizardStep {
             form2.setMargin(true);
             PlaceHolderField place1 = new PlaceHolderField();
             strasse = new PopUpTextField("Strasse");
+
             ort = new OrtPlzTextField();
+
             PlaceHolderField place2 = new PlaceHolderField();
 
 
-            branche = new ComboBox<>("", DatenUnternehmenProfil.branche1);
+            branche = new ComboBox<>("", DatenUnternehmenProfil.getBranche1());
             branche.setPlaceholder("Branche");
             branche.setHeight("56px");
             branche.setWidth("300px");
@@ -93,8 +95,8 @@ public class WizardUntDatenStep implements WizardStep {
         public boolean onAdvance() {
 
 
-            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setLogo(uploadField.getValue());
-            uploadField.clear();
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setLogo(uploadLogo.getValue());
+            uploadLogo.clear();
             ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setKontaktnummer(kontaktnummer.getValue());
             ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setBranche(branche.getValue());
 

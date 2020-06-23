@@ -25,7 +25,7 @@ public class WizardStudentDatenStep implements WizardStep {
         PopUpTextField studiengang;
         PopUpTextField ausbildung;
         NumeralField mobilnr;
-        UploadField uploadField;
+        UploadField uploadProfil;
         Image image = ImageConverter.getUnknownProfilImage();
         UploadField lebenslauf;
 
@@ -46,17 +46,22 @@ public class WizardStudentDatenStep implements WizardStep {
             FormLayout form1 = new FormLayout();
 
 
-            uploadField = new UploadField();
-            uploadField.setDisplayUpload(false);
-            uploadField.setButtonCaption("Profilbild hochladen");
-            uploadField.setClearButtonVisible(false);
-            uploadField.setAcceptFilter("image/*");
+            uploadProfil = new UploadField();
+            uploadProfil.setDisplayUpload(false);
+
+            uploadProfil.setButtonCaption("Profilbild hochladen");
+            uploadProfil.setClearButtonVisible(false);
+
+            uploadProfil.setAcceptFilter("image/*");
 
 
-            uploadField.addValueChangeListener((HasValue.ValueChangeEvent<byte[]> event) -> {
+            uploadProfil.addValueChangeListener((HasValue.ValueChangeEvent<byte[]> event) -> {
                 form1.removeComponent(image);
-                byte[] bild = uploadField.getValue();
+
+                byte[] bild = uploadProfil.getValue();
+
                 image = ImageConverter.convertImagetoProfil(bild);
+
                 form1.addComponent(image,0);
             });
 
@@ -96,7 +101,7 @@ public class WizardStudentDatenStep implements WizardStep {
 
 
 
-            form1.addComponents(image,uploadField, g_datum, mobilnr,lebenslauf,filename);
+            form1.addComponents(image, uploadProfil, g_datum, mobilnr,lebenslauf,filename);
 
 
             FormLayout form2 = new FormLayout();
@@ -104,7 +109,9 @@ public class WizardStudentDatenStep implements WizardStep {
             form2.setMargin(true);
             PlaceHolderField place1 = new PlaceHolderField();
             strasse = new PopUpTextField("Strasse");
-            ort = new OrtPlzTextField();
+
+                ort = new OrtPlzTextField();
+
 
 
             PlaceHolderField place2 = new PlaceHolderField();
@@ -112,7 +119,7 @@ public class WizardStudentDatenStep implements WizardStep {
             ausbildung = new PopUpTextField("Ausbildung (optional)");
 
 
-            abschluss = new ComboBox<>("", DatenStudentProfil.collection);
+            abschluss = new ComboBox<>("", DatenStudentProfil.getCollection());
             abschluss.setPlaceholder("Wähle den höchsten Abschluss...");
             abschluss.setHeight("56px");
             abschluss.setWidth("300px");
@@ -140,9 +147,9 @@ public class WizardStudentDatenStep implements WizardStep {
 
 
             Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-            if(uploadField.getValue() != null){
-                student.setPicture(uploadField.getValue());
-                uploadField.clear();
+            if(uploadProfil.getValue() != null){
+                student.setPicture(uploadProfil.getValue());
+                uploadProfil.clear();
             }
             if(lebenslauf.getValue() != null) {
                 student.setLebenslauf(lebenslauf.getValue());

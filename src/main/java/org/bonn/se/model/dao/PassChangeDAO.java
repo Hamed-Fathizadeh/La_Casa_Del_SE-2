@@ -10,16 +10,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class PassChangeDAO extends AbstractDAO{
-    public static PassChangeDAO dao = null;
+    private static PassChangeDAO instance;
 
-    public static PassChangeDAO getInstance(){
-        if(dao == null){
-            dao = new PassChangeDAO();
-        }
-        return dao;
+    public static PassChangeDAO getInstance() {
+        return instance == null ? instance = new PassChangeDAO() : instance;
     }
 
-    public boolean changePass(PassChangeRequest dto){
+    public boolean changePass(PassChangeRequest dto) throws DatabaseException {
         Statement statement = this.getStatement();
         try{
             statement.executeUpdate("update lacasa.tab_user set passwort = '" +dto.getNewPass()+ "' where upper(email) = '" +dto.getEmail().toUpperCase()+ "'");
@@ -28,11 +25,7 @@ public class PassChangeDAO extends AbstractDAO{
             Logger.getLogger(PassChangeDAO.class.getName()).log(Level.SEVERE,null,ex);
             return false;
         }finally {
-            try {
                 JDBCConnection.getInstance().closeConnection();
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

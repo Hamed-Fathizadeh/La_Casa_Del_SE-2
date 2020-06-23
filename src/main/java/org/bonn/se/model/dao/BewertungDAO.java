@@ -3,31 +3,25 @@ package org.bonn.se.model.dao;
 import com.vaadin.ui.UI;
 import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
-import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.Roles;
 
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BewertungDAO extends AbstractDAO {
-    public static BewertungDAO dao = null;
 
-    private BewertungDAO() {
 
-    }
+    private static BewertungDAO instance;
 
     public static BewertungDAO getInstance() {
-        if (dao == null) {
-            dao = new BewertungDAO();
-        }
-        return dao;
+        return instance == null ? instance = new BewertungDAO() : instance;
     }
 
-    public static void bewertung(BewerbungDTO bewerbung) {
+    public void bewertung(BewerbungDTO bewerbung) throws DatabaseException, SQLException {
         ResultSet set = null;
-        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
 
 
         try {
@@ -37,40 +31,37 @@ public class BewertungDAO extends AbstractDAO {
                     "  FROM lacasa.tab_bewertung\n" +
                     " where student_id = "+bewerbung.getStudentID()+" \n" +
                     "   and firmenname = '"+bewerbung.getUnternehmenName()+"' and hauptsitz = '"+bewerbung.getUnternehmenHauptsitz()+"'");
-        } catch (SQLException | DatabaseException throwables) {
-            throwables.printStackTrace();
-          }
-        try {
+
             while (!set.next()) {
                 String sql = "INSERT INTO lacasa.tab_bewertung (datum, anzahl_sterne, firmenname, hauptsitz, student_id) " +
                         "VALUES(?,?,?,?,?);";
-                PreparedStatement statement = getPreparedStatement(sql);
-                try {
-                    assert statement != null;
-                    statement.setDate(1, Date.valueOf(LocalDate.now()));
-                    statement.setDouble(2, bewerbung.getRating());
-                    statement.setString(3, bewerbung.getUnternehmenName());
-                    statement.setString(4, bewerbung.getUnternehmenHauptsitz());
-                    statement.setInt(5, bewerbung.getStudentID());
-                    statement.executeUpdate();
+                PreparedStatement preparedStatement = getPreparedStatement(sql);
 
+                assert statement != null;
+                preparedStatement.setDate(1, Date.valueOf(LocalDate.now()));
+                preparedStatement.setDouble(2, bewerbung.getRating());
+                preparedStatement.setString(3, bewerbung.getUnternehmenName());
+                preparedStatement.setString(4, bewerbung.getUnternehmenHauptsitz());
+                preparedStatement.setInt(5, bewerbung.getStudentID());
+                preparedStatement.executeUpdate();
+            }
                 } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                    Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
                     throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
                 } finally {
+                    assert set != null;
+                    set.close();
                     JDBCConnection.getInstance().closeConnection();
                 }
                 UI.getCurrent().addWindow(new ConfirmationWindow("Vielen Dank für Ihre bewertung!"));
-                return;
+                  UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben schon für "+bewerbung.getUnternehmenName()+" bewertet!"));
+
+                     return;
             }
 
-        } catch (DatabaseException | SQLException e) {
-            e.printStackTrace();
-        }
-        UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben schon für "+bewerbung.getUnternehmenName()+" bewertet!"));
 
-    }
-}
+ }
+
 
 
 

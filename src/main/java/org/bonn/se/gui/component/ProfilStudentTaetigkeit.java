@@ -5,9 +5,9 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class ProfilStudentTaetigkeit extends VerticalLayout {
-    TextField beschreibung;
-    StudentDateField beginn;
-    StudentDateField ende;
+    final TextField beschreibung;
+    final StudentDateField beginn;
+    final StudentDateField ende;
 
     public ProfilStudentTaetigkeit() {
         beschreibung = new TextField("Tätigkeit");

@@ -11,6 +11,7 @@ import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.junit.Test;
 
+import java.sql.SQLException;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.junit.Assert.*;
@@ -20,7 +21,7 @@ public class TestDAOs {
     String vorname = "Vjunit";
     String nachname = "Njunit";
     String email = "11junit@junit.de";
-    String password = "11111111";
+    String login = "11111111";
     String hauptsitz = "Bonn - Nordrhein-Westfalen";
     String cname = "Firma-JUNIT";
     User student;
@@ -86,7 +87,7 @@ public class TestDAOs {
 
      */
     @Test
-    public void registerStudentWithCheck() throws DatabaseException {
+    public void registerStudentWithCheck() throws DatabaseException, SQLException {
         Student student = userTestFactory.registerStudent();
         UserDAO.getInstance().registerUser(student);
         assertEquals("S",UserDAO.getInstance().getUserType(student.getEmail()));
@@ -96,7 +97,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkStudentProfil() throws DatabaseException {
+    public void checkStudentProfil() throws DatabaseException, SQLException {
        Student student = userTestFactory.getProfilStudent();
         UserDAO.getInstance().registerUser(student);
         ProfilDAO.getInstance().createStudentProfil1(student);
@@ -104,7 +105,7 @@ public class TestDAOs {
 
     }
     @Test
-    public void checkStudentProfilWithAdresse() throws DatabaseException {
+    public void checkStudentProfilWithAdresse() throws DatabaseException, SQLException {
         Student student = userTestFactory.getProfilStudentWithoutAdress();
         UserDAO.getInstance().registerUser(student);
         ProfilDAO.getInstance().createStudentProfil1(student);
@@ -113,7 +114,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void registerUnternehmenWithCheck() throws DatabaseException {
+    public void registerUnternehmenWithCheck() throws DatabaseException, SQLException {
         Unternehmen unternehmen = userTestFactory.registerUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         assertEquals("C",UserDAO.getInstance().getUserType(unternehmen.getEmail()));
@@ -123,7 +124,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkUnternehmenProfil() throws DatabaseException {
+    public void checkUnternehmenProfil() throws DatabaseException, SQLException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
@@ -132,7 +133,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkUnternehmenProfilWithAdresse() throws DatabaseException {
+    public void checkUnternehmenProfilWithAdresse() throws DatabaseException, SQLException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmenWithoutAdresss();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
@@ -150,7 +151,7 @@ public class TestDAOs {
     */
 
     @Test
-    public void checkUnternehmenProfilWithDescription() throws DatabaseException {
+    public void checkUnternehmenProfilWithDescription() throws DatabaseException, SQLException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
@@ -160,7 +161,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkandGetUnternehmenProfilWithDescription() throws DatabaseException {
+    public void checkandGetUnternehmenProfilWithDescription() throws DatabaseException, SQLException {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
@@ -181,7 +182,7 @@ public class TestDAOs {
 
     }
     @Test
-    public void checkStudentProfil2() throws DatabaseException {
+    public void checkStudentProfil2() throws DatabaseException, SQLException {
         Student student = userTestFactory.getProfilStudent();
         UserDAO.getInstance().registerUser(student);
         ProfilDAO.getInstance().createStudentProfil1(student);
@@ -201,7 +202,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void checkStudentWithKenntnisse() throws DatabaseException {
+    public void checkStudentWithKenntnisse() throws DatabaseException, SQLException {
         Student student = userTestFactory.registerStudent();
         UserDAO.getInstance().registerUser(student);
 
@@ -238,7 +239,7 @@ public class TestDAOs {
     }
 
     @Test
-    public void testGetUser() throws DatabaseException {
+    public void testGetUser() throws DatabaseException, SQLException {
         User expected = userTestFactory.registerStudent();
         UserDAO.getInstance().registerUser(expected);
         User actual = UserDAO.getInstance().getUser(expected.getEmail());
@@ -252,12 +253,12 @@ public class TestDAOs {
 
         assertTrue(UserDAO.getInstance().getUserType("abc") == null);
     }
-
+/*
     @Test
     public void testGetUserException() throws DatabaseException {
         User expected = userTestFactory.registerStudent();
         expected.setEmail("'ad'jh'");
-        assertThrows(DatabaseException.class, () -> {
+        Assertions.assertThrows(DatabaseException.class, () -> {
             UserDAO.getInstance().getUser(expected.getEmail());
         });
         assertThrows(DatabaseException.class,() -> {
@@ -273,6 +274,8 @@ public class TestDAOs {
 
         });
     }
+
+ */
 
 /*
     @Test

@@ -1,6 +1,5 @@
 package org.bonn.se.gui.component;
 
-import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
@@ -10,17 +9,20 @@ import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
+import java.sql.SQLException;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     List<T> data;
-    static int anzahlNeuBewerbungen = 0;//jumlah pelamar
+    // --Commented out by Inspection (22.06.20, 23:28):static int anzahlNeuBewerbungen = 0;//jumlah pelamar
     static int gesamtNeuBewerbungen = 0;//jumal pelamar keseluran
 
     public int getGesamtNeuBewerbungen() {
@@ -29,20 +31,24 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     }
 
     public int setGesamtNeuBewerbungen(int gesamtNeuBew) {
-        this.gesamtNeuBewerbungen += gesamtNeuBew;
+        gesamtNeuBewerbungen += gesamtNeuBew;
         return gesamtNeuBew;
     }
 
-    public int getAnzahlNeuBewerbungen() {
-        return anzahlNeuBewerbungen;
-    }
+// --Commented out by Inspection START (22.06.20, 23:13):
+//    public int getAnzahlNeuBewerbungen() {
+//        return anzahlNeuBewerbungen;
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:13)
 
-    public int setAnzahlNeuBewerbungen(int anzahlNeuBewerbungen) {
-
-        this.anzahlNeuBewerbungen = anzahlNeuBewerbungen;
-        setGesamtNeuBewerbungen(this.anzahlNeuBewerbungen );
-        return this.anzahlNeuBewerbungen;
-    }
+// --Commented out by Inspection START (22.06.20, 23:13):
+//    public int setAnzahlNeuBewerbungen(int anzahlNeuBewerbungen) {
+//
+//        Anzeigen.anzahlNeuBewerbungen = anzahlNeuBewerbungen;
+//        setGesamtNeuBewerbungen(Anzeigen.anzahlNeuBewerbungen);
+//        return Anzeigen.anzahlNeuBewerbungen;
+//    }
+// --Commented out by Inspection STOP (22.06.20, 23:13)
 
     @Override
     public List<T> getData() {
@@ -53,11 +59,10 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         return data.size();
     }
 
-    public Grid<T> setData(List<T> data) {
+    public void setData(List<T> data) {
         this.removeAllColumns();
         this.data = data;
         setUp();
-        return this;
     }
 
     public Anzeigen(String str, List<StellenanzeigeDTO> dataInput){
@@ -74,10 +79,11 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         }else{
             this.setWidth("1500px");
         }
-        this.setHeight("500px");
+        this.setHeight("800px");
 
         // Allow column reordering wir können es auch ändern
         this.setColumnReorderingAllowed(true);
+
 
         SingleSelect<StellenanzeigeDTO> selection = (SingleSelect<StellenanzeigeDTO>) this.asSingleSelect();
 
@@ -86,20 +92,19 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
 
             // Speichert den aktuell angewählten Wert bei klick auf die Zeile in der Var. "selected"
             StellenanzeigeDTO sa =  selection.getValue();
-            Unternehmen unternehmen_data = null;
+            Unternehmen unternehmenData = null;
             try {
-                unternehmen_data = UserDAO.getInstance().getUnternehmenByStellAnz(sa);
-            } catch (DatabaseException e) {
-                e.printStackTrace();
+                UserDAO.getInstance();
+                unternehmenData = UserDAO.getUnternehmenByStellAnz(sa);
+            } catch (DatabaseException | SQLException e) {
+                Logger.getLogger(Anzeigen.class.getName()).log(Level.SEVERE, null, e);
             }
             if(sa.getStatus() == 3) {
-                Iterator it =((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().iterator();
-                while (it.hasNext()) {
-                    StellenanzeigeDTO temp = ((StellenanzeigeDTO)it.next());
-                    if(temp.getId() == sa.getId() ){
-                        Collections.swap(((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO(),
-                                ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().indexOf(temp),
-                                ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().size()-1);
+                for (StellenanzeigeDTO temp : ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO()) {
+                    if (temp.getId() == sa.getId()) {
+                        Collections.swap(((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO(),
+                                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().indexOf(temp),
+                                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().size() - 1);
                         break;
 
                     }
@@ -108,8 +113,8 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
                 ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigeDTO(sa);
                 MyUI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
             } else {
-                StellenanzeigeWindow stellenanzeigeWindow = null;
-                stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmen_data);
+                StellenanzeigeWindow stellenanzeigeWindow;
+                stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmenData);
                 UI.getCurrent().addWindow(stellenanzeigeWindow);
             }
         });
@@ -117,25 +122,13 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         data = (List<T>) dataInput;
         setUp();
 
-
-
     }
     public void setUp(){
 
-
-        //this.setCaption("Anzahl Anzeigen " + container.getAnzahl());
         this.setItems( data);
 
-        ThemeResource resource = new ThemeResource("img/Anzeigen/rot.png");
-        Image rot = new Image(null, resource);
-        rot.setDescription("Offline");
-        ThemeResource resource2 = new ThemeResource("img/Anzeigen/gruen.png");
-        Image gruen = new Image(null, resource2);
-        gruen.setDescription("Online");
-        ThemeResource resource3 = new ThemeResource("img/Anzeigen/orange.png");
-        Image orange = new Image(null, resource3);
-        orange.setDescription("Entwurf");
-        String day ="";
+
+
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
             this.addComponentColumn(im ->{
@@ -153,14 +146,14 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
                 return rating;
             }).setCaption("Bewertung");
         }
-        this.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
         this.addColumn(StellenanzeigeDTO::getStandort).setCaption("Ort");
         this.addColumn(StellenanzeigeDTO::getDatum).setCaption("Beginn");
+        this.addColumn(StellenanzeigeDTO::getSuchbegriff).setCaption("Stelle");
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
-            this.addComponentColumn(Sa -> (Sa.getStatus() == 1 ? new Image(null, resource2) : Sa.getStatus() == 2 ? new Image(null, resource) : new Image(null, resource3))).setCaption("Status").setId("Status");
-            this.addComponentColumn(Sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setGesamtNeuBewerbungen(Sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
+            this.addComponentColumn(sa -> (sa.getStatus() == 1 ? ImageConverter.getStatus_gruen(): sa.getStatus() == 2 ? ImageConverter.getStatus_rot() : ImageConverter.getStatus_orange())).setCaption("Status").setId("Status");
+            this.addComponentColumn(sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setGesamtNeuBewerbungen(sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
         }
 
     }
