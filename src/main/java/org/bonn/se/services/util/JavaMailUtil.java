@@ -19,18 +19,20 @@ public class JavaMailUtil {
     public static void sendMail(String recepient, String Vnummer, String name) throws Exception{
 
         System.out.println("Preparing to sen email");
-        Properties properties = new Properties();
+        Properties general_properties = new Properties();
         MailSSLSocketFactory sf = new MailSSLSocketFactory();
         sf.setTrustAllHosts(true);
-        properties.put("mail.smtp.ssl.socketFactory", sf);
-        properties.put("mail.smtp.auth","true");
-        properties.put("mail.smtp.starttls.enable","true");
-        properties.put("mail.smtp.host","smtp.gmail.com");
-        properties.put("mail.smtp.port","587");
+        general_properties.put("mail.smtp.ssl.socketFactory", sf);
+
+
+        general_properties.put("mail.smtp.auth","true");
+        general_properties.put("mail.smtp.starttls.enable","true");
+        general_properties.put("mail.smtp.host","smtp.gmail.com");
+        general_properties.put("mail.smtp.port","587");
 
         String myAccountEmail = "lacolsco.webpage@gmail.com";
 
-       Session session = Session.getInstance(properties, new Authenticator(){
+       Session session = Session.getInstance(general_properties, new Authenticator(){
           @Override
           protected  PasswordAuthentication getPasswordAuthentication(){
               return new PasswordAuthentication(myAccountEmail,Password.mail);
@@ -47,18 +49,21 @@ public class JavaMailUtil {
 
     public static void sendMailToStudents(Unternehmen unternehmen, HashMap<String, String> liste) throws Exception{
         System.out.println("Preparing to sen email");
-        Properties properties = new Properties();
+        Properties properties_Student = new Properties();
         MailSSLSocketFactory sf = new MailSSLSocketFactory();
         sf.setTrustAllHosts(true);
-        properties.put("mail.smtp.ssl.socketFactory", sf);
-        properties.put("mail.smtp.auth","true");
-        properties.put("mail.smtp.starttls.enable","true");
-        properties.put("mail.smtp.host","smtp.gmail.com");
-        properties.put("mail.smtp.port","587");
+        properties_Student.put("mail.smtp.ssl.socketFactory", sf);
+        properties_Student.put("mail.smtp.auth","true");
+
+
+        properties_Student.put("mail.smtp.host","smtp.gmail.com");
+
+        properties_Student.put("mail.smtp.port","587");
 
         String myAccountEmail = "lacolsco.webpage@gmail.com";
+        properties_Student.put("mail.smtp.starttls.enable","true");
 
-        Session session = Session.getInstance(properties, new Authenticator(){
+        Session session = Session.getInstance(properties_Student, new Authenticator(){
             @Override
             protected  PasswordAuthentication getPasswordAuthentication(){
                 return new PasswordAuthentication(myAccountEmail,Password.mail);

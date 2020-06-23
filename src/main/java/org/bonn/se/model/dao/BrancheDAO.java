@@ -22,25 +22,25 @@ public class BrancheDAO {
     public List<String> getBranche() throws SQLException, DatabaseException {
 
         ResultSet set = null;
-        Statement statement = JDBCConnection.getInstance().getStatement();
-        List<String> liste = new ArrayList<>();
+        List<String> liste_branche = new ArrayList<>();
 
+        Statement statement = JDBCConnection.getInstance().getStatement();
         try {
             set = statement.executeQuery("SELECT name FROM lacasa.tab_branche ");
-
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
-                liste.add(set.getString(1));
+                liste_branche.add(set.getString(1));
             }
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
             assert set != null;
             set.close();
+            
             JDBCConnection.getInstance().closeConnection();
         }
-        return liste;
+        return liste_branche;
 
     }
 }

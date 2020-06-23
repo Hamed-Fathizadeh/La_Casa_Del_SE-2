@@ -49,18 +49,14 @@ public class OrtDAO extends AbstractDAO{
     public List<String> getBund() throws DatabaseException, SQLException {
 
         ResultSet set = null;
-        List<String> liste = new ArrayList<>();
-
+        List<String> liste_ort = new ArrayList<>();
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT bundesland FROM lacasa.tab_orte order by bundesland");
-
-
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
-                liste.add(set.getString(1));
-
+                liste_ort.add(set.getString(1));
             }
         }catch (SQLException  throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
@@ -69,8 +65,7 @@ public class OrtDAO extends AbstractDAO{
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }
-
-        return liste;
+        return liste_ort;
     }
 
 }

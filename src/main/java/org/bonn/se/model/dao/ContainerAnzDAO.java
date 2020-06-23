@@ -33,15 +33,16 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             while (set.next()) {
 // taghir mikhad 100
-                StellenanzeigeDTO sa = new StellenanzeigeDTO(
-                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate()
-                        ,set.getDate(3),
+                StellenanzeigeDTO sa_load = new StellenanzeigeDTO(
+                        set.getInt(1),
+                        set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
+                        set.getDate(3),
                         set.getString(4), set.getString(5), set.getInt(6),
                         set.getString(7), set.getString(8), set.getString(9),
                         set.getString(10),set.getString(11),set.getString(12),null,set.getDouble(13),set.getString(12)
                                                             );
 
-                   liste.add(sa);
+                   liste.add(sa_load);
             }
 
         } catch (SQLException throwables) {
@@ -184,7 +185,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                             "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz and sa.status = 1 order by sa.zeitstempel desc "+limit);
 
             while (set.next()) {
-                StellenanzeigeDTO sa = new StellenanzeigeDTO(
+                StellenanzeigeDTO sa_neuigkeiten = new StellenanzeigeDTO(
                         set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
                         set.getDate(3),
                         set.getString(4), set.getString(5), set.getInt(6),
@@ -193,7 +194,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getBytes(13),set.getDouble(14),set.getString(15)
                 );
 
-                liste.add(sa);
+                liste.add(sa_neuigkeiten);
 
 
             }
