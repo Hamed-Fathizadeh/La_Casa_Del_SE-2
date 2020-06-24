@@ -37,7 +37,7 @@ public class StellenanzeigeWindow extends Window {
         } catch (DatabaseException e) {
             Logger.getLogger(StellenanzeigeWindow.class.getName()).log(Level.SEVERE, null, e);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(StellenanzeigeWindow.class.getName()).log(Level.SEVERE,null,throwables);
         }
 
     }
