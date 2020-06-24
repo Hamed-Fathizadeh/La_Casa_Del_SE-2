@@ -1,19 +1,17 @@
 package org.bonn.se.services.util;
 
-import com.vaadin.server.FileResource;
 import com.vaadin.server.StreamResource;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.Image;
 import net.bytebuddy.utility.RandomString;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 
 public class ImageConverter {
 
 
-    private static final FileResource menu = new FileResource(new File("img/Unknown_profil.png"));
-    private static final FileResource profil = new FileResource(new File("img/Unknown.png"));
+    private static ThemeResource menu = new ThemeResource("img/Unknown_profil.png");
+    private static ThemeResource profil = new ThemeResource("img/Unknown.png");
     private static RandomString gen = new RandomString(8 );
     private static ThemeResource status_rot = new ThemeResource("img/Anzeigen/rot.png");
     private static ThemeResource status_gruen = new ThemeResource("img/Anzeigen/gruen.png");
