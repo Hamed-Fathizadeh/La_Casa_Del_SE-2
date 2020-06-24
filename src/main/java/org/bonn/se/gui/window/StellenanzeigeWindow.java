@@ -290,16 +290,7 @@ public class StellenanzeigeWindow extends Window {
                 }
             });
         }
-
-
         this.setContent(panel);
-
-
-
-
-
-
-
     }
 
 

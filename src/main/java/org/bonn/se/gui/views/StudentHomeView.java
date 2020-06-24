@@ -3,7 +3,7 @@ package org.bonn.se.gui.views;
 
 import com.vaadin.data.HasValue;
 import com.vaadin.data.provider.DataProvider;
-import com.vaadin.event.selection.SelectionListener;
+import com.vaadin.event.selection.SingleSelectionListener;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -224,22 +224,29 @@ public class StudentHomeView extends VerticalLayout implements View {
 
             });
         }
-        SingleSelect<StellenanzeigeDTO> selection = grid1.asSingleSelect();
-
         //Selektieren der Anzeige
-        grid1.addSelectionListener((SelectionListener<StellenanzeigeDTO>) event -> {
-           StellenanzeigeDTO temp = selection.getValue();
+        grid1.asSingleSelect().addSingleSelectionListener((SingleSelectionListener<StellenanzeigeDTO>) event -> {
+            StellenanzeigeDTO temp = event.getValue();
             Unternehmen unternehmen = null;
             try {
                 unternehmen =  UserDAO.getUnternehmenByStellAnz(temp);
+
             } catch (DatabaseException | SQLException e) {
                 Logger.getLogger(StudentHomeView.class.getName()).log(Level.SEVERE, null, e);
-
             }
 
-          UI.getCurrent().addWindow(new StellenanzeigeWindow(temp,unternehmen));
+            UI.getCurrent().addWindow(new StellenanzeigeWindow(temp,unternehmen));
+        });
+
+
+
+        /*
+        grid1.addSelectionListener((SelectionListener<StellenanzeigeDTO>) event -> {
+            SingleSelect<StellenanzeigeDTO> selection = grid1.asSingleSelect();
 
         });
+
+         */
 
 //---------------SUCHE ENDE ------------------------------------------------------------------------------------------
 

@@ -61,8 +61,7 @@ public class MockitoTest {
         Mockito.doCallRealMethod().when(loginControl).checkAuthentication(USERNAME,login);
         LoginControl.getInstance().checkAuthentication(USERNAME,login);
         when(vaadinSession.getAttribute(Roles.Student)).thenReturn(true);
-
-
+        //verify
     }
 
     @Test

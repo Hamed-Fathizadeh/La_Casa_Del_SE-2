@@ -21,7 +21,7 @@ public class TopPanelUser extends GridLayout {
 
         this.setRows(1);
         this.setColumns(10);
-        this.setStyleName("toppanelUser");
+        this.setStyleName("toppanel");
 
 
         this.setMargin(false);
@@ -76,7 +76,8 @@ public class TopPanelUser extends GridLayout {
 
         if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
-            UI.getCurrent().access(() -> item1.addItemBefore("Letzte Bewerbungen", VaadinIcons.CLIPBOARD_TEXT, (MenuBar.Command) menuItem -> LoginControl.logoutUser(),item1.getChildren().get(2)));
+            UI.getCurrent().access(() -> item1.addItemBefore("Letzte Bewerbungen", VaadinIcons.CLIPBOARD_TEXT,
+                    (MenuBar.Command) menuItem ->UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView),item1.getChildren().get(2)));
         }
     }
 }
