@@ -47,7 +47,7 @@ public class WizardStudentKenntnisStep implements WizardStep {
             itKenntnisArrayList = new ArrayList<>();
             PopUpTextField itKenntnis1 = new PopUpTextField("Bsp. MS-Office");
             itKenntnis1.setWidth("200px");
-            ComboBoxNiveau niveau1 = new ComboBoxNiveau("", DatenStudentProfil.getCollection());
+            ComboBoxNiveau niveau1 = new ComboBoxNiveau(DatenStudentProfil.getCollection());
 
 
 
@@ -93,7 +93,7 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
                     gl_KenntnisStep.addComponent(new PopUpTextField("Bsp. MS-Office"), i_c[0], i_r[0]);
                     gl_KenntnisStep.getComponent(i_c[0], i_r[0]).setWidth("200px");
-                    gl_KenntnisStep.addComponent(new ComboBoxNiveau("",DatenStudentProfil.getCollection3()), i_c[1], i_r[0]);
+                    gl_KenntnisStep.addComponent(new ComboBoxNiveau(DatenStudentProfil.getCollection3()), i_c[1], i_r[0]);
                     gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(i_c[0], i_r[0]), Alignment.MIDDLE_CENTER);
                     gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(i_c[1], i_r[0]), Alignment.MIDDLE_CENTER);
                     ((PopUpTextField) gl_KenntnisStep.getComponent(i_c[0], i_r[0])).selectAll();
@@ -160,7 +160,7 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
             sprachKenntnisArrayList = new ArrayList<>();
 
-            ComboBoxNiveau niveau21 = new ComboBoxNiveau("",DatenStudentProfil.getCollection2());
+            ComboBoxNiveau niveau21 = new ComboBoxNiveau(DatenStudentProfil.getCollection2());
 
 
 
@@ -207,7 +207,7 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
                     gl_KenntnisStep.addComponent(new PopUpTextField("Bsp. Englisch"), j_c[3], j_r[0]);
                     gl_KenntnisStep.getComponent(j_c[3], j_r[0]).setWidth("200px");
-                    gl_KenntnisStep.addComponent(new ComboBoxNiveau("",DatenStudentProfil.getCollection2()), j_c[4], j_r[0]);
+                    gl_KenntnisStep.addComponent(new ComboBoxNiveau(DatenStudentProfil.getCollection2()), j_c[4], j_r[0]);
                     gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(j_c[3], j_r[0]), Alignment.MIDDLE_CENTER);
                     gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(j_c[4], j_r[0]), Alignment.MIDDLE_CENTER);
                     ((PopUpTextField) gl_KenntnisStep.getComponent(j_c[3], j_r[0])).selectAll();

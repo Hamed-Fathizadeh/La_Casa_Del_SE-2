@@ -83,6 +83,10 @@ div .onoffswitch-slider.on:before {
 	background-color: #91d4c2;
 }
 
+.combobox .demo .v-required-field-indicator {
+	padding: 0;
+}
+
 /**
  * Checks if a list contains a certain value.
  * 
