@@ -7,7 +7,6 @@ import com.vaadin.ui.*;
 import org.bonn.se.control.AnzStatusControl;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
-import org.bonn.se.gui.window.StellenanzeigeConfWindow;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
 import org.bonn.se.model.objects.entitites.Unternehmen;
@@ -17,6 +16,8 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 public class StellenbeschreibungView extends GridLayout implements View {
+    Notification notification;
+    String msgStatus;
 
     public void setUp() {
         this.setMargin(false);
@@ -69,6 +70,8 @@ public class StellenbeschreibungView extends GridLayout implements View {
                                             .getStellenanzeigeDTO().setStatus(1);
                                         ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
                                 }
+                                msgStatus = "Online";
+
                             } else {
                                 if (stellenanzeigeDTO.getStatus() == 3) {
 
@@ -82,11 +85,13 @@ public class StellenbeschreibungView extends GridLayout implements View {
                                             ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
 
                                 }
+                                msgStatus = "Offline";
                             }
-                            StellenanzeigeConfWindow stellenanzeigeConfWindow
-                                    = new StellenanzeigeConfWindow(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
-                                    .getStellenanzeigeDTO());
-                            MyUI.getCurrent().addWindow(stellenanzeigeConfWindow);
+                            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+                            notification = Notification.show("Erfolgreich","Ihr Anzeige ist nun "+msgStatus+"!", Notification.Type.WARNING_MESSAGE);
+                            notification.setHtmlContentAllowed(true);
+                            notification.setDelayMsec(2000);
+
                         });
 
 
@@ -104,6 +109,7 @@ public class StellenbeschreibungView extends GridLayout implements View {
             stellenanzeigeDTO.setBeschreibung(richTextArea.getValue());
             if( stellenanzeigeDTO.getStatus() == 3) {
                     ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeigeDTO);
+
             } else {
 
                 if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
@@ -113,9 +119,11 @@ public class StellenbeschreibungView extends GridLayout implements View {
                     ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
 
             }
-                StellenanzeigeConfWindow stellenanzeigeConfWindow =
-                        new StellenanzeigeConfWindow(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigeDTO());
-                MyUI.getCurrent().addWindow(stellenanzeigeConfWindow);
+
+            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+            notification = Notification.show("Erfolgreich","Ihr Anzeige ist nun als Entwurf gespeichert!", Notification.Type.WARNING_MESSAGE);
+            notification.setHtmlContentAllowed(true);
+            notification.setDelayMsec(3000);
 
 
         });
