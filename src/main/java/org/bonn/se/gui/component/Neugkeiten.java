@@ -80,7 +80,7 @@ public class Neugkeiten extends GridLayout {
                    }
                    StellenanzeigeWindow stellenanzeigeWindow;
 
-                       stellenanzeigeWindow = new StellenanzeigeWindow(sa,unternehmenData);
+                       stellenanzeigeWindow = new StellenanzeigeWindow(sa);
 
                    UI.getCurrent().addWindow(stellenanzeigeWindow);
 

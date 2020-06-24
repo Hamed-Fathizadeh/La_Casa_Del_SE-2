@@ -5,20 +5,15 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenanzeigeWindow;
-import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
-import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     List<T> data;
@@ -78,13 +73,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
 
             // Speichert den aktuell angewählten Wert bei klick auf die Zeile in der Var. "selected"
             StellenanzeigeDTO sa =  selection.getValue();
-            Unternehmen unternehmenData = null;
-            try {
-                UserDAO.getInstance();
-                unternehmenData = UserDAO.getUnternehmenByStellAnz(sa);
-            } catch (DatabaseException | SQLException e) {
-                Logger.getLogger(Anzeigen.class.getName()).log(Level.SEVERE, null, e);
-            }
+
             if(sa.getStatus() == 3) {
                 for (StellenanzeigeDTO temp : ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO()) {
                     if (temp.getId() == sa.getId()) {
@@ -100,7 +89,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
                 MyUI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
             } else {
                 StellenanzeigeWindow stellenanzeigeWindow;
-                stellenanzeigeWindow = new StellenanzeigeWindow(sa, unternehmenData);
+                stellenanzeigeWindow = new StellenanzeigeWindow(sa);
                 UI.getCurrent().addWindow(stellenanzeigeWindow);
             }
         });

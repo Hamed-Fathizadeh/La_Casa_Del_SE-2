@@ -20,13 +20,11 @@ import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.gui.window.StellenanzeigeWindow;
-import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
 import org.bonn.se.model.objects.entitites.ContainerNeuigkeiten;
 import org.bonn.se.model.objects.entitites.Student;
-import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.BrancheService;
@@ -212,11 +210,10 @@ public class StudentHomeView extends VerticalLayout implements View {
         grid1.addColumn(StellenanzeigeDTO::getDatum).setCaption("Einstellungsdatum").setWidth(150.0);
 
         //ValueChangeListener für Suche
+
         for (int i = 0; i < 3; i++) {
             ((ComboBox)searchGrid.getComponent(i+2,1)).addValueChangeListener((HasValue.ValueChangeListener) event -> {
-
                 //Datenabfrage
-
                 DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,comboBranche.getValue());
                 grid1.setDataProvider(dataProvider);
                 grid1.setCaption("Anzahl der Ergebisse: " + suche.getRowsCount());
@@ -226,16 +223,10 @@ public class StudentHomeView extends VerticalLayout implements View {
         }
         //Selektieren der Anzeige
         grid1.asSingleSelect().addSingleSelectionListener((SingleSelectionListener<StellenanzeigeDTO>) event -> {
-            StellenanzeigeDTO temp = event.getValue();
-            Unternehmen unternehmen = null;
-            try {
-                unternehmen =  UserDAO.getUnternehmenByStellAnz(temp);
-
-            } catch (DatabaseException | SQLException e) {
-                Logger.getLogger(StudentHomeView.class.getName()).log(Level.SEVERE, null, e);
+            if(event.getValue() != null) {
+                UI.getCurrent().addWindow(new StellenanzeigeWindow(event.getValue()));
             }
-
-            UI.getCurrent().addWindow(new StellenanzeigeWindow(temp,unternehmen));
+            grid1.deselectAll();
         });
 
 

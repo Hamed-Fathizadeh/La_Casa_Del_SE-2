@@ -7,15 +7,21 @@ import com.vaadin.ui.*;
 import org.bonn.se.control.AnzStatusControl;
 import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.gui.ui.MyUI;
+import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.ContainerAnzeigen;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
+import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
+
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class StellenanzeigeWindow extends Window {
@@ -24,13 +30,21 @@ public class StellenanzeigeWindow extends Window {
     private OnOffSwitch onOffSwitch = new OnOffSwitch();
     Button bewerbungen;
     Button bewerben;
-    public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data) {
-        setUp(stellenanzeige,unternehmen_data);
+    public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige) {
+        try {
+            Unternehmen unternehmen_data =  UserDAO.getUnternehmenByStellAnz(stellenanzeige);
+            setUp(stellenanzeige, unternehmen_data);
+        } catch (DatabaseException e) {
+            Logger.getLogger(StellenanzeigeWindow.class.getName()).log(Level.SEVERE, null, e);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
     public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data)  {
-        center();
 
+        center();
         this.setWidth("80%");
         this.setHeight("90%");
         this.setModal(true);
