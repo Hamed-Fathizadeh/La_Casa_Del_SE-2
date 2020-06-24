@@ -41,10 +41,11 @@ public class TopPanel  extends GridLayout {
         this.setRows(1);
         this.setColumns(10);
         this.setSizeFull();
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
         Button switchUnternehmen = new Button(buttonOne);
-
         Button login = new Button(buttonTwo);
-
+        horizontalLayout.addComponents(switchUnternehmen,login);
+        horizontalLayout.setMargin(true);
         switchUnternehmen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(navigateToTwo));
 
 
@@ -59,10 +60,8 @@ public class TopPanel  extends GridLayout {
         });
 
         this.addComponent(logo,0,0,0,0);
-        this.addComponent(switchUnternehmen,8,0,8,0);
-        this.addComponent(login,9,0,9,0);
-        this.setComponentAlignment(switchUnternehmen,Alignment.MIDDLE_CENTER);
-        this.setComponentAlignment(login,Alignment.MIDDLE_CENTER);
+        this.addComponent(horizontalLayout,8,0,9,0);
+        this.setComponentAlignment(horizontalLayout,Alignment.MIDDLE_RIGHT);
 
         this.addStyleName("toppanel");
 
