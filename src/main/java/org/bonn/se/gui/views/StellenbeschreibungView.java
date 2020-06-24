@@ -103,6 +103,7 @@ public class StellenbeschreibungView extends GridLayout implements View {
         });
 
         Button entwurf = new Button("Entwurf speichern");
+        entwurf.setWidth("200px");
         entwurf.addClickListener((Button.ClickListener) event -> {
             StellenanzeigeDTO stellenanzeigeDTO = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
                     .getStellenanzeigeDTO();
