@@ -2,6 +2,7 @@ package org.bonn.se.gui.window.wizard;
 
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.*;
+import org.bonn.se.gui.component.NumeralField;
 import org.bonn.se.gui.component.OrtPlzTextField;
 import org.bonn.se.gui.component.PlaceHolderField;
 import org.bonn.se.gui.component.PopUpTextField;
@@ -17,7 +18,7 @@ import org.vaadin.teemu.wizards.WizardStep;
 
 public class WizardUntDatenStep implements WizardStep {
 
-        PopUpTextField kontaktnummer;
+        NumeralField kontaktnummer;
         PopUpTextField strasse;
         OrtPlzTextField ort;
         ComboBox<String> branche;
@@ -56,7 +57,7 @@ public class WizardUntDatenStep implements WizardStep {
 
 
 
-            kontaktnummer = new PopUpTextField("Kontaktnummer");
+            kontaktnummer = new NumeralField("Kontaktnummer");
 
             form1.addComponents( image, uploadLogo,kontaktnummer);
             form1.setComponentAlignment(image, Alignment.TOP_LEFT);
