@@ -156,7 +156,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 //Datum
                 wannDatum.setHeight("56px");
                 wannDatum.setWidth("200px");
-                wannDatum.setPlaceholder("ab Wann? dd.mm.yyyy");
+                wannDatum.setPlaceholder("ab Wann?");
                 LocalDate emptyDate = LocalDate.parse("0001-01-01");
 
 
