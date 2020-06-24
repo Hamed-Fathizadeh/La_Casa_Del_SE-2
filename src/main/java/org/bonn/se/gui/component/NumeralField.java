@@ -9,7 +9,8 @@ public class NumeralField extends TextField  {
 
     public NumeralField(String caption) {
 
-        new NumeralFieldFormatter("", "", 10, 0, true).extend(this);
+        new NumeralFieldFormatter.Builder().delimiter("").decimalMark("").integerScale(10)
+                .decimalScale(0).nonNegativeOnly(false).stripLeadingZeroes(false).build().extend(this);
         this.setHeight("56px");
         this.setWidth("300px");
         this.setPlaceholder(caption);
