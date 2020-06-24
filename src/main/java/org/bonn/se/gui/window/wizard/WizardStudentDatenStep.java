@@ -1,6 +1,7 @@
 package org.bonn.se.gui.window.wizard;
 
 import com.vaadin.data.HasValue;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.NumeralField;
 import org.bonn.se.gui.component.OrtPlzTextField;
@@ -112,7 +113,6 @@ public class WizardStudentDatenStep implements WizardStep {
                 ort = new OrtPlzTextField();
 
 
-
             PlaceHolderField place2 = new PlaceHolderField();
             studiengang = new PopUpTextField("Studiengang");
             ausbildung = new PopUpTextField("Ausbildung (optional)");
@@ -123,8 +123,25 @@ public class WizardStudentDatenStep implements WizardStep {
             abschluss.setHeight("56px");
             abschluss.setWidth("300px");
 
-            form2.addComponents(place1, strasse, ort, studiengang, place2, ausbildung, abschluss);
+            Button button = new Button();
+            button.addClickListener((Button.ClickListener) event -> {
+                Notification.show(VaadinService.getCurrent().getBaseDirectory().getAbsolutePath().toString());
 
+            });
+
+            Button button1 = new Button();
+            button1.addClickListener((Button.ClickListener) event -> {
+                Notification.show(VaadinService.getCurrent().getBaseDirectory().toString());
+
+            });
+
+            Button button2 = new Button();
+            button2.addClickListener((Button.ClickListener) event -> {
+                Notification.show(image.getSource().toString());
+
+            });
+
+            form2.addComponents(place1, strasse, ort, studiengang, place2, ausbildung, abschluss,button,button1,button2);
 
 
 
