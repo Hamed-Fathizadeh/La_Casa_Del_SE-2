@@ -124,7 +124,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
 
         binder.forField(jobtitel)
                 .asRequired("Bitte wählen Sie eine Stellenbeschreibung aus!")
-                .bind(StellenanzeigeDTO::getBeschreibung,StellenanzeigeDTO::setBeschreibung);
+                .bind(StellenanzeigeDTO::getSuchbegriff,StellenanzeigeDTO::setSuchbegriff);
 
         binder.forField(ort)
                 .asRequired("Bitte geben Sie einen Standort ein!")
