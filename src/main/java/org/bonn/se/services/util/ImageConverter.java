@@ -12,8 +12,8 @@ import java.io.File;
 public class ImageConverter {
 
 
-    private static final FileResource menu = new FileResource(new File("src/main/resources/Unknown_profil.png"));
-    private static final FileResource profil = new FileResource(new File("src/main/resources/Unknown.png"));
+    private static final FileResource menu = new FileResource(new File("img/Unknown_profil.png"));
+    private static final FileResource profil = new FileResource(new File("img/Unknown.png"));
     private static RandomString gen = new RandomString(8 );
     private static ThemeResource status_rot = new ThemeResource("img/Anzeigen/rot.png");
     private static ThemeResource status_gruen = new ThemeResource("img/Anzeigen/gruen.png");
