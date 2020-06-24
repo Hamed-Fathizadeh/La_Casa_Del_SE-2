@@ -20,6 +20,7 @@ import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.Views;
 
 
 public class RegisterUnternehmerView extends GridLayout implements View {
@@ -148,7 +149,16 @@ public class RegisterUnternehmerView extends GridLayout implements View {
 
     }
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) { this.setUp(); }
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+
+        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+        } else {
+            this.setUp();
+        }
+    }
 
 }
 
