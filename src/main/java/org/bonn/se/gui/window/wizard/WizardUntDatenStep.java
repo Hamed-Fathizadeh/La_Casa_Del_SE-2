@@ -33,7 +33,7 @@ public class WizardUntDatenStep implements WizardStep {
         public Component getContent() {
 
             GridLayout gridLayout = new GridLayout(2, 3);
-            gridLayout.setHeight("100%");
+            gridLayout.setHeightUndefined();
             gridLayout.setWidth("100%");
 
             FormLayout form1 = new FormLayout();
