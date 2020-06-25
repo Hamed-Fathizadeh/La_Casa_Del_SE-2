@@ -121,30 +121,28 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
 
         minus.addClickListener((Button.ClickListener) event -> {
 
-            gl_taetigkeiten.removeComponent(plus);
-            gl_taetigkeiten.removeComponent(minus);
-            i_r[0]--;
-            binder.removeBinding( ((StudentDateField)gl_taetigkeiten.getComponent(2,i_r[0])));
-            binder.removeBinding( ((StudentDateField)gl_taetigkeiten.getComponent(1,i_r[0])));
-            binder.removeBinding( ((RegistrationTextField)gl_taetigkeiten.getComponent(0,i_r[0])));
 
-            for (int i = 0; i < gl_taetigkeiten.getColumns() ; i++) {
-                gl_taetigkeiten.removeComponent(i,i_r[0]);
+                gl_taetigkeiten.removeComponent(plus);
+                gl_taetigkeiten.removeComponent(minus);
+                i_r[0]--;
+                binder.removeBinding(((StudentDateField) gl_taetigkeiten.getComponent(2, i_r[0])));
+                binder.removeBinding(((StudentDateField) gl_taetigkeiten.getComponent(1, i_r[0])));
+                binder.removeBinding(((RegistrationTextField) gl_taetigkeiten.getComponent(0, i_r[0])));
 
+                for (int i = 0; i < gl_taetigkeiten.getColumns(); i++) {
+                    gl_taetigkeiten.removeComponent(i, i_r[0]);
+
+                }
+                gl_taetigkeiten.addComponent(plus, i_c[0], i_r[0]);
+                gl_taetigkeiten.addComponent(minus, i_c[1], i_r[0]);
+                gl_taetigkeiten.setComponentAlignment(plus, Alignment.MIDDLE_CENTER);
+                gl_taetigkeiten.setComponentAlignment(minus, Alignment.MIDDLE_CENTER);
+                if (binder.isValid()) {
+                    taetigkeitArrayList.remove(taetigkeitArrayList.size() - 1);
+                }
+            if ((gl_taetigkeiten.getComponentCount() == 5)) {
+                gl_taetigkeiten.removeComponent(minus);
             }
-
-
-
-            gl_taetigkeiten.addComponent(plus,i_c[0],i_r[0]);
-            gl_taetigkeiten.addComponent(minus,i_c[1],i_r[0]);
-            gl_taetigkeiten.setComponentAlignment(plus,Alignment.MIDDLE_CENTER);
-            gl_taetigkeiten.setComponentAlignment(minus,Alignment.MIDDLE_CENTER);
-            if(binder.isValid()) {
-                taetigkeitArrayList.remove(taetigkeitArrayList.size() - 1);
-            }
-
-
-
 
         });
 
