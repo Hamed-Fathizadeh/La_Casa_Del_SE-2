@@ -142,24 +142,33 @@ public class BewerbungDAO extends AbstractDAO{
     }
 
 
-    public StreamResource downloadLebenslauf(int student_id) throws DatabaseException, SQLException {
+    public static StreamResource downloadLebenslauf(int student_id, String vorname, String nachname) throws DatabaseException {
 
-        ResultSet set = null;
-        Statement statement = JDBCConnection.getInstance().getStatement();
+        ResultSet set;
 
         try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("select lebenslauf from lacasa.tab_student where student_id = " + student_id);
-
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        }
+        //InputStream targetStream = null;
+        try {
             while (set.next()) {
                 InputStream   targetStream = new ByteArrayInputStream(set.getBytes(1));
 
-                return  new StreamResource((StreamResource.StreamSource) () -> targetStream, student_id+" Lebenslauf.pdf");
+                return  new StreamResource(new StreamResource.StreamSource() {
+                    @Override
+                    public InputStream getStream() {
+
+                        return targetStream;
+                    }
+                }, vorname+" "+nachname+" Lebenslauf C"+student_id+".pdf");
             }
         } catch (SQLException throwables) {
-            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+            throwables.printStackTrace();
         } finally {
-            assert set != null;
-            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return null;
@@ -168,5 +177,6 @@ public class BewerbungDAO extends AbstractDAO{
 
 
     }
+
 
 }
