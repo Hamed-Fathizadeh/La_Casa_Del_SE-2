@@ -45,6 +45,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
 
         TopPanel topPanelUnt =  new TopPanel("Studenten");
         topPanelUnt.addStyleName("toppanel");
+        topPanelUnt.setHeight("120px");
 
         FormLayout form_Unt = new FormLayout();
         form_Unt.setMargin(true);

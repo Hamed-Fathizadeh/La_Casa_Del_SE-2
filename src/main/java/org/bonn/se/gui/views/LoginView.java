@@ -29,20 +29,28 @@ public class LoginView extends VerticalLayout implements View {
 
     public void setUp(){
         this.setStyleName("toppanel");
+        this.setMargin(true);
 
         Button regStudent = new Button("Registrierung Student");
         Button regUnternehmen= new Button("Registrierung Unternehmen");
+        regStudent.setWidth("250px");
+        regStudent.setHeight("45px");
+        regUnternehmen.setWidth("280px");
+        regUnternehmen.setHeight("45px");
 
         regStudent.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.RegisterStudent));
 
         regUnternehmen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(RegisterUnternehmen));
+        Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
 
-        HorizontalLayout hLayout = new HorizontalLayout();
-        hLayout.addComponent(regStudent);
-        hLayout.addComponent(regUnternehmen);
+        GridLayout topGrid = new GridLayout(7,1);
+        topGrid.setMargin(true);
+        topGrid.addComponent(regStudent,4,0);
+        topGrid.addComponent(lPatzhalter,5,0);
+        topGrid.addComponent(regUnternehmen,6,0);
 
-        hLayout.setComponentAlignment(regStudent,Alignment.TOP_RIGHT);
-        hLayout.setComponentAlignment(regUnternehmen,Alignment.TOP_RIGHT);
+        topGrid.setComponentAlignment(regStudent,Alignment.TOP_RIGHT);
+        topGrid.setComponentAlignment(regUnternehmen,Alignment.TOP_RIGHT);
 
 
         this.setSizeFull();
@@ -60,7 +68,10 @@ public class LoginView extends VerticalLayout implements View {
 
 
         GridLayout mainGrid = new GridLayout(1, 5);
-        mainGrid.setSizeFull();
+        mainGrid.setHeightFull();
+        //mainGrid.setWidth("1000px");
+        mainGrid.setWidthFull();
+        mainGrid.setMargin(true);
         mainGrid.setStyleName("login_bg");
 
 
@@ -133,11 +144,11 @@ public class LoginView extends VerticalLayout implements View {
             }
         });
 
-        mainGrid.addComponent(hLayout,0,0,0,0);
+        mainGrid.addComponent(topGrid,0,0,0,0);
         mainGrid.addComponent(panel,0,2,0,2);
 
 
-        mainGrid.setComponentAlignment(hLayout,Alignment.TOP_RIGHT);
+        mainGrid.setComponentAlignment(topGrid,Alignment.TOP_RIGHT);
         mainGrid.setComponentAlignment(panel,Alignment.BOTTOM_CENTER);
 
         this.addComponent(mainGrid);

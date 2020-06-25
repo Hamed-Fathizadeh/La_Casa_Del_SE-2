@@ -42,6 +42,7 @@ public class RegisterStudentView extends GridLayout implements View {
 
         TopPanel topPanel_Student =  new TopPanel("Unternehmen");
         topPanel_Student.addStyleName("toppanel");
+        topPanel_Student.setHeight("120px");
 
         Label head = new Label("» Willkommen bei Lacolsco Registrieren Sie sich jetzt!");
 

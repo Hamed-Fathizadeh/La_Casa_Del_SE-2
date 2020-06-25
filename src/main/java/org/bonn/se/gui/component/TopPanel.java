@@ -9,6 +9,7 @@ import static org.bonn.se.services.util.Views.*;
 public class TopPanel  extends GridLayout {
     public TopPanel(String usertyp) {
         this.setSizeFull();
+        this.setMargin(true);
 
         String buttonTwo;
         String buttonOne;
