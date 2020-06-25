@@ -88,8 +88,10 @@ public class BewerbungWindow extends CustomWindow {
         grid1.addComponent( new Label("<h1>Berufstätigkeiten<h1>", ContentMode.HTML),0,0,1,0);
         int i = 1;
         for(Taetigkeit te: student.getTaetigkeiten()){
-            grid1.addComponent(new Label(te.getTaetigkeitName()+":  "),0,i);
-            grid1.addComponent(new Label(" "+te.getBeginn()+" - " +te.getEnde()),1,i);
+            if(te.getTaetigkeitName() != null) {
+                grid1.addComponent(new Label(te.getTaetigkeitName() + ":  "), 0, i);
+                grid1.addComponent(new Label(" " + te.getBeginn() + " - " + te.getEnde()), 1, i);
+            }
             i++;
         }
 
@@ -99,8 +101,10 @@ public class BewerbungWindow extends CustomWindow {
         grid2.addComponent( new Label("<h1>IT-Kenntnisse<h1>", ContentMode.HTML),0,0,1,0);
         i=1;
         for(Student.ITKenntnis itK: student.getItKenntnisList()){
-            grid2.addComponent(new Label(itK.getKenntnis()+":  "),0,i);
-            grid2.addComponent(new Label(" "+itK.getNiveau()),1,i);
+            if(itK.getKenntnis() != null) {
+                grid2.addComponent(new Label(itK.getKenntnis() + ":  "), 0, i);
+                grid2.addComponent(new Label(" " + itK.getNiveau()), 1, i);
+            }
             i++;
         }
 
@@ -111,8 +115,10 @@ public class BewerbungWindow extends CustomWindow {
         i=1;
 
         for(Student.SprachKenntnis sp: student.getSprachKenntnisList()){
-            grid3.addComponent(new Label(sp.getKenntnis()+":  "),0,i);
-            grid3.addComponent(new Label(" "+sp.getNiveau()),1,i);
+            if(sp.getKenntnis() != null) {
+                grid3.addComponent(new Label(sp.getKenntnis() + ":  "), 0, i);
+                grid3.addComponent(new Label(" " + sp.getNiveau()), 1, i);
+            }
             i++;
         }
 
@@ -211,13 +217,16 @@ public class BewerbungWindow extends CustomWindow {
             }
 
 
-            final TextArea textArea = new TextArea();
-            textArea.setSizeFull();
-            textArea.setValue(bewerbung.getDescription());
+            RichTextArea beschreibung_data = new RichTextArea();
+            beschreibung_data.setSizeFull();
+            beschreibung_data.setValue(bewerbung.getDescription());
+            beschreibung_data.setReadOnly(true);
+
+
 
             mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 11, 0, 11);
             mainGridLayout.addComponent(lAnschreiben, 0, 12, 0, 12);
-            mainGridLayout.addComponent(textArea, 0, 13, 5, 13);
+            mainGridLayout.addComponent(beschreibung_data, 0, 13, 5, 13);
             mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 14, 5, 14);
 
 
