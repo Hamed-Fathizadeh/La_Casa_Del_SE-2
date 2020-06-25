@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ProfilVerwaltenStudentView extends GridLayout implements View {
+public class ProfilVerwaltenStudent extends GridLayout implements View {
     static final GridLayout gridAnzeig = null;
     Button cancel;
     Button save;
@@ -222,9 +222,9 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
             try {
                 setUp();
             } catch (DatabaseException e) {
-                Logger.getLogger(ProfilVerwaltenStudentView.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(ProfilVerwaltenStudent.class.getName()).log(Level.SEVERE, null, e);
             } catch (SQLException throwables) {
-                Logger.getLogger(ProfilVerwaltenStudentView.class.getName()).log(Level.SEVERE, null, throwables);
+                Logger.getLogger(ProfilVerwaltenStudent.class.getName()).log(Level.SEVERE, null, throwables);
             }
         }
 

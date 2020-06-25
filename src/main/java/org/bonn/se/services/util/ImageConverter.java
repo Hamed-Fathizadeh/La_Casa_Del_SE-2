@@ -6,6 +6,7 @@ import com.vaadin.ui.Image;
 import net.bytebuddy.utility.RandomString;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 public class ImageConverter {
 
@@ -93,5 +94,15 @@ public class ImageConverter {
             return image;
         }
     }
+
+
+    public static StreamResource getLebenslaufasPDF(byte[] lebenslauf){
+
+        InputStream targetStream = new ByteArrayInputStream(lebenslauf);
+        return  new StreamResource((StreamResource.StreamSource) () -> targetStream, lebenslauf.toString() +" Lebenslauf.pdf");
+
+    }
+
+
 
 }
