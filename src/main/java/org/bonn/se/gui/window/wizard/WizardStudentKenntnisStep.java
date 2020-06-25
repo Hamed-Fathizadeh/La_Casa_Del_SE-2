@@ -6,17 +6,18 @@ import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.bonn.se.control.ComponentControl;
 import org.bonn.se.gui.component.ComboBoxNiveau;
 import org.bonn.se.gui.component.PopUpTextField;
 import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.DatenStudentProfil;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.teemu.wizards.WizardStep;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class WizardStudentKenntnisStep implements WizardStep {
 
@@ -35,6 +36,8 @@ public class WizardStudentKenntnisStep implements WizardStep {
             GridLayout gl_KenntnisStep = new GridLayout(5, 10);
             gl_KenntnisStep.setHeight("100%");
             gl_KenntnisStep.setWidth("100%");
+            Collection<String> itNiveauList =   ComponentControl.getInstance().getITNiveau();
+            Collection<String> spracheList = ComponentControl.getInstance().getSpracheNiveau();
 
 
 
@@ -47,7 +50,8 @@ public class WizardStudentKenntnisStep implements WizardStep {
             itKenntnisArrayList = new ArrayList<>();
             PopUpTextField itKenntnis1 = new PopUpTextField("Bsp. MS-Office");
             itKenntnis1.setWidth("200px");
-            ComboBoxNiveau niveau1 = new ComboBoxNiveau(DatenStudentProfil.getCollection());
+            ComboBoxNiveau niveau1 = new ComboBoxNiveau(itNiveauList);
+
 
 
 
@@ -93,7 +97,7 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
                     gl_KenntnisStep.addComponent(new PopUpTextField("Bsp. MS-Office"), i_c[0], i_r[0]);
                     gl_KenntnisStep.getComponent(i_c[0], i_r[0]).setWidth("200px");
-                    gl_KenntnisStep.addComponent(new ComboBoxNiveau(DatenStudentProfil.getCollection3()), i_c[1], i_r[0]);
+                    gl_KenntnisStep.addComponent(new ComboBoxNiveau(itNiveauList), i_c[1], i_r[0]);
                     gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(i_c[0], i_r[0]), Alignment.MIDDLE_CENTER);
                     gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(i_c[1], i_r[0]), Alignment.MIDDLE_CENTER);
                     ((PopUpTextField) gl_KenntnisStep.getComponent(i_c[0], i_r[0])).selectAll();
@@ -160,7 +164,7 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
             sprachKenntnisArrayList = new ArrayList<>();
 
-            ComboBoxNiveau niveau21 = new ComboBoxNiveau(DatenStudentProfil.getCollection2());
+            ComboBoxNiveau niveau21 = new ComboBoxNiveau(spracheList);
 
 
 
@@ -207,7 +211,7 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
                     gl_KenntnisStep.addComponent(new PopUpTextField("Bsp. Englisch"), j_c[3], j_r[0]);
                     gl_KenntnisStep.getComponent(j_c[3], j_r[0]).setWidth("200px");
-                    gl_KenntnisStep.addComponent(new ComboBoxNiveau(DatenStudentProfil.getCollection2()), j_c[4], j_r[0]);
+                    gl_KenntnisStep.addComponent(new ComboBoxNiveau(spracheList), j_c[4], j_r[0]);
                     gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(j_c[3], j_r[0]), Alignment.MIDDLE_CENTER);
                     gl_KenntnisStep.setComponentAlignment(gl_KenntnisStep.getComponent(j_c[4], j_r[0]), Alignment.MIDDLE_CENTER);
                     ((PopUpTextField) gl_KenntnisStep.getComponent(j_c[3], j_r[0])).selectAll();

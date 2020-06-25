@@ -1,17 +1,8 @@
 package junit;
 
-import junit.util.UserTestFactory;
-import org.bonn.se.model.dao.BrancheDAO;
-import org.bonn.se.model.objects.entitites.Student;
-import org.bonn.se.services.db.exception.DatabaseException;
-import org.junit.Assert;
-import org.junit.Test;
-
-import java.sql.SQLException;
-
 public class BrancheDAOTest {
 
-
+/*
     BrancheDAO bd= BrancheDAO.getInstance();
     BrancheDAO bd1= new BrancheDAO() ;
 
@@ -36,5 +27,7 @@ public class BrancheDAOTest {
 
 
     }
+
+ */
 
 }

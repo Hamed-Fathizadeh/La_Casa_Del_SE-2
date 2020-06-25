@@ -6,10 +6,10 @@ import java.util.Collection;
 
 public class ComboBoxNiveau  extends ComboBox<String> {
 
-    public ComboBoxNiveau(Collection<String> collection){
-        super(null,collection);
+    public ComboBoxNiveau(Collection<String> niveau){
         this.setPlaceholder("Niveau");
         this.setHeight("56px");
         this.setWidth("180px");
+        this.setItems(niveau);
     }
 }
