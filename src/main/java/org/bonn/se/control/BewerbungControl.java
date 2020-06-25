@@ -57,8 +57,8 @@ public class BewerbungControl {
 
     }
 
-    public static StreamResource downloadLebenslauf(int studentId) throws DatabaseException, SQLException {
-        return BewerbungDAO.getInstance().downloadLebenslauf(studentId);
+    public static StreamResource downloadLebenslauf(int studentId, String vorname, String nachname) throws DatabaseException, SQLException {
+        return BewerbungDAO.getInstance().downloadLebenslauf(studentId, vorname, nachname);
     }
 
     public static void checkDeletedAnzeige() throws DatabaseException, SQLException {

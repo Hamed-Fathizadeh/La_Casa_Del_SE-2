@@ -17,6 +17,6 @@ public class BewerbungDAOTest {
          }
          else
              Assertions.assertFalse(bewerb.markierungAendern(2));
-        Assertions.assertNull(bewerb.downloadLebenslauf(16));
+        Assertions.assertNull(bewerb.downloadLebenslauf(16,"Markus","Müller"));
     }
 }

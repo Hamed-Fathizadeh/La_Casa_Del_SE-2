@@ -263,18 +263,27 @@ public class BewerbungWindow extends CustomWindow {
                 BewerbungWindow.this.close();
             });
 
-            try {
 
-                StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID());
-                FileDownloader fileDownloader = new FileDownloader(myResource);
-                fileDownloader.extend(downloadLebnslauf);
-            } catch (DatabaseException | SQLException e) {
-                e.printStackTrace();
+
+
+                 if(bewerbung != null) {
+                try {
+
+                    StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID(),bewerbung.getStudent_vorname(),bewerbung.getStudent_nachname());
+                    FileDownloader fileDownloader = new FileDownloader(myResource);
+                    fileDownloader.extend(downloadLebnslauf);
+                } catch (DatabaseException | SQLException e) {
+                    e.printStackTrace();
+                }
             }
 
-            downloadLebnslauf.addClickListener((Button.ClickListener) event -> {
+            downloadLebnslauf.addClickListener(new Button.ClickListener() {
+                @Override
+                public void buttonClick(Button.ClickEvent event) {
 
+                }
             });
+
 
 
 
