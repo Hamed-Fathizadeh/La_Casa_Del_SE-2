@@ -2,6 +2,7 @@ package org.bonn.se.gui.window.wizard;
 
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.*;
+import org.bonn.se.control.ComponentControl;
 import org.bonn.se.gui.component.NumeralField;
 import org.bonn.se.gui.component.OrtPlzTextField;
 import org.bonn.se.gui.component.PlaceHolderField;
@@ -10,7 +11,6 @@ import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.DatenStudentProfil;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.easyuploads.UploadField;
@@ -122,10 +122,11 @@ public class WizardStudentDatenStep implements WizardStep {
             ausbildung = new PopUpTextField("Ausbildung (optional)");
 
 
-            abschluss = new ComboBox<>("", DatenStudentProfil.getCollection());
+            abschluss = new ComboBox<>("");
             abschluss.setPlaceholder("Wähle den höchsten Abschluss...");
             abschluss.setHeight("56px");
             abschluss.setWidth("300px");
+            abschluss.setItems(ComponentControl.getInstance().getAbschluss());
 
             form2.addComponents(place1, strasse, ort, studiengang, place2, ausbildung, abschluss);
 

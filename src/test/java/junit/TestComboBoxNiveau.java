@@ -1,12 +1,12 @@
 package junit;
 
 
+import org.bonn.se.control.ComponentControl;
 import org.bonn.se.gui.component.ComboBoxNiveau;
-import org.bonn.se.services.util.DatenStudentProfil;
-
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.util.Collection;
 
 
 public class TestComboBoxNiveau {
@@ -16,10 +16,10 @@ public class TestComboBoxNiveau {
 
         String caption = "hallo";
 
-
+        Collection<String> abschluss = ComponentControl.getInstance().getAbschluss();
 
         Assertions.assertDoesNotThrow(
-                () -> new ComboBoxNiveau(DatenStudentProfil.getCollection())
+                () -> new ComboBoxNiveau(abschluss)
         );
     }
 }

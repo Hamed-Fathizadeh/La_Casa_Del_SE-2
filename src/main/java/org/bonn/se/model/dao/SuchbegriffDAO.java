@@ -53,4 +53,119 @@ public class SuchbegriffDAO extends AbstractDAO {
         return suchbegriff_list;
     }
 
+
+    public List<String> getAbschluss() throws DatabaseException, SQLException {
+
+        ResultSet set = null;
+        List<String> liste_abschluss = new ArrayList<>();
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("SELECT * FROM lacasa.tab_hoester_abschluss");
+            while (true) {
+                assert set != null;
+                if (!set.next()) break;
+                liste_abschluss.add(set.getString(1));
+            }
+        }catch (SQLException  throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+            assert set != null;
+            set.close();
+            JDBCConnection.getInstance().closeConnection();
+        }
+        return liste_abschluss;
+    }
+
+    public List<String> getSpracheNiveau() throws DatabaseException, SQLException {
+
+        ResultSet set = null;
+        List<String> liste_sprache = new ArrayList<>();
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("SELECT * FROM lacasa.tab_niveau_sprache");
+            while (true) {
+                assert set != null;
+                if (!set.next()) break;
+                liste_sprache.add(set.getString(1));
+            }
+        }catch (SQLException  throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+            assert set != null;
+            set.close();
+            JDBCConnection.getInstance().closeConnection();
+        }
+        return liste_sprache;
+    }
+
+    public List<String> getITNiveau() throws DatabaseException, SQLException {
+
+        ResultSet set = null;
+        List<String> liste_sprache = new ArrayList<>();
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("SELECT * FROM lacasa.tab_niveau_it");
+            while (true) {
+                assert set != null;
+                if (!set.next()) break;
+                liste_sprache.add(set.getString(1));
+            }
+        }catch (SQLException  throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+            assert set != null;
+            set.close();
+            JDBCConnection.getInstance().closeConnection();
+        }
+        return liste_sprache;
+    }
+
+    public List<String> getEinstellungsart() throws DatabaseException, SQLException {
+
+        ResultSet set = null;
+        List<String> liste_sprache = new ArrayList<>();
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("SELECT * FROM lacasa.tab_art");
+            while (true) {
+                assert set != null;
+                if (!set.next()) break;
+                liste_sprache.add(set.getString(1));
+            }
+        }catch (SQLException  throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+            assert set != null;
+            set.close();
+            JDBCConnection.getInstance().closeConnection();
+        }
+        return liste_sprache;
+    }
+
+    public List<String> getBranche() throws SQLException, DatabaseException {
+
+        ResultSet set = null;
+        List<String> liste_branche = new ArrayList<>();
+
+        Statement statement = JDBCConnection.getInstance().getStatement();
+        try {
+            set = statement.executeQuery("SELECT name FROM lacasa.tab_branche ");
+            while (true) {
+                assert set != null;
+                if (!set.next()) break;
+                liste_branche.add(set.getString(1));
+            }
+        } catch (SQLException throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+            assert set != null;
+            set.close();
+
+            JDBCConnection.getInstance().closeConnection();
+        }
+        return liste_branche;
+
+    }
+
+
 }

@@ -6,6 +6,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.bonn.se.control.ComponentControl;
 import org.bonn.se.control.JobTitelControl;
 import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.RegistrationTextField;
@@ -13,7 +14,6 @@ import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.DatenUnternehmenProfil;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
@@ -66,7 +66,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
         beginn.setPlaceholder("Beginn");
 
         ComboBox<String> art = new ComboBox<>();
-        art.setItems(DatenUnternehmenProfil.getEinstellungsart());
+        art.setItems(ComponentControl.getInstance().getEinstellungsArt());
         art.setHeight("56px");
         art.setWidth("350px");
         art.setPlaceholder("Art der Einstellung");

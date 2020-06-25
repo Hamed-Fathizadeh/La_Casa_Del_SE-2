@@ -2,6 +2,7 @@ package org.bonn.se.gui.window.wizard;
 
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.*;
+import org.bonn.se.control.ComponentControl;
 import org.bonn.se.gui.component.NumeralField;
 import org.bonn.se.gui.component.OrtPlzTextField;
 import org.bonn.se.gui.component.PlaceHolderField;
@@ -10,7 +11,6 @@ import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.DatenUnternehmenProfil;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.easyuploads.UploadField;
@@ -43,7 +43,7 @@ public class WizardUntDatenStep implements WizardStep {
 
             uploadLogo = new UploadField();
             uploadLogo.setDisplayUpload(false);
-            uploadLogo.setButtonCaption("Profilbild hochladen");
+            uploadLogo.setButtonCaption("Firmenlogo hochladen");
             uploadLogo.setClearButtonVisible(true);
             uploadLogo.setAcceptFilter("image/*");
 
@@ -73,7 +73,7 @@ public class WizardUntDatenStep implements WizardStep {
             PlaceHolderField place2 = new PlaceHolderField();
 
 
-            branche = new ComboBox<>("", DatenUnternehmenProfil.getBranche1());
+            branche = new ComboBox<>("", ComponentControl.getInstance().getBranche());
             branche.setPlaceholder("Branche");
             branche.setHeight("56px");
             branche.setWidth("300px");
