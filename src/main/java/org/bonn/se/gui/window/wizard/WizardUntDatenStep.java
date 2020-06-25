@@ -43,7 +43,7 @@ public class WizardUntDatenStep implements WizardStep {
 
             uploadLogo = new UploadField();
             uploadLogo.setDisplayUpload(false);
-            uploadLogo.setButtonCaption("Profilbild hochladen");
+            uploadLogo.setButtonCaption("Firmenlogo hochladen");
             uploadLogo.setClearButtonVisible(true);
             uploadLogo.setAcceptFilter("image/*");
 
