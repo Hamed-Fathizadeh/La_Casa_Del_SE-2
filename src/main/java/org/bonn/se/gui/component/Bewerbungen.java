@@ -135,7 +135,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             this.addColumn(BewerbungDTO::getUnternehmenName).setCaption("Unternehmen").setWidth(150);
             this.addColumn(BewerbungDTO::getTitel).setCaption("Titel");
             this.addColumn(BewerbungDTO::getDatum).setCaption("Beginn");
-            this.addColumn(be -> (be.getStatus() == 1 || be.getStatus() == 9 ? "gesendet" : be.getStatus() == 2 ? "abgelehnt" :  "gesendet")).setCaption("Status");
+            this.addColumn(be -> (be.getStatus() == 1 || be.getStatus() == 9 ? "gesendet" : be.getStatus() == 2 ? "zugesagt" :  "abgelehnt")).setCaption("Status");
             this.addComponentColumn(p -> {
                 RatingStars rating = new RatingStars();
                 rating.setMaxValue(5);
