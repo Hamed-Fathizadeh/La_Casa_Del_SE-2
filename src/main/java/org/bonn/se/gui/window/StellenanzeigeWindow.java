@@ -54,8 +54,9 @@ public class StellenanzeigeWindow extends Window {
         Panel panel = new Panel();
         panel.setWidthFull();
 
-        GridLayout gridLayout = new GridLayout(5, 15);
-        gridLayout.setSizeFull();
+        GridLayout gridLayout = new GridLayout(5, 16);
+        gridLayout.setWidthFull();
+        gridLayout.setHeightUndefined();
         gridLayout.setMargin(true);
 
         Image logo;
@@ -67,7 +68,7 @@ public class StellenanzeigeWindow extends Window {
 
         Label firmenname = new Label("<b>Unternehmensname</b>",ContentMode.HTML);
         Label branche = new Label("<b>Branche</b>",ContentMode.HTML);
-        Label art = new Label("<b>Art der Einstellung:</b>",ContentMode.HTML);
+        Label art = new Label("<b>Art der Einstellung</b>",ContentMode.HTML);
         Label ort= new Label("<b>Ort</b>",ContentMode.HTML);
         Label bundesland = new Label("<b>Bundesland</b>",ContentMode.HTML);
         Label information = new Label("<h3><b><font color=\"blue\">Informationen über das Unternehmen</font></b></h3>",ContentMode.HTML);
@@ -77,7 +78,7 @@ public class StellenanzeigeWindow extends Window {
         Label ansprechpartner = new Label("<b>Ansprechpartner/in</b>",ContentMode.HTML);
         Label email = new Label("<b>E-Mail</b>",ContentMode.HTML);
         Label kontaktnummer1 = new Label("<b>Kontaktnummer</b>",ContentMode.HTML);
-        Label stellenbeschreibung = new Label("<b>Stellenbeschreibung</b>",ContentMode.HTML);
+        Label stellenbeschreibung = new Label("<b>Stellenbezeichnung</b>",ContentMode.HTML);
 
 
         Label titel = new Label("<h2><b>"+stellenanzeige.getTitel()+"</font></b></h3>" ,ContentMode.HTML);
@@ -86,7 +87,7 @@ public class StellenanzeigeWindow extends Window {
 
         Label firmenname_data = new Label(unternehmen_data.getCname());
         Label branche_data = new Label(unternehmen_data.getBranche());
-        Label art_data = new Label(stellenanzeige.getSuchbegriff());
+        Label art_data = new Label(stellenanzeige.getArt());
         Label ort_data = new Label(stellenanzeige.getStandort());
         Label bundesland_data = new Label(stellenanzeige.getBundesland());
         Label beginn_data = new Label(String.valueOf(stellenanzeige.getDatum()));
@@ -106,11 +107,11 @@ public class StellenanzeigeWindow extends Window {
         gridLayout.addComponent(logo,0,1);
         gridLayout.addComponent(unternehmensbeschreibung_label,0,2);
         gridLayout.addComponent(unternehmensbeschreibung,0,3,1,6);
-
-        gridLayout.addComponent(art,0,8);
-        gridLayout.addComponent(ort,0,9);
-        gridLayout.addComponent(bundesland,0,10);
-        gridLayout.addComponent(beginn,0,11);
+        gridLayout.addComponent(stellenbeschreibung,0,8);
+        gridLayout.addComponent(art,0,9);
+        gridLayout.addComponent(ort,0,10);
+        gridLayout.addComponent(bundesland,0,11);
+        gridLayout.addComponent(beginn,0,12);
 
         gridLayout.addComponent(titel,1,1,4,1);
         gridLayout.addComponent(information,3,2,4,2);
@@ -125,11 +126,11 @@ public class StellenanzeigeWindow extends Window {
 
 
 
-
-        gridLayout.addComponent(art_data,1,8);
-        gridLayout.addComponent(ort_data,1,9);
-        gridLayout.addComponent(bundesland_data,1,10);
-        gridLayout.addComponent(beginn_data,1,11);
+        gridLayout.addComponent(suchbegriff_data,1,8);
+        gridLayout.addComponent(art_data,1,9);
+        gridLayout.addComponent(ort_data,1,10);
+        gridLayout.addComponent(bundesland_data,1,11);
+        gridLayout.addComponent(beginn_data,1,12);
         gridLayout.addComponent(firmenname_data,4,3);
         gridLayout.addComponent(branche_data,4,4);
         gridLayout.addComponent(hauptsitz_data,4,5);
@@ -139,8 +140,9 @@ public class StellenanzeigeWindow extends Window {
 
 
 
-
-        gridLayout.addComponent(beschreibung_data,0,13,4,13);
+        gridLayout.addComponent(new Label("&nbsp", ContentMode.HTML),0,13,4,13);
+        gridLayout.addComponent(beschreibung_data,0,14,4,15);
+        gridLayout.setComponentAlignment(beschreibung_data,Alignment.MIDDLE_CENTER);
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
 
