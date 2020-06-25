@@ -155,7 +155,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
             this.addColumn(BewerbungDTO::getStudent_nachname).setCaption("Nachname");
             this.addColumn(BewerbungDTO::getStudent_studiengang).setCaption("Studiengang");
             this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
-            this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
+            this.addColumn(BewerbungDTO::getStudent_ausbildung).setCaption("Ausbildung");
             this.addComponentColumn(bew -> (bew.isBewerbung_markiert() ? ImageConverter.getMarkierung() : null)).setCaption("Markiert");
             this.addComponentColumn(bew -> (bew.getStatus() == 9 ? new Label(" <style>p { color:red ; font-weight:bold;  font-size: 18px; }</style><p>Neu</p>", ContentMode.HTML): null)).setCaption("");
 
