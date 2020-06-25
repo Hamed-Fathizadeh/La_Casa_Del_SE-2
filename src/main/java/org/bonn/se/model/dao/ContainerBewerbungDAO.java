@@ -27,6 +27,7 @@ public class ContainerBewerbungDAO {
         try {
               String limit = " ";
               if(str.equals("Alle")) {
+
               }else{
                   limit = "LIMIT 5";
               }

@@ -7,8 +7,10 @@ import com.vaadin.shared.ui.grid.HeightMode;
 import com.vaadin.ui.*;
 import org.bonn.se.gui.component.Bewerbungen;
 import org.bonn.se.gui.component.TopPanelUser;
+import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.entitites.ContainerLetztenBewerbungen;
+import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
@@ -33,7 +35,8 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
 
 
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
-        containerBewerbungen.load("Alle");
+        Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student));
+        containerBewerbungen.load(student.getEmail());
         Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"AlleBewerbungenView");
         bewerbungen.setHeightMode(HeightMode.UNDEFINED);
 
