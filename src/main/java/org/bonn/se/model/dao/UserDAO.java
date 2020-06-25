@@ -180,6 +180,7 @@ public class UserDAO  extends AbstractDAO {
                 unternehmen.setVorname(set.getString("vorname"));
                 unternehmen.setNachname(set.getString("nachname"));
                 unternehmen.setKontaktnummer(set.getString("kontakt_nr"));
+                unternehmen.setBranche(set.getString("branch_name"));
 
                 return unternehmen;
             }

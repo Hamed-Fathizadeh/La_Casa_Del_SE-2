@@ -85,7 +85,7 @@ public class StellenanzeigeWindow extends Window {
         Label unternehmensbeschreibung = new Label(unternehmen_data.getDescription(),ContentMode.HTML);
 
         Label firmenname_data = new Label(unternehmen_data.getCname());
-        Label branche_data = new Label("Brnache");
+        Label branche_data = new Label(unternehmen_data.getBranche());
         Label art_data = new Label(stellenanzeige.getSuchbegriff());
         Label ort_data = new Label(stellenanzeige.getStandort());
         Label bundesland_data = new Label(stellenanzeige.getBundesland());
