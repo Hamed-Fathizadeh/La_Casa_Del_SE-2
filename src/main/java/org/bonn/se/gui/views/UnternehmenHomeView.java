@@ -131,7 +131,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
             UI.getCurrent().access(() -> {
 
                 containerMeinAnzeigen.loadNeuBewerbungen(unternehmen);
-                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList<StellenanzeigeDTO>) containerMeinAnzeigen.getListe());
+               // ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList<StellenanzeigeDTO>) containerMeinAnzeigen.getListe());
                 Anzeigen<StellenanzeigeDTO> gAnzeigenNeuBewerbungen = new Anzeigen<>("Alle", containerMeinAnzeigen.getListe());
                 gAnzeigenNeuBewerbungen.setSizeFull();
                 gAnzeigenNeuBewerbungen.removeColumn("Status");

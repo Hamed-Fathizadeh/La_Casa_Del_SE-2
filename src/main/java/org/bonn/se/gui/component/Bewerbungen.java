@@ -113,8 +113,6 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 }
                 UI.getCurrent().addWindow(bewerbungWindow);
 
-
-
         }
         });
 

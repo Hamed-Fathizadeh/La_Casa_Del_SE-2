@@ -54,7 +54,7 @@ public class StellenanzeigeWindow extends Window {
         Panel panel = new Panel();
         panel.setWidthFull();
 
-        GridLayout gridLayout = new GridLayout(5, 16);
+        GridLayout gridLayout = new GridLayout(5, 17);
         gridLayout.setWidthFull();
         gridLayout.setHeightUndefined();
         gridLayout.setMargin(true);
@@ -141,7 +141,7 @@ public class StellenanzeigeWindow extends Window {
 
 
         gridLayout.addComponent(new Label("&nbsp", ContentMode.HTML),0,13,4,13);
-        gridLayout.addComponent(beschreibung_data,0,14,4,15);
+        gridLayout.addComponent(beschreibung_data,0,14,4,14);
         gridLayout.setComponentAlignment(beschreibung_data,Alignment.MIDDLE_CENTER);
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
@@ -203,7 +203,6 @@ public class StellenanzeigeWindow extends Window {
                 Button save = new Button("Speichern");
                 RichTextArea richTextArea = new RichTextArea();
                 richTextArea.setValue(beschreibung_data.getValue());
-
                 richTextArea.setSizeFull();
 
                 TextField titel_bearbeiten = new TextField("");
@@ -281,7 +280,9 @@ public class StellenanzeigeWindow extends Window {
 
                     bewerben = new Button("Bewerben");
 
-                    gridLayout.addComponent(bewerben, 4, 14, 4, 14);
+                    gridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 4, 15, 4, 15);
+                    gridLayout.addComponent(bewerben, 4, 16, 4, 16);
+                    gridLayout.setComponentAlignment(bewerben,Alignment.BOTTOM_RIGHT);
 
                     bewerben.addClickListener((Button.ClickListener) event -> {
                         if (((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).hasLebenslauf()) {
