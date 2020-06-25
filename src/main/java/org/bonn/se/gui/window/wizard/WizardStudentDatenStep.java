@@ -28,7 +28,7 @@ public class WizardStudentDatenStep implements WizardStep {
         UploadField uploadProfil;
         Image image = ImageConverter.getUnknownProfilImage();
         UploadField lebenslauf;
-
+        Label filename;
 
         @Override
         public String getCaption() {
@@ -89,13 +89,18 @@ public class WizardStudentDatenStep implements WizardStep {
             lebenslauf = new UploadField();
             lebenslauf.setButtonCaption("Lebenslauf hochladen");
             lebenslauf.setDisplayUpload(false);
-            Label filename = new Label(lebenslauf.getLastFileName());
+
+            filename = new Label(lebenslauf.getLastFileName());
+
             lebenslauf.addValueChangeListener((HasValue.ValueChangeListener<byte[]>) event -> {
-                form1.removeComponent(filename);
-                Label filename1 = new Label(lebenslauf.getLastFileName());
-                form1.addComponent(filename1,5);
-            }
-            );
+                if(lebenslauf.getValue() == null) {
+                    form1.removeComponent(filename);
+                } else {
+                    form1.removeComponent(filename);
+                    filename = new Label(lebenslauf.getLastFileName());
+                    form1.addComponent(filename, 5);
+                }
+            });
 
 
 
