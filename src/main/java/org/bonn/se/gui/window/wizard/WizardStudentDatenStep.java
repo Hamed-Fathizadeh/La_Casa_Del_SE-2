@@ -50,7 +50,7 @@ public class WizardStudentDatenStep implements WizardStep {
             uploadProfil.setDisplayUpload(false);
 
             uploadProfil.setButtonCaption("Profilbild hochladen");
-            uploadProfil.setClearButtonVisible(false);
+            uploadProfil.setClearButtonVisible(true);
 
             uploadProfil.setAcceptFilter("image/*");
 
