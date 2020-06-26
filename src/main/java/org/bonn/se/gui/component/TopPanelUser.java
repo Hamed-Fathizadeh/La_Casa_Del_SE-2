@@ -66,13 +66,21 @@ public class TopPanelUser extends GridLayout {
 
 
 
-        item1.addItem("Mein Profil", VaadinIcons.USER, (MenuBar.Command) menuItem -> MyUI.getCurrent().getNavigator().navigateTo(Views.ProfilVerwaltenStudent));
+
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            item1.addItem("Home", VaadinIcons.HOME, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView));
+            item1.addItem("Mein Profil", VaadinIcons.USER, (MenuBar.Command) menuItem -> MyUI.getCurrent().getNavigator().navigateTo(Views.ProfilVerwaltenStudent));
             item1.addItem("Neuigkeiten", VaadinIcons.INFO_CIRCLE, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
+            item1.addItem("Settings", VaadinIcons.COG, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.Settings));
+            item1.addSeparator();
+            item1.addItem("Logout", VaadinIcons.SIGN_OUT, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
+        }else {
+            item1.addItem("Home", VaadinIcons.HOME, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView));
+            item1.addItem("Mein Profil", VaadinIcons.USER, (MenuBar.Command) menuItem -> MyUI.getCurrent().getNavigator().navigateTo(Views.ProfilVerwaltenStudent));
+            item1.addItem("Settings", VaadinIcons.COG, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.Settings));
+            item1.addSeparator();
+            item1.addItem("Logout", VaadinIcons.SIGN_OUT, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
         }
-        item1.addItem("Settings", VaadinIcons.COG, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.Settings));
-        item1.addSeparator();
-        item1.addItem("Logout", VaadinIcons.SIGN_OUT, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
         this.addComponent(bar,9,0,9,0);
         this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
 
