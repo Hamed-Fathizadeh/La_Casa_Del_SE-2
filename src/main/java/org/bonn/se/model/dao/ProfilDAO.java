@@ -267,6 +267,7 @@ public class ProfilDAO extends AbstractDAO{
                 student.setAdresse(adresse);
                 student.setPicture(set.getBytes("picture"));
                 student.setHasLebenslauf(set.getBytes("lebenslauf") != null);
+                student.setLebenslauf(set.getBytes("lebenslauf"));
             }
             } catch (SQLException  throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
@@ -357,7 +358,10 @@ public class ProfilDAO extends AbstractDAO{
                 "SET   g_datum = ?, studiengang = ?, ausbildung =?, " +
                 "kontakt_nr = ?, picture = ?, lebenslauf = ?, hoester_abschluss = ? WHERE email = ?; " +
                 "UPDATE lacasa.tab_adresse SET strasse = ?, plz = ?, ort = ?, bundesland = ? WHERE email = ?;" +
-                "DELETE FROM lacasa.tab_taetigkeiten WHERE student_id = (SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE email = ?)";
+                "DELETE FROM lacasa.tab_taetigkeiten WHERE student_id = (SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE email = ?);"+
+                "DELETE FROM lacasa.tab_it_kenntnisse WHERE student_id = (SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE email = ?);"+
+                "DELETE FROM lacasa.tab_sprachen WHERE student_id = (SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE email = ?);";
+
 
         PreparedStatement statement = getPreparedStatement(sql);
 
@@ -387,9 +391,12 @@ public class ProfilDAO extends AbstractDAO{
 
             statement.setString(16,student.getEmail());
             statement.setString(17,student.getEmail());
+            statement.setString(18,student.getEmail());
+            statement.setString(19,student.getEmail());
 
             statement.executeUpdate();
             createStudentProfil2(student);
+            createStudentProfil3(student);
         }catch (SQLException ex) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");
