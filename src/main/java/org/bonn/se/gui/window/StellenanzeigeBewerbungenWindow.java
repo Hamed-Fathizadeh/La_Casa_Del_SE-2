@@ -71,6 +71,7 @@ public class StellenanzeigeBewerbungenWindow extends CustomWindow {
             tabSheet.addStyleName(ValoTheme.TABSHEET_FRAMED);
             tabSheet.addStyleName(ValoTheme.TABSHEET_PADDED_TABBAR);
 
+
             tabSheet.addTab(bewerbungen,"Alle "+bewerbungen.getData().size());
             tabSheet.addTab(bewerbungenMakiert,"Markierte "+bewerbungenMakiert.getData().size());
             tabSheet.addTab(bewerbungenZugesagt,"Zugesagt "+bewerbungenZugesagt.getData().size());

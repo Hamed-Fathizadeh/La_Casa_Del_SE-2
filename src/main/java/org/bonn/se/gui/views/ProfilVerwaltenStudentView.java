@@ -158,7 +158,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         grid.setReadOnly(true);
         grid.addComponent(grid.getLink());
         grid.setLink(new Link("Lebenslauf herunterladen", ImageConverter.getLebenslaufasPDF(
-                ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getLebenslauf())));
+                ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getLebenslauf(),"Lebenslauf")));
         grid2.setReadOnly(true);
         }
 

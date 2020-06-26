@@ -114,7 +114,7 @@ public class StudentKenntnisView extends GridLayout {
 
 
             final int[] i_c = {0,1,2,3,4};
-            final int[] i_r = {3};
+            final int[] kenntnisIR = {3};
             plus.addClickListener((Button.ClickListener) event -> {
 
                 if (binder.isValid()) {
@@ -129,27 +129,27 @@ public class StudentKenntnisView extends GridLayout {
                     this.removeComponent(plus);
                     this.removeComponent(minus);
 
-                    this.addComponent(new PopUpTextField("Bsp. MS-Office"), i_c[0], i_r[0]);
-                    this.getComponent(i_c[0], i_r[0]).setWidth("200px");
-                    this.addComponent(new ComboBoxNiveau(itNiveauList), i_c[1], i_r[0]);
-                    this.setComponentAlignment(this.getComponent(i_c[0], i_r[0]), Alignment.MIDDLE_CENTER);
-                    this.setComponentAlignment(this.getComponent(i_c[1], i_r[0]), Alignment.MIDDLE_CENTER);
-                    ((PopUpTextField) this.getComponent(i_c[0], i_r[0])).selectAll();
+                    this.addComponent(new PopUpTextField("Bsp. MS-Office"), i_c[0], kenntnisIR[0]);
+                    this.getComponent(i_c[0], kenntnisIR[0]).setWidth("200px");
+                    this.addComponent(new ComboBoxNiveau(itNiveauList), i_c[1], kenntnisIR[0]);
+                    this.setComponentAlignment(this.getComponent(i_c[0], kenntnisIR[0]), Alignment.MIDDLE_CENTER);
+                    this.setComponentAlignment(this.getComponent(i_c[1], kenntnisIR[0]), Alignment.MIDDLE_CENTER);
+                    ((PopUpTextField) this.getComponent(i_c[0], kenntnisIR[0])).selectAll();
 
-                    binder.forField((PopUpTextField) this.getComponent(i_c[0], i_r[0]))
+                    binder.forField((PopUpTextField) this.getComponent(i_c[0], kenntnisIR[0]))
                             .asRequired("Bitte Feld ausfüllen!")
                             .bind(Student.ITKenntnis::getKenntnis, Student.ITKenntnis::setKenntnis);
-                    binder.forField((ComboBoxNiveau) this.getComponent(i_c[1], i_r[0]))
+                    binder.forField((ComboBoxNiveau) this.getComponent(i_c[1], kenntnisIR[0]))
                             .asRequired("Bitte Niveau ausfüllen")
                             .bind(Student.ITKenntnis::getNiveau, Student.ITKenntnis::setNiveau);
 
 
-                    if (i_r[0] <= 4) {
-                        this.addComponent(plus, i_c[0], i_r[0] + 1);
+                    if (kenntnisIR[0] <= 4) {
+                        this.addComponent(plus, i_c[0], kenntnisIR[0] + 1);
                         this.setComponentAlignment(plus, Alignment.MIDDLE_CENTER);
                     }
-                    i_r[0]++;
-                    this.addComponent(minus, i_c[1], i_r[0]);
+                    kenntnisIR[0]++;
+                    this.addComponent(minus, i_c[1], kenntnisIR[0]);
                     this.setComponentAlignment(minus, Alignment.MIDDLE_CENTER);
 
 
@@ -164,20 +164,20 @@ public class StudentKenntnisView extends GridLayout {
 
                 this.removeComponent(plus);
                 this.removeComponent(minus);
-                i_r[0]--;
-                binder.removeBinding( (PopUpTextField) this.getComponent(i_c[0], i_r[0]));
-                binder.removeBinding( ((ComboBoxNiveau) this.getComponent(i_c[1], i_r[0])));
+                kenntnisIR[0]--;
+                binder.removeBinding( (PopUpTextField) this.getComponent(i_c[0], kenntnisIR[0]));
+                binder.removeBinding( ((ComboBoxNiveau) this.getComponent(i_c[1], kenntnisIR[0])));
 
                 for (int i = 0; i <= 1 ; i++) {
-                    this.removeComponent(i,i_r[0]);
+                    this.removeComponent(i,kenntnisIR[0]);
 
                 }
 
 
 
-                this.addComponent(plus,i_c[0],i_r[0]);
-                if(i_r[0] != 3) {
-                    this.addComponent(minus, i_c[1], i_r[0]);
+                this.addComponent(plus,i_c[0],kenntnisIR[0]);
+                if(kenntnisIR[0] != 3) {
+                    this.addComponent(minus, i_c[1], kenntnisIR[0]);
                     this.setComponentAlignment(minus,Alignment.MIDDLE_CENTER);
 
                 }

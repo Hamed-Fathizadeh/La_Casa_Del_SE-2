@@ -79,14 +79,14 @@ public class SuchbegriffDAO extends AbstractDAO {
     public List<String> getSpracheNiveau() throws DatabaseException, SQLException {
 
         ResultSet set = null;
-        List<String> liste_sprache = new ArrayList<>();
+        List<String> listeSpracheNiveau = new ArrayList<>();
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT * FROM lacasa.tab_niveau_sprache");
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
-                liste_sprache.add(set.getString(1));
+                listeSpracheNiveau.add(set.getString(1));
             }
         }catch (SQLException  throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
@@ -95,20 +95,20 @@ public class SuchbegriffDAO extends AbstractDAO {
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }
-        return liste_sprache;
+        return listeSpracheNiveau;
     }
 
     public List<String> getITNiveau() throws DatabaseException, SQLException {
 
         ResultSet set = null;
-        List<String> liste_sprache = new ArrayList<>();
+        List<String> listeITNiveau = new ArrayList<>();
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT * FROM lacasa.tab_niveau_it");
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
-                liste_sprache.add(set.getString(1));
+                listeITNiveau.add(set.getString(1));
             }
         }catch (SQLException  throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
@@ -117,20 +117,20 @@ public class SuchbegriffDAO extends AbstractDAO {
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }
-        return liste_sprache;
+        return listeITNiveau;
     }
 
     public List<String> getEinstellungsart() throws DatabaseException, SQLException {
 
         ResultSet set = null;
-        List<String> liste_sprache = new ArrayList<>();
+        List<String> listeEinstellungsart = new ArrayList<>();
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT * FROM lacasa.tab_art");
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
-                liste_sprache.add(set.getString(1));
+                listeEinstellungsart.add(set.getString(1));
             }
         }catch (SQLException  throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
@@ -139,7 +139,7 @@ public class SuchbegriffDAO extends AbstractDAO {
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }
-        return liste_sprache;
+        return listeEinstellungsart;
     }
 
     public List<String> getBranche() throws SQLException, DatabaseException {

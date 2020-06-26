@@ -186,7 +186,7 @@ public class StudentDatenView extends GridLayout {
             form1.removeComponent(link);
         } else {
             form1.removeComponent(link);
-            link = new Link(lebenslauf.getLastFileName(),ImageConverter.getLebenslaufasPDF(lebenslauf.getValue()));
+            link = new Link(lebenslauf.getLastFileName(),ImageConverter.getLebenslaufasPDF(lebenslauf.getValue(),lebenslauf.getLastFileName()));
             link.addStyleName("color3");
             form1.addComponent(link, 5);
         }
@@ -241,7 +241,7 @@ public class StudentDatenView extends GridLayout {
         mobilnr.setValue(student.getKontakt_nr());
         uploadProfil.setValue(student.getPicture());
         if(student.hasLebenslauf()) {
-            link = new Link("Lebenslauf herunterladen", ImageConverter.getLebenslaufasPDF(student.getLebenslauf()));
+            link = new Link("Lebenslauf herunterladen", ImageConverter.getLebenslaufasPDF(student.getLebenslauf(),lebenslauf.getLastFileName()));
         }
         lebenslauf.setValue(student.getLebenslauf());
 

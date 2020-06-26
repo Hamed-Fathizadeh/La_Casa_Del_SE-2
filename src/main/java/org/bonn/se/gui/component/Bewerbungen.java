@@ -144,11 +144,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 return rating;
             }).setCaption("Bewertung");
         }else{
-            this.addComponentColumn(im ->{
-                VerticalLayout imageL = new VerticalLayout();
-                imageL.addComponent(im.getStudent_picture());
-                return imageL;
-            }).setCaption("Bild");
+            this.addComponentColumn(BewerbungDTO::getStudent_picture).setCaption("Bild");
             this.addColumn(BewerbungDTO::getStudent_vorname).setCaption("Vorname");
             this.addColumn(BewerbungDTO::getStudent_nachname).setCaption("Nachname");
             this.addColumn(BewerbungDTO::getStudent_studiengang).setCaption("Studiengang");

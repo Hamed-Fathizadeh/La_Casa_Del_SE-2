@@ -142,7 +142,7 @@ public class BewerbungDAO extends AbstractDAO{
     }
 
 
-    public static StreamResource downloadLebenslauf(int student_id, String vorname, String nachname) throws DatabaseException {
+    public static StreamResource downloadLebenslauf(int student_id, String vorname, String nachname) throws DatabaseException, SQLException {
 
         ResultSet set;
 
@@ -167,8 +167,10 @@ public class BewerbungDAO extends AbstractDAO{
                 }, vorname+" "+nachname+" Lebenslauf C"+student_id+".pdf");
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {
+
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
         return null;
