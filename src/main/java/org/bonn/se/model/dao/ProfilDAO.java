@@ -46,7 +46,7 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(7,student.getAbschluss());
             statement.setString(8,student.getEmail());
             statement.setString(9,student.getAdresse().getStrasse());
-            if(!(student.getAdresse().getPlz() == null)) {
+            if(student.getAdresse().getPlz() != null) {
                 statement.setInt(10, Integer.parseInt(student.getAdresse().getPlz()));
             } else {
                 statement.setBigDecimal(10,null);
@@ -66,7 +66,6 @@ public class ProfilDAO extends AbstractDAO{
 
         } finally {
             JDBCConnection.getInstance().closeConnection();
-
         }
     }
 

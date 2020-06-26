@@ -1,15 +1,10 @@
 package org.bonn.se.gui.window.wizard;
 
-import com.github.appreciated.material.MaterialTheme;
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
-import com.vaadin.icons.VaadinIcons;
-import com.vaadin.shared.ui.ContentMode;
-import com.vaadin.ui.*;
-import org.bonn.se.control.ComponentControl;
-import org.bonn.se.gui.component.ComboBoxNiveau;
-import org.bonn.se.gui.component.PopUpTextField;
-import org.bonn.se.gui.window.RegisterStudentWindow;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.UI;
+import org.bonn.se.gui.component.StudentKenntnisView;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.db.exception.DatabaseException;
@@ -17,7 +12,6 @@ import org.bonn.se.services.util.Roles;
 import org.vaadin.teemu.wizards.WizardStep;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class WizardStudentKenntnisStep implements WizardStep {
 
@@ -25,7 +19,7 @@ public class WizardStudentKenntnisStep implements WizardStep {
         Binder<Student.SprachKenntnis> binder1;
         Binder<Student.ITKenntnis> binder;
         ArrayList<Student.ITKenntnis> itKenntnisArrayList;
-
+        StudentKenntnisView studentKenntnisView;
         @Override
         public String getCaption() {
             return "Kenntnisse";
@@ -33,6 +27,10 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
         @Override
         public Component getContent() {
+            studentKenntnisView = new StudentKenntnisView();
+
+            return studentKenntnisView;
+            /*
             GridLayout gl_KenntnisStep = new GridLayout(5, 10);
             gl_KenntnisStep.setHeight("100%");
             gl_KenntnisStep.setWidth("100%");
@@ -268,6 +266,8 @@ public class WizardStudentKenntnisStep implements WizardStep {
 
 
             return gl_KenntnisStep;
+
+             */
         }
 
         @Override
@@ -275,16 +275,16 @@ public class WizardStudentKenntnisStep implements WizardStep {
             Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
             Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
             try {
-                if(binder.isValid()) {
-                    binder.writeBean(itKenntnis);
-                    itKenntnisArrayList.add(itKenntnis);
-                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setItKenntnisList(itKenntnisArrayList);
+                if(studentKenntnisView.getBinder().isValid()) {
+                    studentKenntnisView.getBinder().writeBean(itKenntnis);
+                    studentKenntnisView.getItKenntnisArrayList().add(itKenntnis);
+                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setItKenntnisList(studentKenntnisView.getItKenntnisArrayList());
 
                 }
-                if (binder1.isValid()) {
-                    binder1.writeBean(sprachKenntnis);
-                    sprachKenntnisArrayList.add(sprachKenntnis);
-                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setSprachKenntnisList(sprachKenntnisArrayList);
+                if (studentKenntnisView.getBinder1().isValid()) {
+                    studentKenntnisView.getBinder1().writeBean(sprachKenntnis);
+                    studentKenntnisView.getSprachKenntnisArrayList().add(sprachKenntnis);
+                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setSprachKenntnisList(studentKenntnisView.getSprachKenntnisArrayList());
 
                 }
             } catch (ValidationException e) {

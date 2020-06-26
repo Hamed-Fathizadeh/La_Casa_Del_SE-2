@@ -1,13 +1,10 @@
 package org.bonn.se.gui.window.wizard;
 
-import com.github.appreciated.material.MaterialTheme;
 import com.vaadin.data.Binder;
-import com.vaadin.data.ValidationException;
-import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.*;
-import org.bonn.se.gui.component.RegistrationTextField;
-import org.bonn.se.gui.component.StudentDateField;
-import org.bonn.se.gui.window.RegisterStudentWindow;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.UI;
+import org.bonn.se.gui.component.StudentTaetigkeitenView;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
@@ -22,6 +19,7 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
     final ArrayList<Taetigkeit> taetigkeitArrayList = new ArrayList<>();
     final Binder<Taetigkeit> binder = new Binder<>(Taetigkeit.class);
     Button plus;
+    StudentTaetigkeitenView studentTaetigkeitenView;
 
     @Override
     public String getCaption() {
@@ -30,6 +28,9 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
 
     @Override
     public Component getContent() {
+
+        studentTaetigkeitenView = new StudentTaetigkeitenView();
+        /*
         GridLayout gl_taetigkeiten = new GridLayout(3, 10);
         gl_taetigkeiten.setHeight("100%");
         gl_taetigkeiten.setWidth("100%");
@@ -149,20 +150,21 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
         RegisterStudentWindow registerStudentWindow = new RegisterStudentWindow();
         binder.addStatusChangeListener(event -> registerStudentWindow.getWizard().getNextButton().setEnabled(binder.isValid()));
 
-
-
-
         return gl_taetigkeiten;
+
+         */
+
+        return studentTaetigkeitenView;
     }
 
     @Override
     public boolean onAdvance() {
 
         Taetigkeit taetigkeit = new Taetigkeit();
-        binder.writeBeanIfValid(taetigkeit);
-        taetigkeitArrayList.add(taetigkeit);
+        studentTaetigkeitenView.getBinder().writeBeanIfValid(taetigkeit);
+        studentTaetigkeitenView.getTaetigkeitArrayList().add(taetigkeit);
 
-        ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).setTaetigkeiten(taetigkeitArrayList);
+        ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).setTaetigkeiten(studentTaetigkeitenView.getTaetigkeitArrayList());
 
         try {
             ProfilDAO.getInstance().createStudentProfil2((Student) UI.getCurrent().getSession().getAttribute(Roles.Student));

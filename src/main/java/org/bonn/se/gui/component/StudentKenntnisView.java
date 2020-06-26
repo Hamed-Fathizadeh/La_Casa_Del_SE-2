@@ -28,6 +28,42 @@ public class StudentKenntnisView extends GridLayout {
     private Button plus1;
     private Button minus1;
 
+    public ArrayList<Student.SprachKenntnis> getSprachKenntnisArrayList() {
+        return sprachKenntnisArrayList;
+    }
+
+    public StudentKenntnisView setSprachKenntnisArrayList(ArrayList<Student.SprachKenntnis> sprachKenntnisArrayList) {
+        this.sprachKenntnisArrayList = sprachKenntnisArrayList;
+        return this;
+    }
+
+    public Binder<Student.SprachKenntnis> getBinder1() {
+        return binder1;
+    }
+
+    public StudentKenntnisView setBinder1(Binder<Student.SprachKenntnis> binder1) {
+        this.binder1 = binder1;
+        return this;
+    }
+
+    public Binder<Student.ITKenntnis> getBinder() {
+        return binder;
+    }
+
+    public StudentKenntnisView setBinder(Binder<Student.ITKenntnis> binder) {
+        this.binder = binder;
+        return this;
+    }
+
+    public ArrayList<Student.ITKenntnis> getItKenntnisArrayList() {
+        return itKenntnisArrayList;
+    }
+
+    public StudentKenntnisView setItKenntnisArrayList(ArrayList<Student.ITKenntnis> itKenntnisArrayList) {
+        this.itKenntnisArrayList = itKenntnisArrayList;
+        return this;
+    }
+
     public StudentKenntnisView() {
 
             this.setColumns(5);

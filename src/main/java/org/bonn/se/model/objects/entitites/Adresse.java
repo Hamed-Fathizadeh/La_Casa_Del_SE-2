@@ -47,7 +47,7 @@ public class Adresse {
     }
 
     public String getPlz(){
-        return plz == null?"":plz;
+        return plz == null? null:plz;
     }
 
     public void setPlz(String plz) {

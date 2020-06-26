@@ -1,35 +1,19 @@
 package org.bonn.se.gui.window.wizard;
 
-import com.vaadin.data.HasValue;
-import com.vaadin.ui.*;
-import org.bonn.se.control.ComponentControl;
-import org.bonn.se.gui.component.NumeralField;
-import org.bonn.se.gui.component.OrtPlzTextField;
-import org.bonn.se.gui.component.PlaceHolderField;
-import org.bonn.se.gui.component.PopUpTextField;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.UI;
+import org.bonn.se.gui.component.StudentDatenView;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
-import org.vaadin.easyuploads.UploadField;
 import org.vaadin.teemu.wizards.WizardStep;
 
 public class WizardStudentDatenStep implements WizardStep {
 
-        OrtPlzTextField ort;
-        PopUpTextField strasse;
-        ComboBox<String> abschluss;
-        DateField g_datum;
-        PopUpTextField studiengang;
-        PopUpTextField ausbildung;
-        NumeralField mobilnr;
-        UploadField uploadProfil;
-        Image image = ImageConverter.getUnknownProfilImage();
-        UploadField lebenslauf;
-        Label filename;
 
+        StudentDatenView studentDatenView;
         @Override
         public String getCaption() {
             return "Daten";
@@ -37,7 +21,12 @@ public class WizardStudentDatenStep implements WizardStep {
 
         @Override
         public Component getContent() {
+                studentDatenView = new StudentDatenView();
+            return studentDatenView;
 
+
+
+/*
             GridLayout gridLayout = new GridLayout(2, 3);
             gridLayout.setHeightUndefined();
             gridLayout.setWidth("100%");
@@ -142,6 +131,8 @@ public class WizardStudentDatenStep implements WizardStep {
 
 
             return gridLayout;
+
+ */
         }
 
 
@@ -150,25 +141,26 @@ public class WizardStudentDatenStep implements WizardStep {
 
 
             Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-            if(uploadProfil.getValue() != null){
-                student.setPicture(uploadProfil.getValue());
-                uploadProfil.clear();
+
+            if(studentDatenView.getUploadProfil().getValue() != null){
+                student.setPicture(studentDatenView.getUploadProfil().getValue());
+                studentDatenView.getUploadProfil().clear();
             }
-            if(lebenslauf.getValue() != null) {
-                student.setLebenslauf(lebenslauf.getValue());
-                lebenslauf.clear();
+            if(studentDatenView.getLebenslauf().getValue() != null) {
+                student.setLebenslauf(studentDatenView.getLebenslauf().getValue());
+                studentDatenView.getLebenslauf().clear();
             }
-            student.setAbschluss(abschluss.getValue());
-            student.setKontakt_nr(mobilnr.getValue());
-            student.setAusbildung(ausbildung.getValue());
-            student.setStudiengang(studiengang.getValue());
-            student.setG_datum(g_datum.getValue());
+            student.setAbschluss(studentDatenView.getAbschluss().getValue());
+            student.setKontakt_nr(studentDatenView.getMobilnr().getValue());
+            student.setAusbildung(studentDatenView.getAusbildung().getValue());
+            student.setStudiengang(studentDatenView.getStudiengang().getValue());
+            student.setG_datum(studentDatenView.getG_datum().getValue());
             Adresse adresse = new Adresse();
-            if(!( ort.getOrt() == null ) || ort.getPlz() == null ) {
-                adresse.setStrasse(strasse.getValue());
-                adresse.setPlz(ort.getPlz());
-                adresse.setOrt(ort.getOrt());
-                adresse.setBundesland(ort.getBunesland());
+            if(!( studentDatenView.getOrt().getOrtField().getValue() == null ) || studentDatenView.getOrt().getPlzField().getValue() == null ) {
+                adresse.setStrasse(studentDatenView.getStrasse().getValue());
+                adresse.setPlz(studentDatenView.getOrt().getPlzField().getValue());
+                adresse.setOrt(studentDatenView.getOrt().getOrtField().getValue());
+                adresse.setBundesland(studentDatenView.getOrt().getBunesland());
             }
             student.setAdresse(adresse);
 

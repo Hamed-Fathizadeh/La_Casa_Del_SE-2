@@ -14,12 +14,32 @@ import java.util.ArrayList;
 
 public class StudentTaetigkeitenView extends GridLayout {
 
-    final ArrayList<Taetigkeit> taetigkeitArrayList = new ArrayList<>();
-    final Binder<Taetigkeit> binder = new Binder<>(Taetigkeit.class);
-    Button plus;
-    Button minus;
+    private ArrayList<Taetigkeit> taetigkeitArrayList = new ArrayList<>();
+
+    public ArrayList<Taetigkeit> getTaetigkeitArrayList() {
+        return taetigkeitArrayList;
+    }
+
+    public StudentTaetigkeitenView setTaetigkeitArrayList(ArrayList<Taetigkeit> taetigkeitArrayList) {
+        this.taetigkeitArrayList = taetigkeitArrayList;
+        return this;
+    }
+
+    public Binder<Taetigkeit> getBinder() {
+        return binder;
+    }
+
+    public StudentTaetigkeitenView setBinder(Binder<Taetigkeit> binder) {
+        this.binder = binder;
+        return this;
+    }
+
+    private Binder<Taetigkeit> binder;
+    private Button plus;
+    private Button minus;
 
     public StudentTaetigkeitenView() {
+
         this.setColumns(3);
         this.setRows(10);
         this.setHeight("100%");
@@ -35,7 +55,7 @@ public class StudentTaetigkeitenView extends GridLayout {
 
         minus = new Button(VaadinIcons.MINUS);
         minus.addStyleNames(MaterialTheme.BUTTON_DANGER, MaterialTheme.BUTTON_FLOATING_ACTION);
-
+        binder = new Binder<>(Taetigkeit.class);
 
         binder.forField(taetigkeit1)
                 .asRequired("Bitte ausfüllen")
