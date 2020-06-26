@@ -47,7 +47,7 @@ public class Adresse {
     }
 
     public String getPlz(){
-        return plz;
+        return plz == null?"":plz;
     }
 
     public void setPlz(String plz) {
@@ -57,8 +57,8 @@ public class Adresse {
         } else
             this.plz=plz;
     }
-    public String getOrt(){
-        return ort;
+    public String getOrt() {
+        return ort == null?"":ort;
     }
     public void setOrt(String ort){
         this.ort=ort;

@@ -64,7 +64,7 @@ public class BewerbungWindow extends CustomWindow {
         Label vor_nachname = new Label("Vor und Nachname: ");
         Label vor_nachname_data = new Label(student.getVorname()+" "+student.getNachname());
         Label geb_datum = new Label("Geb Datum: ");
-        Label geb_datum_data = new Label(""+student.getG_datum());
+        Label geb_datum_data = new Label(student.getG_datum() == null?"":""+student.getG_datum());
         Label adresse = new Label("Adresse: ");
         Label adresse_data = new Label(student.getAdresse().getStrasse());
         Label plzOrt = new Label("PLZ Ort: ");
@@ -126,7 +126,7 @@ public class BewerbungWindow extends CustomWindow {
         mainGridLayout.addComponent(back, 5, 0);
           mainGridLayout.addComponent(profilbild, 0, 2,0,7);
         mainGridLayout.addComponent(vor_nachname, 1, 2);mainGridLayout.addComponent(vor_nachname_data, 2, 2);
-           mainGridLayout.addComponent(geb_datum, 1, 3);mainGridLayout.addComponent(geb_datum_data, 2, 3);
+           mainGridLayout.addComponent(geb_datum, 1, 3);mainGridLayout.addComponent(geb_datum_data , 2, 3);
              mainGridLayout.addComponent(adresse, 1, 4); mainGridLayout.addComponent(adresse_data, 2, 4);
               mainGridLayout.addComponent(plzOrt, 1, 5);mainGridLayout.addComponent(plzOrt_data, 2, 5);
            mainGridLayout.addComponent(rufnummer, 1, 6);mainGridLayout.addComponent(rufnummer_data, 2, 6);
