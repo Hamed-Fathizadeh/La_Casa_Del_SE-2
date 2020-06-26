@@ -34,7 +34,7 @@ public class MyUI extends UI {
         navi.addView(UnternehmenHomeView, org.bonn.se.gui.views.UnternehmenHomeView.class);
         navi.addView(AnzeigeErstellen, AnzeigeErstellenView.class);
         navi.addView(Stellenbeschreibung,  StellenbeschreibungView.class);
-        navi.addView(ProfilVerwaltenStudent, ProfilVerwaltenStudentView.class);
+        navi.addView(ProfilVerwaltenStudent, org.bonn.se.gui.views.ProfilVerwaltenStudentView.class);
         navi.addView(AlleBewerbungenView, org.bonn.se.gui.views.AlleBewerbungenView.class);
         navi.addView(Settings, SettingsView.class);
 
