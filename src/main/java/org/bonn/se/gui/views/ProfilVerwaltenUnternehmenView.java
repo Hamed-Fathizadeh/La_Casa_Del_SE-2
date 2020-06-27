@@ -27,14 +27,14 @@ public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
     UnternehmenBeschreibungView gridBeschreibung;
 
     private void addSaveClickListener(Button.ClickEvent clickEvent) {
-        ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
+        ConfirmDialog.Factory confirmUnt = new DefaultConfirmDialogFactory(){
             @Override
             public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
                 return super.create("Speichern", message, "Ja", "Nein", notOkCaption);
             }
         } ;
-        ConfirmDialog.setFactory(df);
-        ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich speichern?",
+        ConfirmDialog.setFactory(confirmUnt);
+        ConfirmDialog.show(MyUI.getCurrent(), "Möchtest Sie wirklich speichern?",
                 (ConfirmDialog.Listener) dialog -> {
                     if (dialog.isConfirmed()) {
                         this.removeComponent(buttonBar);
