@@ -3,6 +3,7 @@ package org.bonn.se.gui.views;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.ProfilControl;
 import org.bonn.se.gui.component.TopPanelUser;
@@ -82,7 +83,7 @@ public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
         buttonBar.addComponents(cancel,save);
         buttonBar.setMargin(true);
         this.removeComponent(bearbeiten);
-        this.addComponent(buttonBar,7,9);
+        this.addComponent(buttonBar,7,7);
         gridDaten.setReadOnly(false);
         gridBeschreibung.setReadOnly(false);
     }
@@ -133,7 +134,9 @@ public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
         this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
 
         this.addStyleName("grid");
-        this.addComponent(bearbeiten, 7, 9);
+        this.addComponent(new Label("&nbsp", ContentMode.HTML),7,6);
+        this.addComponent(bearbeiten,7,7);
+        this.addComponent(new Label("&nbsp", ContentMode.HTML),7,8);
         this.setComponentAlignment(bar, Alignment.TOP_CENTER);
         gridBeschreibung.setReadOnly(true);
         gridDaten.setReadOnly(true);

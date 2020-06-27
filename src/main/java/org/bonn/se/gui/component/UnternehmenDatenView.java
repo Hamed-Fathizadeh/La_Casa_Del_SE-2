@@ -124,10 +124,14 @@ public class UnternehmenDatenView extends GridLayout {
     }
 
     public void setReadOnly(boolean status) {
+
+        kontaktnummer.setCaption("Kontaktnr.");
+        strasse.setCaption("Anschrift");
         kontaktnummer.setReadOnly(status);
         strasse.setReadOnly(status);
         ort.getPlzField().setReadOnly(status);
         ort.getOrtField().setReadOnly(status);
+        branche.setCaption("Branche");
         branche.setReadOnly(status);
         /*
         if (status) {

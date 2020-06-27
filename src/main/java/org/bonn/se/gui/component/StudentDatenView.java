@@ -250,6 +250,12 @@ public class StudentDatenView extends GridLayout {
     }
 
     public void setReadOnly(boolean status) {
+        strasse.setCaption("Anschrift");
+        studiengang.setCaption("Studiengang");
+        abschluss.setCaption("Abschluss");
+        ausbildung.setCaption("Ausbildung");
+        mobilnr.setCaption("Kontaktnr.");
+        g_datum.setCaption("Geburtsdatum");
         ort.getPlzField().setReadOnly(status);
         strasse.setReadOnly(status);
         abschluss.setReadOnly(status);
