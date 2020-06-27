@@ -1,31 +1,21 @@
 package org.bonn.se.gui.window.wizard;
 
-import com.vaadin.data.HasValue;
-import com.vaadin.ui.*;
-import org.bonn.se.control.ComponentControl;
-import org.bonn.se.gui.component.NumeralField;
-import org.bonn.se.gui.component.OrtPlzTextField;
-import org.bonn.se.gui.component.PlaceHolderField;
-import org.bonn.se.gui.component.PopUpTextField;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.UI;
+import org.bonn.se.gui.component.UnternehmenDatenView;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
-import org.vaadin.easyuploads.UploadField;
 import org.vaadin.teemu.wizards.WizardStep;
 
 public class WizardUntDatenStep implements WizardStep {
 
-        NumeralField kontaktnummer;
-        PopUpTextField strasse;
-        OrtPlzTextField ort;
-        ComboBox<String> branche;
-        UploadField uploadLogo;
-        Image image = ImageConverter.getUnknownProfilImage();
+        UnternehmenDatenView unternehmenDatenView;
 
-        @Override
+
+    @Override
         public String getCaption() {
             return "Daten";
         }
@@ -33,6 +23,9 @@ public class WizardUntDatenStep implements WizardStep {
         @Override
         public Component getContent() {
 
+            unternehmenDatenView = new UnternehmenDatenView();
+            return unternehmenDatenView;
+/*
             GridLayout gridLayout = new GridLayout(2, 3);
             gridLayout.setHeightUndefined();
             gridLayout.setWidth("100%");
@@ -66,7 +59,7 @@ public class WizardUntDatenStep implements WizardStep {
             form2.setWidth("300px");
             form2.setMargin(true);
             PlaceHolderField place1 = new PlaceHolderField();
-            strasse = new PopUpTextField("Strasse");
+            strasse = new PopUpTextField("Straße & Nr.");
 
             ort = new OrtPlzTextField();
 
@@ -90,24 +83,30 @@ public class WizardUntDatenStep implements WizardStep {
 
 
             return gridLayout;
+
+ */
         }
 
         @Override
         public boolean onAdvance() {
 
 
-            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setLogo(uploadLogo.getValue());
-            uploadLogo.clear();
-            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setKontaktnummer(kontaktnummer.getValue());
-            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setBranche(branche.getValue());
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                    .setLogo(unternehmenDatenView.getUploadLogo().getValue());
+            unternehmenDatenView.getUploadLogo().clear();
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                    .setKontaktnummer(unternehmenDatenView.getKontaktnummer().getValue());
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                    .setBranche(unternehmenDatenView.getBranche().getValue());
 
             Adresse adresse = new Adresse();
 
-            if(!( ort.getOrt() == null ) || ort.getPlz() == null ) {
-                adresse.setStrasse(strasse.getValue());
-                adresse.setPlz(ort.getPlz());
-                adresse.setOrt(ort.getOrt());
-                adresse.setBundesland(ort.getBunesland());
+            if(!( unternehmenDatenView.getOrt().getOrtField().getValue() == null )
+                    || unternehmenDatenView.getOrt().getPlzField().getValue() == null ) {
+                adresse.setStrasse(unternehmenDatenView.getStrasse().getValue());
+                adresse.setPlz(unternehmenDatenView.getOrt().getPlzField().getValue());
+                adresse.setOrt(unternehmenDatenView.getOrt().getOrtField().getValue());
+                adresse.setBundesland(unternehmenDatenView.getOrt().getBunesland());
             }
             ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setAdresse(adresse);
 

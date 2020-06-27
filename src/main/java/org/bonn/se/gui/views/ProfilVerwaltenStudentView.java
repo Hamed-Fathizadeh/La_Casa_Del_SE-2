@@ -12,7 +12,6 @@ import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
-import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
@@ -67,6 +66,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                     }
                 });
     }
+
     private void addCancelClickListener(Button.ClickEvent clickEvent) {
         ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
             @Override
@@ -156,11 +156,9 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         this.setComponentAlignment(bar, Alignment.TOP_CENTER);
         grid1.setReadOnly(true);
         grid.setReadOnly(true);
-        grid.addComponent(grid.getLink());
-        grid.setLink(new Link("Lebenslauf herunterladen", ImageConverter.getLebenslaufasPDF(
-                ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getLebenslauf(),"Lebenslauf")));
+
         grid2.setReadOnly(true);
-        }
+    }
 
 
 

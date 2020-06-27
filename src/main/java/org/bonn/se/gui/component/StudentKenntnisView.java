@@ -340,7 +340,6 @@ public class StudentKenntnisView extends GridLayout {
     public void setReadOnly(boolean status) {
 
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-        this.setEnabled(!status);
         for (int i = 0; i < student.getItKenntnisList().size(); i++) {
             ((PopUpTextField)   this.getComponent(0,i+2)).setReadOnly(status);
             ((ComboBoxNiveau) this.getComponent(1,i+2)).setReadOnly(status);
@@ -349,10 +348,17 @@ public class StudentKenntnisView extends GridLayout {
             ((PopUpTextField)   this.getComponent(3,i+2)).setReadOnly(status);
             ((ComboBoxNiveau) this.getComponent(4,i+2)).setReadOnly(status);
         }
+        plus.setVisible(!status);
+        plus1.setVisible(!status);
+        minus1.setVisible(!status);
+        minus.setVisible(!status);
+
     }
 
     public ArrayList<Student.ITKenntnis> getITKenntnisValue() {
-        plus.click();
+            Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
+            binder.writeBeanIfValid(itKenntnis);
+            itKenntnisArrayList.add(itKenntnis);
         /*
         ArrayList<Student.ITKenntnis> itKenntnisArrayList = new ArrayList<>();
         for (int i = 0; i <this.getRows() ; i++) {
@@ -369,7 +375,9 @@ public class StudentKenntnisView extends GridLayout {
     }
 
     public ArrayList<Student.SprachKenntnis> getSprachenValue() {
-        plus1.click();
+        Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
+        binder1.writeBeanIfValid(sprachKenntnis);
+        sprachKenntnisArrayList.add(sprachKenntnis);
 
         /*
         ArrayList<Student.SprachKenntnis> sprachKenntnisArrayList = new ArrayList<>();

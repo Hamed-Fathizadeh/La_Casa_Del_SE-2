@@ -10,7 +10,7 @@ public class CustomWizard  {
 
     public static Wizard getWizard(){
         Wizard wizard = new Wizard();
-        wizard.setUriFragmentEnabled(true);
+        wizard.setUriFragmentEnabled(false);
         wizard.getBackButton().setCaption("Zurück");
         wizard.getFinishButton().setCaption("Fertig");
         wizard.getNextButton().setCaption("Weiter");

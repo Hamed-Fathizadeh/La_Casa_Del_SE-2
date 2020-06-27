@@ -216,8 +216,14 @@ public class ProfilDAO extends AbstractDAO{
                 unternehmen.setBundesland(set.getString("u_bundesland"));
                 unternehmen.setKontaktnummer(set.getString("kontakt_nr"));
                 unternehmen.setLogo(set.getBytes("logo"));
+                unternehmen.setBranche(set.getString("branch_name"));
                 Adresse adresse = new Adresse();
+                adresse.setStrasse(set.getString("strasse"));
+                adresse.setPlz(String.valueOf(set.getInt("plz")));
+                adresse.setOrt(set.getString("ort"));
+                adresse.setBundesland(set.getString("a_bundesland"));
                 unternehmen.setAdresse(adresse);
+
 
                 return unternehmen;
             }
@@ -396,6 +402,57 @@ public class ProfilDAO extends AbstractDAO{
             statement.executeUpdate();
             createStudentProfil2(student);
             createStudentProfil3(student);
+        }catch (SQLException ex) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");
+        }finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+    }
+
+    public void updateUnternehmen(Unternehmen unternehmen) throws DatabaseException {
+        String sql = "UPDATE lacasa.tab_adresse SET strasse = ?,plz = ?,ort = ?, bundesland = ? " +
+                "WHERE lacasa.tab_adresse.email = ?;" +
+                "UPDATE lacasa.tab_unternehmen SET logo = ?, kontakt_nr = ?, branch_name = ? , " +
+                " description = ? WHERE lacasa.tab_unternehmen.email = ?;";
+
+
+
+        PreparedStatement statement = getPreparedStatement(sql);
+
+        try {
+            if(unternehmen.getAdresse().getStrasse().equals("")) {
+                statement.setNull(1, Types.VARCHAR);
+            } else {
+                statement.setString(1, unternehmen.getAdresse().getStrasse());
+
+            }
+            if(unternehmen.getAdresse().getPlz().equals("")) {
+                statement.setBigDecimal(2,null);
+            } else {
+                statement.setInt(2, Integer.parseInt(unternehmen.getAdresse().getPlz()));
+
+            }
+            if(!(unternehmen.getAdresse().getOrt() == null) || !(unternehmen.getAdresse().getBundesland() == null)) {
+                statement.setString(3, unternehmen.getAdresse().getOrt());
+                statement.setString(4,unternehmen.getAdresse().getBundesland());
+            } else {
+                statement.setNull(3, Types.VARCHAR);
+                statement.setNull(4, Types.VARCHAR);
+            }
+            statement.setString(5,unternehmen.getEmail());
+            statement.setBytes(6,unternehmen.getLogo());
+            statement.setString(7,unternehmen.getKontaktnummer());
+            statement.setString(8,unternehmen.getBranche() == null ? null : unternehmen.getBranche());
+            statement.setString(9,unternehmen.getDescription());
+            statement.setString(10,unternehmen.getEmail());
+
+
+
+
+            statement.executeUpdate();
+
+
         }catch (SQLException ex) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");

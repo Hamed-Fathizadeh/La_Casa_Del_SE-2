@@ -100,7 +100,7 @@ public class ImageConverter {
     public static StreamResource getLebenslaufasPDF(byte[] lebenslauf,String filename){
 
         InputStream targetStream = new ByteArrayInputStream(lebenslauf);
-        return  new StreamResource((StreamResource.StreamSource) () -> targetStream, gen.nextString() +" Lebenslauf.pdf");
+        return  new StreamResource((StreamResource.StreamSource) () -> targetStream, filename +" Lebenslauf.pdf");
 
     }
 

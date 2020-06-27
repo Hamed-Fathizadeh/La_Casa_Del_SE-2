@@ -2,14 +2,14 @@ package org.bonn.se.gui.window.wizard;
 
 import com.vaadin.ui.*;
 import org.bonn.se.control.UnternehmenDescriptionControl;
+import org.bonn.se.gui.component.UnternehmenBeschreibungView;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.teemu.wizards.WizardStep;
 
 public class WizardUntBeschreibungStep  implements WizardStep {
-        private RichTextArea richTextArea;
-
+        UnternehmenBeschreibungView unternehmenBeschreibungView;
         @Override
         public String getCaption() {
             return "Unternehmensbeschreibung";
@@ -18,6 +18,10 @@ public class WizardUntBeschreibungStep  implements WizardStep {
         @Override
         public Component getContent() {
 
+            unternehmenBeschreibungView = new UnternehmenBeschreibungView();
+
+            return unternehmenBeschreibungView;
+/*
             VerticalLayout verticalLayout = new VerticalLayout();
             verticalLayout.setSizeFull();
             verticalLayout.setMargin(false);
@@ -33,6 +37,8 @@ public class WizardUntBeschreibungStep  implements WizardStep {
 
 
             return verticalLayout;
+
+ */
         }
 
         @Override
@@ -40,7 +46,7 @@ public class WizardUntBeschreibungStep  implements WizardStep {
 
             UnternehmenDescriptionControl unternehmenDescriptionControl = UnternehmenDescriptionControl.getInstance();
             try {
-                ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setDescription(richTextArea.getValue());
+                ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setDescription(unternehmenBeschreibungView.getRichTextArea().getValue());
                 unternehmenDescriptionControl.setDescription();
             } catch (DatabaseException e) {
                 e.printStackTrace();

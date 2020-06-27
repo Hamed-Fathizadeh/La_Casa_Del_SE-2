@@ -180,13 +180,13 @@ public class StudentTaetigkeitenView extends GridLayout {
     public void setReadOnly(boolean status) {
 
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-        this.setEnabled(!status);
         for (int i = 0; i < student.getTaetigkeiten().size(); i++) {
             ((RegistrationTextField) this.getComponent(0, i + 1)).setReadOnly(status);
             ((StudentDateField) this.getComponent(1, i + 1)).setReadOnly(status);
             ((StudentDateField) this.getComponent(2, i + 1)).setReadOnly(status);
-
         }
+        plus.setVisible(!status);
+        minus.setVisible(!status);
 
 
     }

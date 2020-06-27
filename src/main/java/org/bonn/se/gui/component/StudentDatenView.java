@@ -10,19 +10,19 @@ import org.vaadin.easyuploads.UploadField;
 
 public class StudentDatenView extends GridLayout {
 
-    OrtPlzTextField ort;
-    PopUpTextField strasse;
-    ComboBox<String> abschluss;
-    DateField g_datum;
-    PopUpTextField studiengang;
-    PopUpTextField ausbildung;
-    NumeralField mobilnr;
-    UploadField uploadProfil;
-    Image image = ImageConverter.getUnknownProfilImage();
-    UploadField lebenslauf;
-    Label filename;
-    FormLayout form1;
-    Link link;
+    private OrtPlzTextField ort;
+    private PopUpTextField strasse;
+    private ComboBox<String> abschluss;
+    private DateField g_datum;
+    private PopUpTextField studiengang;
+    private PopUpTextField ausbildung;
+    private NumeralField mobilnr;
+    private UploadField uploadProfil;
+    private Image image = ImageConverter.getUnknownProfilImage();
+    private UploadField lebenslauf;
+    private Label filename;
+    private FormLayout form1;
+    private Link link = new Link();
 
     public FormLayout getForm1() {
         return form1;
@@ -144,14 +144,14 @@ public class StudentDatenView extends GridLayout {
         this.setWidth("100%");
 
 
-        form1 = new FormLayout();
 
+        form1 = new FormLayout();
+        form1.setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         uploadProfil =new UploadField();
         uploadProfil.setDisplayUpload(false);
         uploadProfil.setButtonCaption("Profilbild hochladen");
         uploadProfil.setClearButtonVisible(true);
         uploadProfil.setAcceptFilter("image/*");
-
         uploadProfil.addValueChangeListener((HasValue.ValueChangeEvent<byte[]> event) -> {
             form1.removeComponent(image);
 
@@ -160,6 +160,7 @@ public class StudentDatenView extends GridLayout {
             image = ImageConverter.convertImagetoProfil(bild);
 
             form1.addComponent(image,0);
+            form1.setComponentAlignment(image,Alignment.MIDDLE_CENTER);
         });
 
 
@@ -177,9 +178,6 @@ public class StudentDatenView extends GridLayout {
         lebenslauf =new UploadField();
         lebenslauf.setButtonCaption("Lebenslauf hochladen");
         lebenslauf.setDisplayUpload(false);
-        filename =new Label(lebenslauf.getLastFileName());
-        link = new Link();
-
 
     lebenslauf.addValueChangeListener((HasValue.ValueChangeListener<byte[]>)event -> {
         if (lebenslauf.getValue() == null) {
@@ -187,6 +185,7 @@ public class StudentDatenView extends GridLayout {
         } else {
             form1.removeComponent(link);
             link = new Link(lebenslauf.getLastFileName(),ImageConverter.getLebenslaufasPDF(lebenslauf.getValue(),lebenslauf.getLastFileName()));
+            link.setTargetName("_blank");
             link.addStyleName("color3");
             form1.addComponent(link, 5);
         }
@@ -194,14 +193,14 @@ public class StudentDatenView extends GridLayout {
 
 
 
-            form1.addComponents(image,uploadProfil,g_datum,mobilnr,lebenslauf,link,filename);
+            form1.addComponents(image,uploadProfil,g_datum,mobilnr,lebenslauf,link);
 
 
     FormLayout form2 = new FormLayout();
             form2.setWidth("300px");
             form2.setMargin(true);
     PlaceHolderField place1 = new PlaceHolderField();
-    strasse =new PopUpTextField("Strasse");
+    strasse =new PopUpTextField("Straße & Nr.");
 
     ort =new OrtPlzTextField();
 
@@ -221,7 +220,7 @@ public class StudentDatenView extends GridLayout {
     getAbschluss());
 
             form2.addComponents(place1,strasse,ort,studiengang,place2,ausbildung,abschluss);
-
+            form1.setComponentAlignment(image,Alignment.MIDDLE_CENTER);
             this.addComponent(form1,0,0,0,0);
             this.addComponent(form2,1,0,1,0);
             this.setComponentAlignment(form1,Alignment.TOP_LEFT);
@@ -240,10 +239,12 @@ public class StudentDatenView extends GridLayout {
         ausbildung.setValue(student.getAusbildung());
         mobilnr.setValue(student.getKontakt_nr());
         uploadProfil.setValue(student.getPicture());
+        lebenslauf.setLastFilename("Lebenslauf_" + student.getVorname()+ " " + student.getNachname());
         if(student.hasLebenslauf()) {
-            link = new Link("Lebenslauf herunterladen", ImageConverter.getLebenslaufasPDF(student.getLebenslauf(),lebenslauf.getLastFileName()));
+            link.setCaption(lebenslauf.getLastFileName());
+            link.setResource(ImageConverter.getLebenslaufasPDF(student.getLebenslauf(),lebenslauf.getLastFileName()));
+            link.setTargetName("_blank");
         }
-        lebenslauf.setValue(student.getLebenslauf());
 
 
     }
@@ -258,6 +259,7 @@ public class StudentDatenView extends GridLayout {
         mobilnr.setReadOnly(status);
         uploadProfil.setVisible(!status);
         lebenslauf.setVisible(!status);
+        link.setVisible(status);
     }
 
 }

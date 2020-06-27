@@ -26,9 +26,10 @@ public class OrtPlzTextField extends HorizontalLayout {
         comboBund.setWidth(300.0f, Unit.PIXELS);
         comboBund.setHeight("56px");
 
+
         OrtService ortService = new OrtService("Stadt, Bund");
         comboBund.setDataProvider(ortService::fetch, ortService::count);
-
+        comboBund.setPlaceholder("Ort");
 
         this.addComponents(plz,comboBund);
     }
