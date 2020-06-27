@@ -215,9 +215,7 @@ public class StudentDatenView extends GridLayout {
             abschluss.setPlaceholder("Wähle den höchsten Abschluss...");
             abschluss.setHeight("56px");
             abschluss.setWidth("300px");
-            abschluss.setItems(ComponentControl.getInstance().
-
-    getAbschluss());
+            abschluss.setItems(ComponentControl.getInstance().getAbschluss());
 
             form2.addComponents(place1,strasse,ort,studiengang,place2,ausbildung,abschluss);
             form1.setComponentAlignment(image,Alignment.MIDDLE_CENTER);

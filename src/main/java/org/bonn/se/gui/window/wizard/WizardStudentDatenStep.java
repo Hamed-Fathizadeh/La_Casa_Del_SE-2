@@ -159,7 +159,7 @@ public class WizardStudentDatenStep implements WizardStep {
             if(!( studentDatenView.getOrt().getOrtField().getValue() == null ) || studentDatenView.getOrt().getPlzField().getValue() == null ) {
                 adresse.setStrasse(studentDatenView.getStrasse().getValue());
                 adresse.setPlz(studentDatenView.getOrt().getPlzField().getValue());
-                adresse.setOrt(studentDatenView.getOrt().getOrtField().getValue());
+                adresse.setOrt(studentDatenView.getOrt().getOrt());
                 adresse.setBundesland(studentDatenView.getOrt().getBunesland());
             }
             student.setAdresse(adresse);

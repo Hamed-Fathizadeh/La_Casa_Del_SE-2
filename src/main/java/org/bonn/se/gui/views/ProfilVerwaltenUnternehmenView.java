@@ -59,13 +59,13 @@ public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
     }
 
     private void addCancelClickListener(Button.ClickEvent clickEvent) {
-        ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
+        ConfirmDialog.Factory cancelConf = new DefaultConfirmDialogFactory(){
             @Override
             public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
                 return super.create("Abbrechen", message, "Ja", "Nein", notOkCaption);
             }
         } ;
-        ConfirmDialog.setFactory(df);
+        ConfirmDialog.setFactory(cancelConf);
         ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich abbrechen?",
                 (ConfirmDialog.Listener) dialog -> {
                     if (dialog.isConfirmed()) {

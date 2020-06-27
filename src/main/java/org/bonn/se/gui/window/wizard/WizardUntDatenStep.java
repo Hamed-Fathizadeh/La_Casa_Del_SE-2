@@ -105,7 +105,7 @@ public class WizardUntDatenStep implements WizardStep {
                     || unternehmenDatenView.getOrt().getPlzField().getValue() == null ) {
                 adresse.setStrasse(unternehmenDatenView.getStrasse().getValue());
                 adresse.setPlz(unternehmenDatenView.getOrt().getPlzField().getValue());
-                adresse.setOrt(unternehmenDatenView.getOrt().getOrtField().getValue());
+                adresse.setOrt(unternehmenDatenView.getOrt().getOrt());
                 adresse.setBundesland(unternehmenDatenView.getOrt().getBunesland());
             }
             ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setAdresse(adresse);
