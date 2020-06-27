@@ -41,7 +41,7 @@ public class TestStellenAnzeigeDTO {
 
 
 
-   File file = new File("src/main/resources/Unknown.png");
+   File file = new File("src/main/webapp/VAADIN/themes/demo/img/Unknown.png");
    private byte[] image = ImageConverter.getImage(file);
 
 

@@ -36,7 +36,7 @@ public class MockitoTest {
 
     Student student;
     Unternehmen unternehmen;
-    public static final String USERNAME = "s@s.de";
+    public static final String USERNAME = "tobias.fellechner@365h-brs.de";
     public static final String login = "12345678";
 
     @Mock
