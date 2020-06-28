@@ -19,7 +19,7 @@ import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 import org.vaadin.easyuploads.UploadField;
 
 public class ProfilVerwaltenStudentView extends GridLayout implements View {
-    private final Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+    private final Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
     private final Button bearbeiten = new Button("Bearbeiten",this::addBearbeitenClickListener);
     private final Button cancel = new Button("Abbrechen",this::addCancelClickListener);

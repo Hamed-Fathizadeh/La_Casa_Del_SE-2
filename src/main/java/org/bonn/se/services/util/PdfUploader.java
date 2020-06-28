@@ -19,7 +19,7 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
         PdfUploader.path = path;
     }
 
-    final Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+    final Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
 
 

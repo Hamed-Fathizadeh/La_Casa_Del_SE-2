@@ -50,7 +50,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
         titel.setWidth("600px");
 
 
-        NativeSelect<String> jobtitel = new NativeSelect<>("Bitte wählen Sie eine Stellenbeschreibung!",JobTitelControl.getJobTitelList());
+        NativeSelect<String> jobtitel = new NativeSelect<>("Bitte wählen Sie eine STELLENBESCHREIBUNG!",JobTitelControl.getJobTitelList());
         jobtitel.setHeight("56px");
         jobtitel.setWidth("600px");
         jobtitel.setEmptySelectionAllowed(false);
@@ -73,7 +73,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
 
         Button cancel = new Button("Abbrechen");
 
-        Button weiter = new Button("Weiter zur Stellenbeschreibung");
+        Button weiter = new Button("Weiter zur STELLENBESCHREIBUNG");
         weiter.setEnabled(false);
 
 
@@ -114,7 +114,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
 
 
 
-        cancel.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView));
+        cancel.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW));
 
 
         Binder<StellenanzeigeDTO> binder = new Binder<>(StellenanzeigeDTO.class);
@@ -123,7 +123,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
                 .bind(StellenanzeigeDTO::getTitel,StellenanzeigeDTO::setTitel);
 
         binder.forField(jobtitel)
-                .asRequired("Bitte wählen Sie eine Stellenbeschreibung aus!")
+                .asRequired("Bitte wählen Sie eine STELLENBESCHREIBUNG aus!")
                 .bind(StellenanzeigeDTO::getSuchbegriff,StellenanzeigeDTO::setSuchbegriff);
 
         binder.forField(ort)
@@ -147,17 +147,17 @@ public class AnzeigeErstellenView extends GridLayout implements View {
                 event -> weiter.setEnabled(binder.isValid()));
 
         weiter.addClickListener((Button.ClickListener) event -> {
-            if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
-                stellenanzeigeDTO.setFirmenname(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname());
-                stellenanzeigeDTO.setHauptsitz(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getHauptsitz());
+            if (UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) instanceof Unternehmen) {
+                stellenanzeigeDTO.setFirmenname(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).getCname());
+                stellenanzeigeDTO.setHauptsitz(((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).getHauptsitz());
                 stellenanzeigeDTO.setStandort(stellenanzeigeDTO.getStandort());
                 stellenanzeigeDTO.setStandort(ort.getOrt());
                 stellenanzeigeDTO.setBundesland(ort.getBundesland());
 
-                ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeige(stellenanzeigeDTO);
+                ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).setStellenanzeige(stellenanzeigeDTO);
             }
 
-            UI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
+            UI.getCurrent().getNavigator().navigateTo(Views.STELLENBESCHREIBUNG);
 
         });
 
@@ -170,16 +170,16 @@ public class AnzeigeErstellenView extends GridLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
-        } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
             try {
                 this.setUp();
             } catch (DatabaseException | SQLException e) {
                 Logger.getLogger(AnzeigeErstellenView.class.getName()).log(Level.SEVERE, null, e);
             }
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
         }
     }
 

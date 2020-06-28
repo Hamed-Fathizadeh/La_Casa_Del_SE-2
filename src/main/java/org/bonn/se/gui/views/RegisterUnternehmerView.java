@@ -108,7 +108,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
             System.out.println(hauptsitz.getBundesland());
 
         });
-        ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
+        ThemeResource resource = new ThemeResource("img/REGISTERUNTERNEHMEN/unternehmen.png");
 
         Image bildUnt = new Image(null,resource);
         formUnt.setMargin(false);
@@ -146,7 +146,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
                             UserDAO.getInstance().registerUser(user);
 
 
-                            UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
+                            UI.getCurrent().getSession().setAttribute(Roles.UNTERNEHMEN,unternehmen);
                             RegisterUnternehmenWindow registerUnternehmenWindow = new RegisterUnternehmenWindow();
                             UI.getCurrent().addWindow(registerUnternehmenWindow);
                         }
@@ -164,10 +164,10 @@ public class RegisterUnternehmerView extends GridLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+        if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.STUDENTHOMEVIEW);
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
         } else {
             this.setUp();
         }

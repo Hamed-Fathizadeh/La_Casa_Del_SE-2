@@ -140,7 +140,7 @@ public class WizardStudentDatenStep implements WizardStep {
         public boolean onAdvance() {
 
 
-            Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+            Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
             if(studentDatenView.getUploadProfil().getValue() != null){
                 student.setPicture(studentDatenView.getUploadProfil().getValue());
@@ -169,7 +169,7 @@ public class WizardStudentDatenStep implements WizardStep {
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
-            UI.getCurrent().getSession().setAttribute(Roles.Student, student);
+            UI.getCurrent().getSession().setAttribute(Roles.STUDENT, student);
 
 
 

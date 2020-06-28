@@ -144,12 +144,12 @@ public class StellenanzeigeWindow extends Window {
         gridLayout.addComponent(beschreibungData,0,14,4,14);
         gridLayout.setComponentAlignment(beschreibungData,Alignment.MIDDLE_CENTER);
 
-        if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
+        if(UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null ) {
 
             Button back = new Button("Zurück zu Ergebnissen");
             gridLayout.addComponent(back, 4, 0, 4, 0);
             back.addClickListener((Button.ClickListener) event -> StellenanzeigeWindow.this.close());
-        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
 
             Button back = new Button("Zurück zu Anzeigen");
             Button bearbeiten = new Button("Bearbeiten");
@@ -193,7 +193,7 @@ public class StellenanzeigeWindow extends Window {
 
             back.addClickListener(event -> {
                 this.close();
-                UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+                UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
 
             });
 
@@ -266,7 +266,7 @@ public class StellenanzeigeWindow extends Window {
                         if (dialog.isConfirmed()) {
                             ContainerAnzeigen.getInstance().deleteAnzeige(stellenanzeige);
                             StellenanzeigeWindow.this.close();
-                            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+                            UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
                         }
                     }));
 
@@ -276,7 +276,7 @@ public class StellenanzeigeWindow extends Window {
         if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
             UI.getCurrent().access(() -> {
-                if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
+                if(UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null ) {
 
                     bewerben = new Button("Bewerben");
 
@@ -285,7 +285,7 @@ public class StellenanzeigeWindow extends Window {
                     gridLayout.setComponentAlignment(bewerben,Alignment.BOTTOM_RIGHT);
 
                     bewerben.addClickListener((Button.ClickListener) event -> {
-                        if (((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).hasLebenslauf()) {
+                        if (((Student) MyUI.getCurrent().getSession().getAttribute(Roles.STUDENT)).hasLebenslauf()) {
                             StellenanzeigeWindow.this.close();
                             BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige, "Student", null);
                             UI.getCurrent().addWindow(bewerbungWindow);
@@ -294,7 +294,7 @@ public class StellenanzeigeWindow extends Window {
                             UI.getCurrent().addWindow(new ConfirmationWindow("Um dich zu bewerben musst du ein Lebenslauf in deine Profil hinterlegen!"));
                         }
                     });
-                } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+                } else if(UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
                     bewerbungen = new Button("Zum Bewerbungen");
                     gridLayout.addComponent(bewerbungen, 1, 0, 1, 0);
 

@@ -35,7 +35,7 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
         mainGrid.setSizeFull();
 
         Button buttonAnzeigeErstellen= new Button("Anzeige erstellen");
-        buttonAnzeigeErstellen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.AnzeigeErstellen));
+        buttonAnzeigeErstellen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.ANZEIGEERSTELLEN));
         VerticalLayout vlayoutButton = new VerticalLayout();
         vlayoutButton.setMargin(true);
         vlayoutButton.addComponent(buttonAnzeigeErstellen);
@@ -43,11 +43,11 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
 
 //grid anzeige
 
-        Unternehmen unternehmen = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
+        Unternehmen unternehmen = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN));
 
         ContainerNeuigkeiten containerMeinAnzeigen = ContainerNeuigkeiten.getInstance();
         containerMeinAnzeigen.loadUnternehmenAnzeigen(unternehmen.getEmail());
-        ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigenDTOliste((ArrayList<StellenanzeigeDTO>) containerMeinAnzeigen.getListe());
+        ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).setStellenanzeigenDTOliste((ArrayList<StellenanzeigeDTO>) containerMeinAnzeigen.getListe());
 
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new Anzeigen<>("Alle", containerMeinAnzeigen.getListe());
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
@@ -156,12 +156,12 @@ public class UnternehmenHomeView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
                 this.setUp();
-        } else if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
         }
     }
 }

@@ -17,7 +17,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 
 public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
-    private final Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
+    private final Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN);
 
     private final Button bearbeiten = new Button("Bearbeiten",this::addBearbeitenClickListener);
     private final Button cancel = new Button("Abbrechen",this::addCancelClickListener);

@@ -91,12 +91,12 @@ public class WizardUntDatenStep implements WizardStep {
         public boolean onAdvance() {
 
 
-            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN))
                     .setLogo(unternehmenDatenView.getUploadLogo().getValue());
             unternehmenDatenView.getUploadLogo().clear();
-            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN))
                     .setKontaktnummer(unternehmenDatenView.getKontaktnummer().getValue());
-            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN))
                     .setBranche(unternehmenDatenView.getBranche().getValue());
 
             Adresse adresse = new Adresse();
@@ -108,10 +108,10 @@ public class WizardUntDatenStep implements WizardStep {
                 adresse.setOrt(unternehmenDatenView.getOrt().getOrt());
                 adresse.setBundesland(unternehmenDatenView.getOrt().getBunesland());
             }
-            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setAdresse(adresse);
+            ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).setAdresse(adresse);
 
             try {
-                ProfilDAO.getInstance().createUnternehmenProfil( ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)));
+                ProfilDAO.getInstance().createUnternehmenProfil( ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)));
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }

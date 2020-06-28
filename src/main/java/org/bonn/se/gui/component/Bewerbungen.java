@@ -51,7 +51,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
         this.addSelectionListener(event -> {
 
-            if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+            if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
 
                 Window subWindow = new Window("Bewertung abgeben oder Löschen");
                 GridLayout  subContent = new GridLayout (2,2);
@@ -130,7 +130,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
         this.setItems( data);
 
 
-        if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        if(UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
             this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Logo");
             this.addColumn(BewerbungDTO::getUnternehmenName).setCaption("Unternehmen").setWidth(150);
             this.addColumn(BewerbungDTO::getTitel).setCaption("Titel");

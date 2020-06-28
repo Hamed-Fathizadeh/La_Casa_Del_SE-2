@@ -167,10 +167,10 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
        }
         studentTaetigkeitenView.getTaetigkeitArrayList().add(taetigkeit);
 
-        ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).setTaetigkeiten(studentTaetigkeitenView.getTaetigkeitArrayList());
+        ((Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT)).setTaetigkeiten(studentTaetigkeitenView.getTaetigkeitArrayList());
 
         try {
-            ProfilDAO.getInstance().createStudentProfil2((Student) UI.getCurrent().getSession().getAttribute(Roles.Student));
+            ProfilDAO.getInstance().createStudentProfil2((Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT));
         } catch (DatabaseException e) {
             e.printStackTrace();
         }

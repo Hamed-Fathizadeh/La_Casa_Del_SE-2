@@ -130,7 +130,7 @@ public class UnternehmenDatenView extends GridLayout {
     }
 
     public void setUnternehmenValue(){
-        Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
+        Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN);
         uploadLogo.setValue(unternehmen.getLogo());
 
         if(unternehmen.getKontaktnummer() != null) kontaktnummer.setValue(unternehmen.getKontaktnummer());

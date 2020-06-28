@@ -185,7 +185,7 @@ public class StudentDatenView extends GridLayout {
 
 
     public void setStudentValue(){
-        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
         ort.getOrtField().setValue(student.getAdresse().getOrt() == null ? "" : student.getAdresse().getOrt() + ", " + student.getAdresse().getBundesland()) ;
         strasse.setValue(student.getAdresse().getStrasse() == null ? "" : student.getAdresse().getStrasse());
         ort.getPlzField().setValue(student.getAdresse().getPlz().equals("0") ? "" : student.getAdresse().getPlz());

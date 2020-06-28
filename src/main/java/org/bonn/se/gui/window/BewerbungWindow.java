@@ -44,7 +44,7 @@ public class BewerbungWindow extends CustomWindow {
         Image profilbild;
         Student student = null;
         if(userType.equals("Student")) {
-            student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+            student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
         }else {
             try {

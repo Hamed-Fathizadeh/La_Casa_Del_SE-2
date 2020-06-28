@@ -52,9 +52,9 @@ public class RegisterStudentWindow extends CustomWindow implements WizardProgres
     public void wizardCompleted(WizardCompletedEvent wizardCompletedEvent) {
         wizard.setVisible(false);
         this.close();
-        UI.getCurrent().getSession().setAttribute(Roles.Student,null);
+        UI.getCurrent().getSession().setAttribute(Roles.STUDENT,null);
 
-        MyUI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+        MyUI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
     }
 
     @Override
@@ -73,8 +73,8 @@ public class RegisterStudentWindow extends CustomWindow implements WizardProgres
                     if (dialog.isConfirmed()) {
                         wizard.setVisible(false);
                         RegisterStudentWindow.this.close();
-                        UI.getCurrent().getSession().setAttribute(Roles.Student,null);
-                        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+                        UI.getCurrent().getSession().setAttribute(Roles.STUDENT,null);
+                        UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
                     }
                 });
 

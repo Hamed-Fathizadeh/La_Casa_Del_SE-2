@@ -16,30 +16,30 @@ import java.util.logging.Logger;
 
 public class JavaMailUtil {
 
-    public static void sendMail(String recepient, String Vnummer, String name) throws Exception{
+    public static void sendMail(String recepient, String vNummer, String name) throws Exception{
 
         System.out.println("Preparing to sen email");
-        Properties general_properties = new Properties();
+        Properties generalProperties = new Properties();
         MailSSLSocketFactory sf = new MailSSLSocketFactory();
         sf.setTrustAllHosts(true);
-        general_properties.put("mail.smtp.ssl.socketFactory", sf);
+        generalProperties.put("mail.smtp.ssl.socketFactory", sf);
 
 
-        general_properties.put("mail.smtp.auth","true");
-        general_properties.put("mail.smtp.starttls.enable","true");
-        general_properties.put("mail.smtp.host","smtp.gmail.com");
-        general_properties.put("mail.smtp.port","587");
+        generalProperties.put("mail.smtp.auth","true");
+        generalProperties.put("mail.smtp.starttls.enable","true");
+        generalProperties.put("mail.smtp.host","smtp.gmail.com");
+        generalProperties.put("mail.smtp.port","587");
 
         String myAccountEmail = "lacolsco.webpage@gmail.com";
 
-       Session session = Session.getInstance(general_properties, new Authenticator(){
+       Session session = Session.getInstance(generalProperties, new Authenticator(){
           @Override
           protected  PasswordAuthentication getPasswordAuthentication(){
-              return new PasswordAuthentication(myAccountEmail,Password.mail);
+              return new PasswordAuthentication(myAccountEmail,Password.MAIL);
             }
         });
 
-        Message message =  prepareMessage(session, myAccountEmail, recepient,Vnummer, name);
+        Message message =  prepareMessage(session, myAccountEmail, recepient, vNummer, name);
 
         assert message != null;
         Transport.send(message);
@@ -49,24 +49,24 @@ public class JavaMailUtil {
 
     public static void sendMailToStudents(Unternehmen unternehmen, HashMap<String, String> liste) throws Exception{
         System.out.println("Preparing to sen email");
-        Properties properties_Student = new Properties();
+        Properties propertiesStudent = new Properties();
         MailSSLSocketFactory sf = new MailSSLSocketFactory();
         sf.setTrustAllHosts(true);
-        properties_Student.put("mail.smtp.ssl.socketFactory", sf);
-        properties_Student.put("mail.smtp.auth","true");
+        propertiesStudent.put("mail.smtp.ssl.socketFactory", sf);
+        propertiesStudent.put("mail.smtp.auth","true");
 
 
-        properties_Student.put("mail.smtp.host","smtp.gmail.com");
+        propertiesStudent.put("mail.smtp.host","smtp.gmail.com");
 
-        properties_Student.put("mail.smtp.port","587");
+        propertiesStudent.put("mail.smtp.port","587");
 
         String myAccountEmail = "lacolsco.webpage@gmail.com";
-        properties_Student.put("mail.smtp.starttls.enable","true");
+        propertiesStudent.put("mail.smtp.starttls.enable","true");
 
-        Session session = Session.getInstance(properties_Student, new Authenticator(){
+        Session session = Session.getInstance(propertiesStudent, new Authenticator(){
             @Override
             protected  PasswordAuthentication getPasswordAuthentication(){
-                return new PasswordAuthentication(myAccountEmail,Password.mail);
+                return new PasswordAuthentication(myAccountEmail,Password.MAIL);
             }
         });
 
@@ -164,12 +164,12 @@ public class JavaMailUtil {
     }
 
 
-        public static Message prepareMessage(Session session,String myAccountEmail, String recepient,String  Vnummer, String name){
+        public static Message prepareMessage(Session session, String myAccountEmail, String recepient, String vNummer, String name){
             try {
                 Message message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(myAccountEmail));
                 message.setRecipient(Message.RecipientType.TO,new InternetAddress(recepient));
-                message.setSubject("Lacolsco: Verifizierungscode: " + Vnummer);
+                message.setSubject("Lacolsco: Verifizierungscode: " + vNummer);
                 String msg = "</head>\n" +
                         "\n" +
                         "<body lang=DE style='tab-interval:35.4pt'>\n" +
@@ -189,7 +189,7 @@ public class JavaMailUtil {
                         "mso-bidi-theme-font:minor-bidi'>Schreib die <span class=SpellE>Verifizierungscode</span>\n" +
                         "</span><b><span style='font-size:16.0pt;line-height:107%;font-family:\"Arial\",sans-serif;\n" +
                         "mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:minor-bidi;mso-bidi-theme-font:\n" +
-                        "minor-bidi;color:red'>"+Vnummer+"</span></b><span style='font-size:14.0pt;line-height:\n" +
+                        "minor-bidi;color:red'>"+ vNummer +"</span></b><span style='font-size:14.0pt;line-height:\n" +
                         "107%;font-family:\"Arial\",sans-serif;mso-ascii-theme-font:minor-bidi;mso-hansi-theme-font:\n" +
                         "minor-bidi;mso-bidi-theme-font:minor-bidi'> in der vorgegebenen Feld!<o:p></o:p></span></p>\n" +
                         "\n" +

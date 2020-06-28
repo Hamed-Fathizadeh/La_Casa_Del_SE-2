@@ -14,9 +14,9 @@ public class ImageConverter {
     private static ThemeResource menu = new ThemeResource("img/Unknown_profil.png");
     private static ThemeResource profil = new ThemeResource("img/Unknown.png");
     private static RandomString gen = new RandomString(8 );
-    private static ThemeResource status_rot = new ThemeResource("img/Anzeigen/rot.png");
-    private static ThemeResource status_gruen = new ThemeResource("img/Anzeigen/gruen.png");
-    private static ThemeResource status_orange = new ThemeResource("img/Anzeigen/orange.png");
+    private static ThemeResource statusRot = new ThemeResource("img/Anzeigen/rot.png");
+    private static ThemeResource statusGruen = new ThemeResource("img/Anzeigen/gruen.png");
+    private static ThemeResource statusOrange = new ThemeResource("img/Anzeigen/orange.png");
     private static ThemeResource markierung = new ThemeResource("img/Anzeigen/makierung.png");
 
 
@@ -27,20 +27,20 @@ public class ImageConverter {
     }
 
 
-    public static Image getStatus_rot() {
-        Image rot = new Image(null, status_rot);
+    public static Image getStatusRot() {
+        Image rot = new Image(null, statusRot);
         rot.setDescription("Offline");
         return rot;
     }
 
-    public static Image getStatus_gruen() {
-        Image gruen = new Image(null, status_gruen);
+    public static Image getStatusGruen() {
+        Image gruen = new Image(null, statusGruen);
         gruen.setDescription("Online");
         return gruen;
     }
 
-    public static Image getStatus_orange() {
-        Image orange = new Image(null, status_orange);
+    public static Image getStatusOrange() {
+        Image orange = new Image(null, statusOrange);
         orange.setDescription("Entwurf");
         return orange;
     }

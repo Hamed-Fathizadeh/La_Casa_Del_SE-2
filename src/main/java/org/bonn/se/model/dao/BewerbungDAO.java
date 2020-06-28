@@ -73,7 +73,7 @@ public class BewerbungDAO extends AbstractDAO{
                UI.getCurrent().addWindow(confWindow);
            }else{
                UI.getCurrent().addWindow(new ConfirmationWindow("Sie haben sich erfolgreich beworben!"));
-               UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
+               UI.getCurrent().getNavigator().navigateTo(Views.STUDENTHOMEVIEW);
            }
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);

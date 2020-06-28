@@ -316,9 +316,9 @@ public class StudentHomeView extends VerticalLayout implements View {
                 bottomGridBewNeuTwo.setComponentAlignment(lBewerbung,Alignment.TOP_CENTER);
 
                 ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
-                Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student));
+                Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.STUDENT));
                 containerBewerbungen.load("Top 5",student.getEmail());
-                Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<>(containerBewerbungen, "StudentHomeView");
+                Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<>(containerBewerbungen, "STUDENTHOMEVIEW");
                 gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
                 gBewerbungen.setWidth("705px");
                 gBewerbungen.removeColumn("Bewertung");
@@ -331,7 +331,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 bottomGridBewNeuTwo.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
                 horizontalLayout.addComponent(bottomGridBewNeuTwo,0);
                 horizontalLayout.setComponentAlignment(bottomGridBewNeuTwo,Alignment.TOP_CENTER);
-                alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView));
+                alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().getNavigator().navigateTo(Views.ALLEBEWERBUNGENVIEW));
             });
         }
     }
@@ -344,7 +344,7 @@ public class StudentHomeView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
             try {
                 this.setUp();
             } catch (DatabaseException e) {
@@ -352,10 +352,10 @@ public class StudentHomeView extends VerticalLayout implements View {
             } catch (SQLException throwables) {
                 Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             }
-        } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
         }
     }
 }

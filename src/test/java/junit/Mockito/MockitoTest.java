@@ -78,14 +78,14 @@ public class MockitoTest {
         LoginControl loginControl = Mockito.mock(LoginControl.class);
         Mockito.doCallRealMethod().when(loginControl).checkAuthentication(student.getEmail(),student.getPasswort());
         LoginControl.getInstance().checkAuthentication(student.getEmail(),student.getPasswort());
-        when(vaadinSession.getAttribute(Roles.Student)).thenReturn(true);
+        when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(true);
         //verify
     }
 
     @Test
     public void testStudentHomeView() throws DatabaseException, SQLException {
 
-        when(vaadinSession.getAttribute(Roles.Student)).thenReturn(student);
+        when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(student);
 
         StudentHomeView studentHomeView = new StudentHomeView();
         studentHomeView.setUp();
@@ -96,7 +96,7 @@ public class MockitoTest {
         unternehmen = new Unternehmen();
         unternehmen.setEmail("abc.de");
         unternehmen.setCname("Test");
-        when(vaadinSession.getAttribute(Roles.Unternehmen)).thenReturn(unternehmen);
+        when(vaadinSession.getAttribute(Roles.UNTERNEHMEN)).thenReturn(unternehmen);
 
         UnternehmenHomeView unternehmenHomeView = new UnternehmenHomeView();
         unternehmenHomeView.setUp();
@@ -113,7 +113,7 @@ public class MockitoTest {
     @Test
     public void getTest() {
 
-        when(vaadinSession.getAttribute(Roles.Student)).thenReturn(student);
+        when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(student);
         // Assert.assertTrue( instanceof  );
         dataInput = new ArrayList<StellenanzeigeDTO>();
         for (int i = 0; i < 10; i++) {
@@ -165,7 +165,7 @@ public class MockitoTest {
         unternehmen.setNachname("nachname");
         unternehmen.setHauptsitz("Bonn");
         unternehmen.setBundesland("Nordrhein-Westfalen");
-        when(vaadinSession.getAttribute(Roles.Unternehmen)).thenReturn(unternehmen);
+        when(vaadinSession.getAttribute(Roles.UNTERNEHMEN)).thenReturn(unternehmen);
         StellenanzeigeDTO stellenanzeigeDTO = new StellenanzeigeDTO();
         stellenanzeigeDTO.setId(102);
         stellenanzeigeDTO.setFirmenname("BargoBank");
@@ -180,7 +180,7 @@ public class MockitoTest {
 
         Adresse adresse = new Adresse();
         student.setAdresse(adresse);
-        when(vaadinSession.getAttribute(Roles.Student)).thenReturn(student);
+        when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(student);
         StellenanzeigeDTO stellenanzeigeDTO = new StellenanzeigeDTO();
         stellenanzeigeDTO.setId(102);
         stellenanzeigeDTO.setFirmenname("BargoBank");

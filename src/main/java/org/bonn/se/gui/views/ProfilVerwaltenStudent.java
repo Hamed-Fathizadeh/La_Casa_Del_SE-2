@@ -35,7 +35,7 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
 
     public void setUp() throws DatabaseException, SQLException {
 
-        Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student));
+        Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.STUDENT));
 
         TopPanelUser topPanel = new TopPanelUser();
         topPanel.setMargin(false);

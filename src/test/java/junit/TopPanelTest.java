@@ -56,7 +56,7 @@ public class TopPanelTest {
         student = new Student();
         student.setEmail("abc.de");
         student.setVorname("Test");
-        when(vaadinSession.getAttribute(Roles.Student)).thenReturn(student);
+        when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(student);
 
         TopPanelUser topPanelUser = new TopPanelUser();
     }
@@ -66,7 +66,7 @@ public class TopPanelTest {
         unternehmen = new Unternehmen();
         unternehmen.setEmail("abc.de");
         unternehmen.setCname("Test");
-        when(vaadinSession.getAttribute(Roles.Unternehmen)).thenReturn(unternehmen);
+        when(vaadinSession.getAttribute(Roles.UNTERNEHMEN)).thenReturn(unternehmen);
 
         TopPanelUser topPanelUser = new TopPanelUser();
     }

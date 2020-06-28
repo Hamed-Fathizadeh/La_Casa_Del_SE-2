@@ -37,7 +37,7 @@ public class JDBCConnection {
 
             Properties props = new Properties();
             props.setProperty("user", "tfelle2s");
-            props.setProperty("password", Password.db);
+            props.setProperty("password", Password.DB);
 
 
             String url = "jdbc:postgresql://dumbo.inf.h-brs.de/tfelle2s";

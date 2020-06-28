@@ -75,18 +75,18 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
             StellenanzeigeDTO sa =  selection.getValue();
 
             if(sa.getStatus() == 3) {
-                for (StellenanzeigeDTO temp : ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO()) {
+                for (StellenanzeigeDTO temp : ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).getStellenanzeigenDTO()) {
                     if (temp.getId() == sa.getId()) {
-                        Collections.swap(((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO(),
-                                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().indexOf(temp),
-                                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getStellenanzeigenDTO().size() - 1);
+                        Collections.swap(((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).getStellenanzeigenDTO(),
+                                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).getStellenanzeigenDTO().indexOf(temp),
+                                ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).getStellenanzeigenDTO().size() - 1);
                         break;
 
                     }
 
                 }
-                ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setStellenanzeigeDTO(sa);
-                MyUI.getCurrent().getNavigator().navigateTo(Views.Stellenbeschreibung);
+                ((Unternehmen)MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).setStellenanzeigeDTO(sa);
+                MyUI.getCurrent().getNavigator().navigateTo(Views.STELLENBESCHREIBUNG);
             } else {
                 StellenanzeigeWindow stellenanzeigeWindow;
                 stellenanzeigeWindow = new StellenanzeigeWindow(sa);
@@ -105,7 +105,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
 
 
 
-        if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        if(UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
             this.addComponentColumn(im ->{
                 VerticalLayout imageL = new VerticalLayout();
                 imageL.addComponent(im.getUnternehmenLogo());
@@ -125,9 +125,9 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         this.addColumn(StellenanzeigeDTO::getDatum).setCaption("Beginn");
         this.addColumn(StellenanzeigeDTO::getSuchbegriff).setCaption("Stelle");
 
-        if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        if(UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
             this.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
-            this.addComponentColumn(sa -> (sa.getStatus() == 1 ? ImageConverter.getStatus_gruen(): sa.getStatus() == 2 ? ImageConverter.getStatus_rot() : ImageConverter.getStatus_orange())).setCaption("Status").setId("Status");
+            this.addComponentColumn(sa -> (sa.getStatus() == 1 ? ImageConverter.getStatusGruen(): sa.getStatus() == 2 ? ImageConverter.getStatusRot() : ImageConverter.getStatusOrange())).setCaption("Status").setId("Status");
             this.addComponentColumn(sa -> ( new Label(" <style>p { color:black ; font-weight:bold;  font-size: 18px; }</style><p>"+setGesamtNeuBewerbungen(sa.getanzahlNeuBewerbung())+"</p>", ContentMode.HTML))   ).setCaption("Neue Bewerbungen").setId("Anzahl neue Bewerbungen");
         }
 

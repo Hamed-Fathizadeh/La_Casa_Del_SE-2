@@ -14,7 +14,7 @@ public class FileUploader implements Upload.Receiver, Upload.SucceededListener {
     static File file ;
     static PdfWriter writer;
     static PdfDocument pdfDoc;
-    final static Image image = new Image();
+    static final Image image = new Image();
 
 
 

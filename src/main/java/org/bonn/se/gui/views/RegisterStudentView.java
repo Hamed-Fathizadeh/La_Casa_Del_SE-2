@@ -137,7 +137,7 @@ public class RegisterStudentView extends GridLayout implements View {
                             student.setNachname(user.getNachname());
                             student.setPasswort(user.getPasswort());
 
-                            UI.getCurrent().getSession().setAttribute(Roles.Student,student);
+                            UI.getCurrent().getSession().setAttribute(Roles.STUDENT,student);
 
 
                             RegisterStudentWindow registerStudentWindow = new RegisterStudentWindow();
@@ -160,10 +160,10 @@ public class RegisterStudentView extends GridLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+        if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.STUDENTHOMEVIEW);
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
         } else {
             this.setUp();
         }

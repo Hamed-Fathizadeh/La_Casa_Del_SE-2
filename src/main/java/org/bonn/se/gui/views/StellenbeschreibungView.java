@@ -35,11 +35,11 @@ public class StellenbeschreibungView extends GridLayout implements View {
         richTextArea.setHeightFull();
 
 
-        richTextArea.setValue("<h1>Hallo</h1>\n" + "<p>Hier können Sie ihre Stellenbeschreibung verfassen.</p>");
+        richTextArea.setValue("<h1>Hallo</h1>\n" + "<p>Hier können Sie ihre STELLENBESCHREIBUNG verfassen.</p>");
 
         Button abbrechen = new Button("Abbrechen");
 
-        abbrechen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView));
+        abbrechen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW));
 
         Button fertig = new Button("Fertig");
         fertig.addClickListener(new Button.ClickListener() {
@@ -55,7 +55,7 @@ public class StellenbeschreibungView extends GridLayout implements View {
                 ConfirmDialog.setFactory(df);
                 ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du die Anzeige online schalten?",
                         (ConfirmDialog.Listener) dialog -> {
-                            StellenanzeigeDTO stellenanzeigeDTO = ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                            StellenanzeigeDTO stellenanzeigeDTO = ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN))
                                     .getStellenanzeigeDTO();
                             stellenanzeigeDTO.setBeschreibung(richTextArea.getValue());
                             if (dialog.isConfirmed()) {
@@ -65,10 +65,10 @@ public class StellenbeschreibungView extends GridLayout implements View {
                                         AnzStatusControl.changeStatus(stellenanzeigeDTO);
                                         ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeigeDTO);
 
-                                } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
-                                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                                } else if (UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) instanceof Unternehmen) {
+                                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN))
                                             .getStellenanzeigeDTO().setStatus(1);
-                                        ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
+                                        ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN));
                                 }
                                 msgStatus = "Online";
 
@@ -79,15 +79,15 @@ public class StellenbeschreibungView extends GridLayout implements View {
                                         AnzStatusControl.changeStatus(stellenanzeigeDTO);
                                         ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeigeDTO);
 
-                                } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
-                                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                                } else if (UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) instanceof Unternehmen) {
+                                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN))
                                             .getStellenanzeigeDTO().setStatus(2);
-                                            ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
+                                            ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN));
 
                                 }
                                 msgStatus = "Offline";
                             }
-                            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+                            UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
                             notification = Notification.show("Erfolgreich","Ihr Anzeige ist nun "+msgStatus+"!", Notification.Type.WARNING_MESSAGE);
                             notification.setHtmlContentAllowed(true);
                             notification.setDelayMsec(2000);
@@ -105,7 +105,7 @@ public class StellenbeschreibungView extends GridLayout implements View {
         Button entwurf = new Button("Entwurf speichern");
         entwurf.setWidth("200px");
         entwurf.addClickListener((Button.ClickListener) event -> {
-            StellenanzeigeDTO stellenanzeigeDTO = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+            StellenanzeigeDTO stellenanzeigeDTO = ((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN))
                     .getStellenanzeigeDTO();
             stellenanzeigeDTO.setBeschreibung(richTextArea.getValue());
             if( stellenanzeigeDTO.getStatus() == 3) {
@@ -113,15 +113,15 @@ public class StellenbeschreibungView extends GridLayout implements View {
 
             } else {
 
-                if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) instanceof Unternehmen) {
-                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen))
+                if (UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) instanceof Unternehmen) {
+                    ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN))
                             .getStellenanzeigeDTO().setStatus(3);
                 }
-                    ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen));
+                    ContainerAnzeigen.getInstance().setAnzeige((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN));
 
             }
 
-            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+            UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
             notification = Notification.show("Erfolgreich","Ihr Anzeige ist nun als Entwurf gespeichert!", Notification.Type.WARNING_MESSAGE);
             notification.setHtmlContentAllowed(true);
             notification.setDelayMsec(3000);
@@ -153,13 +153,13 @@ public class StellenbeschreibungView extends GridLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
                 this.setUp();
-        } else if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
 
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
         }
     }
 
