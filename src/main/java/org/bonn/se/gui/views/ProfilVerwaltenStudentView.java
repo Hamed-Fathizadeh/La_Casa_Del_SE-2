@@ -42,8 +42,8 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich speichern?",
                 (ConfirmDialog.Listener) dialog -> {
                     if (dialog.isConfirmed()) {
-                        student.setG_datum(grid.getgDatum().getValue());
-                        student.setKontakt_nr((grid.getMobilnr()).getValue());
+                        student.setGDatum(grid.getgDatum().getValue());
+                        student.setKontaktNr((grid.getMobilnr()).getValue());
                         Adresse adresse = new Adresse();
                         adresse.setStrasse(grid.getStrasse().getValue());
                         adresse.setPlz(grid.getOrt().getPlz());

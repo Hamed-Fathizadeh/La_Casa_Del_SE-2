@@ -11,7 +11,6 @@ import org.bonn.se.control.ProfilControl;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
-import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
@@ -65,7 +64,7 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
         ProfilStudentTextField tfnachname = new ProfilStudentTextField("Nachname", student.getNachname());
         StudentDateField tfgdatum= new StudentDateField("Geburtsdatum");
         tfgdatum.setCaption("Geburtsdatum");
-        tfgdatum.setValue(student.getG_datum());
+        tfgdatum.setValue(student.getGDatum());
         ProfilStudentTextField tstrasse = new ProfilStudentTextField("Strasse",student.getAdresse().getStrasse());
         OrtPlzTextField ortPlzTextField = new OrtPlzTextField();
         ortPlzTextField.getOrtField().setValue(student.getAdresse().getOrt() + ", " +student.getAdresse().getBundesland());
@@ -83,7 +82,7 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
         ortPlzTextField.getOrtField().setReadOnly(true);
 
         ProfilStudentTextField tfemail = new ProfilStudentTextField("Email", student.getEmail());
-        ProfilStudentTextField tkontaktnr = new ProfilStudentTextField("Kontaktnr", student.getKontakt_nr());
+        ProfilStudentTextField tkontaktnr = new ProfilStudentTextField("Kontaktnr", student.getKontaktNr());
         ProfilStudentTextField tfausbildung = new ProfilStudentTextField("Ausbildung", student.getAusbildung());
         ProfilStudentTextField tfstudium = new ProfilStudentTextField("Studium", student.getStudiengang());
         ComboBox<String> tfabschluss = new ComboBox<>();
@@ -172,13 +171,13 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
                         if (dialog.isConfirmed()) {
                             student.setVorname(tfvorname.getValue());
                             student.setNachname(tfnachname.getValue());
-                            student.setG_datum(tfgdatum.getValue());
+                            student.setGDatum(tfgdatum.getValue());
                             student.getAdresse().setStrasse(tstrasse.getValue());
                             student.getAdresse().setOrt(ortPlzTextField.getOrt());
                             student.getAdresse().setPlz(ortPlzTextField.getPlz());
                             // Bundesland eventuell
                             //EMail
-                            student.setKontakt_nr(tkontaktnr.getValue());
+                            student.setKontaktNr(tkontaktnr.getValue());
                             student.setAusbildung(tfausbildung.getValue());
                             student.setStudiengang(tfstudium.getValue());
                             student.setAbschluss(tfabschluss.getValue());

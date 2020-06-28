@@ -64,13 +64,13 @@ public class BewerbungWindow extends CustomWindow {
         Label vorNachname = new Label("Vor und Nachname: ");
         Label vorNachnameData = new Label(student.getVorname()+" "+student.getNachname());
         Label gebDatum = new Label("Geb Datum: ");
-        Label gebDatumData = new Label(student.getG_datum() == null?"":""+student.getG_datum());
+        Label gebDatumData = new Label(student.getGDatum() == null?"":""+student.getGDatum());
         Label adresse = new Label("Adresse: ");
         Label adresseData = new Label(student.getAdresse().getStrasse());
         Label plzOrt = new Label("PLZ Ort: ");
         Label plzOrtData = new Label(student.getAdresse().getPlz()+" "+student.getAdresse().getOrt());
         Label rufnummer = new Label("Rufnummer: ");
-        Label rufnummerData = new Label(student.getKontakt_nr());
+        Label rufnummerData = new Label(student.getKontaktNr());
         Label email = new Label("Email: ");
         Label emailData = new Label(student.getEmail());
         Label abschluss = new Label("Abschluss: ");
@@ -180,7 +180,7 @@ public class BewerbungWindow extends CustomWindow {
                 bewerbungDTO.setDescription(richTextArea.getValue());
                 bewerbungDTO.setLebenslauf(PdfUploader.getByte());
                 bewerbungDTO.setStatus(9);
-                bewerbungDTO.setStudentID(st.getStudent_id());
+                bewerbungDTO.setStudentID(st.getStudentId());
                 bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
                 BewerbungWindow.this.close();
                 try {

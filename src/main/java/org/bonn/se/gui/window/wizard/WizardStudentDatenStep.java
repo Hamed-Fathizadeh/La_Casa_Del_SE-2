@@ -151,10 +151,10 @@ public class WizardStudentDatenStep implements WizardStep {
                 studentDatenView.getLebenslauf().clear();
             }
             student.setAbschluss(studentDatenView.getAbschluss().getValue());
-            student.setKontakt_nr(studentDatenView.getMobilnr().getValue());
+            student.setKontaktNr(studentDatenView.getMobilnr().getValue());
             student.setAusbildung(studentDatenView.getAusbildung().getValue());
             student.setStudiengang(studentDatenView.getStudiengang().getValue());
-            student.setG_datum(studentDatenView.getgDatum().getValue());
+            student.setGDatum(studentDatenView.getgDatum().getValue());
             Adresse adresse = new Adresse();
             if(!( studentDatenView.getOrt().getOrtField().getValue() == null ) || studentDatenView.getOrt().getPlzField().getValue() == null ) {
                 adresse.setStrasse(studentDatenView.getStrasse().getValue());
