@@ -65,7 +65,7 @@ public class StudentTaetigkeitenView extends GridLayout {
                 .asRequired("Bitte ausfüllen")
                 .withValidator(
                         beginnDate -> beginnDate
-                                .isAfter(t1_beginn.getValue()),
+                                .isAfter(t1_beginn.getValue()) || beginnDate.isEqual(null),
                         "Beginndatum darf nicht nach Enddatum sein!")
                 .bind(Taetigkeit::getEnde, Taetigkeit::setEnde);
 
