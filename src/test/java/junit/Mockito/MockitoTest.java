@@ -10,6 +10,7 @@ import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.StudentDatenView;
 import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.gui.views.UnternehmenHomeView;
+import org.bonn.se.gui.window.StellenanzeigeWindow;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
@@ -128,4 +129,33 @@ public class MockitoTest {
         studentDatenView.setStudentValue();
 
     }
+
+
+    @Test
+    public void testStellenanzeigeStudent() {
+        student = new Student();
+        student.setEmail("abc.de");
+        student.setVorname("Test");
+        when(vaadinSession.getAttribute(Roles.Student)).thenReturn(student);
+        StellenanzeigeDTO stellenanzeigeDTO = new StellenanzeigeDTO();
+        stellenanzeigeDTO.setId(102);
+        stellenanzeigeDTO.setFirmenname("BargoBank");
+        stellenanzeigeDTO.setBeschreibung("Test");
+        StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(stellenanzeigeDTO);
+    }
+
+    @Test
+    public void testStellenanzeigeUnternehmen() {
+        unternehmen = new Unternehmen();
+        unternehmen.setEmail("abc.de");
+        unternehmen.setCname("Test");
+        when(vaadinSession.getAttribute(Roles.Unternehmen)).thenReturn(unternehmen);
+        StellenanzeigeDTO stellenanzeigeDTO = new StellenanzeigeDTO();
+        stellenanzeigeDTO.setId(102);
+        stellenanzeigeDTO.setFirmenname("BargoBank");
+        stellenanzeigeDTO.setBeschreibung("Test");
+        StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(stellenanzeigeDTO);
+
+    }
+
 }
