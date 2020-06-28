@@ -71,7 +71,7 @@ public class ContainerAnzDAO extends AbstractDAO{
             StringBuilder sbBranche = new StringBuilder(" ");
 
             if(artSuche.equals("Erweitert")){
-                Date date = Date.valueOf(ab_Datum);
+                Date date = ab_Datum == null ? null : Date.valueOf(ab_Datum) ;
                 sbEinstellungsart = new StringBuilder(einstellungsart == null ? " " : " and a.art = '" + einstellungsart + "' ");
                 sbAb_Datum = new StringBuilder(date == null ? " " : " and a.datum >= '" + date + "' ");
                 sbBranche = new StringBuilder(branche == null ? " " : " and u.branch_name = '" + branche + "' ");
