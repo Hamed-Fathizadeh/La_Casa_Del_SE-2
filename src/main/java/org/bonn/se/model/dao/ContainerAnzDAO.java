@@ -33,13 +33,13 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             while (set.next()) {
                 StellenanzeigeDTO sa_load = new StellenanzeigeDTO(
-                        set.getInt(1),
-                        set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
-                        set.getDate(3),
-                        set.getString(4), set.getString(5), set.getInt(6),
-                        set.getString(7), set.getString(8), set.getString(9),
-                        set.getString(10),set.getString(11),set.getString(12),null,set.getDouble(13),set.getString(12)
-                                                            );
+                        set.getInt("s_anzeige_id"),
+                        set.getDate("datum") == null? null: set.getDate("datum").toLocalDate(),
+                        set.getDate("zeitstempel"),
+                        set.getString("titel"), set.getString("s_beschreibung"), set.getInt("status"),
+                        set.getString("ort"), set.getString("bundesland"), set.getString("firmenname"),
+                        set.getString("hauptsitz"),set.getString("suchbegriff"),set.getString("art"),
+                        null,set.getDouble("bewertung"),null,null);
 
                    liste.add(sa_load);
             }
@@ -118,16 +118,13 @@ public class ContainerAnzDAO extends AbstractDAO{
                  );
             while (set.next()) {
                 StellenanzeigeDTO sa_suche = new StellenanzeigeDTO(
-                        set.getInt(1),
-                        set.getDate(2) == null ? null: set.getDate(2).toLocalDate()
-                        ,set.getDate(3),
-                        set.getString(4),
-                        set.getString(5),
-                        set.getInt(6),
-                        set.getString(7), set.getString(8), set.getString(9),
-                        set.getString(10),set.getString(11),set.getString(12),
-                        set.getBytes(13),set.getDouble(14),set.getString(15)
-                );
+                        set.getInt("s_anzeige_id"),
+                        set.getDate("datum") == null? null: set.getDate("datum").toLocalDate(),
+                        set.getDate("zeitstempel"),
+                        set.getString("titel"), set.getString("s_beschreibung"), set.getInt("status"),
+                        set.getString("ort"), set.getString("bundesland"), set.getString("firmenname"),
+                        set.getString("hauptsitz"),set.getString("suchbegriff"),set.getString("art"),
+                        set.getBytes("logo"),set.getDouble("bewertung"),set.getString("branch_name"),null);
 
                 liste.add(sa_suche);
             }
@@ -163,13 +160,13 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             while (set.next()) {
                 StellenanzeigeDTO sa_neuigkeiten = new StellenanzeigeDTO(
-                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
-                        set.getDate(3),
-                        set.getString(4), set.getString(5), set.getInt(6),
-                        set.getString(7), set.getString(8), set.getString(9),
-                        set.getString(10),set.getString(11),set.getString(12),
-                        set.getBytes(13),set.getDouble(14),set.getString(15)
-                );
+                        set.getInt("s_anzeige_id"),
+                        set.getDate("datum") == null? null: set.getDate("datum").toLocalDate(),
+                        set.getDate("zeitstempel"),
+                        set.getString("titel"), set.getString("s_beschreibung"), set.getInt("status"),
+                        set.getString("ort"), set.getString("bundesland"), set.getString("firmenname"),
+                        set.getString("hauptsitz"),set.getString("suchbegriff"),set.getString("art"),
+                        set.getBytes("logo"),set.getDouble("bewertung"),set.getString("branch_name"),null);
 
                 liste.add(sa_neuigkeiten);
 
@@ -205,12 +202,15 @@ public class ContainerAnzDAO extends AbstractDAO{
             while (set.next()) {
 
                 StellenanzeigeDTO sa_loadUnternehmenAnzeigen = new StellenanzeigeDTO(
-                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
-                        set.getDate(3), set.getString(4), set.getString(5),
-                        set.getInt(6), set.getString(7), set.getString(8),
-                        set.getString(9), set.getString(10),set.getString(11),
-                        set.getString(12),set.getInt(13)
-                );
+                        set.getInt("s_anzeige_id"),
+                        set.getDate("datum") == null? null: set.getDate("datum").toLocalDate(),
+                        set.getDate("zeitstempel"),
+                        set.getString("titel"), set.getString("s_beschreibung"), set.getInt("status"),
+                        set.getString("ort"), set.getString("bundesland"), set.getString("firmenname"),
+                        set.getString("hauptsitz"),set.getString("suchbegriff"),set.getString("art"),
+                        null,null,null,null);
+
+
 
                 liste.add(sa_loadUnternehmenAnzeigen);
 
@@ -261,12 +261,14 @@ public class ContainerAnzDAO extends AbstractDAO{
             while (set.next()) {
 
                 StellenanzeigeDTO sa_loadNeueBewerbungen = new StellenanzeigeDTO(
-                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
-                        set.getDate(3), set.getString(4), set.getString(5),
-                        set.getInt(6), set.getString(7), set.getString(8),
-                        set.getString(9), set.getString(10),set.getString(11),
-                        set.getString(12),set.getInt(13)
-                );
+                        set.getInt("s_anzeige_id"),
+                        set.getDate("datum") == null? null: set.getDate("datum").toLocalDate(),
+                        set.getDate("zeitstempel"),
+                        set.getString("titel"), set.getString("s_beschreibung"), set.getInt("status"),
+                        set.getString("ort"), set.getString("bundesland"), set.getString("firmenname"),
+                        set.getString("hauptsitz"),set.getString("suchbegriff"),set.getString("art"),
+                        null,null,null,set.getInt("anzahlbewerbung"));
+
 
                 listeStellenanzeigenBew.add(sa_loadNeueBewerbungen);
 
