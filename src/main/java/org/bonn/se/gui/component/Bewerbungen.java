@@ -144,13 +144,13 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 return rating;
             }).setCaption("Bewertung").setId("Bewertung");
         }else{
-            this.addComponentColumn(BewerbungDTO::getStudent_picture).setCaption("Bild");
-            this.addColumn(BewerbungDTO::getStudent_vorname).setCaption("Vorname");
-            this.addColumn(BewerbungDTO::getStudent_nachname).setCaption("Nachname");
-            this.addColumn(BewerbungDTO::getStudent_studiengang).setCaption("Studiengang");
-            this.addColumn(BewerbungDTO::getStudent_hoester_abschluss).setCaption("Höchster Abschluss");
-            this.addColumn(BewerbungDTO::getStudent_ausbildung).setCaption("Ausbildung");
-            this.addComponentColumn(bew -> (bew.isBewerbung_markiert() ? ImageConverter.getMarkierung() : null)).setCaption("Markiert");
+            this.addComponentColumn(BewerbungDTO::getStudentPicture).setCaption("Bild");
+            this.addColumn(BewerbungDTO::getStudentVorname).setCaption("Vorname");
+            this.addColumn(BewerbungDTO::getStudentNachname).setCaption("Nachname");
+            this.addColumn(BewerbungDTO::getStudentStudiengang).setCaption("Studiengang");
+            this.addColumn(BewerbungDTO::getStudentHoesterAbschluss).setCaption("Höchster Abschluss");
+            this.addColumn(BewerbungDTO::getStudentAusbildung).setCaption("Ausbildung");
+            this.addComponentColumn(bew -> (bew.isBewerbungMarkiert() ? ImageConverter.getMarkierung() : null)).setCaption("Markiert");
             this.addComponentColumn(bew -> (bew.getStatus() == 9 ? new Label(" <style>p { color:red ; font-weight:bold;  font-size: 18px; }</style><p>Neu</p>", ContentMode.HTML): null)).setCaption("");
 
         } new Label("<b>Unternehmensname</b>", ContentMode.HTML);

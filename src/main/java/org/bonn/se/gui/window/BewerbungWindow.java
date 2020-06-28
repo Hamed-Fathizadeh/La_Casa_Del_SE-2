@@ -207,7 +207,7 @@ public class BewerbungWindow extends CustomWindow {
 
 
             Image picMarkierung;
-            if( bewerbung.isBewerbung_markiert()){
+            if( bewerbung.isBewerbungMarkiert()){
                 ThemeResource resource3 = new ThemeResource("img/Anzeigen/makierung.png");
                 picMarkierung = new Image(null, resource3);
                 mainGridLayout.addComponent(picMarkierung, 5, 2);
@@ -240,7 +240,7 @@ public class BewerbungWindow extends CustomWindow {
 
             markieren.addClickListener((Button.ClickListener) event -> {
                 try {
-                   bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
+                   bewerbung.setBewerbungMarkiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
                 } catch (DatabaseException | SQLException e) {
                     e.printStackTrace();
                 }
@@ -259,9 +259,9 @@ public class BewerbungWindow extends CustomWindow {
             });
 
             ablehnen.addClickListener((Button.ClickListener) event -> {
-                if(bewerbung.isBewerbung_markiert()) {
+                if(bewerbung.isBewerbungMarkiert()) {
                     try {
-                        bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
+                        bewerbung.setBewerbungMarkiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
                     } catch (DatabaseException | SQLException e) {
                         e.printStackTrace();
                     }
@@ -278,7 +278,7 @@ public class BewerbungWindow extends CustomWindow {
                  if(bewerbung != null) {
                 try {
 
-                    StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID(),bewerbung.getStudent_vorname(),bewerbung.getStudent_nachname());
+                    StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID(),bewerbung.getStudentVorname(),bewerbung.getStudentNachname());
                     FileDownloader fileDownloader = new FileDownloader(myResource);
                     fileDownloader.extend(downloadLebnslauf);
                 } catch (DatabaseException | SQLException e) {

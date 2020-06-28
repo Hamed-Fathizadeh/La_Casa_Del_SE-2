@@ -17,15 +17,15 @@ public class BewerbungDTOTest {
     private int AnzeigeID = 2;
     private Date datum = null;
     private String unternehmenName="ONCP";
-    private Date student_g_datum=null;
-    private String student_studiengang="Reseaux informatique";
-    private String student_ausbildung="genie Logiciel";
-    private String  student_kontakt_nr="017643517588";
-    private int student_benachrichtigung=1;
-    private String student_hoester_abschluss="Bachelor";
-    private String student_vorname="salma";
-    private String student_nachname="hassouni";
-    private boolean bewerbung_markiert=true;
+    private Date studentGDatum=null;
+    private String studentStudiengang="Reseaux informatique";
+    private String studentAusbildung="genie Logiciel";
+    private String  studentKontaktNr="017643517588";
+    private int studentBenachrichtigung=1;
+    private String studentHoesterAbschluss="Bachelor";
+    private String studentVorname="salma";
+    private String studentNachname="hassouni";
+    private boolean bewerbungMarkiert=true;
 
 
     BewerbungDTO bewerb = new BewerbungDTO();
@@ -43,24 +43,24 @@ public class BewerbungDTOTest {
         bewerb.setStatus(status);
 
         bewerb.setUnternehmenName("ONCP");
-        bewerb.setStudent_g_datum(student_g_datum);
-        bewerb.setStudent_studiengang(student_studiengang);
-        bewerb.setStudent_ausbildung(student_ausbildung);
-        bewerb.setStudent_kontakt_nr(student_kontakt_nr);
-        bewerb.setStudent_benachrichtigung(student_benachrichtigung);
-        bewerb.setStudent_hoester_abschluss(student_hoester_abschluss);
-        bewerb.setStudent_vorname(student_vorname);
-        bewerb.setStudent_nachname(student_nachname);
-        bewerb.setBewerbung_markiert(bewerbung_markiert);
+        bewerb.setStudentGDatum(studentGDatum);
+        bewerb.setStudentStudiengang(studentStudiengang);
+        bewerb.setStudentAusbildung(studentAusbildung);
+        bewerb.setStudentKontaktNr(studentKontaktNr);
+        bewerb.setStudentBenachrichtigung(studentBenachrichtigung);
+        bewerb.setStudentHoesterAbschluss(studentHoesterAbschluss);
+        bewerb.setStudentVorname(studentVorname);
+        bewerb.setStudentNachname(studentNachname);
+        bewerb.setBewerbungMarkiert(bewerbungMarkiert);
 
-        Assertions.assertEquals("Reseaux informatique",bewerb.getStudent_studiengang());
-        Assertions.assertEquals("genie Logiciel",bewerb.getStudent_ausbildung());
-        Assertions.assertEquals("017643517588",bewerb.getStudent_kontakt_nr());
-        Assertions.assertEquals(1,bewerb.getStudent_benachrichtigung());
-        Assertions.assertEquals("Bachelor",bewerb.getStudent_hoester_abschluss());
-        Assertions.assertEquals("hassouni",bewerb.getStudent_nachname());
-        Assertions.assertEquals("salma",bewerb.getStudent_vorname());
-        Assertions.assertTrue(bewerb.isBewerbung_markiert());
+        Assertions.assertEquals("Reseaux informatique",bewerb.getStudentStudiengang());
+        Assertions.assertEquals("genie Logiciel",bewerb.getStudentAusbildung());
+        Assertions.assertEquals("017643517588",bewerb.getStudentKontaktNr());
+        Assertions.assertEquals(1,bewerb.getStudentBenachrichtigung());
+        Assertions.assertEquals("Bachelor",bewerb.getStudentHoesterAbschluss());
+        Assertions.assertEquals("hassouni",bewerb.getStudentNachname());
+        Assertions.assertEquals("salma",bewerb.getStudentVorname());
+        Assertions.assertTrue(bewerb.isBewerbungMarkiert());
         Assertions.assertEquals("ONCP",bewerb.getUnternehmenName());
         Assertions.assertEquals(1, bewerb.getBewerbungID());
         Assertions.assertSame(null,bewerb.getLebenslauf());
