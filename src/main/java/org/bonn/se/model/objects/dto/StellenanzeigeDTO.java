@@ -56,10 +56,9 @@ public class StellenanzeigeDTO {
         setBranche(branche);
     }
 
-
     public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
                              int status, String standort, String bundesland, String firmenname, String hauptsitz,
-                             String suchbegriff, String art, byte[] unternehmenLogo, Double bewertung, String branche, Integer anzahlNeuBewerbung) {
+                             String suchbegriff, String art, byte[] unternehmenLogo, double bewertung, String branche) {
         this.id = id;
         this.datum = datum;
         this.zeitstempel = zeitstempel;
@@ -70,19 +69,12 @@ public class StellenanzeigeDTO {
         this.bundesland = bundesland;
         this.firmenname = firmenname;
         this.hauptsitz = hauptsitz;
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
         this.suchbegriff = suchbegriff;
         this.art = art;
-        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
         this.bewertung = bewertung;
         this.branche = branche;
-        this.anzahlNeuBewerbung = anzahlNeuBewerbung ;
-        setHatNeuBewerbung(anzahlNeuBewerbung);
-
-
     }
-
-
-/*
 
     public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
                              int status, String standort, String bundesland, String firmenname, String hauptsitz,
@@ -101,14 +93,6 @@ public class StellenanzeigeDTO {
         this.art = art;
         this.anzahlNeuBewerbung = anzahlNeuBewerbung ;
     }
-
- */
-
-
-
-
-
-
 
     public Image getUnternehmenLogo() {
         return unternehmenLogo;

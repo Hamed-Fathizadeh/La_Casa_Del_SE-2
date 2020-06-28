@@ -33,15 +33,15 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             while (set.next()) {
                 StellenanzeigeDTO sa_load = new StellenanzeigeDTO(
-                        set.getInt("s_anzeige_id"),
-                        set.getDate("datum") == null? null: set.getDate("datum").toLocalDate(),
-                        set.getDate("zeitstempel"),
-                        set.getString("titel"), set.getString("s_beschreibung"), set.getInt("status"),
-                        set.getString("ort"), set.getString("bundesland"), set.getString("firmenname"),
-                        set.getString("hauptsitz"),set.getString("suchbegriff"),set.getString("art"),
-                        null,set.getDouble("bewertung"),null,null);
+                        set.getInt(1),
+                        set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
+                        set.getDate(3),
+                        set.getString(4), set.getString(5), set.getInt(6),
+                        set.getString(7), set.getString(8), set.getString(9),
+                        set.getString(10),set.getString(11),set.getString(12),null,set.getDouble(13),set.getString(12)
+                );
 
-                   liste.add(sa_load);
+                liste.add(sa_load);
             }
 
         } catch (SQLException throwables) {
@@ -107,7 +107,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         "and b.bundesland = '"+bundesland+"') \n");
             }
 
-             set = statement.executeQuery("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
+            set = statement.executeQuery("SELECT a.s_anzeige_id, a.datum, a.zeitstempel, a.titel, a.s_beschreibung, a.status\n" +
                     "      ,a.ort, a.bundesland, a.firmenname, a.hauptsitz, a.suchbegriff, a.art, u.logo ,  \n" +
                     "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = u.firmenname and bew.hauptsitz = u.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
                     ", u.branch_name"+
@@ -115,16 +115,19 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "  join lacasa.tab_unternehmen u\n" +
                     "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
                     " where status = 1" + (ort == null ? " " : " and a.ort =  '" + ort + "' ") + (bundesland == null ? " " : " and a.bundesland =  '" + bundesland + "' ") + sbSuchbeg  + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis
-                 );
+            );
             while (set.next()) {
                 StellenanzeigeDTO sa_suche = new StellenanzeigeDTO(
-                        set.getInt("s_anzeige_id"),
-                        set.getDate("datum") == null? null: set.getDate("datum").toLocalDate(),
-                        set.getDate("zeitstempel"),
-                        set.getString("titel"), set.getString("s_beschreibung"), set.getInt("status"),
-                        set.getString("ort"), set.getString("bundesland"), set.getString("firmenname"),
-                        set.getString("hauptsitz"),set.getString("suchbegriff"),set.getString("art"),
-                        set.getBytes("logo"),set.getDouble("bewertung"),set.getString("branch_name"),null);
+                        set.getInt(1),
+                        set.getDate(2) == null ? null: set.getDate(2).toLocalDate()
+                        ,set.getDate(3),
+                        set.getString(4),
+                        set.getString(5),
+                        set.getInt(6),
+                        set.getString(7), set.getString(8), set.getString(9),
+                        set.getString(10),set.getString(11),set.getString(12),
+                        set.getBytes(13),set.getDouble(14),set.getString(15)
+                );
 
                 liste.add(sa_suche);
             }
@@ -151,22 +154,22 @@ public class ContainerAnzDAO extends AbstractDAO{
             if(!str.equals("Alle")) {
                 limit = " LIMIT 5";
             }
-                    set = statement.executeQuery("select sa.*, u.logo, \n" +
-                            "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = u.firmenname and bew.hauptsitz = u.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
-                            ",u.branch_name"+
-                            "  from lacasa.tab_stellen_anzeige sa\n" +
-                            "  join lacasa.tab_unternehmen u\n" +
-                            "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz and sa.status = 1 order by sa.zeitstempel desc "+limit);
+            set = statement.executeQuery("select sa.*, u.logo, \n" +
+                    "(SELECT avg(bew.anzahl_sterne) AS avg FROM lacasa.tab_bewertung bew where bew.firmenname = u.firmenname and bew.hauptsitz = u.hauptsitz GROUP BY bew.firmenname,  bew.hauptsitz) AS bewertung"+
+                    ",u.branch_name"+
+                    "  from lacasa.tab_stellen_anzeige sa\n" +
+                    "  join lacasa.tab_unternehmen u\n" +
+                    "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz and sa.status = 1 order by sa.zeitstempel desc "+limit);
 
             while (set.next()) {
                 StellenanzeigeDTO sa_neuigkeiten = new StellenanzeigeDTO(
-                        set.getInt("s_anzeige_id"),
-                        set.getDate("datum") == null? null: set.getDate("datum").toLocalDate(),
-                        set.getDate("zeitstempel"),
-                        set.getString("titel"), set.getString("s_beschreibung"), set.getInt("status"),
-                        set.getString("ort"), set.getString("bundesland"), set.getString("firmenname"),
-                        set.getString("hauptsitz"),set.getString("suchbegriff"),set.getString("art"),
-                        set.getBytes("logo"),set.getDouble("bewertung"),set.getString("branch_name"),null);
+                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
+                        set.getDate(3),
+                        set.getString(4), set.getString(5), set.getInt(6),
+                        set.getString(7), set.getString(8), set.getString(9),
+                        set.getString(10),set.getString(11),set.getString(12),
+                        set.getBytes(13),set.getDouble(14),set.getString(15)
+                );
 
                 liste.add(sa_neuigkeiten);
 
@@ -202,15 +205,12 @@ public class ContainerAnzDAO extends AbstractDAO{
             while (set.next()) {
 
                 StellenanzeigeDTO sa_loadUnternehmenAnzeigen = new StellenanzeigeDTO(
-                        set.getInt("s_anzeige_id"),
-                        set.getDate("datum") == null? null: set.getDate("datum").toLocalDate(),
-                        set.getDate("zeitstempel"),
-                        set.getString("titel"), set.getString("s_beschreibung"), set.getInt("status"),
-                        set.getString("ort"), set.getString("bundesland"), set.getString("firmenname"),
-                        set.getString("hauptsitz"),set.getString("suchbegriff"),set.getString("art"),
-                        null,null,null,null);
-
-
+                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
+                        set.getDate(3), set.getString(4), set.getString(5),
+                        set.getInt(6), set.getString(7), set.getString(8),
+                        set.getString(9), set.getString(10),set.getString(11),
+                        set.getString(12),set.getInt(13)
+                );
 
                 liste.add(sa_loadUnternehmenAnzeigen);
 
@@ -249,26 +249,24 @@ public class ContainerAnzDAO extends AbstractDAO{
         try {
 
             set = statement.executeQuery("SELECT sa.s_anzeige_id, sa.datum, sa.zeitstempel, sa.titel,sa.s_beschreibung, \n" +
-                                                "       sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art, count( b.bewerbung_id) anzahlBewerbung\n" +
-                                                "  FROM lacasa.tab_stellen_anzeige sa\n" +
-                                                "  join lacasa.tab_bewerbung b\n" +
-                                                "    on sa.s_anzeige_id = b.s_anzeige_id\n" +
-                                                " where sa.firmenname = '"+unternehmen.getCname()+"' and sa.hauptsitz = '"+unternehmen.getHauptsitz()+"'\n" +
-                                                "   and b.status = 9\n" +
-                                                " group by sa.s_anzeige_id  "
-                                         );
+                    "       sa.status, sa.ort, sa.bundesland, sa.firmenname, sa.hauptsitz, sa.suchbegriff,sa.art, count( b.bewerbung_id) anzahlBewerbung\n" +
+                    "  FROM lacasa.tab_stellen_anzeige sa\n" +
+                    "  join lacasa.tab_bewerbung b\n" +
+                    "    on sa.s_anzeige_id = b.s_anzeige_id\n" +
+                    " where sa.firmenname = '"+unternehmen.getCname()+"' and sa.hauptsitz = '"+unternehmen.getHauptsitz()+"'\n" +
+                    "   and b.status = 9\n" +
+                    " group by sa.s_anzeige_id  "
+            );
 
             while (set.next()) {
 
                 StellenanzeigeDTO sa_loadNeueBewerbungen = new StellenanzeigeDTO(
-                        set.getInt("s_anzeige_id"),
-                        set.getDate("datum") == null? null: set.getDate("datum").toLocalDate(),
-                        set.getDate("zeitstempel"),
-                        set.getString("titel"), set.getString("s_beschreibung"), set.getInt("status"),
-                        set.getString("ort"), set.getString("bundesland"), set.getString("firmenname"),
-                        set.getString("hauptsitz"),set.getString("suchbegriff"),set.getString("art"),
-                        null,null,null,set.getInt("anzahlbewerbung"));
-
+                        set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
+                        set.getDate(3), set.getString(4), set.getString(5),
+                        set.getInt(6), set.getString(7), set.getString(8),
+                        set.getString(9), set.getString(10),set.getString(11),
+                        set.getString(12),set.getInt(13)
+                );
 
                 listeStellenanzeigenBew.add(sa_loadNeueBewerbungen);
 
@@ -302,35 +300,35 @@ public class ContainerAnzDAO extends AbstractDAO{
         String sql = "INSERT INTO lacasa.tab_stellen_anzeige (datum,zeitstempel,titel,s_beschreibung,status,ort, bundesland,firmenname,hauptsitz, suchbegriff, art) " +
                 "VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 
-            PreparedStatement statement = getPreparedStatement(sql);
+        PreparedStatement statement = getPreparedStatement(sql);
 
 
-            try {
+        try {
 
 
-                assert statement != null;
-                    statement.setDate(1, Date.valueOf(String.valueOf(user.getStellenanzeigeDTO().getDatum())));
-                    statement.setDate(2, Date.valueOf(LocalDate.now()));
-                    statement.setString(3, user.getStellenanzeigeDTO().getTitel());
-                    statement.setString(4, user.getStellenanzeigeDTO().getBeschreibung());
-                    statement.setInt(5, user.getStellenanzeigeDTO().getStatus());
-                    statement.setString(6, user.getStellenanzeigeDTO().getStandort());
-                    statement.setString(7, user.getStellenanzeigeDTO().getBundesland());
-                    statement.setString(8, user.getStellenanzeigeDTO().getFirmenname());
-                    statement.setString(9, user.getStellenanzeigeDTO().getHauptsitz());
-                    statement.setString(10, user.getStellenanzeigeDTO().getSuchbegriff());
-                    statement.setString(11, user.getStellenanzeigeDTO().getArt());
+            assert statement != null;
+            statement.setDate(1, Date.valueOf(String.valueOf(user.getStellenanzeigeDTO().getDatum())));
+            statement.setDate(2, Date.valueOf(LocalDate.now()));
+            statement.setString(3, user.getStellenanzeigeDTO().getTitel());
+            statement.setString(4, user.getStellenanzeigeDTO().getBeschreibung());
+            statement.setInt(5, user.getStellenanzeigeDTO().getStatus());
+            statement.setString(6, user.getStellenanzeigeDTO().getStandort());
+            statement.setString(7, user.getStellenanzeigeDTO().getBundesland());
+            statement.setString(8, user.getStellenanzeigeDTO().getFirmenname());
+            statement.setString(9, user.getStellenanzeigeDTO().getHauptsitz());
+            statement.setString(10, user.getStellenanzeigeDTO().getSuchbegriff());
+            statement.setString(11, user.getStellenanzeigeDTO().getArt());
 
-                    statement.executeUpdate();
-                    sendEmail(user);
+            statement.executeUpdate();
+            sendEmail(user);
 
 
-            } catch (SQLException throwables) {
-                Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
-                throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
-            } finally {
-                JDBCConnection.getInstance().closeConnection();
-            }
+        } catch (SQLException throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        } finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
     }
 
     public void sendEmail(Unternehmen unternehmen) throws DatabaseException, SQLException {
@@ -394,14 +392,14 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "FROM lacasa.tab_bewerbung " +
                     "WHERE lacasa.tab_bewerbung.s_anzeige_id = '" + stellenanzeige.getId() + "'");
 
-        if(!result) {
-            sql = "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
-        } else {
-            sql ="UPDATE lacasa.tab_bewerbung SET s_anzeige_id = '-1'" +
-                    "WHERE lacasa.tab_bewerbung.s_anzeige_id = '" + stellenanzeige.getId()+ "';" +
-                    "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
-        }
-        PreparedStatement preparedStatement = getPreparedStatement(sql);
+            if(!result) {
+                sql = "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
+            } else {
+                sql ="UPDATE lacasa.tab_bewerbung SET s_anzeige_id = '-1'" +
+                        "WHERE lacasa.tab_bewerbung.s_anzeige_id = '" + stellenanzeige.getId()+ "';" +
+                        "DELETE FROM lacasa.tab_stellen_anzeige WHERE s_anzeige_id = '" + stellenanzeige.getId()+ "';";
+            }
+            PreparedStatement preparedStatement = getPreparedStatement(sql);
 
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
