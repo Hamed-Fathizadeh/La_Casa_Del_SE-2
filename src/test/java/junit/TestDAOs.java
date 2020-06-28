@@ -3,6 +3,7 @@ package junit;
 
 import junit.util.RandomString;
 import junit.util.UserTestFactory;
+import org.bonn.se.control.ProfilControl;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Student;
@@ -243,6 +244,22 @@ public class TestDAOs {
         UserDAO.deleteUser(expected.getEmail());
 
         assertTrue(UserDAO.getInstance().getUserType("abc") == null);
+    }
+
+    @Test
+    public void updateStudent() throws DatabaseException, SQLException {
+        Student student = userTestFactory.getProfilStudent();
+        UserDAO.getInstance().registerUser(student);
+        ProfilControl.getInstance().updateStudent(student);
+        UserDAO.deleteUser(student.getEmail());
+    }
+
+    @Test
+    public void updateUnternehmen() throws DatabaseException, SQLException {
+        Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
+        UserDAO.getInstance().registerUser(unternehmen);
+        ProfilControl.getInstance().updateUnternehmen(unternehmen);
+        UserDAO.deleteUser(unternehmen.getEmail());
     }
 
 }

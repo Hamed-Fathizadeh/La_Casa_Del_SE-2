@@ -4,7 +4,10 @@ import com.github.appreciated.material.MaterialTheme;
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.UI;
 import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
@@ -39,7 +42,9 @@ public class StudentTaetigkeitenView extends GridLayout {
 
         RegistrationTextField taetigkeit1 = new RegistrationTextField("Tätigkeit (Optional)");
         StudentDateField t1_beginn = new StudentDateField("Beginn");
+
         StudentDateField t1_ende = new StudentDateField("Ende");
+
 
         plus = new Button(VaadinIcons.PLUS);
         plus.addStyleName(MaterialTheme.BUTTON_FLOATING_ACTION);
