@@ -142,7 +142,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 rating.setValue(p.getRating());
                 rating.setReadOnly(true);
                 return rating;
-            }).setCaption("Bewertung");
+            }).setCaption("Bewertung").setId("Bewertung");
         }else{
             this.addComponentColumn(BewerbungDTO::getStudent_picture).setCaption("Bild");
             this.addColumn(BewerbungDTO::getStudent_vorname).setCaption("Vorname");

@@ -336,6 +336,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<>(containerBewerbungen, "StudentHomeView");
                 gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
                 gBewerbungen.setWidth("705px");
+                gBewerbungen.removeColumn("Bewertung");
                 bottomGridBewNeuTwo.addComponent(gBewerbungen,0,1,1,1);
                 bottomGridBewNeuTwo.setComponentAlignment(gBewerbungen,Alignment.TOP_CENTER);
 
