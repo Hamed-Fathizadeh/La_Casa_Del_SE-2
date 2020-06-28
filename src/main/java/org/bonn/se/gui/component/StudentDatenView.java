@@ -186,9 +186,9 @@ public class StudentDatenView extends GridLayout {
 
     public void setStudentValue(){
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
-        ort.getOrtField().setValue(student.getAdresse().getOrt() + ", " + student.getAdresse().getBundesland()) ;
+        ort.getOrtField().setValue(student.getAdresse().getOrt() == null ? "" : student.getAdresse().getOrt() + ", " + student.getAdresse().getBundesland()) ;
         strasse.setValue(student.getAdresse().getStrasse() == null ? "" : student.getAdresse().getStrasse());
-        ort.getPlzField().setValue(student.getAdresse().getPlz());
+        ort.getPlzField().setValue(student.getAdresse().getPlz().equals("0") ? "" : student.getAdresse().getPlz());
         abschluss.setValue(student.getAbschluss());
         g_datum.setValue(student.getG_datum());
         studiengang.setValue(student.getStudiengang());
@@ -213,6 +213,7 @@ public class StudentDatenView extends GridLayout {
         mobilnr.setCaption("Kontaktnr.");
         g_datum.setCaption("Geburtsdatum");
         ort.getPlzField().setReadOnly(status);
+        ort.getOrtField().setReadOnly(status);
         strasse.setReadOnly(status);
         abschluss.setReadOnly(status);
         g_datum.setReadOnly(status);
