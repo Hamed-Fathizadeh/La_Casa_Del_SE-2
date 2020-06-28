@@ -26,4 +26,11 @@ public class FeatureToggleControl {
        }
        return false;
    }
+   public void setSMTPFeature(boolean status) {
+       try {
+           FeatureToggleDAO.getInstance().setFeatureSMTP(status);
+       } catch (DatabaseException | SQLException e) {
+           e.printStackTrace();
+       }
+   }
 }

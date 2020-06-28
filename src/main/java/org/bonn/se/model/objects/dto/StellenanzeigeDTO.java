@@ -70,6 +70,7 @@ public class StellenanzeigeDTO {
         this.bundesland = bundesland;
         this.firmenname = firmenname;
         this.hauptsitz = hauptsitz;
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
         this.suchbegriff = suchbegriff;
         this.art = art;
         this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
