@@ -7,6 +7,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.UserError;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 
 import org.bonn.se.control.UserSearchControl;
@@ -33,7 +34,18 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         this.addStyleName("grid");
         this.setSizeFull();
 
-        Label head = new Label("» Willkommen bei Lacolsco Registrieren Sie sich jetzt!");
+        String ls1 = "<div class=WordSection1>\n" +
+                "\n" +
+                "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
+                "font-family:\"Edwardian Script ITC\";color:#002635'>»&nbsp;Willkommen bei <span\n" +
+                "class=SpellE>Lacolsco</span><o:p></o:p></span></b></p>\n" +
+                "\n" +
+                "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
+                "font-family:\"Edwardian Script ITC\";color:#002635'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
+                "\n" +
+                "</div>";
+
+        Label head = new Label(ls1, ContentMode.HTML);
         this.setMargin(false);
         this.addStyleName("grid");
 
