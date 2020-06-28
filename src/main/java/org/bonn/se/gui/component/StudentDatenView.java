@@ -24,9 +24,6 @@ public class StudentDatenView extends GridLayout {
     private FormLayout form1;
     private Link link = new Link();
 
-    public FormLayout getForm1() {
-        return form1;
-    }
 
     public OrtPlzTextField getOrt() {
         return ort;
@@ -50,55 +47,33 @@ public class StudentDatenView extends GridLayout {
         return abschluss;
     }
 
-    public StudentDatenView setAbschluss(ComboBox<String> abschluss) {
-        this.abschluss = abschluss;
-        return this;
-    }
+
 
     public DateField getG_datum() {
         return g_datum;
     }
 
-    public StudentDatenView setG_datum(DateField g_datum) {
-        this.g_datum = g_datum;
-        return this;
-    }
+
 
     public PopUpTextField getStudiengang() {
         return studiengang;
     }
 
-    public StudentDatenView setStudiengang(PopUpTextField studiengang) {
-        this.studiengang = studiengang;
-        return this;
-    }
 
     public PopUpTextField getAusbildung() {
         return ausbildung;
-    }
-
-    public StudentDatenView setAusbildung(PopUpTextField ausbildung) {
-        this.ausbildung = ausbildung;
-        return this;
     }
 
     public NumeralField getMobilnr() {
         return mobilnr;
     }
 
-    public StudentDatenView setMobilnr(NumeralField mobilnr) {
-        this.mobilnr = mobilnr;
-        return this;
-    }
 
     public UploadField getUploadProfil() {
         return uploadProfil;
     }
 
-    public StudentDatenView setUploadProfil(UploadField uploadProfil) {
-        this.uploadProfil = uploadProfil;
-        return this;
-    }
+
 
     public Image getImage() {
         return image;
@@ -118,23 +93,6 @@ public class StudentDatenView extends GridLayout {
         return this;
     }
 
-    public Label getFilename() {
-        return filename;
-    }
-
-    public StudentDatenView setFilename(Label filename) {
-        this.filename = filename;
-        return this;
-    }
-
-    public Link getLink() {
-        return link;
-    }
-
-    public StudentDatenView setLink(Link link) {
-        this.link = link;
-        return this;
-    }
 
     public StudentDatenView() {
 

@@ -7,6 +7,7 @@ import com.vaadin.ui.UI;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.component.Anzeigen;
+import org.bonn.se.gui.component.StudentDatenView;
 import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.gui.views.UnternehmenHomeView;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
@@ -119,5 +120,12 @@ public class MockitoTest {
 
             dataInput.add(san);
         }
+    }
+
+    @Test
+    public void testStudentView() {
+        StudentDatenView studentDatenView = new StudentDatenView();
+        studentDatenView.setStudentValue();
+
     }
 }

@@ -32,36 +32,19 @@ public class StudentKenntnisView extends GridLayout {
         return sprachKenntnisArrayList;
     }
 
-    public StudentKenntnisView setSprachKenntnisArrayList(ArrayList<Student.SprachKenntnis> sprachKenntnisArrayList) {
-        this.sprachKenntnisArrayList = sprachKenntnisArrayList;
-        return this;
-    }
 
     public Binder<Student.SprachKenntnis> getBinder1() {
         return binder1;
     }
 
-    public StudentKenntnisView setBinder1(Binder<Student.SprachKenntnis> binder1) {
-        this.binder1 = binder1;
-        return this;
-    }
 
     public Binder<Student.ITKenntnis> getBinder() {
         return binder;
     }
 
-    public StudentKenntnisView setBinder(Binder<Student.ITKenntnis> binder) {
-        this.binder = binder;
-        return this;
-    }
 
     public ArrayList<Student.ITKenntnis> getItKenntnisArrayList() {
         return itKenntnisArrayList;
-    }
-
-    public StudentKenntnisView setItKenntnisArrayList(ArrayList<Student.ITKenntnis> itKenntnisArrayList) {
-        this.itKenntnisArrayList = itKenntnisArrayList;
-        return this;
     }
 
     public StudentKenntnisView() {
@@ -359,18 +342,7 @@ public class StudentKenntnisView extends GridLayout {
             Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
             binder.writeBeanIfValid(itKenntnis);
             itKenntnisArrayList.add(itKenntnis);
-        /*
-        ArrayList<Student.ITKenntnis> itKenntnisArrayList = new ArrayList<>();
-        for (int i = 0; i <this.getRows() ; i++) {
-            Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
-            if(this.getComponent(0,i+2) != null || this.getComponent(0,i+2).getClass() == ) {
-                itKenntnis.setKenntnis(((PopUpTextField) this.getComponent(0, i + 2)).getValue());
-                itKenntnis.setNiveau(((ComboBoxNiveau) this.getComponent(1, i + 2)).getValue());
-                itKenntnisArrayList.add(itKenntnis);
-            }
-        }
 
-         */
         return itKenntnisArrayList;
     }
 
@@ -379,17 +351,6 @@ public class StudentKenntnisView extends GridLayout {
         binder1.writeBeanIfValid(sprachKenntnis);
         sprachKenntnisArrayList.add(sprachKenntnis);
 
-        /*
-        ArrayList<Student.SprachKenntnis> sprachKenntnisArrayList = new ArrayList<>();
-        for (int i = 0; i <this.getRows() ; i++) {
-            Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
-            if(this.getComponent(3,i+2).getClass() == PopUpTextField.class && this.getComponent(3,i+2) != null) {
-                sprachKenntnis.setKenntnis(((PopUpTextField) this.getComponent(3, i + 2)).getValue());
-                sprachKenntnis.setNiveau(((ComboBoxNiveau) this.getComponent(4, i + 2)).getValue());
-                sprachKenntnisArrayList.add(sprachKenntnis);
-            }
-        }
-        */
 
         return sprachKenntnisArrayList;
     }

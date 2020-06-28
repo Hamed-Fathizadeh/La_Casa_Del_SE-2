@@ -11,11 +11,6 @@ public class UnternehmenBeschreibungView extends VerticalLayout {
         return richTextArea;
     }
 
-    public UnternehmenBeschreibungView setRichTextArea(RichTextArea richTextArea) {
-        this.richTextArea = richTextArea;
-        return this;
-    }
-
     public UnternehmenBeschreibungView() {
         this.setSizeFull();
         this.setMargin(false);

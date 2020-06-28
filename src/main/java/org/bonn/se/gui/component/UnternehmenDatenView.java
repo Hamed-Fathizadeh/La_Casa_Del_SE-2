@@ -17,10 +17,6 @@ public class UnternehmenDatenView extends GridLayout {
         return kontaktnummer;
     }
 
-    public UnternehmenDatenView setKontaktnummer(NumeralField kontaktnummer) {
-        this.kontaktnummer = kontaktnummer;
-        return this;
-    }
 
     public PopUpTextField getStrasse() {
         return strasse;
@@ -53,10 +49,6 @@ public class UnternehmenDatenView extends GridLayout {
         return uploadLogo;
     }
 
-    public UnternehmenDatenView setUploadLogo(UploadField uploadLogo) {
-        this.uploadLogo = uploadLogo;
-        return this;
-    }
 
     public Image getImage() {
         return image;
@@ -133,15 +125,7 @@ public class UnternehmenDatenView extends GridLayout {
         ort.getOrtField().setReadOnly(status);
         branche.setCaption("Branche");
         branche.setReadOnly(status);
-        /*
-        if (status) {
-            branche.setValue("Branche");
-            ort.getOrtField().setValue("Ort");
-        } else {
-            branche.setValue(branche.getValue());
-            ort.getOrtField().setValue(ort.getOrtField().getValue());
-        }
-         */
+
         uploadLogo.setVisible(!status);
     }
 
