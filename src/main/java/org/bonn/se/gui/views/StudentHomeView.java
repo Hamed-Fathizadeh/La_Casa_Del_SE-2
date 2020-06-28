@@ -131,8 +131,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 suchArt = "Erweitert";
 
                 //Art
-                comboEinstellungsart.setItems("Feste Anstellung","Befristeter Vertrag","Praktikum","Werkstudent",
-                        "Praktikum/Werkstudent","Trainee","Ausbildung/Studium",
+                comboEinstellungsart.setItems("Feste Anstellung","Befristeter Vertrag","Praktikum","Werkstudent","Trainee","Ausbildung/Studium",
                         "Bachelor-/Master-/Diplom-Arbeiten","Promotion/Habilitation","Freie Mitarbeit/Projektmitarbeit");
                 comboEinstellungsart.setPlaceholder("Einstellungsart");
                 comboEinstellungsart.setHeight("56px");

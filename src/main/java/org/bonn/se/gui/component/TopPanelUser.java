@@ -2,6 +2,7 @@ package org.bonn.se.gui.component;
 
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.ThemeResource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.bonn.se.control.FeatureToggleControl;
@@ -50,19 +51,19 @@ public class TopPanelUser extends GridLayout {
 
         if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
            Image profilbild = ImageConverter.convertImagetoMenu(((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getPicture());
-
             item1 = bar.addItem(
-                    ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).getVorname()
+                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).getVorname()
                     ,profilbild.getSource(),
                     null);
+
         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
             Image firmaLogo = ImageConverter.convertImagetoMenu(((Unternehmen)UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getLogo());
             item1 = bar.addItem(
                     ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getCname(),
                     firmaLogo.getSource(),
                     null);
-        }
 
+        }
 
 
 
@@ -79,6 +80,7 @@ public class TopPanelUser extends GridLayout {
             item1.addSeparator();
             item1.addItem("Logout", VaadinIcons.SIGN_OUT, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
         }
+        item1.getMenuBar().getItems().get(0).setStyleName("NameUserWhite");
         this.addComponent(bar,9,0,9,0);
         this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
 
