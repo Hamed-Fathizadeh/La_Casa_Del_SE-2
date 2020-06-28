@@ -10,8 +10,11 @@ import org.bonn.se.gui.component.Anzeigen;
 import org.bonn.se.gui.component.StudentDatenView;
 import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.gui.views.UnternehmenHomeView;
+import org.bonn.se.gui.window.BewerbungWindow;
 import org.bonn.se.gui.window.StellenanzeigeWindow;
+import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
+import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
@@ -133,10 +136,7 @@ public class MockitoTest {
 
     @Test
     public void testStellenanzeigeStudent() {
-        student = new Student();
-        student.setEmail("abc.de");
-        student.setVorname("Test");
-        when(vaadinSession.getAttribute(Roles.Student)).thenReturn(student);
+
         StellenanzeigeDTO stellenanzeigeDTO = new StellenanzeigeDTO();
         stellenanzeigeDTO.setId(102);
         stellenanzeigeDTO.setFirmenname("BargoBank");
@@ -155,7 +155,22 @@ public class MockitoTest {
         stellenanzeigeDTO.setFirmenname("BargoBank");
         stellenanzeigeDTO.setBeschreibung("Test");
         StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(stellenanzeigeDTO);
+    }
 
+    @Test
+    public void testBewerbungUnternehmen() {
+        student = new Student();
+        student.setEmail("abc.de");
+        student.setVorname("Test");
+        Adresse adresse = new Adresse();
+        student.setAdresse(adresse);
+        when(vaadinSession.getAttribute(Roles.Student)).thenReturn(student);
+        StellenanzeigeDTO stellenanzeigeDTO = new StellenanzeigeDTO();
+        stellenanzeigeDTO.setId(102);
+        stellenanzeigeDTO.setFirmenname("BargoBank");
+        stellenanzeigeDTO.setBeschreibung("Test");
+        BewerbungDTO bewerbungDTO = new BewerbungDTO();
+        BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeigeDTO,"Student",bewerbungDTO);
     }
 
 }
