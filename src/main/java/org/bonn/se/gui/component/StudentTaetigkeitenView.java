@@ -20,18 +20,9 @@ public class StudentTaetigkeitenView extends GridLayout {
         return taetigkeitArrayList;
     }
 
-    public StudentTaetigkeitenView setTaetigkeitArrayList(ArrayList<Taetigkeit> taetigkeitArrayList) {
-        this.taetigkeitArrayList = taetigkeitArrayList;
-        return this;
-    }
 
     public Binder<Taetigkeit> getBinder() {
         return binder;
-    }
-
-    public StudentTaetigkeitenView setBinder(Binder<Taetigkeit> binder) {
-        this.binder = binder;
-        return this;
     }
 
     private Binder<Taetigkeit> binder;
