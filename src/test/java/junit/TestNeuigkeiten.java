@@ -14,7 +14,7 @@ import java.util.List;
 public class TestNeuigkeiten {
 
     @Test
-    public void TestNeuigkeiten(){
+    public void testNeuigkeiten(){
         ContainerNeuigkeiten con = ContainerNeuigkeiten.getInstance();
 
 

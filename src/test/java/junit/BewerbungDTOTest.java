@@ -14,7 +14,7 @@ public class BewerbungDTOTest {
     private String unternehmenHauptsitz = "Aachen";
     private Double rating = 0.0;
     private String emailStudent = "salma.hassouni@outlook.com";
-    private int AnzeigeID = 2;
+    private int anzeigeID = 2;
     private Date datum = null;
     private String unternehmenName="ONCP";
     private Date studentGDatum=null;
@@ -31,7 +31,7 @@ public class BewerbungDTOTest {
     BewerbungDTO bewerb = new BewerbungDTO();
     @Test
     public void setUp() {
-        bewerb.setAnzeigeID(AnzeigeID);
+        bewerb.setAnzeigeID(anzeigeID);
         bewerb.setBewerbungID(bewerbungId);
         bewerb.setStudentID(2);
         bewerb.setDatum((java.sql.Date) datum);

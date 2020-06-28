@@ -22,7 +22,7 @@ public class BewerbungenTest<T extends BewerbungDTO> {
         Date datum = Date.valueOf(LocalDate.now());;
         int status = 2;
         int bewerbungID = 10;
-        String s_titel = "Bewerbung";
+        String sTitel = "Bewerbung";
 
         ContainerLetztenBewerbungen container = ContainerLetztenBewerbungen.getInstance();
 
