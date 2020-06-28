@@ -5,6 +5,8 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
+import org.bonn.se.control.CheckSMTP;
+import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.gui.views.LoginView;
 import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.gui.views.*;
@@ -38,6 +40,12 @@ public class MyUI extends UI {
         navi.addView(ProfilVerwaltenUnternehmen, ProfilVerwaltenUnternehmenView.class);
         navi.addView(AlleBewerbungenView, org.bonn.se.gui.views.AlleBewerbungenView.class);
         navi.addView(Settings, SettingsView.class);
+
+        if(CheckSMTP.pingHost("smtp.gmail.com",587,100)){
+            FeatureToggleControl.getInstance().setSMTPFeature(true);
+        } else {
+            FeatureToggleControl.getInstance().setSMTPFeature(false);
+        }
 
 
         UI.getCurrent().getNavigator().navigateTo(RegisterStudent);

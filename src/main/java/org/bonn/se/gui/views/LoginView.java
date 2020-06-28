@@ -9,10 +9,12 @@ import com.vaadin.server.FileResource;
 import com.vaadin.server.VaadinService;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
+import org.bonn.se.gui.window.PassChangeWindow;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
@@ -105,17 +107,7 @@ public class LoginView extends VerticalLayout implements View {
         //layout.setComponentAlignment(link4, Alignment.MIDDLE_CENTER);
 
         //Button für Passwort vergessen.
-        /*
-        Button buttonPassVerg = new Button("Passwort vergessen?");
-        buttonPassVerg.addClickListener(e -> {
-            PassChangeWindow pcWindow = new PassChangeWindow();
-            UI.getCurrent().addWindow(pcWindow);
 
-        });
-
-        layout.addComponent(buttonPassVerg);
-        layout.setComponentAlignment(buttonPassVerg, Alignment.MIDDLE_CENTER);
-         */
         //Erstellen und Hinzufügen eines Panels + Platzierung in die Mitte
         Panel panel = new Panel( "");
         panel.setWidth("40px");
@@ -153,6 +145,22 @@ public class LoginView extends VerticalLayout implements View {
 
         this.addComponent(mainGrid);
         this.setComponentAlignment(mainGrid,Alignment.MIDDLE_CENTER);
+
+
+        if(FeatureToggleControl.getInstance().featureIsEnabled("SMTP")) {
+            UI.getCurrent().access(() -> {
+                Button buttonPassVerg = new Button("Passwort vergessen?");
+                buttonPassVerg.addClickListener(e -> {
+                    PassChangeWindow pcWindow = new PassChangeWindow();
+                    UI.getCurrent().addWindow(pcWindow);
+                });
+                layout.addComponent(buttonPassVerg);
+                layout.setComponentAlignment(buttonPassVerg, Alignment.MIDDLE_CENTER);
+            });
+        }
+
+
+
 
     }
 

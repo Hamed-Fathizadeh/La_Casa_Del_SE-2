@@ -41,4 +41,22 @@ public class FeatureToggleDAO {
         }
         return true;
     }
+
+    public void setFeatureSMTP(boolean status) throws DatabaseException, SQLException {
+        Statement statement = null;
+        try {
+            statement = JDBCConnection.getInstance().getStatement();
+
+            statement.executeUpdate("UPDATE lacasa.tab_toggle_configuration " +
+                    " SET status = "+status +
+                    " WHERE feature_name = 'SMTP'");
+
+        } catch (SQLException throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+        } finally {
+
+            JDBCConnection.getInstance().closeConnection();
+        }
+    }
+
 }
