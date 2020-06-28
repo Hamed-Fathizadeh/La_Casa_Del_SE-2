@@ -70,7 +70,6 @@ public class StellenanzeigeDTO {
         this.bundesland = bundesland;
         this.firmenname = firmenname;
         this.hauptsitz = hauptsitz;
-        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
         this.suchbegriff = suchbegriff;
         this.art = art;
         this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
@@ -83,7 +82,7 @@ public class StellenanzeigeDTO {
     }
 
 
-/*
+
 
     public StellenanzeigeDTO(int id, LocalDate datum, Date zeitstempel, String titel, String beschreibung,
                              int status, String standort, String bundesland, String firmenname, String hauptsitz,
@@ -103,7 +102,6 @@ public class StellenanzeigeDTO {
         this.anzahlNeuBewerbung = anzahlNeuBewerbung ;
     }
 
- */
 
 
 
