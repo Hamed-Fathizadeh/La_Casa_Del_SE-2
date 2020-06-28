@@ -54,13 +54,13 @@ public class StudentTaetigkeitenView extends GridLayout {
         minus.addStyleNames(MaterialTheme.BUTTON_DANGER, MaterialTheme.BUTTON_FLOATING_ACTION);
         binder = new Binder<>(Taetigkeit.class);
 
-        binder.forField(taetigkeit1)
+  /*      binder.forField(taetigkeit1)
                 .asRequired("Bitte ausfüllen")
                 .bind(Taetigkeit::getTaetigkeitName, Taetigkeit::setTaetigkeitName);
 
         binder.forField(t1_beginn)
                 .asRequired("Bitte ausfüllen")
-                .bind(Taetigkeit::getBeginn, Taetigkeit::setBeginn);
+                .bind(Taetigkeit::getBeginn, Taetigkeit::setBeginn);*/
 
         binder.forField(t1_ende)
                 .asRequired("Bitte ausfüllen")

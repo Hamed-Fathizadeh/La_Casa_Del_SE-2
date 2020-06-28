@@ -261,9 +261,9 @@ public class StudentHomeView extends VerticalLayout implements View {
 
 
 
-        Button alleNeuigkeiten = new Button("Alle Neuigkeiten", VaadinIcons.SEARCH);
 
-        Button meineAbos = new Button("Meine Abos", VaadinIcons.SEARCH);
+
+
 
         Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
         HorizontalLayout horizontalLayout = new HorizontalLayout();
@@ -281,15 +281,10 @@ public class StudentHomeView extends VerticalLayout implements View {
         bottomGridBewNeu.addComponent(lNeuigkeit,0,0,1,0);
         bottomGridBewNeu.addComponent(gAnzeigen,0,1,1,1);
         bottomGridBewNeu.addComponent(lPatzhalter,0,2,1,2);
-        bottomGridBewNeu.addComponent(alleNeuigkeiten,0,3);
-        bottomGridBewNeu.addComponent(meineAbos,1,3);
 
 
         bottomGridBewNeu.setComponentAlignment(lNeuigkeit,Alignment.TOP_CENTER);
         bottomGridBewNeu.setComponentAlignment(gAnzeigen,Alignment.TOP_CENTER);
-        bottomGridBewNeu.setComponentAlignment(alleNeuigkeiten,Alignment.BOTTOM_CENTER);
-        bottomGridBewNeu.setComponentAlignment(meineAbos,Alignment.BOTTOM_CENTER);
-
 
 
         mainGrid.addComponent(topPanel, 0, 0, 1, 0);
