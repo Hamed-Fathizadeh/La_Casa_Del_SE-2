@@ -19,8 +19,8 @@ public class StellenanzeigeBewerbungenWindow extends CustomWindow {
 
     public void setUp(StellenanzeigeDTO stellenanzeige) {
 
-        Panel panel_sa = new Panel();
-        panel_sa.setWidthFull();
+        Panel panelSa = new Panel();
+        panelSa.setWidthFull();
 
         Button back = new Button("Zurück");
 
@@ -89,7 +89,7 @@ public class StellenanzeigeBewerbungenWindow extends CustomWindow {
         });
 
 
-        panel_sa.setContent(mainGridLayout);
+        panelSa.setContent(mainGridLayout);
         this.setContent(mainGridLayout);
 
 

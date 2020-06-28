@@ -21,10 +21,10 @@ public class WizardStepRegisterSuccessWindow implements WizardStep {
     @Override
         public Component getContent() {
 
-            GridLayout gl_success = new GridLayout();
+            GridLayout glSuccess = new GridLayout();
             Label label = new Label("Vielen Dank für ihre Registrierung!");
-            gl_success.addComponent(label);
-            return gl_success;
+            glSuccess.addComponent(label);
+            return glSuccess;
         }
 
         @Override

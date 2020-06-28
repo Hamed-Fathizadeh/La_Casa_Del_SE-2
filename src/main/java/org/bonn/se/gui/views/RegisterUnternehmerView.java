@@ -59,8 +59,8 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         topPanelUnt.addStyleName("toppanel");
         topPanelUnt.setHeight("120px");
 
-        FormLayout form_Unt = new FormLayout();
-        form_Unt.setMargin(true);
+        FormLayout formUnt = new FormLayout();
+        formUnt.setMargin(true);
         RegistrationTextField firmenname = new RegistrationTextField("Unternehmensname");
         firmenname.selectAll();
 
@@ -72,7 +72,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         Button registerUntButton = new Button("Registrieren");
         registerUntButton.setEnabled(false);
 
-        form_Unt.addComponents(head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerUntButton);
+        formUnt.addComponents(head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerUntButton);
 
         Binder<User> binder = new Binder<>(User.class);
         binder.forField(firmenname)
@@ -110,14 +110,14 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         });
         ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
 
-        Image bild_unt = new Image(null,resource);
-        form_Unt.setMargin(false);
+        Image bildUnt = new Image(null,resource);
+        formUnt.setMargin(false);
         this.addComponent(topPanelUnt, 0, 0, 9, 2);
-        this.addComponent(form_Unt, 0, 5, 0, 5);
-        this.addComponent(bild_unt, 9, 5, 9, 5);
+        this.addComponent(formUnt, 0, 5, 0, 5);
+        this.addComponent(bildUnt, 9, 5, 9, 5);
         this.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
-        this.setComponentAlignment(form_Unt, Alignment.MIDDLE_LEFT);
-        this.setComponentAlignment(bild_unt, Alignment.MIDDLE_RIGHT);
+        this.setComponentAlignment(formUnt, Alignment.MIDDLE_LEFT);
+        this.setComponentAlignment(bildUnt, Alignment.MIDDLE_RIGHT);
         this.setMargin(false);
 
         registerUntButton.addClickListener(
