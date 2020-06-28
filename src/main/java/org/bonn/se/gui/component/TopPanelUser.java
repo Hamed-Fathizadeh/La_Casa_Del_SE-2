@@ -33,7 +33,6 @@ public class TopPanelUser extends GridLayout {
         Button imagePropertyInfo = new Button(resource);
         imagePropertyInfo.setStyleName(ValoTheme.BUTTON_BORDERLESS);
 
-
         imagePropertyInfo.addClickListener((Button.ClickListener) clickEvent -> {
             if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
                 UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);

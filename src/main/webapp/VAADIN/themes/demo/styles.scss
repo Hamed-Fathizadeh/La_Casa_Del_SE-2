@@ -130,6 +130,12 @@ div .onoffswitch-slider.on:before {
   background-color: #91d4c2
 }
 
+.menu {
+  span.v-menubar-menuitem-caption{
+    color: white;
+  }
+}
+
 
 @import "../material/material.scss";
 
