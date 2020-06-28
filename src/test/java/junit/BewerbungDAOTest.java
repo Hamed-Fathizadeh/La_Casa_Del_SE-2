@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import java.sql.SQLException;
 
 public class BewerbungDAOTest {
+
+
     @Test
     public void testall() throws DatabaseException, SQLException {
         BewerbungDAO bewerb = BewerbungDAO.getInstance();
