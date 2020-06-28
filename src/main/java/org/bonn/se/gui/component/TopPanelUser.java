@@ -81,7 +81,6 @@ public class TopPanelUser extends GridLayout {
             item1.addItem("Logout", VaadinIcons.SIGN_OUT, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
         }
         item1.getMenuBar().getItems().get(0).setStyleName("NameUserWhite");
-        System.out.println("toPUser "+item1.getMenuBar().getItems().get(0).getText());
         this.addComponent(bar,9,0,9,0);
         this.setComponentAlignment(bar, Alignment.MIDDLE_CENTER);
 
