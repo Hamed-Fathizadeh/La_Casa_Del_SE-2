@@ -4,6 +4,7 @@ package junit.Mockito;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
+import junit.util.StudentBuilder;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.component.Anzeigen;
@@ -12,6 +13,7 @@ import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.gui.views.UnternehmenHomeView;
 import org.bonn.se.gui.window.BewerbungWindow;
 import org.bonn.se.gui.window.StellenanzeigeWindow;
+import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Adresse;
@@ -21,6 +23,7 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -38,11 +41,9 @@ import static org.mockito.Mockito.when;
 public class MockitoTest {
 
 
-
     Student student;
     Unternehmen unternehmen;
-    public static final String USERNAME = "tobias.fellechner@365h-brs.de";
-    public static final String login = "12345678";
+
 
     @Mock
     private UI ui;
@@ -54,26 +55,36 @@ public class MockitoTest {
     Navigator navigator;
 
     @Before
-    public void init() {
+    public void init() throws DatabaseException {
         UI.setCurrent(ui);
         when(ui.getSession()).thenReturn(vaadinSession);
         when(ui.getNavigator()).thenReturn(navigator);
+        student = new StudentBuilder()
+                .withVorname("Tobias")
+                .withNachname("Fellechner")
+                .withPasswort("12345678")
+                .withEmail("abc@abc.de")
+                .createStudent();
+        UserDAO.getInstance().registerUser(student);
+    }
+    @AfterEach
+    public void ende() throws DatabaseException, SQLException {
+       UserDAO.deleteUser(student.getEmail());
     }
 
+
     @Test
-    public void buttonClick() throws DatabaseException, NoSuchUserOrPassword, SQLException {
+    public void testLogin() throws DatabaseException, NoSuchUserOrPassword, SQLException {
         LoginControl loginControl = Mockito.mock(LoginControl.class);
-        Mockito.doCallRealMethod().when(loginControl).checkAuthentication(USERNAME,login);
-        LoginControl.getInstance().checkAuthentication(USERNAME,login);
+        Mockito.doCallRealMethod().when(loginControl).checkAuthentication(student.getEmail(),student.getPasswort());
+        LoginControl.getInstance().checkAuthentication(student.getEmail(),student.getPasswort());
         when(vaadinSession.getAttribute(Roles.Student)).thenReturn(true);
         //verify
     }
 
     @Test
     public void testStudentHomeView() throws DatabaseException, SQLException {
-        student = new Student();
-        student.setEmail("abc.de");
-        student.setVorname("Test");
+
         when(vaadinSession.getAttribute(Roles.Student)).thenReturn(student);
 
         StudentHomeView studentHomeView = new StudentHomeView();

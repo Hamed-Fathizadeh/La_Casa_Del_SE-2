@@ -228,6 +228,7 @@ public class TestDAOs {
         assertEquals(student.getItKenntnisList().size(),actual.getItKenntnisList().size());
         assertEquals(student.getITKenntnis().getKenntnis(),actual.getITKenntnis().getKenntnis());
         assertEquals(student.getITKenntnis().getNiveau(),actual.getITKenntnis().getNiveau());
+        UserDAO.deleteUser(student.getEmail());
     }
 
     @Test
