@@ -31,10 +31,10 @@ public class TestContainerAnzDAO {
 
 
         containerNeuigkeiten.loadSuche("1","Bonn","Nordrhein-Westfalen"
-        ,"Ganzer Ort","Erweitert","Praktikum", date,"Banken");
+        ,"Ganzer Ort","Erweitert","Praktikum", localDate,"Banken");
 
         containerNeuigkeiten.loadSuche("IT","Bonn","Nordrhein-Westfalen"
-          ,"+10 km ","Erweitert","Feste Anstellung", date1,"Banken");
+          ,"+10 km ","Erweitert","Feste Anstellung", localDate,"Banken");
 
         containerNeuigkeiten.loadNeuigkeiten("Alle");
         containerNeuigkeiten.loadNeuigkeiten("Test");

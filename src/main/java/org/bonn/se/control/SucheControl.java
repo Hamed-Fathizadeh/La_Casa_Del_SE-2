@@ -6,7 +6,7 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.services.db.exception.DatabaseException;
 
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,7 +33,7 @@ public class SucheControl  implements Suche {
     }
 
     @Override
-    public DataProvider<StellenanzeigeDTO,Void> einfacheSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, Date abDatum, String branche) {
+    public DataProvider<StellenanzeigeDTO,Void> einfacheSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, LocalDate abDatum, String branche) {
         try {
             stellenanzeigeDTOS = ContainerAnzDAO.getInstance().loadSuche(
                     suchbegriff, ort, bundesland, umkreis, artSuche, einstellungsart, abDatum,  branche);

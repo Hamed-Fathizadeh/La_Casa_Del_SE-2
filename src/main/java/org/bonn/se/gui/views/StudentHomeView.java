@@ -34,7 +34,6 @@ import org.bonn.se.services.util.Views;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -157,20 +156,21 @@ public class StudentHomeView extends VerticalLayout implements View {
                 wannDatum.setHeight("56px");
                 wannDatum.setWidth("200px");
                 wannDatum.setPlaceholder("ab Wann?");
-                LocalDate emptyDate = LocalDate.parse("0001-01-01");
 
 
                 //EVENTUELL NOCH FOR-SCHLEIFE HIER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 comboEinstellungsart.addValueChangeListener((HasValue.ValueChangeListener<String>) event1 -> {
-                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,comboBranche.getValue());
+                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),wannDatum.getValue(),comboBranche.getValue());
                     grid1.setDataProvider(dataProvider);
                 });
 
                 comboBranche.addValueChangeListener((HasValue.ValueChangeListener<String>) event1 -> {
+                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),wannDatum.getValue(),comboBranche.getValue());
 
+                    grid1.setDataProvider(dataProvider);
                 });
                 wannDatum.addValueChangeListener((HasValue.ValueChangeListener<LocalDate>) event2 -> {
-                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),null,comboBranche.getValue());
+                    DataProvider<StellenanzeigeDTO,Void> dataProvider = suche.einfacheSuche(comboNachWas.getValue(),comboOrtBund.getOrt(),comboOrtBund.getBundesland(),comboUmkreis.getValue(),suchArt,comboEinstellungsart.getValue(),wannDatum.getValue(),comboBranche.getValue());
 
                     grid1.setDataProvider(dataProvider);
                 });
@@ -229,15 +229,6 @@ public class StudentHomeView extends VerticalLayout implements View {
             grid1.deselectAll();
         });
 
-
-
-        /*
-        grid1.addSelectionListener((SelectionListener<StellenanzeigeDTO>) event -> {
-            SingleSelect<StellenanzeigeDTO> selection = grid1.asSingleSelect();
-
-        });
-
-         */
 
 //---------------SUCHE ENDE ------------------------------------------------------------------------------------------
 
@@ -372,19 +363,5 @@ public class StudentHomeView extends VerticalLayout implements View {
         } else {
             UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
         }
-    }
-
-    public static void stellenSuchen( String fachgebiet, String standort, String bundesland, String umkreis,
-                                      String artSuche, String einstellungsart, Date abDatum, String branche) {
-
-        ContainerNeuigkeiten container = ContainerNeuigkeiten.getInstance();
-        container.loadSuche(fachgebiet, standort, bundesland, umkreis, artSuche, einstellungsart, abDatum, branche);
-
-
-        Anzeigen<StellenanzeigeDTO> gAnzeigen = new Anzeigen<>("Student", container.getListe());
-        gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
-        gAnzeigen.setWidth("1000px");
-        gridAnzeige = gAnzeigen;
-
     }
 }
