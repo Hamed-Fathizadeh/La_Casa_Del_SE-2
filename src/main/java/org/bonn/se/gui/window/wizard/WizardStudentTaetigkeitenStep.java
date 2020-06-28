@@ -5,6 +5,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import org.bonn.se.gui.component.StudentTaetigkeitenView;
+import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.model.dao.ProfilDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
@@ -161,7 +162,9 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
     public boolean onAdvance() {
 
         Taetigkeit taetigkeit = new Taetigkeit();
-        studentTaetigkeitenView.getBinder().writeBeanIfValid(taetigkeit);
+       if(!studentTaetigkeitenView.getBinder().writeBeanIfValid(taetigkeit)){
+          return false;
+       }
         studentTaetigkeitenView.getTaetigkeitArrayList().add(taetigkeit);
 
         ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).setTaetigkeiten(studentTaetigkeitenView.getTaetigkeitArrayList());
@@ -175,6 +178,7 @@ public class WizardStudentTaetigkeitenStep implements WizardStep {
 
         return true;
     }
+
 
     @Override
     public boolean onBack() {
