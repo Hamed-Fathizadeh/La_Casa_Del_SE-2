@@ -32,7 +32,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                     " FROM lacasa.tab_stellen_anzeige st where status = 1 ");
 
             while (set.next()) {
-                StellenanzeigeDTO sa_load = new StellenanzeigeDTO(
+                StellenanzeigeDTO saLoad = new StellenanzeigeDTO(
                         set.getInt(1),
                         set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
                         set.getDate(3),
@@ -41,7 +41,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getString(10),set.getString(11),set.getString(12),null,set.getDouble(13),set.getString(12)
                 );
 
-                liste.add(sa_load);
+                liste.add(saLoad);
             }
 
         } catch (SQLException throwables) {
@@ -57,7 +57,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
 
 
-    public List<StellenanzeigeDTO> loadSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, LocalDate ab_Datum, String branche) throws DatabaseException, SQLException {
+    public List<StellenanzeigeDTO> loadSuche(String suchbegriff, String ort, String bundesland, String umkreis, String artSuche, String einstellungsart, LocalDate abDatum, String branche) throws DatabaseException, SQLException {
         List<StellenanzeigeDTO> liste = new ArrayList<>();
         ResultSet set = null;
         Statement statement = JDBCConnection.getInstance().getStatement();
@@ -67,13 +67,13 @@ public class ContainerAnzDAO extends AbstractDAO{
             StringBuilder sbSuchbeg = new StringBuilder(suchbegriff == null ? " " : " and a.suchbegriff = '" + suchbegriff + "' ");
             StringBuilder sBumkreis = new StringBuilder();
             StringBuilder sbEinstellungsart = new StringBuilder(" ");
-            StringBuilder sbAb_Datum = new StringBuilder(" ");
+            StringBuilder sbAbDatum = new StringBuilder(" ");
             StringBuilder sbBranche = new StringBuilder(" ");
 
             if(artSuche.equals("Erweitert")){
-                Date date = ab_Datum == null ? null : Date.valueOf(ab_Datum) ;
+                Date date = abDatum == null ? null : Date.valueOf(abDatum) ;
                 sbEinstellungsart = new StringBuilder(einstellungsart == null ? " " : " and a.art = '" + einstellungsart + "' ");
-                sbAb_Datum = new StringBuilder(date == null ? " " : " and a.datum >= '" + date + "' ");
+                sbAbDatum = new StringBuilder(date == null ? " " : " and a.datum >= '" + date + "' ");
                 sbBranche = new StringBuilder(branche == null ? " " : " and u.branch_name = '" + branche + "' ");
             }
 
@@ -82,7 +82,7 @@ public class ContainerAnzDAO extends AbstractDAO{
             }else{
                 int km = Integer.parseInt(umkreis.substring(0,umkreis.indexOf(' ')));
 
-                sBumkreis.append(" or a.status = 1 "+ sbSuchbeg +sbEinstellungsart+ sbAb_Datum+sbBranche +" and a.ort in (SELECT a.ort FROM lacasa.tab_orte a \n" +
+                sBumkreis.append(" or a.status = 1 "+ sbSuchbeg +sbEinstellungsart+ sbAbDatum +sbBranche +" and a.ort in (SELECT a.ort FROM lacasa.tab_orte a \n" +
                         "  join lacasa.tab_orte b\n" +
                         "    on 1 = 1\n" +
                         "WHERE (\n" +
@@ -114,10 +114,10 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "  FROM lacasa.tab_stellen_anzeige a\n" +
                     "  join lacasa.tab_unternehmen u\n" +
                     "    on u.firmenname = a.firmenname and u.hauptsitz = a.hauptsitz\n" +
-                    " where status = 1" + (ort == null ? " " : " and a.ort =  '" + ort + "' ") + (bundesland == null ? " " : " and a.bundesland =  '" + bundesland + "' ") + sbSuchbeg  + sbEinstellungsart + sbAb_Datum + sbBranche +sBumkreis
+                    " where status = 1" + (ort == null ? " " : " and a.ort =  '" + ort + "' ") + (bundesland == null ? " " : " and a.bundesland =  '" + bundesland + "' ") + sbSuchbeg  + sbEinstellungsart + sbAbDatum + sbBranche +sBumkreis
             );
             while (set.next()) {
-                StellenanzeigeDTO sa_suche = new StellenanzeigeDTO(
+                StellenanzeigeDTO saSuche = new StellenanzeigeDTO(
                         set.getInt(1),
                         set.getDate(2) == null ? null: set.getDate(2).toLocalDate()
                         ,set.getDate(3),
@@ -129,7 +129,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getBytes(13),set.getDouble(14),set.getString(15)
                 );
 
-                liste.add(sa_suche);
+                liste.add(saSuche);
             }
 
 
@@ -162,7 +162,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                     "    on sa.firmenname = u.firmenname and sa.hauptsitz = u.hauptsitz and sa.status = 1 order by sa.zeitstempel desc "+limit);
 
             while (set.next()) {
-                StellenanzeigeDTO sa_neuigkeiten = new StellenanzeigeDTO(
+                StellenanzeigeDTO saNeuigkeiten = new StellenanzeigeDTO(
                         set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
                         set.getDate(3),
                         set.getString(4), set.getString(5), set.getInt(6),
@@ -171,7 +171,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getBytes(13),set.getDouble(14),set.getString(15)
                 );
 
-                liste.add(sa_neuigkeiten);
+                liste.add(saNeuigkeiten);
 
 
             }
@@ -204,7 +204,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             while (set.next()) {
 
-                StellenanzeigeDTO sa_loadUnternehmenAnzeigen = new StellenanzeigeDTO(
+                StellenanzeigeDTO saLoadUnternehmenAnzeigen = new StellenanzeigeDTO(
                         set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
                         set.getDate(3), set.getString(4), set.getString(5),
                         set.getInt(6), set.getString(7), set.getString(8),
@@ -212,7 +212,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getString(12),set.getInt(13)
                 );
 
-                liste.add(sa_loadUnternehmenAnzeigen);
+                liste.add(saLoadUnternehmenAnzeigen);
 
 
             }
@@ -260,7 +260,7 @@ public class ContainerAnzDAO extends AbstractDAO{
 
             while (set.next()) {
 
-                StellenanzeigeDTO sa_loadNeueBewerbungen = new StellenanzeigeDTO(
+                StellenanzeigeDTO saLoadNeueBewerbungen = new StellenanzeigeDTO(
                         set.getInt(1),set.getDate(2) == null? null: set.getDate(2).toLocalDate(),
                         set.getDate(3), set.getString(4), set.getString(5),
                         set.getInt(6), set.getString(7), set.getString(8),
@@ -268,7 +268,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                         set.getString(12),set.getInt(13)
                 );
 
-                listeStellenanzeigenBew.add(sa_loadNeueBewerbungen);
+                listeStellenanzeigenBew.add(saLoadNeueBewerbungen);
 
 
             }

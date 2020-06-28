@@ -17,7 +17,7 @@ public class TestViewComponenet {
         studentDatenView.getOrt();
         studentDatenView.getStrasse();
         studentDatenView.getStudiengang();
-        studentDatenView.getG_datum();
+        studentDatenView.getgDatum();
         studentDatenView.getMobilnr();
         studentDatenView.getAbschluss();
         studentDatenView.getUploadProfil();

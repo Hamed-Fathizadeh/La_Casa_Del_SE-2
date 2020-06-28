@@ -13,7 +13,7 @@ public class StudentDatenView extends GridLayout {
     private OrtPlzTextField ort;
     private PopUpTextField strasse;
     private ComboBox<String> abschluss;
-    private DateField g_datum;
+    private DateField gDatum;
     private PopUpTextField studiengang;
     private PopUpTextField ausbildung;
     private NumeralField mobilnr;
@@ -49,8 +49,8 @@ public class StudentDatenView extends GridLayout {
 
 
 
-    public DateField getG_datum() {
-        return g_datum;
+    public DateField getgDatum() {
+        return gDatum;
     }
 
 
@@ -125,10 +125,10 @@ public class StudentDatenView extends GridLayout {
 
         form1.setWidth("300px");
         form1.setMargin(true);
-        g_datum =new DateField();
-        g_datum.setHeight("56px");
-        g_datum.setWidth("300px");
-        g_datum.setPlaceholder("Geburtsdatum dd.mm.yyyy");
+        gDatum =new DateField();
+        gDatum.setHeight("56px");
+        gDatum.setWidth("300px");
+        gDatum.setPlaceholder("Geburtsdatum dd.mm.yyyy");
         mobilnr =new NumeralField("Kontaktnummer");
 
         image.setHeight("170px");
@@ -151,7 +151,7 @@ public class StudentDatenView extends GridLayout {
 
 
 
-            form1.addComponents(image,uploadProfil,g_datum,mobilnr,lebenslauf,link);
+            form1.addComponents(image,uploadProfil, gDatum,mobilnr,lebenslauf,link);
 
 
     FormLayout form2 = new FormLayout();
@@ -190,7 +190,7 @@ public class StudentDatenView extends GridLayout {
         strasse.setValue(student.getAdresse().getStrasse() == null ? "" : student.getAdresse().getStrasse());
         ort.getPlzField().setValue(student.getAdresse().getPlz().equals("0") ? "" : student.getAdresse().getPlz());
         abschluss.setValue(student.getAbschluss());
-        g_datum.setValue(student.getG_datum());
+        gDatum.setValue(student.getG_datum());
         studiengang.setValue(student.getStudiengang());
         ausbildung.setValue(student.getAusbildung());
         mobilnr.setValue(student.getKontakt_nr());
@@ -211,12 +211,12 @@ public class StudentDatenView extends GridLayout {
         abschluss.setCaption("Abschluss");
         ausbildung.setCaption("Ausbildung");
         mobilnr.setCaption("Kontaktnr.");
-        g_datum.setCaption("Geburtsdatum");
+        gDatum.setCaption("Geburtsdatum");
         ort.getPlzField().setReadOnly(status);
         ort.getOrtField().setReadOnly(status);
         strasse.setReadOnly(status);
         abschluss.setReadOnly(status);
-        g_datum.setReadOnly(status);
+        gDatum.setReadOnly(status);
         studiengang.setReadOnly(status);
         ausbildung.setReadOnly(status);
         mobilnr.setReadOnly(status);

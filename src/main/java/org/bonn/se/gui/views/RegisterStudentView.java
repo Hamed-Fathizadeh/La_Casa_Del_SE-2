@@ -41,9 +41,9 @@ public class RegisterStudentView extends GridLayout implements View {
 
 
 
-        TopPanel topPanel_Student =  new TopPanel("Unternehmen");
-        topPanel_Student.addStyleName("toppanel");
-        topPanel_Student.setHeight("120px");
+        TopPanel topPanelStudent =  new TopPanel("Unternehmen");
+        topPanelStudent.addStyleName("toppanel");
+        topPanelStudent.setHeight("120px");
 
         String ls1 = "<div class=WordSection1>\n" +
                 "\n" +
@@ -58,8 +58,8 @@ public class RegisterStudentView extends GridLayout implements View {
 
         Label head = new Label(ls1, ContentMode.HTML);
 
-        FormLayout form_Student = new FormLayout();
-        form_Student.setMargin(true);
+        FormLayout formStudent = new FormLayout();
+        formStudent.setMargin(true);
         RegistrationTextField vorname = new RegistrationTextField("Vorname");
         vorname.selectAll();
         vorname.setValue(VaadinService.getCurrent().getBaseDirectory().toString());
@@ -76,7 +76,7 @@ public class RegisterStudentView extends GridLayout implements View {
         Button vNummerButton = new Button("Verifikation");
         vNummerButton.setEnabled(false);
 
-        form_Student.addComponents(head,vorname,nachname,email,passwort,registerStudentButton);
+        formStudent.addComponents(head,vorname,nachname,email,passwort,registerStudentButton);
         Binder<User> binder = new Binder<>(User.class);
 
         binder.forField(vorname)
@@ -103,16 +103,16 @@ public class RegisterStudentView extends GridLayout implements View {
         ThemeResource resource = new ThemeResource("img/RegisterStudent/student_pic.png");
 
 
-        Image bild_Student = new Image(null,resource);
+        Image bildStudent = new Image(null,resource);
 
-        form_Student.setMargin(false);
-        this.addComponent(topPanel_Student, 0, 0, 9, 1);
-        this.addComponent(form_Student, 0, 5, 0, 5);
-        this.addComponent(bild_Student, 9, 5, 9, 5);
-        this.setComponentAlignment(topPanel_Student, Alignment.TOP_LEFT);
-        this.setComponentAlignment(form_Student, Alignment.MIDDLE_LEFT);
+        formStudent.setMargin(false);
+        this.addComponent(topPanelStudent, 0, 0, 9, 1);
+        this.addComponent(formStudent, 0, 5, 0, 5);
+        this.addComponent(bildStudent, 9, 5, 9, 5);
+        this.setComponentAlignment(topPanelStudent, Alignment.TOP_LEFT);
+        this.setComponentAlignment(formStudent, Alignment.MIDDLE_LEFT);
 
-        this.setComponentAlignment(bild_Student, Alignment.MIDDLE_RIGHT);
+        this.setComponentAlignment(bildStudent, Alignment.MIDDLE_RIGHT);
 
 
         this.setMargin(false);

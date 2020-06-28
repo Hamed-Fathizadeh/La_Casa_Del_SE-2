@@ -13,7 +13,6 @@ import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.services.util.Roles;
 
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 
 public class StudentTaetigkeitenView extends GridLayout {
@@ -42,9 +41,9 @@ public class StudentTaetigkeitenView extends GridLayout {
 
 
         RegistrationTextField taetigkeit1 = new RegistrationTextField("Tätigkeit (Optional)");
-        StudentDateField t1_beginn = new StudentDateField("Beginn");
+        StudentDateField t1Beginn = new StudentDateField("Beginn");
 
-        StudentDateField t1_ende = new StudentDateField("Ende");
+        StudentDateField t1Ende = new StudentDateField("Ende");
 
 
         plus = new Button(VaadinIcons.PLUS);
@@ -62,27 +61,27 @@ public class StudentTaetigkeitenView extends GridLayout {
                 .asRequired("Bitte ausfüllen")
                 .bind(Taetigkeit::getBeginn, Taetigkeit::setBeginn);*/
 
-        binder.forField(t1_ende)
+        binder.forField(t1Ende)
                 .asRequired("Bitte ausfüllen")
                 .withValidator(
                         endDate -> endDate
-                                .isAfter(t1_beginn.getValue()) || endDate.isEqual(null),
+                                .isAfter(t1Beginn.getValue()) || endDate.isEqual(null),
                         "Beginndatum darf nicht nach Enddatum sein!")
                 .bind(Taetigkeit::getEnde, Taetigkeit::setEnde);
 
         this.addComponent(taetigkeit1, 0, 1);
-        this.addComponent(t1_beginn, 1, 1);
-        this.addComponent(t1_ende, 2, 1);
+        this.addComponent(t1Beginn, 1, 1);
+        this.addComponent(t1Ende, 2, 1);
         this.setComponentAlignment(taetigkeit1, Alignment.MIDDLE_CENTER);
-        this.setComponentAlignment(t1_beginn, Alignment.MIDDLE_CENTER);
-        this.setComponentAlignment(t1_ende, Alignment.MIDDLE_CENTER);
+        this.setComponentAlignment(t1Beginn, Alignment.MIDDLE_CENTER);
+        this.setComponentAlignment(t1Ende, Alignment.MIDDLE_CENTER);
         this.addComponent(plus, 0, 2);
         this.setComponentAlignment(plus, Alignment.MIDDLE_CENTER);
         taetigkeit1.selectAll();
 
 
-        final int[] i_c = {0, 1, 2};
-        final int[] i_r = {2};
+        final int[] iC = {0, 1, 2};
+        final int[] iR = {2};
         plus.addClickListener((Button.ClickListener) event -> {
 
             if (binder.isValid()) {
@@ -97,37 +96,37 @@ public class StudentTaetigkeitenView extends GridLayout {
                 this.removeComponent(plus);
                 this.removeComponent(minus);
 
-                this.addComponent(new RegistrationTextField("Tätigkeit (Optional)"), i_c[0], i_r[0]);
-                this.addComponent(new StudentDateField("Beginn"), i_c[1], i_r[0]);
-                this.addComponent(new StudentDateField("Ende"), i_c[2], i_r[0]);
-                this.setComponentAlignment(this.getComponent(i_c[0], i_r[0]), Alignment.MIDDLE_CENTER);
-                this.setComponentAlignment(this.getComponent(i_c[1], i_r[0]), Alignment.MIDDLE_CENTER);
-                this.setComponentAlignment(this.getComponent(i_c[2], i_r[0]), Alignment.MIDDLE_CENTER);
-                ((RegistrationTextField) this.getComponent(i_c[0], i_r[0])).selectAll();
+                this.addComponent(new RegistrationTextField("Tätigkeit (Optional)"), iC[0], iR[0]);
+                this.addComponent(new StudentDateField("Beginn"), iC[1], iR[0]);
+                this.addComponent(new StudentDateField("Ende"), iC[2], iR[0]);
+                this.setComponentAlignment(this.getComponent(iC[0], iR[0]), Alignment.MIDDLE_CENTER);
+                this.setComponentAlignment(this.getComponent(iC[1], iR[0]), Alignment.MIDDLE_CENTER);
+                this.setComponentAlignment(this.getComponent(iC[2], iR[0]), Alignment.MIDDLE_CENTER);
+                ((RegistrationTextField) this.getComponent(iC[0], iR[0])).selectAll();
 
-                binder.forField((RegistrationTextField) this.getComponent(i_c[0], i_r[0]))
+                binder.forField((RegistrationTextField) this.getComponent(iC[0], iR[0]))
                         .asRequired("Bitte ausfüllen")
                         .bind(Taetigkeit::getTaetigkeitName, Taetigkeit::setTaetigkeitName);
 
-                binder.forField((StudentDateField) this.getComponent(i_c[1], i_r[0]))
+                binder.forField((StudentDateField) this.getComponent(iC[1], iR[0]))
                         .asRequired("Bitte ausfüllen")
                         .bind(Taetigkeit::getBeginn, Taetigkeit::setBeginn);
 
-                binder.forField((StudentDateField) this.getComponent(i_c[2], i_r[0]))
+                binder.forField((StudentDateField) this.getComponent(iC[2], iR[0]))
                         .asRequired("Bitte ausfüllen")
                         .withValidator(
                                 endDate -> endDate
-                                        .isAfter( ((StudentDateField) this.getComponent(i_c[1], i_r[0]-1)).getValue())|| endDate.isEqual(null),
+                                        .isAfter( ((StudentDateField) this.getComponent(iC[1], iR[0]-1)).getValue())|| endDate.isEqual(null),
                                 "Beginndatum darf nicht nach Enddatum sein1!")
                         .bind(Taetigkeit::getEnde, Taetigkeit::setEnde);
 
-                if (i_r[0] <= 3) {
-                    this.addComponent(plus, i_c[0], i_r[0] + 1);
+                if (iR[0] <= 3) {
+                    this.addComponent(plus, iC[0], iR[0] + 1);
                     this.setComponentAlignment(plus, Alignment.MIDDLE_CENTER);
                 }
 
-                i_r[0]++;
-                this.addComponent(minus, i_c[1], i_r[0]);
+                iR[0]++;
+                this.addComponent(minus, iC[1], iR[0]);
                 this.setComponentAlignment(minus, Alignment.MIDDLE_CENTER);
             } else {
                 binder.validate().getFieldValidationErrors();
@@ -141,17 +140,17 @@ public class StudentTaetigkeitenView extends GridLayout {
 
             this.removeComponent(plus);
             this.removeComponent(minus);
-            i_r[0]--;
-            binder.removeBinding(((StudentDateField) this.getComponent(2, i_r[0])));
-            binder.removeBinding(((StudentDateField) this.getComponent(1, i_r[0])));
-            binder.removeBinding(((RegistrationTextField) this.getComponent(0, i_r[0])));
+            iR[0]--;
+            binder.removeBinding(((StudentDateField) this.getComponent(2, iR[0])));
+            binder.removeBinding(((StudentDateField) this.getComponent(1, iR[0])));
+            binder.removeBinding(((RegistrationTextField) this.getComponent(0, iR[0])));
 
             for (int i = 0; i < this.getColumns(); i++) {
-                this.removeComponent(i, i_r[0]);
+                this.removeComponent(i, iR[0]);
 
             }
-            this.addComponent(plus, i_c[0], i_r[0]);
-            this.addComponent(minus, i_c[1], i_r[0]);
+            this.addComponent(plus, iC[0], iR[0]);
+            this.addComponent(minus, iC[1], iR[0]);
             this.setComponentAlignment(plus, Alignment.MIDDLE_CENTER);
             this.setComponentAlignment(minus, Alignment.MIDDLE_CENTER);
             if (binder.isValid()) {
