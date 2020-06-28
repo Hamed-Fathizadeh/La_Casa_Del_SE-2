@@ -75,8 +75,8 @@ public class StellenanzeigeDTO {
         this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
         this.bewertung = bewertung;
         this.branche = branche;
-        this.anzahlNeuBewerbung = anzahlNeuBewerbung ;
-        setHatNeuBewerbung(anzahlNeuBewerbung);
+        this.anzahlNeuBewerbung = anzahlNeuBewerbung == null? 0 : anzahlNeuBewerbung ;
+        setHatNeuBewerbung(anzahlNeuBewerbung == null? 0 : anzahlNeuBewerbung);
 
 
     }

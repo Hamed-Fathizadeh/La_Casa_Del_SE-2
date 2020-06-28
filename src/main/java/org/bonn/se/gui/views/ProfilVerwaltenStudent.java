@@ -11,6 +11,7 @@ import org.bonn.se.control.ProfilControl;
 import org.bonn.se.gui.component.*;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.objects.entitites.Student;
+import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
@@ -124,6 +125,7 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
             buttonsBar.setMargin(true);
             this.addComponent(buttonsBar,2,12,2,12);
             this.setComponentAlignment(buttonsBar,Alignment.TOP_CENTER);
+
             for (int i = 1; i <=student.getTaetigkeiten().size() ; i++) {
                 ((ProfilStudentTaetigkeit)this.getComponent(1,i)).getBeschreibungField().setReadOnly(false);
                 ((ProfilStudentTaetigkeit)this.getComponent(1,i)).getBeginnField().setReadOnly(false);
@@ -131,6 +133,10 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
             }
             this.addComponent(minus,1,student.getTaetigkeiten().size()+1,1,student.getTaetigkeiten().size()+1);
             this.setComponentAlignment(minus,Alignment.MIDDLE_CENTER);
+
+
+
+
 
         });
 
@@ -193,6 +199,7 @@ public class ProfilVerwaltenStudent extends GridLayout implements View {
             }
             student.getTaetigkeiten().remove(student.getTaetigkeiten().size() - 1);
         });
+
 
         for (int i = 0; i < formLayout.getComponentCount() ; i++) {
             if(formLayout.getComponent(i) instanceof ProfilStudentTextField) {

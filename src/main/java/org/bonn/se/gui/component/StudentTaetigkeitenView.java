@@ -13,6 +13,7 @@ import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.services.util.Roles;
 
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 
 public class StudentTaetigkeitenView extends GridLayout {
@@ -64,8 +65,8 @@ public class StudentTaetigkeitenView extends GridLayout {
         binder.forField(t1_ende)
                 .asRequired("Bitte ausfüllen")
                 .withValidator(
-                        beginnDate -> beginnDate
-                                .isAfter(t1_beginn.getValue()) || beginnDate.isEqual(null),
+                        endDate -> endDate
+                                .isAfter(t1_beginn.getValue()) || endDate.isEqual(null),
                         "Beginndatum darf nicht nach Enddatum sein!")
                 .bind(Taetigkeit::getEnde, Taetigkeit::setEnde);
 
@@ -114,18 +115,24 @@ public class StudentTaetigkeitenView extends GridLayout {
 
                 binder.forField((StudentDateField) this.getComponent(i_c[2], i_r[0]))
                         .asRequired("Bitte ausfüllen")
+                        .withValidator(
+                                endDate -> endDate
+                                        .isAfter( ((StudentDateField) this.getComponent(i_c[1], i_r[0]-1)).getValue())|| endDate.isEqual(null),
+                                "Beginndatum darf nicht nach Enddatum sein1!")
                         .bind(Taetigkeit::getEnde, Taetigkeit::setEnde);
 
                 if (i_r[0] <= 3) {
                     this.addComponent(plus, i_c[0], i_r[0] + 1);
                     this.setComponentAlignment(plus, Alignment.MIDDLE_CENTER);
                 }
+
                 i_r[0]++;
                 this.addComponent(minus, i_c[1], i_r[0]);
                 this.setComponentAlignment(minus, Alignment.MIDDLE_CENTER);
             } else {
                 binder.validate().getFieldValidationErrors();
             }
+
         });
 
 

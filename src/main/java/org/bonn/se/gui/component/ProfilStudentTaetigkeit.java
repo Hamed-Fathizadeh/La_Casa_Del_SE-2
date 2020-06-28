@@ -1,8 +1,10 @@
 package org.bonn.se.gui.component;
 
+import com.vaadin.data.Binder;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import org.bonn.se.model.objects.entitites.Taetigkeit;
 
 public class ProfilStudentTaetigkeit extends VerticalLayout {
     final TextField beschreibung;
@@ -31,7 +33,22 @@ public class ProfilStudentTaetigkeit extends VerticalLayout {
         ende.setReadOnly(true);
         beschreibung.setReadOnly(true);
 
+        Binder<Taetigkeit> binder = new Binder<>(Taetigkeit.class);
+        binder.forField(beschreibung)
+                .asRequired("Bitte ausfüllen")
+                .bind(Taetigkeit::getTaetigkeitName, Taetigkeit::setTaetigkeitName);
 
+        binder.forField(beginn)
+                .asRequired("Bitte ausfüllen")
+                .bind(Taetigkeit::getBeginn, Taetigkeit::setBeginn);
+
+        binder.forField(ende)
+                .asRequired("Bitte ausfüllen")
+                .withValidator(
+                        endDate -> endDate
+                                .isAfter(beginn.getValue()) || endDate.isEqual(null),
+                        "Beginndatum darf nicht nach Enddatum sein!")
+                .bind(Taetigkeit::getEnde, Taetigkeit::setEnde);
 
 
     }
