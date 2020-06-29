@@ -69,13 +69,13 @@ public class TopPanelUser extends GridLayout {
         if(UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
             item1.addItem("Home", VaadinIcons.HOME, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.STUDENTHOMEVIEW));
             item1.addItem("Mein Profil", VaadinIcons.USER, (MenuBar.Command) menuItem -> MyUI.getCurrent().getNavigator().navigateTo(Views.PROFILVERWALTENSTUDENT));
-            item1.addItem("SETTINGS", VaadinIcons.COG, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.SETTINGS));
+            item1.addItem("Einstellungen", VaadinIcons.COG, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.SETTINGS));
             item1.addSeparator();
             item1.addItem("Logout", VaadinIcons.SIGN_OUT, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
         }else {
             item1.addItem("Home", VaadinIcons.HOME, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW));
             item1.addItem("Mein Profil", VaadinIcons.USER, (MenuBar.Command) menuItem -> MyUI.getCurrent().getNavigator().navigateTo(Views.PROFILVERWALTENUNTERNEHMEN));
-            item1.addItem("SETTINGS", VaadinIcons.COG, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.SETTINGS));
+            item1.addItem("Einstellungen", VaadinIcons.COG, (MenuBar.Command) menuItem -> UI.getCurrent().getNavigator().navigateTo(Views.SETTINGS));
             item1.addSeparator();
             item1.addItem("Logout", VaadinIcons.SIGN_OUT, (MenuBar.Command) menuItem -> LoginControl.logoutUser());
         }

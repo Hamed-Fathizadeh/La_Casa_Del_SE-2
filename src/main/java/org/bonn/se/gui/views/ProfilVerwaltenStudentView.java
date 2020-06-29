@@ -22,14 +22,14 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
 
     private final Button bearbeitenDaten = new Button("Bearbeiten",this::addBearbeitenDatenClickListener);
     private final Button bearbeitenTaetigkeiten = new Button("Bearbeiten",this::addBearbeitenTaetigkeitenClickListener);
-    private final Button bearbeitenKenntnisse = new Button("Bearbeiten",this::addBearbeitenKenntnisClickListener);
+    //private final Button bearbeitenKenntnisse = new Button("Bearbeiten",this::addBearbeitenKenntnisClickListener);
 
     private final Button cancelDaten = new Button("Abbrechen",this::addCancelDatenClickListener);
     private final Button saveDaten = new Button("Speichern", this::addSaveDatenClickListener);
     private final Button cancelTaetigkeiten = new Button("Abbrechen",this::addCancelTaetigkeitenClickListener);
     private final Button saveTaetigkeiten = new Button("Speichern", this::addSaveTaetigkeitenClickListener);
-    private final Button cancelKenntnis = new Button("Abbrechen",this::addCancelKenntnisClickListener);
-    private final Button saveKenntnis = new Button("Speichern", this::addSaveKenntisClickListener);
+   // private final Button cancelKenntnis = new Button("Abbrechen",this::addCancelKenntnisClickListener);
+   //private final Button saveKenntnis = new Button("Speichern", this::addSaveKenntisClickListener);
     private HorizontalLayout buttonBar;
     private  boolean change = false;
     StudentDatenView grid;
@@ -110,7 +110,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                     }
                 });
     }
-
+/*
     private void addSaveKenntisClickListener(Button.ClickEvent clickEvent) {
         ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
             @Override
@@ -136,7 +136,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                     }
                 });
     }
-
+ */
 
     private void addCancelDatenClickListener(Button.ClickEvent clickEvent) {
         ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
@@ -177,7 +177,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                     }
                 });
     }
-
+/*
     private void addCancelKenntnisClickListener(Button.ClickEvent clickEvent) {
         ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
             @Override
@@ -198,6 +198,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                 });
     }
 
+ */
 
     private void addBearbeitenDatenClickListener(Button.ClickEvent clickEvent) {
         change = true;
@@ -221,7 +222,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         grid1.setReadOnly(false);
 
     }
-
+/*
     private void addBearbeitenKenntnisClickListener(Button.ClickEvent clickEvent) {
         change = true;
         buttonBar = new HorizontalLayout();
@@ -235,6 +236,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
 
     }
 
+ */
     public void setUp() {
         TopPanelUser topPanelUser = new TopPanelUser();
         topPanelUser.setWidthFull();
@@ -285,7 +287,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                     this.addComponent(grid1, 0, 2, 9, 5);
                 } else {
                     this.removeComponent(7, 7);
-                    this.addComponent(bearbeitenKenntnisse, 7, 7);
+                   // this.addComponent(bearbeitenKenntnisse, 7, 7);
                     this.removeComponent(0, 2);
                     this.addComponent(grid2, 0, 2, 9, 5);
 
