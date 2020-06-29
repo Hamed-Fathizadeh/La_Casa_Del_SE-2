@@ -34,6 +34,15 @@ public class ProfilControl {
         }
     }
 
+    public void  updateStudentKenntis(Student student) {
+
+        try {
+            ProfilDAO.getInstance().updateStudentKenntnis(student);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void  updateUnternehmen(Unternehmen unternehmen) {
 
         try {

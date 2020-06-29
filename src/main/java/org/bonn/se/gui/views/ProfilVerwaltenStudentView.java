@@ -19,7 +19,6 @@ import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 import org.vaadin.easyuploads.UploadField;
 
 public class ProfilVerwaltenStudentView extends GridLayout implements View {
-    private final Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
     private final Button bearbeitenDaten = new Button("Bearbeiten",this::addBearbeitenDatenClickListener);
     private final Button bearbeitenTaetigkeiten = new Button("Bearbeiten",this::addBearbeitenTaetigkeitenClickListener);
@@ -49,6 +48,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich speichern?",
                 (ConfirmDialog.Listener) dialog -> {
                     if (dialog.isConfirmed()) {
+                        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
                         student.setGDatum(grid.getgDatum().getValue());
                         student.setKontaktNr((grid.getMobilnr()).getValue());
                         Adresse adresse = new Adresse();
@@ -93,6 +93,8 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich speichern?",
                 (ConfirmDialog.Listener) dialog -> {
                     if (dialog.isConfirmed()) {
+                        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
+
                         student.setTaetigkeiten(grid1.getStudentValue());
                         this.removeComponent(buttonBar);
                         this.addComponent(bearbeitenTaetigkeiten,7,7);
@@ -121,12 +123,14 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                 (ConfirmDialog.Listener) dialog -> {
                     if (dialog.isConfirmed()) {
 
+                        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
-                        student.setTaetigkeiten(grid1.getStudentValue());
+                        student.setItKenntnisList(grid2.getITKenntnisValue());
+                        student.setSprachKenntnisList(grid2.getSprachenValue());
 
                         this.removeComponent(buttonBar);
                         this.addComponent(bearbeitenKenntnisse,7,7);
-                        ProfilControl.getInstance().updateStudentDaten(student);
+                        ProfilControl.getInstance().updateStudentKenntis(student);
                         grid2.setReadOnly(true);
                         change =false;
                     }
@@ -253,6 +257,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         grid2 = new StudentKenntnisView();
         grid2.setHeight("490px");
         grid2.setKenntnisValue();
+        grid2.setSpracheValue();
 
         this.addComponent(grid,0,2,9,5);
 

@@ -413,12 +413,35 @@ public class ProfilDAO extends AbstractDAO{
 
         try {
 
+            statement.setString(1,student.getEmail());
             statement.executeUpdate();
-
 
             if(!student.getTaetigkeiten().isEmpty() || !(student.getTaetigkeiten().get(0).getTaetigkeitName() == null)) {
                 createStudentProfil2(student);
             }
+        }catch (SQLException ex) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");
+        }finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+    }
+
+    public void updateStudentKenntnis(Student student) throws DatabaseException {
+        String sql =  "DELETE FROM lacasa.tab_it_kenntnisse WHERE student_id = (SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE email = ?);"+
+                "DELETE FROM lacasa.tab_sprachen WHERE student_id = (SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE email = ?);";
+
+
+        PreparedStatement statement = getPreparedStatement(sql);
+
+        try {
+
+            statement.setString(1,student.getEmail());
+            statement.setString(2,student.getEmail());
+
+            statement.executeUpdate();
+            createStudentProfil3(student);
+
         }catch (SQLException ex) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");

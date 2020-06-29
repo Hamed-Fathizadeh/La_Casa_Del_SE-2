@@ -27,6 +27,8 @@ public class StudentKenntnisView extends GridLayout {
     private ComboBoxNiveau niveau21;
     private Button plus1;
     private Button minus1;
+    private  static boolean status = false;
+
 
     public ArrayList<Student.SprachKenntnis> getSprachKenntnisArrayList() {
         return sprachKenntnisArrayList;
@@ -290,7 +292,6 @@ public class StudentKenntnisView extends GridLayout {
 
     public void setKenntnisValue() {
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
-        boolean status = false;
         if(!student.getItKenntnisList().isEmpty()) {
             for (int i = 0; i < student.getItKenntnisList().size(); i++) {
                 ((PopUpTextField)this.getComponent(0,i+2)).setValue(student.getItKenntnisList().get(i).getKenntnis());
@@ -307,14 +308,17 @@ public class StudentKenntnisView extends GridLayout {
         } else {
             this.setEnabled(status);
         }
+    }
 
+    public void setSpracheValue() {
+        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
         if(!student.getSprachKenntnisList().isEmpty()) {
             for (int i = 0; i < student.getSprachKenntnisList().size(); i++) {
                 ((PopUpTextField)this.getComponent(3,i+2)).setValue(student.getSprachKenntnisList().get(i).getKenntnis());
                 ((ComboBoxNiveau)this.getComponent(4,i+2)).setValue(student.getSprachKenntnisList().get(i).getNiveau());
-                if (!(student.getSprachKenntnisList().size() - 1 == i)) {
+//                if (!(student.getSprachKenntnisList().size() - 1 == i)) {
                     plus1.click();
-                }
+  //              }
             }
             status =true;
             StudentKenntnisView.this.setEnabled(status);
@@ -323,8 +327,6 @@ public class StudentKenntnisView extends GridLayout {
                 StudentKenntnisView.this.setEnabled(false);
             }
         }
-
-
     }
 
     public void setReadOnly(boolean status) {
