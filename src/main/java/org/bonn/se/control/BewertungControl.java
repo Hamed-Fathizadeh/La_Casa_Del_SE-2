@@ -1,11 +1,12 @@
 package org.bonn.se.control;
 
-import org.bonn.se.model.dao.BewerbungDAO;
 import org.bonn.se.model.dao.BewertungDAO;
-import org.bonn.se.model.objects.dto.BewerbungDTO;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BewertungControl {
 
@@ -20,7 +21,7 @@ public class BewertungControl {
         } catch (DatabaseException e) {
             e.printStackTrace();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         }
         return res;
     }
