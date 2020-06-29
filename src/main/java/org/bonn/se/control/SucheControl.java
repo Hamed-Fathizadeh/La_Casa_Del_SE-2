@@ -48,5 +48,5 @@ public class SucheControl  implements Suche {
             return stellenanzeigeDTOS.stream().skip(offset).limit(limit);
         } ,query ->getRowsCount() );
 
-     }
+    }
 }

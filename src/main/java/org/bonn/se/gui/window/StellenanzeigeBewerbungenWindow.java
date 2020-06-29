@@ -19,14 +19,14 @@ public class StellenanzeigeBewerbungenWindow extends CustomWindow {
 
     public void setUp(StellenanzeigeDTO stellenanzeige) {
 
-        Panel panel_sa = new Panel();
-        panel_sa.setWidthFull();
+        Panel panelSa = new Panel();
+        panelSa.setWidthFull();
 
         Button back = new Button("Zurück");
 
         back.addClickListener((Button.ClickListener) event -> {
             StellenanzeigeBewerbungenWindow.this.close();
-            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+            UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
 
         });
 
@@ -40,26 +40,26 @@ public class StellenanzeigeBewerbungenWindow extends CustomWindow {
 
             ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
             containerBewerbungen.loadByStellenAnzeigeID("Alle",stellenanzeige.getId());
-            Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"UnternehmenHomeView");
+            Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"UNTERNEHMENHOMEVIEW");
             bewerbungen.setHeightMode(HeightMode.UNDEFINED);
             bewerbungen.setWidthFull();
 
 
             ContainerLetztenBewerbungen containerBewerbungenMarkiert  = ContainerLetztenBewerbungen.getInstance();
             containerBewerbungenMarkiert.loadByStellenAnzeigeID("Markiert",stellenanzeige.getId());
-            Bewerbungen<BewerbungDTO> bewerbungenMakiert = new Bewerbungen(containerBewerbungenMarkiert,"UnternehmenHomeView");
+            Bewerbungen<BewerbungDTO> bewerbungenMakiert = new Bewerbungen(containerBewerbungenMarkiert,"UNTERNEHMENHOMEVIEW");
             bewerbungenMakiert.setHeightMode(HeightMode.UNDEFINED);
             bewerbungenMakiert.setWidthFull();
 
             ContainerLetztenBewerbungen containerBewerbungenZusage  = ContainerLetztenBewerbungen.getInstance();
             containerBewerbungenZusage.loadByStellenAnzeigeID("Zusage",stellenanzeige.getId());
-            Bewerbungen<BewerbungDTO> bewerbungenZugesagt = new Bewerbungen(containerBewerbungenZusage,"UnternehmenHomeView");
+            Bewerbungen<BewerbungDTO> bewerbungenZugesagt = new Bewerbungen(containerBewerbungenZusage,"UNTERNEHMENHOMEVIEW");
             bewerbungenZugesagt.setHeightMode(HeightMode.UNDEFINED);
             bewerbungenZugesagt.setWidthFull();
 
             ContainerLetztenBewerbungen containerBewerbungenAbgelehnt  = ContainerLetztenBewerbungen.getInstance();
             containerBewerbungenAbgelehnt.loadByStellenAnzeigeID("Abgelehnt",stellenanzeige.getId());
-            Bewerbungen<BewerbungDTO> bewerbungenAbgelehnt = new Bewerbungen(containerBewerbungenAbgelehnt,"UnternehmenHomeView");
+            Bewerbungen<BewerbungDTO> bewerbungenAbgelehnt = new Bewerbungen(containerBewerbungenAbgelehnt,"UNTERNEHMENHOMEVIEW");
             bewerbungenAbgelehnt.setHeightMode(HeightMode.UNDEFINED);
             bewerbungenAbgelehnt.setWidthFull();
 
@@ -89,7 +89,7 @@ public class StellenanzeigeBewerbungenWindow extends CustomWindow {
         });
 
 
-        panel_sa.setContent(mainGridLayout);
+        panelSa.setContent(mainGridLayout);
         this.setContent(mainGridLayout);
 
 

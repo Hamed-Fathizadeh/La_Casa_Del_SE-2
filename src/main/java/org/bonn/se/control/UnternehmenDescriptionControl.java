@@ -31,8 +31,8 @@ public class UnternehmenDescriptionControl extends AbstractDAO {
         PreparedStatement statement = getPreparedStatement(sql);
 
         try {
-            statement.setString(1,((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getDescription());
-            statement.setString(2,((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).getEmail());
+            statement.setString(1,((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).getDescription());
+            statement.setString(2,((Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).getEmail());
             statement.executeUpdate();
     } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);

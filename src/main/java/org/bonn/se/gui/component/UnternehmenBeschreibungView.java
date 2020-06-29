@@ -27,7 +27,7 @@ public class UnternehmenBeschreibungView extends VerticalLayout {
     }
 
     public void setBeschreibungValue() {
-        Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
+        Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN);
         richTextArea.setValue(unternehmen.getDescription());
     }
 }

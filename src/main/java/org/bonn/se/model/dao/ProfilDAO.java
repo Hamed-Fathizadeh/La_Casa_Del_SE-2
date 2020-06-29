@@ -32,17 +32,17 @@ public class ProfilDAO extends AbstractDAO{
 
             statement.setBytes(5,student.getPicture());
             statement.setBytes(6,student.getLebenslauf());
-            if (String.valueOf(student.getG_datum()).equals("null")) {
+            if (String.valueOf(student.getGDatum()).equals("null")) {
                 statement.setDate(1,null);
 
             } else{
-                Date geburtsdatum = Date.valueOf(student.getG_datum());
+                Date geburtsdatum = Date.valueOf(student.getGDatum());
                 statement.setDate(1,geburtsdatum);
             }
 
             statement.setString(2,student.getStudiengang());
             statement.setString(3,student.getAusbildung());
-            statement.setString(4,student.getKontakt_nr());
+            statement.setString(4,student.getKontaktNr());
             statement.setString(7,student.getAbschluss());
             statement.setString(8,student.getEmail());
             statement.setString(9,student.getAdresse().getStrasse());
@@ -256,14 +256,14 @@ public class ProfilDAO extends AbstractDAO{
 
 
             while (set.next()) {
-                student.setStudent_id(set.getInt("student_id"));
+                student.setStudentId(set.getInt("student_id"));
                 student.setVorname(set.getString("vorname"));
                 student.setNachname(set.getString("nachname"));
                 student.setEmail(set.getString("email"));
-                student.setKontakt_nr(set.getString("kontakt_nr"));
+                student.setKontaktNr(set.getString("kontakt_nr"));
                 student.setStudiengang(set.getString("studiengang"));
                 LocalDate localDate = set.getDate("g_datum") == null ? null : set.getDate("g_datum").toLocalDate();
-                student.setG_datum(localDate);
+                student.setGDatum(localDate);
                 student.setAusbildung(set.getString("ausbildung"));
                 student.setAbschluss(set.getString("hoester_abschluss"));
                 student.setBenachrichtigung(set.getInt("benachrichtigung"));
@@ -375,10 +375,10 @@ public class ProfilDAO extends AbstractDAO{
             statement.setString(1,student.getVorname());
             statement.setString(2,student.getNachname());
             statement.setString(3,student.getEmail());
-            statement.setDate(4,student.getG_datum() == null ? null : Date.valueOf(student.getG_datum()));
+            statement.setDate(4,student.getGDatum() == null ? null : Date.valueOf(student.getGDatum()));
             statement.setString(5,student.getStudiengang());
             statement.setString(6,student.getAusbildung());
-            statement.setString(7,student.getKontakt_nr());
+            statement.setString(7,student.getKontaktNr());
             statement.setBytes(8,student.getPicture());
             statement.setBytes(9,student.getLebenslauf());
             statement.setString(10,student.getAbschluss());

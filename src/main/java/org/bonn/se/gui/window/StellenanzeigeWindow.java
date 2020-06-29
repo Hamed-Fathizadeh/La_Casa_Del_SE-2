@@ -32,8 +32,8 @@ public class StellenanzeigeWindow extends Window {
     Button bewerben;
     public StellenanzeigeWindow(StellenanzeigeDTO stellenanzeige) {
         try {
-            Unternehmen unternehmen_data =  UserDAO.getUnternehmenByStellAnz(stellenanzeige);
-            setUp(stellenanzeige, unternehmen_data);
+            Unternehmen unternehmenData =  UserDAO.getUnternehmenByStellAnz(stellenanzeige);
+            setUp(stellenanzeige, unternehmenData);
         } catch (DatabaseException e) {
             Logger.getLogger(StellenanzeigeWindow.class.getName()).log(Level.SEVERE, null, e);
         } catch (SQLException throwables) {
@@ -42,7 +42,7 @@ public class StellenanzeigeWindow extends Window {
 
     }
 
-    public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmen_data)  {
+    public void setUp(StellenanzeigeDTO stellenanzeige, Unternehmen unternehmenData)  {
 
         center();
         this.setWidth("80%");
@@ -60,10 +60,10 @@ public class StellenanzeigeWindow extends Window {
         gridLayout.setMargin(true);
 
         Image logo;
-        if (unternehmen_data.getLogo() == null) {
+        if (unternehmenData.getLogo() == null) {
             logo = ImageConverter.getUnknownProfilImage();
         } else {
-            logo = ImageConverter.convertImagetoProfil(unternehmen_data.getLogo());
+            logo = ImageConverter.convertImagetoProfil(unternehmenData.getLogo());
         }
 
         Label firmenname = new Label("<b>Unternehmensname</b>",ContentMode.HTML);
@@ -82,30 +82,30 @@ public class StellenanzeigeWindow extends Window {
 
 
         Label titel = new Label("<h2><b>"+stellenanzeige.getTitel()+"</font></b></h3>" ,ContentMode.HTML);
-        Label unternehmensbeschreibung_label = new Label("<h3><b><font color=\"blue\">Informationen über das Unternehmen</font></b></h3>",ContentMode.HTML);
-        Label unternehmensbeschreibung = new Label(unternehmen_data.getDescription(),ContentMode.HTML);
+        Label unternehmensbeschreibungLabel = new Label("<h3><b><font color=\"blue\">Informationen über das Unternehmen</font></b></h3>",ContentMode.HTML);
+        Label unternehmensbeschreibung = new Label(unternehmenData.getDescription(),ContentMode.HTML);
 
-        Label firmenname_data = new Label(unternehmen_data.getCname());
-        Label branche_data = new Label(unternehmen_data.getBranche());
-        Label art_data = new Label(stellenanzeige.getArt());
-        Label ort_data = new Label(stellenanzeige.getStandort());
-        Label bundesland_data = new Label(stellenanzeige.getBundesland());
-        Label beginn_data = new Label(String.valueOf(stellenanzeige.getDatum()));
-        Label hauptsitz_data = new Label(stellenanzeige.getHauptsitz());
-        Label ansprechpartner_data = new Label(unternehmen_data.getVorname() + " " + unternehmen_data.getNachname());
-        Label email_data = new Label(unternehmen_data.getEmail());
-        Label kontaktnummer1_data = new Label(unternehmen_data.getKontaktnummer());
-        Label suchbegriff_data = new Label(stellenanzeige.getSuchbegriff());
-        RichTextArea beschreibung_data = new RichTextArea();
-        beschreibung_data.setSizeFull();
-        beschreibung_data.setValue(stellenanzeige.getBeschreibung());
-        beschreibung_data.setReadOnly(true);
+        Label firmennameData = new Label(unternehmenData.getCname());
+        Label brancheData = new Label(unternehmenData.getBranche());
+        Label artData = new Label(stellenanzeige.getArt());
+        Label ortData = new Label(stellenanzeige.getStandort());
+        Label bundeslandData = new Label(stellenanzeige.getBundesland());
+        Label beginnData = new Label(String.valueOf(stellenanzeige.getDatum()));
+        Label hauptsitzData = new Label(stellenanzeige.getHauptsitz());
+        Label ansprechpartnerData = new Label(unternehmenData.getVorname() + " " + unternehmenData.getNachname());
+        Label emailData = new Label(unternehmenData.getEmail());
+        Label kontaktnummer1Data = new Label(unternehmenData.getKontaktnummer());
+        Label suchbegriffData = new Label(stellenanzeige.getSuchbegriff());
+        RichTextArea beschreibungData = new RichTextArea();
+        beschreibungData.setSizeFull();
+        beschreibungData.setValue(stellenanzeige.getBeschreibung());
+        beschreibungData.setReadOnly(true);
 
 
 
 
         gridLayout.addComponent(logo,0,1);
-        gridLayout.addComponent(unternehmensbeschreibung_label,0,2);
+        gridLayout.addComponent(unternehmensbeschreibungLabel,0,2);
         gridLayout.addComponent(unternehmensbeschreibung,0,3,1,6);
         gridLayout.addComponent(stellenbeschreibung,0,8);
         gridLayout.addComponent(art,0,9);
@@ -126,30 +126,30 @@ public class StellenanzeigeWindow extends Window {
 
 
 
-        gridLayout.addComponent(suchbegriff_data,1,8);
-        gridLayout.addComponent(art_data,1,9);
-        gridLayout.addComponent(ort_data,1,10);
-        gridLayout.addComponent(bundesland_data,1,11);
-        gridLayout.addComponent(beginn_data,1,12);
-        gridLayout.addComponent(firmenname_data,4,3);
-        gridLayout.addComponent(branche_data,4,4);
-        gridLayout.addComponent(hauptsitz_data,4,5);
-        gridLayout.addComponent(ansprechpartner_data,4,8);
-        gridLayout.addComponent(email_data,4,9);
-        gridLayout.addComponent(kontaktnummer1_data,4,10);
+        gridLayout.addComponent(suchbegriffData,1,8);
+        gridLayout.addComponent(artData,1,9);
+        gridLayout.addComponent(ortData,1,10);
+        gridLayout.addComponent(bundeslandData,1,11);
+        gridLayout.addComponent(beginnData,1,12);
+        gridLayout.addComponent(firmennameData,4,3);
+        gridLayout.addComponent(brancheData,4,4);
+        gridLayout.addComponent(hauptsitzData,4,5);
+        gridLayout.addComponent(ansprechpartnerData,4,8);
+        gridLayout.addComponent(emailData,4,9);
+        gridLayout.addComponent(kontaktnummer1Data,4,10);
 
 
 
         gridLayout.addComponent(new Label("&nbsp", ContentMode.HTML),0,13,4,13);
-        gridLayout.addComponent(beschreibung_data,0,14,4,14);
-        gridLayout.setComponentAlignment(beschreibung_data,Alignment.MIDDLE_CENTER);
+        gridLayout.addComponent(beschreibungData,0,14,4,14);
+        gridLayout.setComponentAlignment(beschreibungData,Alignment.MIDDLE_CENTER);
 
-        if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
+        if(UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null ) {
 
             Button back = new Button("Zurück zu Ergebnissen");
             gridLayout.addComponent(back, 4, 0, 4, 0);
             back.addClickListener((Button.ClickListener) event -> StellenanzeigeWindow.this.close());
-        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
 
             Button back = new Button("Zurück zu Anzeigen");
             Button bearbeiten = new Button("Bearbeiten");
@@ -193,7 +193,7 @@ public class StellenanzeigeWindow extends Window {
 
             back.addClickListener(event -> {
                 this.close();
-                UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+                UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
 
             });
 
@@ -202,18 +202,18 @@ public class StellenanzeigeWindow extends Window {
                 Button cancel = new Button("Abbrechen");
                 Button save = new Button("Speichern");
                 RichTextArea richTextArea = new RichTextArea();
-                richTextArea.setValue(beschreibung_data.getValue());
+                richTextArea.setValue(beschreibungData.getValue());
                 richTextArea.setSizeFull();
 
-                TextField titel_bearbeiten = new TextField("");
-                titel_bearbeiten.setValue(titel.getValue().substring(7,titel.getValue().length()-16));
+                TextField titelBearbeiten = new TextField("");
+                titelBearbeiten.setValue(titel.getValue().substring(7,titel.getValue().length()-16));
 
 
 
-                titel_bearbeiten.addValueChangeListener(event1 -> save.setEnabled(true));
-                gridLayout.replaceComponent(titel,titel_bearbeiten);
-                titel_bearbeiten.setSizeFull();
-                gridLayout.replaceComponent(beschreibung_data, richTextArea);
+                titelBearbeiten.addValueChangeListener(event1 -> save.setEnabled(true));
+                gridLayout.replaceComponent(titel, titelBearbeiten);
+                titelBearbeiten.setSizeFull();
+                gridLayout.replaceComponent(beschreibungData, richTextArea);
                 gridLayout.setComponentAlignment(richTextArea,Alignment.MIDDLE_CENTER);
                 gridLayout.replaceComponent(bearbeiten, cancel);
                 gridLayout.replaceComponent(delete, save);
@@ -222,10 +222,10 @@ public class StellenanzeigeWindow extends Window {
                 richTextArea.addValueChangeListener(event1 -> save.setEnabled(true));
 
                 cancel.addClickListener((Button.ClickListener) event12 -> {
-                    gridLayout.replaceComponent(richTextArea,beschreibung_data);
+                    gridLayout.replaceComponent(richTextArea, beschreibungData);
                     gridLayout.replaceComponent(cancel,bearbeiten);
                     gridLayout.replaceComponent(save,delete);
-                    gridLayout.replaceComponent(titel_bearbeiten,titel);
+                    gridLayout.replaceComponent(titelBearbeiten,titel);
                     gridLayout.addComponent(back, 4, 0, 4, 0);
                 });
 
@@ -244,15 +244,15 @@ public class StellenanzeigeWindow extends Window {
                         ConfirmDialog.show(MyUI.getCurrent(), "Bist du dir sicher?",
                                 (ConfirmDialog.Listener) dialog -> {
                                     if (dialog.isConfirmed()) {
-                                        stellenanzeige.setTitel(titel_bearbeiten.getValue());
+                                        stellenanzeige.setTitel(titelBearbeiten.getValue());
                                         stellenanzeige.setBeschreibung(richTextArea.getValue());
                                         ContainerAnzeigen.getInstance().updateAnzeige(stellenanzeige);
-                                        gridLayout.replaceComponent(richTextArea, beschreibung_data);
+                                        gridLayout.replaceComponent(richTextArea, beschreibungData);
                                         gridLayout.replaceComponent(cancel, bearbeiten);
                                         gridLayout.replaceComponent(save, delete);
-                                        gridLayout.replaceComponent(titel_bearbeiten, titel);
+                                        gridLayout.replaceComponent(titelBearbeiten, titel);
 
-                                        StellenanzeigeWindow.this.setUp(stellenanzeige, unternehmen_data);
+                                        StellenanzeigeWindow.this.setUp(stellenanzeige, unternehmenData);
                                     }
                                 });
                     }
@@ -266,7 +266,7 @@ public class StellenanzeigeWindow extends Window {
                         if (dialog.isConfirmed()) {
                             ContainerAnzeigen.getInstance().deleteAnzeige(stellenanzeige);
                             StellenanzeigeWindow.this.close();
-                            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+                            UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
                         }
                     }));
 
@@ -276,7 +276,7 @@ public class StellenanzeigeWindow extends Window {
         if(FeatureToggleControl.getInstance().featureIsEnabled("BEWERBUNGEN")) {
 
             UI.getCurrent().access(() -> {
-                if(UI.getCurrent().getSession().getAttribute(Roles.Student) != null ) {
+                if(UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null ) {
 
                     bewerben = new Button("Bewerben");
 
@@ -285,7 +285,7 @@ public class StellenanzeigeWindow extends Window {
                     gridLayout.setComponentAlignment(bewerben,Alignment.BOTTOM_RIGHT);
 
                     bewerben.addClickListener((Button.ClickListener) event -> {
-                        if (((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student)).hasLebenslauf()) {
+                        if (((Student) MyUI.getCurrent().getSession().getAttribute(Roles.STUDENT)).hasLebenslauf()) {
                             StellenanzeigeWindow.this.close();
                             BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeige, "Student", null);
                             UI.getCurrent().addWindow(bewerbungWindow);
@@ -294,7 +294,7 @@ public class StellenanzeigeWindow extends Window {
                             UI.getCurrent().addWindow(new ConfirmationWindow("Um dich zu bewerben musst du ein Lebenslauf in deine Profil hinterlegen!"));
                         }
                     });
-                } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+                } else if(UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
                     bewerbungen = new Button("Zum Bewerbungen");
                     gridLayout.addComponent(bewerbungen, 1, 0, 1, 0);
 

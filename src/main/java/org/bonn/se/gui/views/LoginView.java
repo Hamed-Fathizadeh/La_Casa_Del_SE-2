@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static org.bonn.se.services.util.Views.RegisterUnternehmen;
+import static org.bonn.se.services.util.Views.REGISTERUNTERNEHMEN;
 
 public class LoginView extends VerticalLayout implements View {
 
@@ -40,9 +40,9 @@ public class LoginView extends VerticalLayout implements View {
         regUnternehmen.setWidth("280px");
         regUnternehmen.setHeight("45px");
 
-        regStudent.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.RegisterStudent));
+        regStudent.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(Views.REGISTERSTUDENT));
 
-        regUnternehmen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(RegisterUnternehmen));
+        regUnternehmen.addClickListener((Button.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(REGISTERUNTERNEHMEN));
         Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
 
         GridLayout topGrid = new GridLayout(7,1);
@@ -166,10 +166,10 @@ public class LoginView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-         } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+        if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.STUDENTHOMEVIEW);
+         } else if(UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
          } else {
             this.setUp();
         }

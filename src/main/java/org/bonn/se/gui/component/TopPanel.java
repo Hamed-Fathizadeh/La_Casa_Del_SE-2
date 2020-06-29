@@ -20,20 +20,20 @@ public class TopPanel  extends GridLayout {
         if(usertyp.equals("Unternehmen")){
             buttonOne = "Unternehmen";
             buttonTwo = "Login";
-            navigateToOne = LoginView;
-            navigateToTwo = RegisterUnternehmen;
-            logo.addClickListener((MouseEvents.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(RegisterUnternehmen));
+            navigateToOne = LOGINVIEW;
+            navigateToTwo = REGISTERUNTERNEHMEN;
+            logo.addClickListener((MouseEvents.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(REGISTERUNTERNEHMEN));
         }else if(usertyp.equals("Studenten")){
             buttonOne = "Studenten";
             buttonTwo = "Login";
-            navigateToOne = LoginView;
-            navigateToTwo = RegisterStudent;
-            logo.addClickListener((MouseEvents.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(RegisterStudent));
+            navigateToOne = LOGINVIEW;
+            navigateToTwo = REGISTERSTUDENT;
+            logo.addClickListener((MouseEvents.ClickListener) event -> UI.getCurrent().getNavigator().navigateTo(REGISTERSTUDENT));
         }else{
             buttonOne = "Registrierung Unternehmen";
             buttonTwo = "Registrierung Student";
-            navigateToOne = RegisterStudent;
-            navigateToTwo = RegisterUnternehmen;
+            navigateToOne = REGISTERSTUDENT;
+            navigateToTwo = REGISTERUNTERNEHMEN;
         }
 
 

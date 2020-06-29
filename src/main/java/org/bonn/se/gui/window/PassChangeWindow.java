@@ -33,21 +33,21 @@ public class PassChangeWindow extends Window {
 
        RegistrationTextField email = new RegistrationTextField("E-Mail");
        RegistrationPasswordField neuPasswort = new RegistrationPasswordField("Neue Passwort");
-       RegistrationPasswordField Vnummer = new RegistrationPasswordField("Verifizierungscode");
+       RegistrationPasswordField vNummer = new RegistrationPasswordField("Verifizierungscode");
 
        Button passAendern = new Button("Ändern");
        passAendern.setEnabled(false);
 
-       Button VnummerButton = new Button("Verifikation");
-       VnummerButton.setEnabled(false);
+       Button vNummerButton = new Button("Verifikation");
+       vNummerButton.setEnabled(false);
 
        Label emptyLabel = new Label("&nbsp;", ContentMode.HTML);
 
        content.addComponent(emptyLabel);
        content.addComponent(email);
        content.addComponent(neuPasswort);
-       content.addComponent(Vnummer);
-       content.addComponent(VnummerButton);
+       content.addComponent(vNummer);
+       content.addComponent(vNummerButton);
        content.addComponent(passAendern);
 
        Binder<User> binder = new Binder<>(User.class);
@@ -64,7 +64,7 @@ public class PassChangeWindow extends Window {
                .bind(User::getPasswort, User::setPasswort);
 
 
-       binder.forField(Vnummer)
+       binder.forField(vNummer)
                .asRequired("Verification Nummer")
                .withValidator(new StringLengthValidator(
                        "Verifizierungscode ist falsch!", 5, 5))
@@ -76,9 +76,9 @@ public class PassChangeWindow extends Window {
 
 
 
-                       if (!vnummer.equals(Vnummer.getValue())) {
+                       if (!vnummer.equals(vNummer.getValue())) {
                            UI.getCurrent().addWindow(new ConfirmationWindow("Verifizierungscode ist falsch!"));
-                           Vnummer.clear();
+                           vNummer.clear();
                        }
                        else if(UserSearchControl.getInstance().existUser(email.getValue())) {
                            PassChangeRequest request = new PassChangeRequest();
@@ -95,7 +95,7 @@ public class PassChangeWindow extends Window {
                        }
                        else {
                            Notification.show("Fehler!");
-                           Vnummer.clear();
+                           vNummer.clear();
                        }
 
 
@@ -118,7 +118,7 @@ public class PassChangeWindow extends Window {
                        "Passwort muss mindestens 8 Zeichen lang sein", 8, null))
                .bind(User::getPasswort, User::setPasswort);
 
-       VnummerButton.addClickListener(
+       vNummerButton.addClickListener(
                event -> {
                    try {
 
@@ -132,7 +132,7 @@ public class PassChangeWindow extends Window {
                });
 
        binder2.addStatusChangeListener(
-               event -> VnummerButton.setEnabled(binder2.isValid()));
+               event -> vNummerButton.setEnabled(binder2.isValid()));
 
    }
 

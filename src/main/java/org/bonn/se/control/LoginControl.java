@@ -68,19 +68,19 @@ public class LoginControl {
 
                 if(set.getString(5).equals("C")) {
                         Unternehmen unternehmen = new Unternehmen();
-                        MyUI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
+                        MyUI.getCurrent().getSession().setAttribute(Roles.UNTERNEHMEN,unternehmen);
                         unternehmen.setEmail(user.getEmail());
                         unternehmen.setVorname(user.getVorname());
                         unternehmen.setNachname(user.getNachname());
                         unternehmen = ProfilDAO.getInstance().getUnternehmenProfil(unternehmen);
 
-                        UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
+                        UI.getCurrent().getSession().setAttribute(Roles.UNTERNEHMEN,unternehmen);
 
                     } else if(set.getString(5).equals("S")) {
                         Student student;
                         student = ProfilDAO.getInstance().getStudent(user.getEmail());
 
-                        UI.getCurrent().getSession().setAttribute(Roles.Student,student);
+                        UI.getCurrent().getSession().setAttribute(Roles.STUDENT,student);
 
 
                      } else {
@@ -96,15 +96,15 @@ public class LoginControl {
             JDBCConnection.getInstance().closeConnection();
         }
 
-        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+        UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
     }
 
     public static void logoutUser() {
 
         VaadinSession vaadinSession = UI.getCurrent().getSession();
-        vaadinSession.setAttribute(Roles.Student,null);
-        vaadinSession.setAttribute(Roles.Unternehmen,null);
-        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+        vaadinSession.setAttribute(Roles.STUDENT,null);
+        vaadinSession.setAttribute(Roles.UNTERNEHMEN,null);
+        UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
     }
 
 

@@ -1,6 +1,5 @@
 package org.bonn.se.gui.window.wizard;
 
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
@@ -23,7 +22,7 @@ public class WizardStepRegisterSuccessWindow implements WizardStep {
         public Component getContent() {
 
             GridLayout gl_success = new GridLayout();
-            Label label = new Label("Vielen Dank für ihre Registrierung!", ContentMode.HTML);
+            Label label = new Label("Vielen Dank für ihre Registrierung!");
             gl_success.addComponent(label);
             return gl_success;
         }

@@ -35,9 +35,9 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
 
 
         ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
-        Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student));
+        Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.STUDENT));
         containerBewerbungen.load(student.getEmail());
-        Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"AlleBewerbungenView");
+        Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"ALLEBEWERBUNGENVIEW");
         bewerbungen.setHeightMode(HeightMode.UNDEFINED);
 
         GridLayout bottomGridBewNeu = new GridLayout(1, 1);
@@ -71,12 +71,12 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
                 this.setUp();
-        } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
         }
 
     }

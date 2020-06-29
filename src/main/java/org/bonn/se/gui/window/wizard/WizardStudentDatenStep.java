@@ -140,7 +140,7 @@ public class WizardStudentDatenStep implements WizardStep {
         public boolean onAdvance() {
 
 
-            Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+            Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
             if(studentDatenView.getUploadProfil().getValue() != null){
                 student.setPicture(studentDatenView.getUploadProfil().getValue());
@@ -151,10 +151,10 @@ public class WizardStudentDatenStep implements WizardStep {
                 studentDatenView.getLebenslauf().clear();
             }
             student.setAbschluss(studentDatenView.getAbschluss().getValue());
-            student.setKontakt_nr(studentDatenView.getMobilnr().getValue());
+            student.setKontaktNr(studentDatenView.getMobilnr().getValue());
             student.setAusbildung(studentDatenView.getAusbildung().getValue());
             student.setStudiengang(studentDatenView.getStudiengang().getValue());
-            student.setG_datum(studentDatenView.getG_datum().getValue());
+            student.setGDatum(studentDatenView.getgDatum().getValue());
             Adresse adresse = new Adresse();
             if(!( studentDatenView.getOrt().getOrtField().getValue() == null ) || studentDatenView.getOrt().getPlzField().getValue() == null ) {
                 adresse.setStrasse(studentDatenView.getStrasse().getValue());
@@ -169,7 +169,7 @@ public class WizardStudentDatenStep implements WizardStep {
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }
-            UI.getCurrent().getSession().setAttribute(Roles.Student, student);
+            UI.getCurrent().getSession().setAttribute(Roles.STUDENT, student);
 
 
 

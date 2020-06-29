@@ -41,13 +41,13 @@ public class RegisterUnternehmenWindow extends CustomWindow implements WizardPro
     public void wizardCompleted(WizardCompletedEvent wizardCompletedEvent) {
         wizard.setVisible(false);
         this.close();
-        UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,null);
-        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+        UI.getCurrent().getSession().setAttribute(Roles.UNTERNEHMEN,null);
+        UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
     }
 
     @Override
     public void wizardCancelled(WizardCancelledEvent wizardCancelledEvent) {
-        ConfirmDialog.Factory bestaetigung_Unt = new DefaultConfirmDialogFactory(){
+        ConfirmDialog.Factory bestaetigungUnt = new DefaultConfirmDialogFactory(){
             @Override
             public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
                 return super.create("Beenden", message, "Ja", "Nein", notOkCaption);
@@ -55,7 +55,7 @@ public class RegisterUnternehmenWindow extends CustomWindow implements WizardPro
         } ;
 
 
-        ConfirmDialog.setFactory(bestaetigung_Unt);
+        ConfirmDialog.setFactory(bestaetigungUnt);
 
 
         ConfirmDialog.show(UI.getCurrent(), "Profilvervollständigung wirklich abbrechen und zum Login?",
@@ -63,8 +63,8 @@ public class RegisterUnternehmenWindow extends CustomWindow implements WizardPro
                     if (dialog.isConfirmed()) {
                         wizard.setVisible(false);
                         RegisterUnternehmenWindow.this.close();
-                        UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,null);
-                        UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+                        UI.getCurrent().getSession().setAttribute(Roles.UNTERNEHMEN,null);
+                        UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
                     }
                 });
     }

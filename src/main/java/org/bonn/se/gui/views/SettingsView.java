@@ -35,7 +35,7 @@ public class SettingsView extends VerticalLayout implements View {
                 "minor-bidi;mso-bidi-theme-font:minor-bidi;color:#ffffff;mso-themecolor:accent1;\n" +
                 "mso-themeshade:191;mso-style-textfill-fill-color:#ffffff;mso-style-textfill-fill-themecolor:\n" +
                 "accent1;mso-style-textfill-fill-alpha:100.0%;mso-style-textfill-fill-colortransforms:\n" +
-                "lumm=75000'>Settings<o:p></o:p></span></b></p>";
+                "lumm=75000'>SETTINGS<o:p></o:p></span></b></p>";
 
 
         Label lSpruch = new Label(ls3, ContentMode.HTML);
@@ -121,8 +121,8 @@ public class SettingsView extends VerticalLayout implements View {
                 ConfirmDialog.show(MyUI.getCurrent(), "Möchten Sie ihr Konto wirklich löschen?",
                         (ConfirmDialog.Listener) dialog -> {
                             if (dialog.isConfirmed()) {
-                                if(MyUI.getCurrent().getSession().getAttribute(Roles.Student) != null){
-                                    Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student);
+                                if(MyUI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null){
+                                    Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.STUDENT);
                                     try {
                                         UserDAO.deleteUser(student.getEmail());
                                     } catch (DatabaseException | SQLException e) {
@@ -130,7 +130,7 @@ public class SettingsView extends VerticalLayout implements View {
                                     }
                                 }
                                 else{
-                                   Unternehmen unternehmen= (Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.Unternehmen);
+                                   Unternehmen unternehmen= (Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN);
                                     try {
                                         UserDAO.deleteUser(unternehmen.getEmail());
                                     } catch (DatabaseException | SQLException e) {
@@ -163,9 +163,9 @@ public class SettingsView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
                 this.setUp();
-        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
                 this.setUp();
         } else {
             UI.getCurrent().getNavigator().getCurrentNavigationState();

@@ -278,13 +278,13 @@ public class WizardStudentKenntnisStep implements WizardStep {
                 if(studentKenntnisView.getBinder().isValid()) {
                     studentKenntnisView.getBinder().writeBean(itKenntnis);
                     studentKenntnisView.getItKenntnisArrayList().add(itKenntnis);
-                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setItKenntnisList(studentKenntnisView.getItKenntnisArrayList());
+                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.STUDENT)).setItKenntnisList(studentKenntnisView.getItKenntnisArrayList());
 
                 }
                 if (studentKenntnisView.getBinder1().isValid()) {
                     studentKenntnisView.getBinder1().writeBean(sprachKenntnis);
                     studentKenntnisView.getSprachKenntnisArrayList().add(sprachKenntnis);
-                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.Student)).setSprachKenntnisList(studentKenntnisView.getSprachKenntnisArrayList());
+                    ((Student)UI.getCurrent().getSession().getAttribute(Roles.STUDENT)).setSprachKenntnisList(studentKenntnisView.getSprachKenntnisArrayList());
 
                 }
             } catch (ValidationException e) {
@@ -292,7 +292,7 @@ public class WizardStudentKenntnisStep implements WizardStep {
             }
 
             try {
-                ProfilDAO.getInstance().createStudentProfil3((Student) UI.getCurrent().getSession().getAttribute(Roles.Student));
+                ProfilDAO.getInstance().createStudentProfil3((Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT));
             } catch (DatabaseException e) {
                 e.printStackTrace();
             }

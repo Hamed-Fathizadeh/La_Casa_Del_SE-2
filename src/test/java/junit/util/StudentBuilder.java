@@ -9,15 +9,15 @@ import java.util.ArrayList;
 
 public class StudentBuilder {
     private String email;
-    private int student_id;
+    private int studentId;
     private String vorname;
     private String nachname;
-    private LocalDate g_datum;
+    private LocalDate gDatum;
     private String studiengang;
     private byte[] picture;
     private byte[] lebenslauf;
     private String abschluss;
-    private String kontakt_nr;
+    private String kontaktNr;
     private int benachrichtigung;
     private ArrayList<Taetigkeit> taetigkeiten;
     private ArrayList<Student.SprachKenntnis> sprachKenntnisList;
@@ -33,8 +33,8 @@ public class StudentBuilder {
         return this;
     }
 
-    public StudentBuilder withStudent_id(int student_id) {
-        this.student_id = student_id;
+    public StudentBuilder withStudentId(int studentId) {
+        this.studentId = studentId;
         return this;
     }
 
@@ -48,8 +48,8 @@ public class StudentBuilder {
         return this;
     }
 
-    public StudentBuilder withG_datum(LocalDate g_datum) {
-        this.g_datum = g_datum;
+    public StudentBuilder withGDatum(LocalDate gDatum) {
+        this.gDatum = gDatum;
         return this;
     }
 
@@ -73,8 +73,8 @@ public class StudentBuilder {
         return this;
     }
 
-    public StudentBuilder withKontakt_nr(String kontakt_nr) {
-        this.kontakt_nr = kontakt_nr;
+    public StudentBuilder withKontaktNr(String kontaktNr) {
+        this.kontaktNr = kontaktNr;
         return this;
     }
 
@@ -124,6 +124,6 @@ public class StudentBuilder {
     }
 
     public Student createStudent() {
-        return new Student(email, student_id, vorname, nachname, g_datum, studiengang, picture, lebenslauf, abschluss, kontakt_nr, benachrichtigung, taetigkeiten, sprachKenntnisList, itKenntnisList, ausbildung, adresse, passwort, itKenntnis, sprachKenntnis);
+        return new Student(email, studentId, vorname, nachname, gDatum, studiengang, picture, lebenslauf, abschluss, kontaktNr, benachrichtigung, taetigkeiten, sprachKenntnisList, itKenntnisList, ausbildung, adresse, passwort, itKenntnis, sprachKenntnis);
     }
 }

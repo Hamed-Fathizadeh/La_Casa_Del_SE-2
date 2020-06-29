@@ -29,17 +29,17 @@ public class MyUI extends UI {
 
 
         Navigator navi = new Navigator(this , this );
-        navi.addView(RegisterStudent, RegisterStudentView.class);
-        navi.addView(LoginView, LoginView.class);
-        navi.addView(RegisterUnternehmen, RegisterUnternehmerView.class);
-        navi.addView(StudentHomeView, StudentHomeView.class);
-        navi.addView(UnternehmenHomeView, org.bonn.se.gui.views.UnternehmenHomeView.class);
-        navi.addView(AnzeigeErstellen, AnzeigeErstellenView.class);
-        navi.addView(Stellenbeschreibung,  StellenbeschreibungView.class);
-        navi.addView(ProfilVerwaltenStudent, ProfilVerwaltenStudentView.class);
-        navi.addView(ProfilVerwaltenUnternehmen, ProfilVerwaltenUnternehmenView.class);
-        navi.addView(AlleBewerbungenView, org.bonn.se.gui.views.AlleBewerbungenView.class);
-        navi.addView(Settings, SettingsView.class);
+        navi.addView(REGISTERSTUDENT, RegisterStudentView.class);
+        navi.addView(LOGINVIEW, LoginView.class);
+        navi.addView(REGISTERUNTERNEHMEN, RegisterUnternehmerView.class);
+        navi.addView(STUDENTHOMEVIEW, StudentHomeView.class);
+        navi.addView(UNTERNEHMENHOMEVIEW, org.bonn.se.gui.views.UnternehmenHomeView.class);
+        navi.addView(ANZEIGEERSTELLEN, AnzeigeErstellenView.class);
+        navi.addView(STELLENBESCHREIBUNG,  StellenbeschreibungView.class);
+        navi.addView(PROFILVERWALTENSTUDENT, ProfilVerwaltenStudentView.class);
+        navi.addView(PROFILVERWALTENUNTERNEHMEN, ProfilVerwaltenUnternehmenView.class);
+        navi.addView(ALLEBEWERBUNGENVIEW, org.bonn.se.gui.views.AlleBewerbungenView.class);
+        navi.addView(SETTINGS, SettingsView.class);
 
         if(CheckSMTP.pingHost("smtp.gmail.com",587,100)){
             FeatureToggleControl.getInstance().setSMTPFeature(true);
@@ -48,7 +48,7 @@ public class MyUI extends UI {
         }
 
 
-        UI.getCurrent().getNavigator().navigateTo(RegisterStudent);
+        UI.getCurrent().getNavigator().navigateTo(REGISTERSTUDENT);
 
     }
 

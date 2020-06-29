@@ -30,8 +30,8 @@ public class BewerbungWindow extends CustomWindow {
 
     public void setUp(StellenanzeigeDTO stellenanzeige, String userType,BewerbungDTO bewerbung) {
 
-        Panel panel_bewerbung = new Panel();
-        panel_bewerbung.setWidthFull();
+        Panel panelBewerbung = new Panel();
+        panelBewerbung.setWidthFull();
         Button back = new Button("Zurück");
 
         back.addClickListener((Button.ClickListener) event -> {
@@ -44,7 +44,7 @@ public class BewerbungWindow extends CustomWindow {
         Image profilbild;
         Student student = null;
         if(userType.equals("Student")) {
-            student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+            student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
         }else {
             try {
@@ -61,24 +61,24 @@ public class BewerbungWindow extends CustomWindow {
             mainGridLayout.addComponent(titel, 0, 1, 5, 1);
             mainGridLayout.setComponentAlignment(titel, Alignment.TOP_CENTER);
         }
-        Label vor_nachname = new Label("Vor und Nachname: ");
-        Label vor_nachname_data = new Label(student.getVorname()+" "+student.getNachname());
-        Label geb_datum = new Label("Geb Datum: ");
-        Label geb_datum_data = new Label(student.getG_datum() == null?"":""+student.getG_datum());
+        Label vorNachname = new Label("Vor und Nachname: ");
+        Label vorNachnameData = new Label(student.getVorname()+" "+student.getNachname());
+        Label gebDatum = new Label("Geb Datum: ");
+        Label gebDatumData = new Label(student.getGDatum() == null?"":""+student.getGDatum());
         Label adresse = new Label("Adresse: ");
-        Label adresse_data = new Label(student.getAdresse().getStrasse());
+        Label adresseData = new Label(student.getAdresse().getStrasse());
         Label plzOrt = new Label("PLZ Ort: ");
-        Label plzOrt_data = new Label(student.getAdresse().getPlz()+" "+student.getAdresse().getOrt());
+        Label plzOrtData = new Label(student.getAdresse().getPlz()+" "+student.getAdresse().getOrt());
         Label rufnummer = new Label("Rufnummer: ");
-        Label rufnummer_data = new Label(student.getKontakt_nr());
+        Label rufnummerData = new Label(student.getKontaktNr());
         Label email = new Label("Email: ");
-        Label email_data = new Label(student.getEmail());
+        Label emailData = new Label(student.getEmail());
         Label abschluss = new Label("Abschluss: ");
-        Label abschluss_data = new Label(student.getAbschluss());
+        Label abschlussData = new Label(student.getAbschluss());
         Label studiengang = new Label("Studiengang: ");
-        Label studiengang_data = new Label(student.getStudiengang());
+        Label studiengangData = new Label(student.getStudiengang());
         Label ausbildung = new Label("Ausbildung: ");
-        Label ausbildung_data = new Label(student.getAusbildung());
+        Label ausbildungData = new Label(student.getAusbildung());
 
         Label line = new Label("<h1><color: black h1>", ContentMode.HTML);
 
@@ -125,16 +125,16 @@ public class BewerbungWindow extends CustomWindow {
 
         mainGridLayout.addComponent(back, 5, 0);
           mainGridLayout.addComponent(profilbild, 0, 2,0,7);
-        mainGridLayout.addComponent(vor_nachname, 1, 2);mainGridLayout.addComponent(vor_nachname_data, 2, 2);
-           mainGridLayout.addComponent(geb_datum, 1, 3);mainGridLayout.addComponent(geb_datum_data , 2, 3);
-             mainGridLayout.addComponent(adresse, 1, 4); mainGridLayout.addComponent(adresse_data, 2, 4);
-              mainGridLayout.addComponent(plzOrt, 1, 5);mainGridLayout.addComponent(plzOrt_data, 2, 5);
-           mainGridLayout.addComponent(rufnummer, 1, 6);mainGridLayout.addComponent(rufnummer_data, 2, 6);
-               mainGridLayout.addComponent(email, 1, 7); mainGridLayout.addComponent(email_data, 2, 7);
+        mainGridLayout.addComponent(vorNachname, 1, 2);mainGridLayout.addComponent(vorNachnameData, 2, 2);
+           mainGridLayout.addComponent(gebDatum, 1, 3);mainGridLayout.addComponent(gebDatumData, 2, 3);
+             mainGridLayout.addComponent(adresse, 1, 4); mainGridLayout.addComponent(adresseData, 2, 4);
+              mainGridLayout.addComponent(plzOrt, 1, 5);mainGridLayout.addComponent(plzOrtData, 2, 5);
+           mainGridLayout.addComponent(rufnummer, 1, 6);mainGridLayout.addComponent(rufnummerData, 2, 6);
+               mainGridLayout.addComponent(email, 1, 7); mainGridLayout.addComponent(emailData, 2, 7);
 
-        mainGridLayout.addComponent(abschluss, 3, 2); mainGridLayout.addComponent(abschluss_data, 4, 2);
-        mainGridLayout.addComponent(studiengang, 3, 3);  mainGridLayout.addComponent(studiengang_data, 4, 3);
-        mainGridLayout.addComponent(ausbildung, 3, 4); mainGridLayout.addComponent(ausbildung_data, 4, 4);
+        mainGridLayout.addComponent(abschluss, 3, 2); mainGridLayout.addComponent(abschlussData, 4, 2);
+        mainGridLayout.addComponent(studiengang, 3, 3);  mainGridLayout.addComponent(studiengangData, 4, 3);
+        mainGridLayout.addComponent(ausbildung, 3, 4); mainGridLayout.addComponent(ausbildungData, 4, 4);
 
         mainGridLayout.addComponent(line, 0, 8,4,8);
 
@@ -180,7 +180,7 @@ public class BewerbungWindow extends CustomWindow {
                 bewerbungDTO.setDescription(richTextArea.getValue());
                 bewerbungDTO.setLebenslauf(PdfUploader.getByte());
                 bewerbungDTO.setStatus(9);
-                bewerbungDTO.setStudentID(st.getStudent_id());
+                bewerbungDTO.setStudentID(st.getStudentId());
                 bewerbungDTO.setAnzeigeID(stellenanzeige.getId());
                 BewerbungWindow.this.close();
                 try {
@@ -207,7 +207,7 @@ public class BewerbungWindow extends CustomWindow {
 
 
             Image picMarkierung;
-            if( bewerbung.isBewerbung_markiert()){
+            if( bewerbung.isBewerbungMarkiert()){
                 ThemeResource resource3 = new ThemeResource("img/Anzeigen/makierung.png");
                 picMarkierung = new Image(null, resource3);
                 mainGridLayout.addComponent(picMarkierung, 5, 2);
@@ -217,16 +217,16 @@ public class BewerbungWindow extends CustomWindow {
             }
 
 
-            RichTextArea beschreibung_data = new RichTextArea();
-            beschreibung_data.setSizeFull();
-            beschreibung_data.setValue(bewerbung.getDescription());
-            beschreibung_data.setReadOnly(true);
+            RichTextArea beschreibungData = new RichTextArea();
+            beschreibungData.setSizeFull();
+            beschreibungData.setValue(bewerbung.getDescription());
+            beschreibungData.setReadOnly(true);
 
 
 
             mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 11, 0, 11);
             mainGridLayout.addComponent(lAnschreiben, 0, 12, 0, 12);
-            mainGridLayout.addComponent(beschreibung_data, 0, 13, 5, 13);
+            mainGridLayout.addComponent(beschreibungData, 0, 13, 5, 13);
             mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 14, 5, 14);
 
 
@@ -240,7 +240,7 @@ public class BewerbungWindow extends CustomWindow {
 
             markieren.addClickListener((Button.ClickListener) event -> {
                 try {
-                   bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
+                   bewerbung.setBewerbungMarkiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
                 } catch (DatabaseException | SQLException e) {
                     e.printStackTrace();
                 }
@@ -259,9 +259,9 @@ public class BewerbungWindow extends CustomWindow {
             });
 
             ablehnen.addClickListener((Button.ClickListener) event -> {
-                if(bewerbung.isBewerbung_markiert()) {
+                if(bewerbung.isBewerbungMarkiert()) {
                     try {
-                        bewerbung.setBewerbung_markiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
+                        bewerbung.setBewerbungMarkiert(BewerbungControl.markierungAendern(bewerbung.getBewerbungID()));
                     } catch (DatabaseException | SQLException e) {
                         e.printStackTrace();
                     }
@@ -278,7 +278,7 @@ public class BewerbungWindow extends CustomWindow {
                  if(bewerbung != null) {
                 try {
 
-                    StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID(),bewerbung.getStudent_vorname(),bewerbung.getStudent_nachname());
+                    StreamResource myResource = BewerbungControl.downloadLebenslauf(bewerbung.getStudentID(),bewerbung.getStudentVorname(),bewerbung.getStudentNachname());
                     FileDownloader fileDownloader = new FileDownloader(myResource);
                     fileDownloader.extend(downloadLebnslauf);
                 } catch (DatabaseException | SQLException e) {
@@ -297,8 +297,8 @@ public class BewerbungWindow extends CustomWindow {
 
 
         }
-        panel_bewerbung.setContent(mainGridLayout);
-        this.setContent(panel_bewerbung);
+        panelBewerbung.setContent(mainGridLayout);
+        this.setContent(panelBewerbung);
 
 
 

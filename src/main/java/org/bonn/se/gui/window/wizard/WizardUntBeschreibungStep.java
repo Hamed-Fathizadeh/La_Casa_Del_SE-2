@@ -46,7 +46,7 @@ public class WizardUntBeschreibungStep  implements WizardStep {
 
             UnternehmenDescriptionControl unternehmenDescriptionControl = UnternehmenDescriptionControl.getInstance();
             try {
-                ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.Unternehmen)).setDescription(unternehmenBeschreibungView.getRichTextArea().getValue());
+                ((Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN)).setDescription(unternehmenBeschreibungView.getRichTextArea().getValue());
                 unternehmenDescriptionControl.setDescription();
             } catch (DatabaseException e) {
                 e.printStackTrace();

@@ -19,7 +19,7 @@ import org.vaadin.dialogs.DefaultConfirmDialogFactory;
 import org.vaadin.easyuploads.UploadField;
 
 public class ProfilVerwaltenStudentView extends GridLayout implements View {
-    private final Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+    private final Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
     private final Button bearbeiten = new Button("Bearbeiten",this::addBearbeitenClickListener);
     private final Button cancel = new Button("Abbrechen",this::addCancelClickListener);
@@ -42,8 +42,8 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich speichern?",
                 (ConfirmDialog.Listener) dialog -> {
                     if (dialog.isConfirmed()) {
-                        student.setG_datum(grid.getG_datum().getValue());
-                        student.setKontakt_nr((grid.getMobilnr()).getValue());
+                        student.setGDatum(grid.getgDatum().getValue());
+                        student.setKontaktNr((grid.getMobilnr()).getValue());
                         Adresse adresse = new Adresse();
                         adresse.setStrasse(grid.getStrasse().getValue());
                         adresse.setPlz(grid.getOrt().getPlz());

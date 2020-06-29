@@ -22,7 +22,7 @@ public class SuchbegriffDAO extends AbstractDAO {
     public List<String> getSuchbegriffe() {
 
         ResultSet set = null;
-        List<String> suchbegriff_list = new ArrayList<>();
+        List<String> suchbegriffList = new ArrayList<>();
 
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
@@ -31,7 +31,7 @@ public class SuchbegriffDAO extends AbstractDAO {
                 assert set != null;
                 if (!set.next()) break;
 
-                suchbegriff_list.add(set.getString(1));
+                suchbegriffList.add(set.getString(1));
             }
 
         }catch (SQLException | DatabaseException throwables) {
@@ -50,21 +50,21 @@ public class SuchbegriffDAO extends AbstractDAO {
             }
         }
 
-        return suchbegriff_list;
+        return suchbegriffList;
     }
 
 
     public List<String> getAbschluss() throws DatabaseException, SQLException {
 
         ResultSet set = null;
-        List<String> liste_abschluss = new ArrayList<>();
+        List<String> listeAbschluss = new ArrayList<>();
         try {
             Statement statement = JDBCConnection.getInstance().getStatement();
             set = statement.executeQuery("SELECT * FROM lacasa.tab_hoester_abschluss");
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
-                liste_abschluss.add(set.getString(1));
+                listeAbschluss.add(set.getString(1));
             }
         }catch (SQLException  throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
@@ -73,7 +73,7 @@ public class SuchbegriffDAO extends AbstractDAO {
             set.close();
             JDBCConnection.getInstance().closeConnection();
         }
-        return liste_abschluss;
+        return listeAbschluss;
     }
 
     public List<String> getSpracheNiveau() throws DatabaseException, SQLException {
@@ -145,7 +145,7 @@ public class SuchbegriffDAO extends AbstractDAO {
     public List<String> getBranche() throws SQLException, DatabaseException {
 
         ResultSet set = null;
-        List<String> liste_branche = new ArrayList<>();
+        List<String> listeBranche = new ArrayList<>();
 
         Statement statement = JDBCConnection.getInstance().getStatement();
         try {
@@ -153,7 +153,7 @@ public class SuchbegriffDAO extends AbstractDAO {
             while (true) {
                 assert set != null;
                 if (!set.next()) break;
-                liste_branche.add(set.getString(1));
+                listeBranche.add(set.getString(1));
             }
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
@@ -163,7 +163,7 @@ public class SuchbegriffDAO extends AbstractDAO {
 
             JDBCConnection.getInstance().closeConnection();
         }
-        return liste_branche;
+        return listeBranche;
 
     }
 

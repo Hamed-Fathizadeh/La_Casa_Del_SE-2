@@ -7,6 +7,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.UserError;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 
 import org.bonn.se.control.UserSearchControl;
@@ -33,7 +34,18 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         this.addStyleName("grid");
         this.setSizeFull();
 
-        Label head = new Label("» Willkommen bei Lacolsco Registrieren Sie sich jetzt!");
+        String ls1 = "<div class=WordSection1>\n" +
+                "\n" +
+                "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
+                "font-family:\"Edwardian Script ITC\";color:#002635'>»&nbsp;Willkommen bei <span\n" +
+                "class=SpellE>Lacolsco</span><o:p></o:p></span></b></p>\n" +
+                "\n" +
+                "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
+                "font-family:\"Edwardian Script ITC\";color:#002635'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
+                "\n" +
+                "</div>";
+
+        Label head = new Label(ls1, ContentMode.HTML);
         this.setMargin(false);
         this.addStyleName("grid");
 
@@ -47,8 +59,8 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         topPanelUnt.addStyleName("toppanel");
         topPanelUnt.setHeight("120px");
 
-        FormLayout form_Unt = new FormLayout();
-        form_Unt.setMargin(true);
+        FormLayout formUnt = new FormLayout();
+        formUnt.setMargin(true);
         RegistrationTextField firmenname = new RegistrationTextField("Unternehmensname");
         firmenname.selectAll();
 
@@ -60,7 +72,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         Button registerUntButton = new Button("Registrieren");
         registerUntButton.setEnabled(false);
 
-        form_Unt.addComponents(head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerUntButton);
+        formUnt.addComponents(head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerUntButton);
 
         Binder<User> binder = new Binder<>(User.class);
         binder.forField(firmenname)
@@ -96,16 +108,16 @@ public class RegisterUnternehmerView extends GridLayout implements View {
             System.out.println(hauptsitz.getBundesland());
 
         });
-        ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
+        ThemeResource resource = new ThemeResource("img/REGISTERUNTERNEHMEN/unternehmen.png");
 
-        Image bild_unt = new Image(null,resource);
-        form_Unt.setMargin(false);
+        Image bildUnt = new Image(null,resource);
+        formUnt.setMargin(false);
         this.addComponent(topPanelUnt, 0, 0, 9, 2);
-        this.addComponent(form_Unt, 0, 5, 0, 5);
-        this.addComponent(bild_unt, 9, 5, 9, 5);
+        this.addComponent(formUnt, 0, 5, 0, 5);
+        this.addComponent(bildUnt, 9, 5, 9, 5);
         this.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
-        this.setComponentAlignment(form_Unt, Alignment.MIDDLE_LEFT);
-        this.setComponentAlignment(bild_unt, Alignment.MIDDLE_RIGHT);
+        this.setComponentAlignment(formUnt, Alignment.MIDDLE_LEFT);
+        this.setComponentAlignment(bildUnt, Alignment.MIDDLE_RIGHT);
         this.setMargin(false);
 
         registerUntButton.addClickListener(
@@ -134,7 +146,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
                             UserDAO.getInstance().registerUser(user);
 
 
-                            UI.getCurrent().getSession().setAttribute(Roles.Unternehmen,unternehmen);
+                            UI.getCurrent().getSession().setAttribute(Roles.UNTERNEHMEN,unternehmen);
                             RegisterUnternehmenWindow registerUnternehmenWindow = new RegisterUnternehmenWindow();
                             UI.getCurrent().addWindow(registerUnternehmenWindow);
                         }
@@ -152,10 +164,10 @@ public class RegisterUnternehmerView extends GridLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.StudentHomeView);
-        } else if(UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
-            UI.getCurrent().getNavigator().navigateTo(Views.UnternehmenHomeView);
+        if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.STUDENTHOMEVIEW);
+        } else if(UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
+            UI.getCurrent().getNavigator().navigateTo(Views.UNTERNEHMENHOMEVIEW);
         } else {
             this.setUp();
         }

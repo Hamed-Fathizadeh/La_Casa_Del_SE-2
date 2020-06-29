@@ -30,8 +30,8 @@ public class UserTestFactory {
 
     public Student getProfilStudent() throws DatabaseException {
         student = registerStudent();
-        student.setG_datum(randomString.nextDate());
-        student.setKontakt_nr(randomString.nextString());
+        student.setGDatum(randomString.nextDate());
+        student.setKontaktNr(randomString.nextString());
 
         Adresse adresse = new Adresse();
         adresse.setStrasse(randomString.nextString());
@@ -53,8 +53,8 @@ public class UserTestFactory {
 
     public Student getProfilStudentWithoutAdress() throws DatabaseException {
         student = registerStudent();
-        student.setG_datum(randomString.nextDate());
-        student.setKontakt_nr(randomString.nextString());
+        student.setGDatum(randomString.nextDate());
+        student.setKontaktNr(randomString.nextString());
         Adresse adresse = new Adresse();
         student.setAdresse(adresse);
         student.setAbschluss("Diplom");

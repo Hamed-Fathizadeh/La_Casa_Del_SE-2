@@ -70,7 +70,7 @@ public class BewerbungControl {
                     "SELECT datum " +
                     " FROM lacasa.tab_bewerbung" +
                     " WHERE (student_id = (SELECT student_id FROM lacasa.tab_student WHERE email = '" +
-                    ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).getEmail() + "')" +
+                    ((Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT)).getEmail() + "')" +
                     " AND s_anzeige_id = '-1')");
             if (!set.next()) {
             } else {
@@ -108,7 +108,7 @@ public class BewerbungControl {
             statement.execute("DELETE FROM lacasa.tab_bewerbung " +
                     " WHERE s_anzeige_id = '-1' AND student_id  = " +
                     " (SELECT student_id FROM lacasa.tab_student WHERE email = '"
-                    + ((Student) UI.getCurrent().getSession().getAttribute(Roles.Student)).getEmail() + "')");
+                    + ((Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT)).getEmail() + "')");
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
         } finally {

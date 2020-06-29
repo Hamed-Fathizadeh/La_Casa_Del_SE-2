@@ -131,8 +131,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 suchArt = "Erweitert";
 
                 //Art
-                comboEinstellungsart.setItems("Feste Anstellung","Befristeter Vertrag","Praktikum","Werkstudent",
-                        "Praktikum/Werkstudent","Trainee","Ausbildung/Studium",
+                comboEinstellungsart.setItems("Feste Anstellung","Befristeter Vertrag","Praktikum","Werkstudent","Trainee","Ausbildung/Studium",
                         "Bachelor-/Master-/Diplom-Arbeiten","Promotion/Habilitation","Freie Mitarbeit/Projektmitarbeit");
                 comboEinstellungsart.setPlaceholder("Einstellungsart");
                 comboEinstellungsart.setHeight("56px");
@@ -261,9 +260,9 @@ public class StudentHomeView extends VerticalLayout implements View {
 
 
 
-        Button alleNeuigkeiten = new Button("Alle Neuigkeiten", VaadinIcons.SEARCH);
 
-        Button meineAbos = new Button("Meine Abos", VaadinIcons.SEARCH);
+
+
 
         Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
         HorizontalLayout horizontalLayout = new HorizontalLayout();
@@ -281,15 +280,10 @@ public class StudentHomeView extends VerticalLayout implements View {
         bottomGridBewNeu.addComponent(lNeuigkeit,0,0,1,0);
         bottomGridBewNeu.addComponent(gAnzeigen,0,1,1,1);
         bottomGridBewNeu.addComponent(lPatzhalter,0,2,1,2);
-        bottomGridBewNeu.addComponent(alleNeuigkeiten,0,3);
-        bottomGridBewNeu.addComponent(meineAbos,1,3);
 
 
         bottomGridBewNeu.setComponentAlignment(lNeuigkeit,Alignment.TOP_CENTER);
         bottomGridBewNeu.setComponentAlignment(gAnzeigen,Alignment.TOP_CENTER);
-        bottomGridBewNeu.setComponentAlignment(alleNeuigkeiten,Alignment.BOTTOM_CENTER);
-        bottomGridBewNeu.setComponentAlignment(meineAbos,Alignment.BOTTOM_CENTER);
-
 
 
         mainGrid.addComponent(topPanel, 0, 0, 1, 0);
@@ -322,9 +316,9 @@ public class StudentHomeView extends VerticalLayout implements View {
                 bottomGridBewNeuTwo.setComponentAlignment(lBewerbung,Alignment.TOP_CENTER);
 
                 ContainerLetztenBewerbungen containerBewerbungen  = ContainerLetztenBewerbungen.getInstance();
-                Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.Student));
+                Student student = ((Student) MyUI.getCurrent().getSession().getAttribute(Roles.STUDENT));
                 containerBewerbungen.load("Top 5",student.getEmail());
-                Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<>(containerBewerbungen, "StudentHomeView");
+                Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<>(containerBewerbungen, "STUDENTHOMEVIEW");
                 gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
                 gBewerbungen.setWidth("705px");
                 gBewerbungen.removeColumn("Bewertung");
@@ -337,7 +331,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 bottomGridBewNeuTwo.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
                 horizontalLayout.addComponent(bottomGridBewNeuTwo,0);
                 horizontalLayout.setComponentAlignment(bottomGridBewNeuTwo,Alignment.TOP_CENTER);
-                alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().getNavigator().navigateTo(Views.AlleBewerbungenView));
+                alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().getNavigator().navigateTo(Views.ALLEBEWERBUNGENVIEW));
             });
         }
     }
@@ -350,7 +344,7 @@ public class StudentHomeView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
 
-        if (UI.getCurrent().getSession().getAttribute(Roles.Student) != null) {
+        if (UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
             try {
                 this.setUp();
             } catch (DatabaseException e) {
@@ -358,10 +352,10 @@ public class StudentHomeView extends VerticalLayout implements View {
             } catch (SQLException throwables) {
                 Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             }
-        } else if (UI.getCurrent().getSession().getAttribute(Roles.Unternehmen) != null) {
+        } else if (UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN) != null) {
             UI.getCurrent().getNavigator().getCurrentNavigationState();
         } else {
-            UI.getCurrent().getNavigator().navigateTo(Views.LoginView);
+            UI.getCurrent().getNavigator().navigateTo(Views.LOGINVIEW);
         }
     }
 }

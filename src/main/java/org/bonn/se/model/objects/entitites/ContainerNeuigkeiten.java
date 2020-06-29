@@ -12,7 +12,7 @@ import java.util.List;
 public class ContainerNeuigkeiten {
 
     private List<StellenanzeigeDTO> liste;
-    final private ContainerAnzDAO containerAnzDAO = ContainerAnzDAO.getInstance();
+    private final ContainerAnzDAO containerAnzDAO = ContainerAnzDAO.getInstance();
 
     private static ContainerNeuigkeiten instance;
 
@@ -70,9 +70,9 @@ public class ContainerNeuigkeiten {
     }
 
 
-    public void loadSuche(String suchbegriff_id, String standort, String bundesland, String umkreis, String artSuche, String einstellungsart, LocalDate ab_Datum, String branche){
+    public void loadSuche(String suchbegriffId, String standort, String bundesland, String umkreis, String artSuche, String einstellungsart, LocalDate abDatum, String branche){
         try {
-            liste = containerAnzDAO.loadSuche(suchbegriff_id, standort, bundesland, umkreis, artSuche, einstellungsart, ab_Datum, branche);
+            liste = containerAnzDAO.loadSuche(suchbegriffId, standort, bundesland, umkreis, artSuche, einstellungsart, abDatum, branche);
         }
         catch(DatabaseException | SQLException throwables){
             throwables.getMessage();

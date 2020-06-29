@@ -5,7 +5,7 @@ import org.bonn.se.services.util.IllegalException;
 import java.util.ArrayList;
 
 public class Unternehmen extends User {
-       private int unt_id;
+       private int untId;
        private String hauptsitz;
        private ArrayList<StellenanzeigeDTO> stellenanzeigenDTOliste;
        private byte[] logo;
@@ -51,7 +51,7 @@ public class Unternehmen extends User {
 
     public Unternehmen() {
            super();
-           setUnt_id(unt_id);
+           setUntId(untId);
            getAnsprechpartner();
            setBundesland(bundesland);
            setDescription(description);
@@ -61,8 +61,8 @@ public class Unternehmen extends User {
            setStellenanzeigenDTOliste(stellenanzeigenDTOliste);
        }
 
-       public void setUnt_id(int unt_id){
-           int length = String.valueOf(unt_id).length();
+       public void setUntId(int untId){
+           int length = String.valueOf(untId).length();
            if(length<=0) {
                throw new IllegalException();
            }
@@ -70,7 +70,7 @@ public class Unternehmen extends User {
                throw  new IllegalException();
            }
            else
-               this.unt_id=unt_id;
+               this.untId = untId;
        }
     public Adresse getAdresse(){
         return adresse;

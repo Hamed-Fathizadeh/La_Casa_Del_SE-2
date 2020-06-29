@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Student extends User {
-    private int student_id;
+    private int studentId;
     private String vorname;
     private String nachname;
-    private LocalDate g_datum;
+    private LocalDate gDatum;
     private String studiengang;
     private byte[] picture = null;
     private byte[] lebenslauf = null;
     private String abschluss;
-    private String kontakt_nr;
+    private String kontaktNr;
     private int benachrichtigung;
     private  ArrayList<Taetigkeit> taetigkeiten = new ArrayList<>();
     private  ArrayList<SprachKenntnis> sprachKenntnisList = new ArrayList<>();
@@ -32,7 +32,7 @@ public class Student extends User {
         super();
         setVorname(vorname);
         setNachname(nachname);
-        setG_datum(g_datum);
+        setGDatum(gDatum);
         setStudiengang(studiengang);
         super.setType("S");
         setAdresse(adresse);
@@ -50,17 +50,17 @@ public class Student extends User {
     public void setLebenslauf(byte[] lebenslauf) {
         this.lebenslauf = lebenslauf;
     }
-    public Student(String email,int student_id, String vorname, String nachname, LocalDate g_datum, String studiengang, byte[] picture, byte[] lebenslauf, String abschluss, String kontakt_nr, int benachrichtigung, ArrayList<Taetigkeit> taetigkeiten, ArrayList<SprachKenntnis> sprachKenntnisList, ArrayList<ITKenntnis> itKenntnisList, String ausbildung, Adresse adresse,String passwort, ITKenntnis itKenntnis, SprachKenntnis sprachKenntnis) {
+    public Student(String email,int studentId, String vorname, String nachname, LocalDate gDatum, String studiengang, byte[] picture, byte[] lebenslauf, String abschluss, String kontaktNr, int benachrichtigung, ArrayList<Taetigkeit> taetigkeiten, ArrayList<SprachKenntnis> sprachKenntnisList, ArrayList<ITKenntnis> itKenntnisList, String ausbildung, Adresse adresse,String passwort, ITKenntnis itKenntnis, SprachKenntnis sprachKenntnis) {
         super.setEmail(email);
-        this.student_id = student_id;
+        this.studentId = studentId;
         this.vorname = vorname;
         this.nachname = nachname;
-        this.g_datum = g_datum;
+        this.gDatum = gDatum;
         this.studiengang = studiengang;
         this.picture = picture;
         this.lebenslauf = lebenslauf;
         this.abschluss = abschluss;
-        this.kontakt_nr = kontakt_nr;
+        this.kontaktNr = kontaktNr;
         this.benachrichtigung = benachrichtigung;
         this.taetigkeiten = taetigkeiten;
         this.sprachKenntnisList = sprachKenntnisList;
@@ -80,11 +80,11 @@ public class Student extends User {
     public void setHasLebenslauf(boolean hasLebenslauf){
         this.hasLebenslauf = hasLebenslauf;
     }
-    public int getStudent_id() {
-        return student_id;
+    public int getStudentId() {
+        return studentId;
     }
-    public void setStudent_id(int student_id) {
-        this.student_id = student_id;
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
     }
 
     public ArrayList<Taetigkeit> getTaetigkeiten() { return taetigkeiten; }
@@ -118,11 +118,11 @@ public class Student extends User {
     public String getAbschluss() { return abschluss; }
     public void setAbschluss(String abschluss) { this.abschluss = abschluss; }
 
-    public String getKontakt_nr() {
-        return kontakt_nr;
+    public String getKontaktNr() {
+        return kontaktNr;
     }
-    public void setKontakt_nr(String kontakt_nr) {
-        this.kontakt_nr = kontakt_nr;
+    public void setKontaktNr(String kontaktNr) {
+        this.kontaktNr = kontaktNr;
     }
 
     public Adresse getAdresse() { return adresse; }
@@ -142,11 +142,11 @@ public class Student extends User {
         this.nachname=nachname;
     }
 
-    public LocalDate getG_datum(){
-        return g_datum;
+    public LocalDate getGDatum(){
+        return gDatum;
     }
-    public void setG_datum(LocalDate g_datum){
-        this.g_datum=g_datum;
+    public void setGDatum(LocalDate gDatum){
+        this.gDatum=gDatum;
     }
 
     public String getStudiengang(){
@@ -238,15 +238,15 @@ public class Student extends User {
     @Override
     public String toString() {
         return "Student{" +
-                "student_id=" + student_id +
+                "student_id=" + studentId +
                 ", vorname='" + vorname + '\'' +
                 ", nachname='" + nachname + '\'' +
-                ", g_datum=" + g_datum +
+                ", g_datum=" + gDatum +
                 ", studiengang='" + studiengang + '\'' +
                 ", picture=" + Arrays.toString(picture) +
                 ", lebenslauf=" + Arrays.toString(lebenslauf) +
                 ", abschluss='" + abschluss + '\'' +
-                ", kontakt_nr='" + kontakt_nr + '\'' +
+                ", kontakt_nr='" + kontaktNr + '\'' +
                 ", benachrichtigung=" + benachrichtigung +
                 ", taetigkeiten=" + taetigkeiten +
                 ", sprachKenntnisList=" + sprachKenntnisList +
