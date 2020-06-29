@@ -59,7 +59,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                         student.setItKenntnisList(grid2.getITKenntnisValue());
                         student.setSprachKenntnisList(grid2.getSprachenValue());
                         this.removeComponent(buttonBar);
-                        this.addComponent(bearbeiten,7,9);
+                        this.addComponent(bearbeiten,7,7);
                         ProfilControl.getInstance().updateStudent(student);
                         grid1.setReadOnly(true);
                         grid.setReadOnly(true);

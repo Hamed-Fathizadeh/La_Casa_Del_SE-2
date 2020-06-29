@@ -19,7 +19,7 @@ public class OrtField extends ComboBox<String> {
 
 
     public String getOrt() {
-        if(this.getValue() == null) {
+        if(this.getValue() == null || this.getValue().equals("")) {
             return null;
         } else {
             return this.getValue().substring(0,this.getValue().indexOf(", "));

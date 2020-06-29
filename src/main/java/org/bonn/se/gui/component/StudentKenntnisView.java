@@ -290,6 +290,7 @@ public class StudentKenntnisView extends GridLayout {
 
     public void setKenntnisValue() {
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+        boolean status = false;
         if(!student.getItKenntnisList().isEmpty()) {
             for (int i = 0; i < student.getItKenntnisList().size(); i++) {
                 ((PopUpTextField)this.getComponent(0,i+2)).setValue(student.getItKenntnisList().get(i).getKenntnis());
@@ -301,8 +302,10 @@ public class StudentKenntnisView extends GridLayout {
 
 
             }
+            status =true;
+            StudentKenntnisView.this.setEnabled(status);
         } else {
-            this.setEnabled(false);
+            this.setEnabled(status);
         }
 
         if(!student.getSprachKenntnisList().isEmpty()) {
@@ -313,8 +316,12 @@ public class StudentKenntnisView extends GridLayout {
                     plus1.click();
                 }
             }
+            status =true;
+            StudentKenntnisView.this.setEnabled(status);
         } else {
-            this.setEnabled(false);
+            if(!status) {
+                StudentKenntnisView.this.setEnabled(false);
+            }
         }
 
 
@@ -339,20 +346,122 @@ public class StudentKenntnisView extends GridLayout {
     }
 
     public ArrayList<Student.ITKenntnis> getITKenntnisValue() {
+        if(binder.isValid()) {
             Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
-            binder.writeBeanIfValid(itKenntnis);
+            try {
+                binder.writeBean(itKenntnis);
+            } catch (ValidationException e) {
+                e.printStackTrace();
+            }
             itKenntnisArrayList.add(itKenntnis);
+        }
+        return itKenntnisArrayList;
+    }
+
+    public ArrayList<Student.SprachKenntnis> getSprachenValue() {
+        if(binder1.isValid()) {
+            Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
+            try {
+                binder1.writeBean(sprachKenntnis);
+            } catch (ValidationException e) {
+                e.printStackTrace();
+            }
+            sprachKenntnisArrayList.add(sprachKenntnis);
+        }
+
+        return sprachKenntnisArrayList;
+    }
+
+
+/*
+
+    public void setKenntnisValue() {
+        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+        if(!student.getItKenntnisList().isEmpty()) {
+            for (int i = 0; i < student.getItKenntnisList().size(); i++) {
+                ((PopUpTextField) this.getComponent(0, i + 2)).setValue(student.getItKenntnisList().get(i).getKenntnis());
+                ((ComboBoxNiveau) this.getComponent(1, i + 2)).setValue(student.getItKenntnisList().get(i).getNiveau());
+
+                if (!(student.getItKenntnisList().size() - 1 == i)) {
+                    plus.click();
+                }
+            }
+        }
+
+
+        if(!student.getSprachKenntnisList().isEmpty()) {
+            for (int i = 0; i < student.getSprachKenntnisList().size(); i++) {
+                ((PopUpTextField)this.getComponent(3,i+2)).setValue(student.getSprachKenntnisList().get(i).getKenntnis());
+                ((ComboBoxNiveau)this.getComponent(4,i+2)).setValue(student.getSprachKenntnisList().get(i).getNiveau());
+                if (!(student.getSprachKenntnisList().size() - 1 == i)) {
+                    plus1.click();
+                }
+            }
+        }
+
+
+    }
+
+    public void setReadOnly(boolean status) {
+
+        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+
+            for (int i = 0; i < student.getItKenntnisList().size(); i++) {
+                ((PopUpTextField) this.getComponent(0, i + 2)).setReadOnly(status);
+                ((ComboBoxNiveau) this.getComponent(1, i + 2)).setReadOnly(status);
+            }
+            for (int i = 0; i < student.getSprachKenntnisList().size(); i++) {
+                ((PopUpTextField) this.getComponent(3, i + 2)).setReadOnly(status);
+                ((ComboBoxNiveau) this.getComponent(4, i + 2)).setReadOnly(status);
+            }
+            if(student.getItKenntnisList().isEmpty()) {
+                ((PopUpTextField) this.getComponent(0, 2)).setReadOnly(status);
+                ((ComboBoxNiveau) this.getComponent(1, 2)).setReadOnly(status);
+            }
+            if(sprachKenntnisArrayList.isEmpty()) {
+                ((PopUpTextField) this.getComponent(3, 2)).setReadOnly(status);
+                ((ComboBoxNiveau) this.getComponent(4, 2)).setReadOnly(status);
+            }
+
+        plus.setVisible(!status);
+        plus1.setVisible(!status);
+        minus1.setVisible(!status);
+        minus.setVisible(!status);
+
+    }
+
+    public ArrayList<Student.ITKenntnis> getITKenntnisValue() {
+            Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
+        if(binder.isValid()) {
+            try {
+                binder.writeBean(itKenntnis);
+            } catch (ValidationException e) {
+                Logger.getLogger(StudentKenntnisView.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        if(!(itKenntnis.getKenntnis() == null)) {
+                itKenntnisArrayList.add(itKenntnis);
+            }
 
         return itKenntnisArrayList;
     }
 
     public ArrayList<Student.SprachKenntnis> getSprachenValue() {
         Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
-        binder1.writeBeanIfValid(sprachKenntnis);
-        sprachKenntnisArrayList.add(sprachKenntnis);
-
+        if (binder1.isValid()) {
+            try {
+                binder1.writeBean(sprachKenntnis);
+            } catch (ValidationException e) {
+                Logger.getLogger(StudentKenntnisView.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        if(!(sprachKenntnis.getKenntnis() == null)) {
+            sprachKenntnisArrayList.add(sprachKenntnis);
+        }
 
         return sprachKenntnisArrayList;
     }
+
+ */
 
 }
