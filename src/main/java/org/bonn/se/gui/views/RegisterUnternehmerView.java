@@ -108,7 +108,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
             System.out.println(hauptsitz.getBundesland());
 
         });
-        ThemeResource resource = new ThemeResource("img/REGISTERUNTERNEHMEN/unternehmen.png");
+        ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
 
         Image bildUnt = new Image(null,resource);
         formUnt.setMargin(false);
