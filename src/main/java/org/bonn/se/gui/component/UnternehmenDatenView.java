@@ -20,6 +20,10 @@ public class UnternehmenDatenView extends GridLayout {
         rating.setReadOnly(true);
     }
 
+    public void setRatingUnviable(){
+        rating.setVisible(false);
+    }
+
     public NumeralField getKontaktnummer() {
         return kontaktnummer;
     }

@@ -24,6 +24,7 @@ public class WizardUntDatenStep implements WizardStep {
         public Component getContent() {
 
             unternehmenDatenView = new UnternehmenDatenView();
+            unternehmenDatenView.setRatingUnviable();
             return unternehmenDatenView;
 /*
             GridLayout gridLayout = new GridLayout(2, 3);
