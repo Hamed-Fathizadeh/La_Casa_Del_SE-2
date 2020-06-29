@@ -10,11 +10,12 @@ import org.bonn.se.control.ComponentControl;
 import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.util.Roles;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class StudentKenntnisView extends GridLayout {
+public class StudentKenntnisView extends GridLayout implements Comparable<Student.ITKenntnis> {
     private ArrayList<Student.SprachKenntnis> sprachKenntnisArrayList;
     private Binder<Student.SprachKenntnis> binder1;
     private Binder<Student.ITKenntnis> binder;
@@ -300,11 +301,12 @@ public class StudentKenntnisView extends GridLayout {
                 if (!(student.getItKenntnisList().size() - 1 == i)) {
                     plus.click();
                 }
-
-
             }
             status =true;
             StudentKenntnisView.this.setEnabled(status);
+        } else if(student.getItKenntnisList().isEmpty()){
+            ((PopUpTextField)   this.getComponent(0,2)).setVisible(false);
+            ((ComboBoxNiveau) this.getComponent(1,2)).setVisible(false);
         } else {
             this.setEnabled(status);
         }
@@ -316,22 +318,33 @@ public class StudentKenntnisView extends GridLayout {
             for (int i = 0; i < student.getSprachKenntnisList().size(); i++) {
                 ((PopUpTextField)this.getComponent(3,i+2)).setValue(student.getSprachKenntnisList().get(i).getKenntnis());
                 ((ComboBoxNiveau)this.getComponent(4,i+2)).setValue(student.getSprachKenntnisList().get(i).getNiveau());
-//                if (!(student.getSprachKenntnisList().size() - 1 == i)) {
+           if (!(student.getSprachKenntnisList().size() - 1 == i)) {
                     plus1.click();
-  //              }
+           }
             }
             status =true;
             StudentKenntnisView.this.setEnabled(status);
+        } else if(student.getSprachKenntnisList().isEmpty()) {
+            ((PopUpTextField)   this.getComponent(3,2)).setVisible(false);
+            ((ComboBoxNiveau) this.getComponent(4,2)).setVisible(false);
         } else {
-            if(!status) {
                 StudentKenntnisView.this.setEnabled(false);
-            }
+
         }
     }
 
     public void setReadOnly(boolean status) {
 
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
+        if(student.getItKenntnisList().isEmpty()) {
+            ((PopUpTextField) this.getComponent(0, 2)).setVisible(!status);
+            ((ComboBoxNiveau) this.getComponent(1, 2)).setVisible(!status);
+        }
+        if(student.getSprachKenntnisList().isEmpty()) {
+            ((PopUpTextField) this.getComponent(3, 2)).setVisible(!status);
+            ((ComboBoxNiveau) this.getComponent(4, 2)).setVisible(!status);
+        }
+
         for (int i = 0; i < student.getItKenntnisList().size(); i++) {
             ((PopUpTextField)   this.getComponent(0,i+2)).setReadOnly(status);
             ((ComboBoxNiveau) this.getComponent(1,i+2)).setReadOnly(status);
@@ -348,19 +361,24 @@ public class StudentKenntnisView extends GridLayout {
     }
 
     public ArrayList<Student.ITKenntnis> getITKenntnisValue() {
-        if(binder.isValid()) {
-            Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
-            try {
-                binder.writeBean(itKenntnis);
-            } catch (ValidationException e) {
-                e.printStackTrace();
+
+            if (binder.isValid()) {
+                Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
+                try {
+                    binder.writeBean(itKenntnis);
+                } catch (ValidationException e) {
+                    e.printStackTrace();
+                }
+                if(this.compareTo(itKenntnis) == 1 ) {
+                    itKenntnisArrayList.add(itKenntnis);
+                }
             }
-            itKenntnisArrayList.add(itKenntnis);
-        }
+
         return itKenntnisArrayList;
     }
 
     public ArrayList<Student.SprachKenntnis> getSprachenValue() {
+
         if(binder1.isValid()) {
             Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
             try {
@@ -372,6 +390,16 @@ public class StudentKenntnisView extends GridLayout {
         }
 
         return sprachKenntnisArrayList;
+    }
+
+    @Override
+    public int compareTo(@NotNull Student.ITKenntnis o) {
+        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
+        if(o.getKenntnis().equals(student.getItKenntnisList().get(student.getItKenntnisList().size()-1).getKenntnis()) &&
+        o.getNiveau().equals(student.getItKenntnisList().get(student.getItKenntnisList().size()-1).getNiveau())) {
+            return 0;
+        }
+        return 1;
     }
 
 
