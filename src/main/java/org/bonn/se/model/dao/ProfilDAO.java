@@ -355,19 +355,15 @@ public class ProfilDAO extends AbstractDAO{
 
 
 
-    public void updateStudent(Student student) throws DatabaseException {
+
+    public void updateStudentDaten(Student student) throws DatabaseException {
         String sql = "UPDATE lacasa.tab_user " +
                 "SET vorname = ?, nachname = ? " +
                 "WHERE email = ?; " +
                 "UPDATE lacasa.tab_student " +
                 "SET   g_datum = ?, studiengang = ?, ausbildung =?, " +
                 "kontakt_nr = ?, picture = ?, lebenslauf = ?, hoester_abschluss = ? WHERE email = ?; " +
-                "UPDATE lacasa.tab_adresse SET strasse = ?, plz = ?, ort = ?, bundesland = ? WHERE email = ?;" +
-                "DELETE FROM lacasa.tab_taetigkeiten WHERE student_id = (SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE email = ?);"+
-                "DELETE FROM lacasa.tab_it_kenntnisse WHERE student_id = (SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE email = ?);"+
-                "DELETE FROM lacasa.tab_sprachen WHERE student_id = (SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE email = ?);";
-
-
+                "UPDATE lacasa.tab_adresse SET strasse = ?, plz = ?, ort = ?, bundesland = ? WHERE email = ?;" ;
         PreparedStatement statement = getPreparedStatement(sql);
 
         try {
@@ -398,13 +394,31 @@ public class ProfilDAO extends AbstractDAO{
             }
 
             statement.setString(16,student.getEmail());
-            statement.setString(17,student.getEmail());
-            statement.setString(18,student.getEmail());
-            statement.setString(19,student.getEmail());
+
 
             statement.executeUpdate();
-            createStudentProfil2(student);
-            createStudentProfil3(student);
+
+        }catch (SQLException ex) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");
+        }finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+    }
+
+    public void updateStudentTaetigkeiten(Student student) throws DatabaseException {
+        String sql = "DELETE FROM lacasa.tab_taetigkeiten WHERE student_id = (SELECT lacasa.tab_student.student_id FROM lacasa.tab_student WHERE email = ?);";
+
+        PreparedStatement statement = getPreparedStatement(sql);
+
+        try {
+
+            statement.executeUpdate();
+
+
+            if(!student.getTaetigkeiten().isEmpty() || !(student.getTaetigkeiten().get(0).getTaetigkeitName() == null)) {
+                createStudentProfil2(student);
+            }
         }catch (SQLException ex) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, ex);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen");

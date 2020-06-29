@@ -251,7 +251,7 @@ public class TestDAOs {
     public void updateStudent() throws DatabaseException, SQLException {
         Student student = userTestFactory.getProfilStudent();
         UserDAO.getInstance().registerUser(student);
-        ProfilControl.getInstance().updateStudent(student);
+        ProfilControl.getInstance().updateStudentDaten(student);
         UserDAO.deleteUser(student.getEmail());
     }
 

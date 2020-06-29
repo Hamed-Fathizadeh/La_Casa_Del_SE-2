@@ -21,17 +21,24 @@ import org.vaadin.easyuploads.UploadField;
 public class ProfilVerwaltenStudentView extends GridLayout implements View {
     private final Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
-    private final Button bearbeiten = new Button("Bearbeiten",this::addBearbeitenClickListener);
-    private final Button cancel = new Button("Abbrechen",this::addCancelClickListener);
-    private final Button save = new Button("Speichern", this::addSaveClickListener);
-    private HorizontalLayout buttonBar;
+    private final Button bearbeitenDaten = new Button("Bearbeiten",this::addBearbeitenDatenClickListener);
+    private final Button bearbeitenTaetigkeiten = new Button("Bearbeiten",this::addBearbeitenTaetigkeitenClickListener);
+    private final Button bearbeitenKenntnisse = new Button("Bearbeiten",this::addBearbeitenKenntnisClickListener);
 
+    private final Button cancelDaten = new Button("Abbrechen",this::addCancelDatenClickListener);
+    private final Button saveDaten = new Button("Speichern", this::addSaveDatenClickListener);
+    private final Button cancelTaetigkeiten = new Button("Abbrechen",this::addCancelTaetigkeitenClickListener);
+    private final Button saveTaetigkeiten = new Button("Speichern", this::addSaveTaetigkeitenClickListener);
+    private final Button cancelKenntnis = new Button("Abbrechen",this::addCancelKenntnisClickListener);
+    private final Button saveKenntnis = new Button("Speichern", this::addSaveKenntisClickListener);
+    private HorizontalLayout buttonBar;
+    private  boolean change = false;
     StudentDatenView grid;
     StudentTaetigkeitenView grid1;
     StudentKenntnisView grid2;
     UploadField uploadProfil;
 
-    private void addSaveClickListener(Button.ClickEvent clickEvent) {
+    private void addSaveDatenClickListener(Button.ClickEvent clickEvent) {
         ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
             @Override
             public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
@@ -55,20 +62,79 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                         student.setAbschluss(grid.getAbschluss().getValue());
                         student.setPicture(grid.getUploadProfil().getValue());
                         student.setLebenslauf(grid.getLebenslauf().getValue());
-                        student.setTaetigkeiten(grid1.getStudentValue());
+                        /*
+
                         student.setItKenntnisList(grid2.getITKenntnisValue());
                         student.setSprachKenntnisList(grid2.getSprachenValue());
+
+                         */
                         this.removeComponent(buttonBar);
-                        this.addComponent(bearbeiten,7,7);
-                        ProfilControl.getInstance().updateStudent(student);
-                        grid1.setReadOnly(true);
+                        this.addComponent(bearbeitenDaten,7,7);
+                        ProfilControl.getInstance().updateStudentDaten(student);
+                        grid.setReadOnly(true);
+                        change =false;
+                        /*
                         grid.setReadOnly(true);
                         grid2.setReadOnly(true);
+
+                         */
                     }
                 });
     }
 
-    private void addCancelClickListener(Button.ClickEvent clickEvent) {
+    private void addSaveTaetigkeitenClickListener(Button.ClickEvent clickEvent) {
+        ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
+            @Override
+            public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
+                return super.create("Speichern", message, "Ja", "Nein", notOkCaption);
+            }
+        } ;
+        ConfirmDialog.setFactory(df);
+        ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich speichern?",
+                (ConfirmDialog.Listener) dialog -> {
+                    if (dialog.isConfirmed()) {
+                        student.setTaetigkeiten(grid1.getStudentValue());
+                        this.removeComponent(buttonBar);
+                        this.addComponent(bearbeitenTaetigkeiten,7,7);
+
+                        ProfilControl.getInstance().updateStudentTaetigkeiten(student);
+
+                        grid1.setReadOnly(true);
+                        change =false;
+
+
+
+
+                    }
+                });
+    }
+
+    private void addSaveKenntisClickListener(Button.ClickEvent clickEvent) {
+        ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
+            @Override
+            public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
+                return super.create("Speichern", message, "Ja", "Nein", notOkCaption);
+            }
+        } ;
+        ConfirmDialog.setFactory(df);
+        ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich speichern?",
+                (ConfirmDialog.Listener) dialog -> {
+                    if (dialog.isConfirmed()) {
+
+
+                        student.setTaetigkeiten(grid1.getStudentValue());
+
+                        this.removeComponent(buttonBar);
+                        this.addComponent(bearbeitenKenntnisse,7,7);
+                        ProfilControl.getInstance().updateStudentDaten(student);
+                        grid2.setReadOnly(true);
+                        change =false;
+                    }
+                });
+    }
+
+
+    private void addCancelDatenClickListener(Button.ClickEvent clickEvent) {
         ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
             @Override
             public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
@@ -79,27 +145,91 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
         ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich abbrechen?",
                 (ConfirmDialog.Listener) dialog -> {
                     if (dialog.isConfirmed()) {
+                        change = false;
                         this.removeComponent(buttonBar);
-                        this.addComponent(bearbeiten,7,9);
+                        this.addComponent(bearbeitenDaten,7,7);
                         grid.setReadOnly(true);
-                        grid1.setReadOnly(true);
-                        grid2.setReadOnly(true);
+
                     }
                 });
     }
 
-    private void addBearbeitenClickListener(Button.ClickEvent clickEvent) {
+    private void addCancelTaetigkeitenClickListener(Button.ClickEvent clickEvent) {
+        ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
+            @Override
+            public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
+                return super.create("Abbrechen", message, "Ja", "Nein", notOkCaption);
+            }
+        } ;
+        ConfirmDialog.setFactory(df);
+        ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich abbrechen?",
+                (ConfirmDialog.Listener) dialog -> {
+                    if (dialog.isConfirmed()) {
+                        change = false;
+                        this.removeComponent(buttonBar);
+                        this.addComponent(bearbeitenTaetigkeiten,7,7);
+                        grid1.setReadOnly(true);
 
-        buttonBar = new HorizontalLayout();
-        buttonBar.addComponents(cancel,save);
-        buttonBar.setMargin(true);
-        this.removeComponent(bearbeiten);
-        this.addComponent(buttonBar,7,7);
-        grid.setReadOnly(false);
-        grid1.setReadOnly(false);
-        grid2.setReadOnly(false);
+                    }
+                });
     }
 
+    private void addCancelKenntnisClickListener(Button.ClickEvent clickEvent) {
+        ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
+            @Override
+            public ConfirmDialog create(String caption, String message, String okCaption, String cancelCaption, String notOkCaption) {
+                return super.create("Abbrechen", message, "Ja", "Nein", notOkCaption);
+            }
+        } ;
+        ConfirmDialog.setFactory(df);
+        ConfirmDialog.show(MyUI.getCurrent(), "Möchtest du wirklich abbrechen?",
+                (ConfirmDialog.Listener) dialog -> {
+                    if (dialog.isConfirmed()) {
+                        change = false;
+                        this.removeComponent(buttonBar);
+                        this.addComponent(bearbeitenKenntnisse,7,7);
+                        grid2.setReadOnly(true);
+
+                    }
+                });
+    }
+
+
+    private void addBearbeitenDatenClickListener(Button.ClickEvent clickEvent) {
+        change = true;
+        buttonBar = new HorizontalLayout();
+        buttonBar.addComponents(cancelDaten, saveDaten);
+        buttonBar.setMargin(true);
+        this.removeComponent(bearbeitenDaten);
+        this.addComponent(buttonBar,7,7);
+        grid.setReadOnly(false);
+
+    }
+
+    private void addBearbeitenTaetigkeitenClickListener(Button.ClickEvent clickEvent) {
+        change = true;
+        buttonBar = new HorizontalLayout();
+        buttonBar.addComponents(cancelTaetigkeiten, saveTaetigkeiten);
+        buttonBar.setMargin(true);
+        this.removeComponent(bearbeitenTaetigkeiten);
+        this.addComponent(buttonBar,7,7);
+
+        grid1.setReadOnly(false);
+
+    }
+
+    private void addBearbeitenKenntnisClickListener(Button.ClickEvent clickEvent) {
+        change = true;
+        buttonBar = new HorizontalLayout();
+        buttonBar.addComponents(cancelKenntnis, saveKenntnis);
+        buttonBar.setMargin(true);
+        this.removeComponent(bearbeitenKenntnisse);
+        this.addComponent(buttonBar,7,7);
+
+        grid2.setReadOnly(false);
+
+
+    }
 
     public void setUp() {
         TopPanelUser topPanelUser = new TopPanelUser();
@@ -132,18 +262,35 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
             for (MenuBar.MenuItem item : bar.getItems()) {
                 item.setChecked(false);
             }
-                selectedItem.setChecked(true);
-            if (selectedItem.getText().equals("Persönliche Daten")) {
-                this.removeComponent(0,2);
-                this.addComponent(grid,0,2,9, 5);
-            } else if(selectedItem.getText().equals("Tätigkeiten")) {
-                this.removeComponent(0,2);
-                this.addComponent(grid1,0,2,9,5);
+
+            if(change == true) {
+               Notification.show("Achtung", "Bitte speichern sie ihre Änderungen oder brechen Sie ihre Änderungen ab!", Notification.Type.WARNING_MESSAGE)
+               .setDelayMsec(300);
             } else {
-                this.removeComponent(0,2);
-                this.addComponent(grid2,0,2,9,5);
+                selectedItem.setChecked(true);
+                if (selectedItem.getText().equals("Persönliche Daten")) {
+                    this.removeComponent(7, 7);
+                    this.addComponent(bearbeitenDaten, 7, 7);
+                    this.removeComponent(0, 2);
+                    this.addComponent(grid, 0, 2, 9, 5);
+                } else if (selectedItem.getText().equals("Tätigkeiten")) {
+                    this.removeComponent(7, 7);
+                    this.addComponent(bearbeitenTaetigkeiten, 7, 7);
+                    this.removeComponent(0, 2);
+                    this.addComponent(grid1, 0, 2, 9, 5);
+                } else {
+                    this.removeComponent(7, 7);
+                    this.addComponent(bearbeitenKenntnisse, 7, 7);
+                    this.removeComponent(0, 2);
+                    this.addComponent(grid2, 0, 2, 9, 5);
+
+                }
             }
         };
+
+
+
+
 
         bar.addItem("Persönliche Daten", VaadinIcons.USER,typeCommand).setCheckable(true);
         bar.addItem("Tätigkeiten", VaadinIcons.WORKPLACE,typeCommand).setCheckable(true);
@@ -154,7 +301,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
 
         this.addStyleName("grid");
         this.addComponent(new Label("&nbsp", ContentMode.HTML),7,6);
-        this.addComponent(bearbeiten,7,7);
+       // this.addComponent(bearbeitenDaten,7,7);
         this.addComponent(new Label("&nbsp", ContentMode.HTML),7,8);
 
 

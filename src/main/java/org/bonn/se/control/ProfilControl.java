@@ -16,14 +16,24 @@ public class ProfilControl {
         return instance;
     }
 
-    public void  updateStudent(Student student) {
+    public void  updateStudentDaten(Student student) {
 
         try {
-            ProfilDAO.getInstance().updateStudent(student);
+            ProfilDAO.getInstance().updateStudentDaten(student);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
     }
+
+    public void  updateStudentTaetigkeiten(Student student) {
+
+        try {
+            ProfilDAO.getInstance().updateStudentTaetigkeiten(student);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void  updateUnternehmen(Unternehmen unternehmen) {
 
         try {
