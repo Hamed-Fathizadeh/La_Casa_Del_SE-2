@@ -289,7 +289,7 @@ public class StudentKenntnisView extends GridLayout {
 
 
     public void setKenntnisValue() {
-        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
         boolean status = false;
         if(!student.getItKenntnisList().isEmpty()) {
             for (int i = 0; i < student.getItKenntnisList().size(); i++) {
@@ -329,7 +329,7 @@ public class StudentKenntnisView extends GridLayout {
 
     public void setReadOnly(boolean status) {
 
-        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.Student);
+        Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
         for (int i = 0; i < student.getItKenntnisList().size(); i++) {
             ((PopUpTextField)   this.getComponent(0,i+2)).setReadOnly(status);
             ((ComboBoxNiveau) this.getComponent(1,i+2)).setReadOnly(status);
