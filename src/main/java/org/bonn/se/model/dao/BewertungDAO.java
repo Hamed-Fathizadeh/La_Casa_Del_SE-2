@@ -60,7 +60,30 @@ public class BewertungDAO extends AbstractDAO {
             }
 
 
- }
+    public double bewertungByID(String hauptsitz, String firmenname) throws DatabaseException, SQLException {
+        ResultSet set = null;
+
+        try {
+            Statement statement = JDBCConnection.getInstance().getStatement();
+            set = statement.executeQuery("select avg(anzahl_sterne) as bewertung\n" +
+                    "  from lacasa.tab_bewertung\n" +
+                    " where firmenname = '"+firmenname+"' and hauptsitz = '"+hauptsitz+"'");
+
+        } catch (SQLException throwables) {
+            Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+            throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
+        } finally {
+            JDBCConnection.getInstance().closeConnection();
+        }
+        if (set.next()) {
+            return set.getDouble(1);
+        }else{
+            return 0.0;
+        }
+    }
+
+
+}
 
 
 
