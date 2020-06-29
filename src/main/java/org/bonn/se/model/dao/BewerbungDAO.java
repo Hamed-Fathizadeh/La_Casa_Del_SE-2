@@ -92,7 +92,6 @@ public class BewerbungDAO extends AbstractDAO{
 
         try {
             set = statement.executeQuery("select markiert from lacasa.tab_bewerbung where bewerbung_id = "+bewId);
-            System.out.println("bewDAO"+set.toString());
 
             while(set.next()){
 
@@ -106,8 +105,6 @@ public class BewerbungDAO extends AbstractDAO{
             assert set != null;
             set.close();
         }
-
-        System.out.println("bewDAO"+bMarkierung );
         String sql = "update lacasa.tab_bewerbung set markiert ="+ !bMarkierung + " where bewerbung_id = "+bewId;
         PreparedStatement preparedStatement = getPreparedStatement(sql);
 
