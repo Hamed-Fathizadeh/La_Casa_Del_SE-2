@@ -69,17 +69,21 @@ public class BewertungDAO extends AbstractDAO {
                     "  from lacasa.tab_bewertung\n" +
                     " where firmenname = '"+firmenname+"' and hauptsitz = '"+hauptsitz+"'");
 
+            if (set.next()) {
+                return set.getDouble(1);
+            }else{
+                return 0.0;
+            }
+
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
             throw new DatabaseException("Fehler im SQL Befehl! Bitte den Programmierer benachrichtigen.");
         } finally {
+            assert set != null;
+            set.close();
             JDBCConnection.getInstance().closeConnection();
         }
-        if (set.next()) {
-            return set.getDouble(1);
-        }else{
-            return 0.0;
-        }
+
     }
 
 
