@@ -239,7 +239,9 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new Anzeigen<>("Student", dataTop5);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
-        gAnzeigen.setWidth("705px");
+        gAnzeigen.setWidth("680px");
+        gAnzeigen.removeColumn("Online seit");
+        gAnzeigen.removeColumn("Bewertung");
 
 
 
@@ -320,7 +322,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 containerBewerbungen.load("Top 5",student.getEmail());
                 Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<>(containerBewerbungen, "STUDENTHOMEVIEW");
                 gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
-                gBewerbungen.setWidth("705px");
+                gBewerbungen.setWidth("608px");
                 gBewerbungen.removeColumn("Bewertung");
                 bottomGridBewNeuTwo.addComponent(gBewerbungen,0,1,1,1);
                 bottomGridBewNeuTwo.setComponentAlignment(gBewerbungen,Alignment.TOP_CENTER);

@@ -2,16 +2,23 @@ package org.bonn.se.gui.component;
 
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.*;
+import org.bonn.se.control.BewertungControl;
 import org.bonn.se.control.ComponentControl;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.util.ImageConverter;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.easyuploads.UploadField;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 public class UnternehmenDatenView extends GridLayout {
 
-
+        RatingStars rating = new RatingStars();
         NumeralField kontaktnummer;
+
+    public void setUpRating(){
+        rating.setMaxValue(5);
+        rating.setReadOnly(true);
+    }
 
     public NumeralField getKontaktnummer() {
         return kontaktnummer;
@@ -91,9 +98,8 @@ public class UnternehmenDatenView extends GridLayout {
             form1.addComponent(image, 0);
         });
 
-
         kontaktnummer = new NumeralField("Kontaktnummer");
-        form1.addComponents(image, uploadLogo, kontaktnummer);
+        form1.addComponents(image, uploadLogo,rating, kontaktnummer);
         form1.setComponentAlignment(image, Alignment.TOP_LEFT);
 
         FormLayout form2 = new FormLayout();
@@ -118,6 +124,7 @@ public class UnternehmenDatenView extends GridLayout {
     public void setReadOnly(boolean status) {
 
         kontaktnummer.setCaption("Kontaktnr.");
+        rating.setCaption("Bewertung");
         strasse.setCaption("Anschrift");
         kontaktnummer.setReadOnly(status);
         strasse.setReadOnly(status);
@@ -139,6 +146,9 @@ public class UnternehmenDatenView extends GridLayout {
                 unternehmen.getBundesland());
         if(unternehmen.getAdresse().getPlz() != null)  ort.getPlzField().setValue(unternehmen.getAdresse().getPlz());
         if(unternehmen.getBranche() != null) branche.setValue(unternehmen.getBranche());
+
+        setUpRating();
+        rating.setValue(BewertungControl.bewertungByID(unternehmen.getHauptsitz(),unternehmen.getCname()));
     }
 
 }

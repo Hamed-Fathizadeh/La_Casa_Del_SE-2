@@ -48,11 +48,11 @@ public class RegisterStudentView extends GridLayout implements View {
         String ls1 = "<div class=WordSection1>\n" +
                 "\n" +
                 "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
-                "font-family:\"Edwardian Script ITC\";color:#002635'>»&nbsp;Willkommen bei <span\n" +
+                "font-family:\"Arial Black\";color:#002635'>Willkommen bei <span\n" +
                 "class=SpellE>Lacolsco</span><o:p></o:p></span></b></p>\n" +
                 "\n" +
                 "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
-                "font-family:\"Edwardian Script ITC\";color:#002635'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
+                "font-family:\"Arial Black\";color:#002635'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
                 "\n" +
                 "</div>";
 

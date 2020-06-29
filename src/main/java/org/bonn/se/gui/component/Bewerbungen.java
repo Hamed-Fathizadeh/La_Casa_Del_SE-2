@@ -131,7 +131,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
 
         if(UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
-            this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Logo");
+            this.addComponentColumn(BewerbungDTO::getUnternehmenLogo).setCaption("Logo").setWidth(80.0);;
             this.addColumn(BewerbungDTO::getUnternehmenName).setCaption("Unternehmen").setWidth(150);
             this.addColumn(BewerbungDTO::getTitel).setCaption("Titel");
             this.addColumn(BewerbungDTO::getDatum).setCaption("Beginn");

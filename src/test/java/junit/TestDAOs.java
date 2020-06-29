@@ -93,7 +93,7 @@ public class TestDAOs {
         UserDAO.getInstance().registerUser(student);
         assertEquals("S",UserDAO.getInstance().getUserType(student.getEmail()));
         assertTrue(UserDAO.getInstance().getUserbyEmail(student.getEmail()));
-        UserDAO.deleteUser(student.getEmail());
+        UserDAO.deleteUser(student);
         assertFalse(UserDAO.getInstance().getUserbyEmail(student.getEmail()));
     }
 
@@ -102,7 +102,7 @@ public class TestDAOs {
        Student student = userTestFactory.getProfilStudent();
         UserDAO.getInstance().registerUser(student);
         ProfilDAO.getInstance().createStudentProfil1(student);
-        UserDAO.deleteUser(student.getEmail());
+        UserDAO.deleteUser(student);
 
     }
     @Test
@@ -110,7 +110,7 @@ public class TestDAOs {
         Student student = userTestFactory.getProfilStudentWithoutAdress();
         UserDAO.getInstance().registerUser(student);
         ProfilDAO.getInstance().createStudentProfil1(student);
-        UserDAO.deleteUser(student.getEmail());
+        UserDAO.deleteUser(student);
 
     }
 
@@ -120,7 +120,7 @@ public class TestDAOs {
         UserDAO.getInstance().registerUser(unternehmen);
         assertEquals("C",UserDAO.getInstance().getUserType(unternehmen.getEmail()));
         assertTrue(UserDAO.getInstance().getUserbyEmail(unternehmen.getEmail()));
-        UserDAO.deleteUser(unternehmen.getEmail());
+        UserDAO.deleteUser(unternehmen);
         assertFalse(UserDAO.getInstance().getUserbyEmail(unternehmen.getEmail()));
     }
 
@@ -129,7 +129,7 @@ public class TestDAOs {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
-        UserDAO.deleteUser(unternehmen.getEmail());
+        UserDAO.deleteUser(unternehmen);
 
     }
 
@@ -138,7 +138,7 @@ public class TestDAOs {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmenWithoutAdresss();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
-        UserDAO.deleteUser(unternehmen.getEmail());
+        UserDAO.deleteUser(unternehmen);
 
     }
 
@@ -147,7 +147,7 @@ public class TestDAOs {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilDAO.getInstance().createUnternehmenProfil(unternehmen);
-        UserDAO.deleteUser(unternehmen.getEmail());
+        UserDAO.deleteUser(unternehmen);
 
 
     }
@@ -170,7 +170,7 @@ public class TestDAOs {
         assertEquals(unternehmen.getAdresse().getPlz(),unternehmen.getAdresse().getPlz());
         assertEquals(unternehmen.getAdresse().getStrasse(),unternehmen.getAdresse().getStrasse());
         assertTrue(actual.getLogo() == null);
-        UserDAO.deleteUser(unternehmen.getEmail());
+        UserDAO.deleteUser(unternehmen);
 
     }
     @Test
@@ -189,7 +189,7 @@ public class TestDAOs {
             assertEquals(student.getTaetigkeiten().get(i).getTaetigkeitName(),actual.getTaetigkeiten().get(i).getTaetigkeitName());
         }
 
-        UserDAO.deleteUser(student.getEmail());
+        UserDAO.deleteUser(student);
 
     }
 
@@ -228,7 +228,7 @@ public class TestDAOs {
         assertEquals(student.getItKenntnisList().size(),actual.getItKenntnisList().size());
         assertEquals(student.getITKenntnis().getKenntnis(),actual.getITKenntnis().getKenntnis());
         assertEquals(student.getITKenntnis().getNiveau(),actual.getITKenntnis().getNiveau());
-        UserDAO.deleteUser(student.getEmail());
+        UserDAO.deleteUser(student);
     }
 
     @Test
@@ -242,7 +242,7 @@ public class TestDAOs {
         assertEquals(expected.getPasswort(),actual.getPasswort());
         assertEquals(expected.getEmail(),actual.getEmail());
         assertTrue(actual.getType().equals("S"));
-        UserDAO.deleteUser(expected.getEmail());
+        UserDAO.deleteUser(expected);
 
         assertTrue(UserDAO.getInstance().getUserType("abc") == null);
     }
@@ -252,7 +252,7 @@ public class TestDAOs {
         Student student = userTestFactory.getProfilStudent();
         UserDAO.getInstance().registerUser(student);
         ProfilControl.getInstance().updateStudentDaten(student);
-        UserDAO.deleteUser(student.getEmail());
+        UserDAO.deleteUser(student);
     }
 
     @Test
@@ -260,7 +260,7 @@ public class TestDAOs {
         Unternehmen unternehmen = userTestFactory.getProfilUnternehmen();
         UserDAO.getInstance().registerUser(unternehmen);
         ProfilControl.getInstance().updateUnternehmen(unternehmen);
-        UserDAO.deleteUser(unternehmen.getEmail());
+        UserDAO.deleteUser(unternehmen);
     }
 
 }

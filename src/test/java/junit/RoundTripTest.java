@@ -37,7 +37,7 @@ public class RoundTripTest {
         Assert.assertEquals(student.getEmail(),actual.getEmail());
         System.out.println("Read erfolgreich");
 
-        UserDAO.deleteUser(student.getEmail());
+        UserDAO.deleteUser(student);
 
         System.out.println("Delete erfolgreich");
     }

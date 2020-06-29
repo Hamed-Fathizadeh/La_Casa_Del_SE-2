@@ -137,12 +137,16 @@ public class UserDAO  extends AbstractDAO {
         }
      return null;
     }
-    public static void deleteUser(String email) throws DatabaseException, SQLException {
+    public static void deleteUser(User user) throws DatabaseException, SQLException {
         String sql;
-        if(UserDAO.getInstance().getUserType(email).equals("S")) {
-            sql = "DELETE FROM lacasa.tab_student WHERE email = '" + email + "'; DELETE FROM lacasa.tab_user WHERE email = '" + email + "'";
+        if(UserDAO.getInstance().getUserType(user.getEmail()).equals("S")) {
+            sql = "DELETE FROM lacasa.tab_user WHERE email = '" + user.getEmail() + "'";
         } else {
-            sql = "DELETE FROM lacasa.tab_unternehmen WHERE email = '" + email + "'; DELETE FROM lacasa.tab_user WHERE email = '" + email + "'";
+            sql = "UPDATE lacasa.tab_bewerbung SET s_anzeige_id = '-1'\n" +
+                    " WHERE lacasa.tab_bewerbung.s_anzeige_id in(\n" +
+                    "select s_anzeige_id\n" +
+                    "  from lacasa.tab_stellen_anzeige \n" +
+                    " where firmenname = '" + user.getCname() + "' and hauptsitz = '" + user.getHauptsitz()+ "');  DELETE FROM lacasa.tab_user WHERE email = '" + user.getEmail() + "'";
         }
         PreparedStatement statement = AbstractDAO.getPreparedStatement(sql);
 
