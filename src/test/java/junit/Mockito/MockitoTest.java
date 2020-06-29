@@ -69,7 +69,7 @@ public class MockitoTest {
     }
     @After
     public void ende() throws DatabaseException, SQLException {
-       UserDAO.deleteUser(student.getEmail());
+       UserDAO.deleteUser(student);
     }
 
 

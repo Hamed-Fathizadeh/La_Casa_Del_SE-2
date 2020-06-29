@@ -124,7 +124,7 @@ public class SettingsView extends VerticalLayout implements View {
                                 if(MyUI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null){
                                     Student student = (Student) MyUI.getCurrent().getSession().getAttribute(Roles.STUDENT);
                                     try {
-                                        UserDAO.deleteUser(student.getEmail());
+                                        UserDAO.deleteUser(student);
                                     } catch (DatabaseException | SQLException e) {
                                         Logger.getLogger(SettingsView.class.getName()).log(Level.SEVERE, null, e);
                                     }
@@ -132,7 +132,7 @@ public class SettingsView extends VerticalLayout implements View {
                                 else{
                                    Unternehmen unternehmen= (Unternehmen) MyUI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN);
                                     try {
-                                        UserDAO.deleteUser(unternehmen.getEmail());
+                                        UserDAO.deleteUser(unternehmen);
                                     } catch (DatabaseException | SQLException e) {
                                         Logger.getLogger(SettingsView.class.getName()).log(Level.SEVERE, null, e);
                                     }

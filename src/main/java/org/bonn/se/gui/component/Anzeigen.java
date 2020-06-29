@@ -106,20 +106,16 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
 
 
         if(UI.getCurrent().getSession().getAttribute(Roles.STUDENT) != null) {
-            this.addComponentColumn(im ->{
-                VerticalLayout imageL = new VerticalLayout();
-                imageL.addComponent(im.getUnternehmenLogo());
-                return imageL;
-            }).setCaption("Logo");
+            this.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Logo").setWidth(80.0);
             this.addColumn(StellenanzeigeDTO::getFirmenname).setCaption("Unternehmen");
-            this.addColumn(StellenanzeigeDTO::getZeitstempel).setCaption("Online seit");
+            this.addColumn(StellenanzeigeDTO::getZeitstempel).setCaption("Online seit").setId("Online seit");
             this.addComponentColumn(p -> {
                 RatingStars rating = new RatingStars();
                 rating.setMaxValue(5);
                 rating.setValue(p.getBewertung());
                 rating.setReadOnly(true);
                 return rating;
-            }).setCaption("Bewertung");
+            }).setCaption("Bewertung").setId("Bewertung");
         }
         this.addColumn(StellenanzeigeDTO::getStandort).setCaption("Ort");
         this.addColumn(StellenanzeigeDTO::getDatum).setCaption("Beginn");
