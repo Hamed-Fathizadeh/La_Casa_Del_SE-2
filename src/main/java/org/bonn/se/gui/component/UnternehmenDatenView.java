@@ -20,7 +20,7 @@ public class UnternehmenDatenView extends GridLayout {
         rating.setReadOnly(true);
     }
 
-    public void setRatingUnviable(){
+    public void setRatingInviable(){
         rating.setVisible(false);
     }
 

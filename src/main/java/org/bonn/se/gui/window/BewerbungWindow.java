@@ -193,7 +193,7 @@ public class BewerbungWindow extends CustomWindow {
 
         }else{
             Label titel = new Label("<h2><b> Bewerbung</font></b></h2>", ContentMode.HTML);
-            Label lAnschreiben = new Label("<h1>Anschreiben<h1>", ContentMode.HTML);
+            Label lAnschreiben = new Label("<h1>&nbsp Anschreiben:<h1>", ContentMode.HTML);
 
             Button downloadLebnslauf = new Button("Lebenslauf Herunterladen");
             Button markieren = new Button("Bewerbung Markieren");
@@ -228,6 +228,7 @@ public class BewerbungWindow extends CustomWindow {
             mainGridLayout.addComponent(lAnschreiben, 0, 12, 0, 12);
             mainGridLayout.addComponent(beschreibungData, 0, 13, 5, 13);
             mainGridLayout.addComponent(new Label("&nbsp", ContentMode.HTML), 0, 14, 5, 14);
+            mainGridLayout.setComponentAlignment(lAnschreiben, Alignment.BOTTOM_RIGHT);
 
 
             mainGridLayout.addComponent(markieren, 4, 0);
