@@ -64,7 +64,7 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
         SingleSelect<StellenanzeigeDTO> selection = (SingleSelect<StellenanzeigeDTO>) this.asSingleSelect();
 
         // Der Event Listener für den Grid
-       this.addSelectionListener(event -> {
+        this.addSelectionListener(event -> {
 
             // Speichert den aktuell angewählten Wert bei klick auf die Zeile in der Var. "selected"
             StellenanzeigeDTO sa =  selection.getValue();
