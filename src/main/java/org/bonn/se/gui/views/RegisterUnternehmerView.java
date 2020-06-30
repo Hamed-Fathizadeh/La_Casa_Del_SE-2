@@ -24,15 +24,15 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 
-public class RegisterUnternehmerView extends GridLayout implements View {
+public class RegisterUnternehmerView extends Panel implements View {
 
     public void setUp() {
 
-        this.setColumns(10);
-        this.setRows(10);
+        GridLayout mainGrid = new GridLayout(10,10);
+        mainGrid.addStyleName("grid");
+        mainGrid.setWidthFull();
+        mainGrid.setHeightUndefined();
 
-        this.addStyleName("grid");
-        this.setSizeFull();
 
         String ls1 = "<div class=WordSection1>\n" +
                 "\n" +
@@ -46,9 +46,6 @@ public class RegisterUnternehmerView extends GridLayout implements View {
                 "</div>";
 
         Label head = new Label(ls1, ContentMode.HTML);
-        this.setMargin(false);
-        this.addStyleName("grid");
-
 
         OrtField hauptsitz = new OrtField("Hauptsitz");
 
@@ -115,15 +112,18 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         Image bild_Register = new Image(null,resources);
 
         formUnt.setMargin(false);
-        this.addComponent(topPanelUnt, 0, 0, 9, 2);
-        this.addComponent(formUnt, 0, 5, 0, 5);
-        this.addComponent(bildUnt, 9, 5, 9, 5);
-        this.addComponent(bild_Register, 1, 6, 1, 6);
-        this.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
-        this.setComponentAlignment(formUnt, Alignment.MIDDLE_LEFT);
-        this.setComponentAlignment(bildUnt, Alignment.MIDDLE_RIGHT);
-        this.setComponentAlignment(bild_Register, Alignment.MIDDLE_LEFT);
-        this.setMargin(false);
+        mainGrid.addComponent(topPanelUnt, 0, 0, 9, 2);
+        mainGrid.addComponent(formUnt, 0, 5, 0, 5);
+        mainGrid.addComponent(bildUnt, 9, 5, 9, 5);
+        mainGrid.addComponent(bild_Register, 1, 6, 1, 6);
+        mainGrid.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
+        mainGrid.setComponentAlignment(formUnt, Alignment.MIDDLE_LEFT);
+        mainGrid.setComponentAlignment(bildUnt, Alignment.MIDDLE_RIGHT);
+        mainGrid.setComponentAlignment(bild_Register, Alignment.MIDDLE_LEFT);
+        mainGrid.setMargin(false);
+
+        this.setContent(mainGrid);
+        this.setSizeFull();
 
         registerUntButton.addClickListener(
                 event -> {

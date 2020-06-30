@@ -30,9 +30,8 @@ public class RegisterStudentView extends Panel implements View {
     public void setUp() {
 
         System.out.println("LOG: get UI-Objekt in RegisterStudent!" + VaadinSession.getCurrent().toString());
+
         GridLayout mainGrid = new GridLayout(10,10);
-
-
         mainGrid.addStyleName("grid");
         mainGrid.setWidthFull();
         mainGrid.setHeightUndefined();
