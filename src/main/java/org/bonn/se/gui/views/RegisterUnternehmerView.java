@@ -9,7 +9,6 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.server.UserError;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-
 import org.bonn.se.control.UserSearchControl;
 import org.bonn.se.gui.component.OrtField;
 import org.bonn.se.gui.component.RegistrationPasswordField;
@@ -24,15 +23,15 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 
-public class RegisterUnternehmerView extends GridLayout implements View {
+public class RegisterUnternehmerView extends Panel implements View {
 
     public void setUp() {
 
-        this.setColumns(10);
-        this.setRows(10);
+        GridLayout mainGrid = new GridLayout(10,10);
+        mainGrid.addStyleName("grid");
+        mainGrid.setWidthFull();
+        mainGrid.setHeightUndefined();
 
-        this.addStyleName("grid");
-        this.setSizeFull();
 
         String ls1 = "<div class=WordSection1>\n" +
                 "\n" +
@@ -46,14 +45,8 @@ public class RegisterUnternehmerView extends GridLayout implements View {
                 "</div>";
 
         Label head = new Label(ls1, ContentMode.HTML);
-        this.setMargin(false);
-        this.addStyleName("grid");
-
 
         OrtField hauptsitz = new OrtField("Hauptsitz");
-
-
-
 
         TopPanel topPanelUnt =  new TopPanel("Studenten");
         topPanelUnt.addStyleName("toppanel");
@@ -71,8 +64,9 @@ public class RegisterUnternehmerView extends GridLayout implements View {
 
         Button registerUntButton = new Button("Registrieren");
         registerUntButton.setEnabled(false);
+        Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
 
-        formUnt.addComponents(head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerUntButton);
+        formUnt.addComponents(lPatzhalter,head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerUntButton);
 
         Binder<User> binder = new Binder<>(User.class);
         binder.forField(firmenname)
@@ -109,21 +103,24 @@ public class RegisterUnternehmerView extends GridLayout implements View {
 
         });
         ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
-        ThemeResource resources = new ThemeResource("img/RegisterStudent/AnzeigeB.png");
+        ThemeResource resources = new ThemeResource("img/RegisterStudent/JobfindenB.png");
 
         Image bildUnt = new Image(null,resource);
         Image bild_Register = new Image(null,resources);
 
         formUnt.setMargin(false);
-        this.addComponent(topPanelUnt, 0, 0, 9, 2);
-        this.addComponent(formUnt, 0, 5, 0, 5);
-        this.addComponent(bildUnt, 9, 5, 9, 5);
-        this.addComponent(bild_Register, 1, 6, 1, 6);
-        this.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
-        this.setComponentAlignment(formUnt, Alignment.MIDDLE_LEFT);
-        this.setComponentAlignment(bildUnt, Alignment.MIDDLE_RIGHT);
-        this.setComponentAlignment(bild_Register, Alignment.MIDDLE_CENTER);
-        this.setMargin(false);
+        mainGrid.addComponent(topPanelUnt, 0, 0, 9, 1);
+        mainGrid.addComponent(formUnt, 0, 5, 0, 5);
+        mainGrid.addComponent(bildUnt, 9, 5, 9, 5);
+        mainGrid.addComponent(bild_Register, 0, 6, 9, 6);
+        mainGrid.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
+        mainGrid.setComponentAlignment(formUnt, Alignment.TOP_LEFT);
+        mainGrid.setComponentAlignment(bildUnt, Alignment.TOP_RIGHT);
+        mainGrid.setComponentAlignment(bild_Register, Alignment.TOP_CENTER);
+        mainGrid.setMargin(false);
+
+        this.setContent(mainGrid);
+        this.setSizeFull();
 
         registerUntButton.addClickListener(
                 event -> {
@@ -179,6 +176,5 @@ public class RegisterUnternehmerView extends GridLayout implements View {
     }
 
 }
-
 
 
