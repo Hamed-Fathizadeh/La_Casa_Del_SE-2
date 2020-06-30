@@ -15,9 +15,9 @@ public class UnternehmenBeschreibungView extends VerticalLayout {
         this.setSizeFull();
         this.setMargin(false);
         richTextArea = new RichTextArea();
-        richTextArea.setWidthFull();
+        richTextArea.setWidth("644px");
         richTextArea.setValue("Schreiben Sie etwas hier über Ihr Unternehmen");
-        richTextArea.setSizeFull();
+
         this.addComponent(richTextArea);
         this.setComponentAlignment(richTextArea, Alignment.MIDDLE_CENTER);
     }

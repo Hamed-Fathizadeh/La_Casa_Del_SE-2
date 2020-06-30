@@ -40,6 +40,8 @@ public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
                     if (dialog.isConfirmed()) {
                         this.removeComponent(buttonBar);
                         this.addComponent(bearbeiten,7,9);
+                        Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN);
+
                         unternehmen.setKontaktnummer(gridDaten.getKontaktnummer().getValue());
                         Adresse adresse = new Adresse();
                         adresse.setStrasse(gridDaten.getStrasse().getValue());
@@ -54,6 +56,7 @@ public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
                         ProfilControl.getInstance().updateUnternehmen(unternehmen);
                         gridBeschreibung.setReadOnly(true);
                         gridDaten.setReadOnly(true);
+                        UI.getCurrent().getSession().setAttribute(Roles.UNTERNEHMEN,unternehmen);
                     }
                 });
     }
