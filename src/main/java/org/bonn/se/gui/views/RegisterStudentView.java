@@ -46,11 +46,11 @@ public class RegisterStudentView extends Panel implements View {
         String ls1 = "<div class=WordSection1>\n" +
                 "\n" +
                 "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
-                "font-family:\"Arial Black\";color:#003853'>Willkommen bei <span\n" +
+                "font-family:\"\"YACgEa4Wckw 0\", _fb_, auto\";color:#003853'>Willkommen bei <span\n" +
                 "class=SpellE>Lacolsco</span><o:p></o:p></span></b></p>\n" +
                 "\n" +
                 "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
-                "font-family:\"Arial Black\";color:#003853'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
+                "font-family:\"\"YACgEa4Wckw 0\", _fb_, auto\";color:#003853'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
                 "\n" +
                 "</div>";
 
@@ -99,7 +99,7 @@ public class RegisterStudentView extends Panel implements View {
         binder.setBean(user);
 
         ThemeResource resource = new ThemeResource("img/RegisterStudent/student_pic.png");
-        ThemeResource resources = new ThemeResource("img/RegisterStudent/jobfinden.png");
+        ThemeResource resources = new ThemeResource("img/RegisterStudent/JobfindenB.png");
 
         Image bildStudent = new Image(null,resource);
         Image bild_Register = new Image(null,resources);
