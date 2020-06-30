@@ -1,7 +1,14 @@
 package junit;
 
+import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.util.*;
 import org.junit.Test;
+
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import java.util.HashMap;
+import java.util.Properties;
 
 public class TestUtil {
 
@@ -23,6 +30,7 @@ public class TestUtil {
     @Test
     public void utilPDFUploader(){
         PdfUploader.getByte();
+        PdfUploader.setPath("");
     }
     @Test
     public void utilSuchbegriffService(){
@@ -48,6 +56,24 @@ public class TestUtil {
         Views views = new Views();
         Password password = new Password();
         IllegalException illegalException = new IllegalException();
-
     }
+
+    @Test
+    public void utilMail() throws Exception {
+        String myAccountEmail = "lacolsco.webpage@gmail.com";
+        Properties generalProperties = new Properties();
+
+        Session session = Session.getInstance(generalProperties, new Authenticator(){
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication(myAccountEmail,Password.MAIL);
+            }
+        });
+
+       JavaMailUtil.prepareMessage(session,myAccountEmail,"","","");
+       JavaMailUtil.sendMailToStudents(new Unternehmen(),new HashMap<String,String>());
+       JavaMailUtil.prepareMessageForStudents(session,myAccountEmail,"","",new Unternehmen());
+    }
+
+
 }
