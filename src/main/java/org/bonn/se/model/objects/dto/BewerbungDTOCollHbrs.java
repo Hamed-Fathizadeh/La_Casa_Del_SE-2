@@ -318,4 +318,10 @@ public class BewerbungDTOCollHbrs implements BewerbungDTO{
                 Objects.equals(getStudentNachname(), that.getStudentNachname());
     }
 
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(getBewerbungID(), getDatum(), getDescription(), getStatus(), getStudentID(), getUnternehmenName(), getUnternehmenHauptsitz(), getUnternehmenLogo(), sTitel, getRating(), getEmailStudent(), studentGDatum, getStudentStudiengang(), getStudentAusbildung(), getStudentKontaktNr(), getStudentBenachrichtigung(), getStudentPicture(), getStudentHoesterAbschluss(), getStudentVorname(), getStudentNachname(), isBewerbungMarkiert(), getAnzeigeID());
+        result = 31 * result + Arrays.hashCode(getLebenslauf());
+        return result;
+    }
 }

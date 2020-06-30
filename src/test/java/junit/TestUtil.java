@@ -22,12 +22,12 @@ public class TestUtil {
         brancheService.count(null);
         brancheService.fetch(null,0,5);
     }
-    @Test
-    public void utilDTOFactory() {
+
+   /* public void utilDTOFactory() {
         DTOFactory bewerbung = new ConcreteFactoryCollHbrs();
         bewerbung.createBewerbungDTO(1,null,"Test",null ,1,1,1,"name","bonn"
                 ,null,"email","titel",null,"studium","ausbildung","konakt",1,null,"abschluss","vorname","nachname",0.0,true);
-    }
+    }*/
     @Test
     public void utilPDFUploader(){
         PdfUploader.getByte();
