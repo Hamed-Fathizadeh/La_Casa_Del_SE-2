@@ -313,13 +313,10 @@ public class StudentHomeView extends VerticalLayout implements View {
                 bottomGridBewNeuTwo.addComponent(gBewerbungen,0,1,1,1);
                 bottomGridBewNeuTwo.setComponentAlignment(gBewerbungen,Alignment.TOP_CENTER);
 
-                Button alleBewerbungen = new Button("Alle Bewerbungen", VaadinIcons.SEARCH);
+
                 bottomGridBewNeuTwo.addComponent(lPatzhalter1,0,2,1,2);
-                bottomGridBewNeuTwo.addComponent(alleBewerbungen,0,3,1,3);
-                bottomGridBewNeuTwo.setComponentAlignment(alleBewerbungen,Alignment.BOTTOM_CENTER);
                 horizontalLayout.addComponent(bottomGridBewNeuTwo,0);
                 horizontalLayout.setComponentAlignment(bottomGridBewNeuTwo,Alignment.TOP_CENTER);
-                alleBewerbungen.addClickListener((Button.ClickListener) clickEvent -> UI.getCurrent().getNavigator().navigateTo(Views.ALLEBEWERBUNGENVIEW));
             });
         }
     }

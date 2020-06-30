@@ -109,15 +109,20 @@ public class RegisterUnternehmerView extends GridLayout implements View {
 
         });
         ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
+        ThemeResource resources = new ThemeResource("img/RegisterStudent/Anzeige.png");
 
         Image bildUnt = new Image(null,resource);
+        Image bild_Register = new Image(null,resources);
+
         formUnt.setMargin(false);
         this.addComponent(topPanelUnt, 0, 0, 9, 2);
         this.addComponent(formUnt, 0, 5, 0, 5);
         this.addComponent(bildUnt, 9, 5, 9, 5);
+        this.addComponent(bild_Register, 1, 6, 1, 6);
         this.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
         this.setComponentAlignment(formUnt, Alignment.MIDDLE_LEFT);
         this.setComponentAlignment(bildUnt, Alignment.MIDDLE_RIGHT);
+        this.setComponentAlignment(bild_Register, Alignment.MIDDLE_LEFT);
         this.setMargin(false);
 
         registerUntButton.addClickListener(

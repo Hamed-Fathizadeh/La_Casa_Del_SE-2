@@ -25,19 +25,17 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 
 
-public class RegisterStudentView extends GridLayout implements View {
+public class RegisterStudentView extends Panel implements View {
 
     public void setUp() {
 
-
-
         System.out.println("LOG: get UI-Objekt in RegisterStudent!" + VaadinSession.getCurrent().toString());
+        GridLayout mainGrid = new GridLayout(10,10);
 
-        this.setColumns(10);
-        this.setRows(10);
 
-        this.addStyleName("grid");
-        this.setSizeFull();
+        mainGrid.addStyleName("grid");
+        mainGrid.setWidthFull();
+        mainGrid.setHeightUndefined();
 
 
 
@@ -48,11 +46,11 @@ public class RegisterStudentView extends GridLayout implements View {
         String ls1 = "<div class=WordSection1>\n" +
                 "\n" +
                 "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
-                "font-family:\"Arial Black\";color:#002635'>Willkommen bei <span\n" +
+                "font-family:\"Arial Black\";color:#003853'>Willkommen bei <span\n" +
                 "class=SpellE>Lacolsco</span><o:p></o:p></span></b></p>\n" +
                 "\n" +
                 "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
-                "font-family:\"Arial Black\";color:#002635'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
+                "font-family:\"Arial Black\";color:#003853'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
                 "\n" +
                 "</div>";
 
@@ -101,21 +99,26 @@ public class RegisterStudentView extends GridLayout implements View {
         binder.setBean(user);
 
         ThemeResource resource = new ThemeResource("img/RegisterStudent/student_pic.png");
-
+        ThemeResource resources = new ThemeResource("img/RegisterStudent/jobfinden.png");
 
         Image bildStudent = new Image(null,resource);
+        Image bild_Register = new Image(null,resources);
 
         formStudent.setMargin(false);
-        this.addComponent(topPanelStudent, 0, 0, 9, 1);
-        this.addComponent(formStudent, 0, 5, 0, 5);
-        this.addComponent(bildStudent, 9, 5, 9, 5);
-        this.setComponentAlignment(topPanelStudent, Alignment.TOP_LEFT);
-        this.setComponentAlignment(formStudent, Alignment.MIDDLE_LEFT);
+        mainGrid.addComponent(topPanelStudent, 0, 0, 9, 1);
+        mainGrid.addComponent(formStudent, 0, 5, 0, 5);
+        mainGrid.addComponent(bildStudent, 9, 5, 9, 5);
+        mainGrid.addComponent(bild_Register, 0, 6, 9, 6);
+        mainGrid.setComponentAlignment(topPanelStudent, Alignment.TOP_LEFT);
+        mainGrid.setComponentAlignment(formStudent, Alignment.MIDDLE_LEFT);
 
-        this.setComponentAlignment(bildStudent, Alignment.MIDDLE_RIGHT);
+        mainGrid.setComponentAlignment(bildStudent, Alignment.MIDDLE_RIGHT);
+        mainGrid.setComponentAlignment(bild_Register, Alignment.MIDDLE_CENTER);
+        mainGrid.setMargin(false);
 
+        this.setContent(mainGrid);
+        this.setSizeFull();
 
-        this.setMargin(false);
 
 
         registerStudentButton.addClickListener(
