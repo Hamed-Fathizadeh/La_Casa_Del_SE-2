@@ -32,8 +32,6 @@
 // Example variants can be copy/pasted from https://vaadin.com/docs/v8/framework/articles/ValoExamples.html
 //0f2a54
 
-$v-background-color: #3D82AB;
-
 .NameUserWhite{
   color:white !important;
   :hover {color:white; }
@@ -66,11 +64,6 @@ div .onoffswitch-slider.on {
 
 div .onoffswitch-slider.on:before {
   border-color: $green;
-}
-
-.v-icon .v-errorindicator .v-required-field-indicator {
-  /* display: inline; */
-  /* line-height: inherit; */
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -137,12 +130,6 @@ div .onoffswitch-slider.on:before {
   background-color: #91d4c2
 }
 
-.menu {
-  span.v-menubar-menuitem-caption{
-    color: white;
-  }
-}
-
 .demo .v-textfield{
   color: black !important;
 }
@@ -152,7 +139,6 @@ div .onoffswitch-slider.on:before {
 .demo .v-filterselect [class*="input"] {
   color: black !important;
 }
-
 div.v-ui.v-scrollable{
   background-color: #91d4c2 !important
 }
