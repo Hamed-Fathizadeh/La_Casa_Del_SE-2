@@ -61,6 +61,11 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                         student.setAbschluss(grid.getAbschluss().getValue());
                         student.setPicture(grid.getUploadProfil().getValue());
                         student.setLebenslauf(grid.getLebenslauf().getValue());
+                        if(student.getLebenslauf() != null ) {
+                            student.setHasLebenslauf(true);
+                        } else {
+                            student.setHasLebenslauf(false);
+                        }
                         /*
 
                         student.setItKenntnisList(grid2.getITKenntnisValue());
