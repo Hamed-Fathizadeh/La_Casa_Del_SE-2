@@ -212,6 +212,7 @@ public class StellenanzeigeWindow extends Window {
 
                 TextField titelBearbeiten = new TextField("");
                 titelBearbeiten.setValue(titel.getValue().substring(7,titel.getValue().length()-16));
+                titelBearbeiten.setMaxLength(44);
 
 
 

@@ -141,6 +141,15 @@ div .onoffswitch-slider.on:before {
   }
 }
 
+.demo .v-textfield{
+  color: black !important;
+}
+.demo .v-datefield {
+  color: black !important;
+}
+.demo .v-filterselect [class*="input"] {
+  color: black !important;
+}
 
 @import "../material/material.scss";
 
