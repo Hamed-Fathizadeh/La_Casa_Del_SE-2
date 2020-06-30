@@ -37,20 +37,17 @@ public class RegisterUnternehmerView extends Panel implements View {
         String ls1 = "<div class=WordSection1>\n" +
                 "\n" +
                 "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
-                "font-family:\"Arial Black\";color:#002635'>Willkommen bei <span\n" +
+                "font-family:\"Arial Black\";color:#003853'>Willkommen bei <span\n" +
                 "class=SpellE>Lacolsco</span><o:p></o:p></span></b></p>\n" +
                 "\n" +
                 "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
-                "font-family:\"Arial Black\";color:#002635'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
+                "font-family:\"Arial Black\";color:#003853'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
                 "\n" +
                 "</div>";
 
         Label head = new Label(ls1, ContentMode.HTML);
 
         OrtField hauptsitz = new OrtField("Hauptsitz");
-
-
-
 
         TopPanel topPanelUnt =  new TopPanel("Studenten");
         topPanelUnt.addStyleName("toppanel");
@@ -68,8 +65,9 @@ public class RegisterUnternehmerView extends Panel implements View {
 
         Button registerUntButton = new Button("Registrieren");
         registerUntButton.setEnabled(false);
+        Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
 
-        formUnt.addComponents(head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerUntButton);
+        formUnt.addComponents(lPatzhalter,head,firmenname,hauptsitz,vorname,nachname,email,passwort,registerUntButton);
 
         Binder<User> binder = new Binder<>(User.class);
         binder.forField(firmenname)
@@ -106,20 +104,20 @@ public class RegisterUnternehmerView extends Panel implements View {
 
         });
         ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
-        ThemeResource resources = new ThemeResource("img/RegisterStudent/Anzeige.png");
+        ThemeResource resources = new ThemeResource("img/RegisterUnternehmen/Anzeige.png");
 
         Image bildUnt = new Image(null,resource);
         Image bild_Register = new Image(null,resources);
 
         formUnt.setMargin(false);
-        mainGrid.addComponent(topPanelUnt, 0, 0, 9, 2);
+        mainGrid.addComponent(topPanelUnt, 0, 0, 9, 1);
         mainGrid.addComponent(formUnt, 0, 5, 0, 5);
         mainGrid.addComponent(bildUnt, 9, 5, 9, 5);
-        mainGrid.addComponent(bild_Register, 1, 6, 1, 6);
+        mainGrid.addComponent(bild_Register, 0, 6, 9, 6);
         mainGrid.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
-        mainGrid.setComponentAlignment(formUnt, Alignment.MIDDLE_LEFT);
-        mainGrid.setComponentAlignment(bildUnt, Alignment.MIDDLE_RIGHT);
-        mainGrid.setComponentAlignment(bild_Register, Alignment.MIDDLE_LEFT);
+        mainGrid.setComponentAlignment(formUnt, Alignment.TOP_LEFT);
+        mainGrid.setComponentAlignment(bildUnt, Alignment.TOP_RIGHT);
+        mainGrid.setComponentAlignment(bild_Register, Alignment.TOP_CENTER);
         mainGrid.setMargin(false);
 
         this.setContent(mainGrid);
