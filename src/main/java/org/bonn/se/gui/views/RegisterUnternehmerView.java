@@ -112,11 +112,12 @@ public class RegisterUnternehmerView extends Panel implements View {
         mainGrid.addComponent(topPanelUnt, 0, 0, 9, 1);
         mainGrid.addComponent(formUnt, 0, 5, 0, 5);
         mainGrid.addComponent(bildUnt, 9, 5, 9, 5);
-        mainGrid.addComponent(bild_Register, 0, 6, 9, 6);
+        mainGrid.addComponent(lPatzhalter, 0, 6, 9, 6);
+        mainGrid.addComponent(bild_Register, 0, 7, 9, 7);
         mainGrid.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
-        mainGrid.setComponentAlignment(formUnt, Alignment.TOP_LEFT);
+        mainGrid.setComponentAlignment(formUnt, Alignment.BOTTOM_LEFT);
         mainGrid.setComponentAlignment(bildUnt, Alignment.TOP_RIGHT);
-        mainGrid.setComponentAlignment(bild_Register, Alignment.TOP_CENTER);
+        mainGrid.setComponentAlignment(bild_Register, Alignment.BOTTOM_CENTER);
         mainGrid.setMargin(false);
 
         this.setContent(mainGrid);

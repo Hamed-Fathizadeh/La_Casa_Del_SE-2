@@ -73,8 +73,9 @@ public class RegisterStudentView extends Panel implements View {
 
         Button vNummerButton = new Button("Verifikation");
         vNummerButton.setEnabled(false);
+        Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
 
-        formStudent.addComponents(head,vorname,nachname,email,passwort,registerStudentButton);
+        formStudent.addComponents(lPatzhalter,head,vorname,nachname,email,passwort,registerStudentButton);
         Binder<User> binder = new Binder<>(User.class);
 
         binder.forField(vorname)
@@ -108,12 +109,12 @@ public class RegisterStudentView extends Panel implements View {
         mainGrid.addComponent(topPanelStudent, 0, 0, 9, 1);
         mainGrid.addComponent(formStudent, 0, 5, 0, 5);
         mainGrid.addComponent(bildStudent, 9, 5, 9, 5);
-        mainGrid.addComponent(bild_Register, 0, 6, 9, 6);
+        mainGrid.addComponent(lPatzhalter, 0, 6, 9, 6);
+        mainGrid.addComponent(bild_Register, 0, 7, 9, 7);
         mainGrid.setComponentAlignment(topPanelStudent, Alignment.TOP_LEFT);
-        mainGrid.setComponentAlignment(formStudent, Alignment.MIDDLE_LEFT);
-
-        mainGrid.setComponentAlignment(bildStudent, Alignment.MIDDLE_RIGHT);
-        mainGrid.setComponentAlignment(bild_Register, Alignment.MIDDLE_CENTER);
+        mainGrid.setComponentAlignment(formStudent, Alignment.BOTTOM_LEFT);
+        mainGrid.setComponentAlignment(bildStudent, Alignment.TOP_RIGHT);
+        mainGrid.setComponentAlignment(bild_Register, Alignment.BOTTOM_CENTER);
         mainGrid.setMargin(false);
 
         this.setContent(mainGrid);

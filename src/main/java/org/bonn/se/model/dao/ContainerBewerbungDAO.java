@@ -5,6 +5,7 @@ import org.bonn.se.model.objects.dto.BewerbungDTOCollHbrs;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.ConcreteFactoryCollHbrs;
+import org.bonn.se.services.util.ConcreteFactoryStepston2;
 import org.bonn.se.services.util.DTOFactory;
 
 import java.sql.ResultSet;
@@ -50,8 +51,15 @@ public class ContainerBewerbungDAO {
                         set.getString(11),set.getString(12),set.getDouble(22)
                 );
 
+                DTOFactory bewerbung2 = new ConcreteFactoryStepston2();
+                BewerbungDTO res2 = bewerbung2.createBewerbungDTO(set.getInt(1),set.getDate(2),set.getString(3),
+                        set.getBytes(4),set.getInt(5),set.getInt(6),
+                        set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
+                        set.getString(11),set.getString(12),set.getDouble(22)
+                );
 
 
+                res.toString();
                 liste.add(res);
 
 
