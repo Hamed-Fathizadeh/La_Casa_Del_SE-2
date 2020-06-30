@@ -205,7 +205,7 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>src/main/webapp/VAADIN/themes</directory>
+							<directory>src/main/webapp/VAADIN/themes/demo</directory>
 							<includes>
 								<include>**/styles.css</include>
 								<include>**/styles.scss.cache</include>
