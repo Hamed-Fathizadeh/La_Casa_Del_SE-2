@@ -33,7 +33,7 @@
 //0f2a54
 
 .NameUserWhite{
-  color:white;
+  color:white !important;
   :hover {color:white; }
 }
 
@@ -139,12 +139,16 @@ div .onoffswitch-slider.on:before {
 .demo .v-filterselect [class*="input"] {
   color: black !important;
 }
+
 div.v-ui.v-scrollable{
-  background-color: #91d4c2 !important
+  background-color: #91d4c2 !important;
 }
 
 @import "../material/material.scss";
 
 .demo {
   @include material;
+
+
+
 }
