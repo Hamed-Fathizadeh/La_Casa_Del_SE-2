@@ -51,7 +51,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
         titel.setWidth("600px");
 
 
-        NativeSelect<String> jobtitel = new NativeSelect<>("Bitte wählen Sie eine STELLENBESCHREIBUNG!",JobTitelControl.getJobTitelList());
+        ComboBox<String> jobtitel = new ComboBox<>("Bitte wählen Sie eine STELLENBESCHREIBUNG!",JobTitelControl.getJobTitelList());
         jobtitel.setHeight("56px");
         jobtitel.setWidth("600px");
         jobtitel.setEmptySelectionAllowed(false);
