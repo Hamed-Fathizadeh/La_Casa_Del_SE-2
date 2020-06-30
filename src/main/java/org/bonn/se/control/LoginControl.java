@@ -77,17 +77,13 @@ public class LoginControl {
                         UI.getCurrent().getSession().setAttribute(Roles.UNTERNEHMEN,unternehmen);
 
                     } else if(set.getString(5).equals("S")) {
-                        Student student;
-                        student = ProfilDAO.getInstance().getStudent(user.getEmail());
+                    Student student;
+                    student = ProfilDAO.getInstance().getStudent(user.getEmail());
 
-                        UI.getCurrent().getSession().setAttribute(Roles.STUDENT,student);
-
-
-                     } else {
-                        throw new NoSuchUserOrPassword();
-                     }
+                    UI.getCurrent().getSession().setAttribute(Roles.STUDENT, student);
+                }
           }else{
-                throw new DatabaseException("Fehler Passwort oder Email ist falsch!");
+                throw new NoSuchUserOrPassword();
             }
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);

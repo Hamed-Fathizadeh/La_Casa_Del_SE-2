@@ -190,9 +190,9 @@ public class StudentDatenView extends GridLayout {
         ort.getPlzField().setValue(student.getAdresse().getPlz().equals("0") ? "" : student.getAdresse().getPlz());
         abschluss.setValue(student.getAbschluss());
         gDatum.setValue(student.getGDatum());
-        studiengang.setValue(student.getStudiengang());
-        ausbildung.setValue(student.getAusbildung());
-        mobilnr.setValue(student.getKontaktNr());
+        studiengang.setValue(student.getStudiengang() == null ? "" : student.getStudiengang());
+        ausbildung.setValue(student.getAusbildung() == null ? "" : student.getAusbildung());
+        mobilnr.setValue(student.getKontaktNr() == null ? "" : student.getKontaktNr());
         uploadProfil.setValue(student.getPicture());
         lebenslauf.setLastFilename("Lebenslauf_" + student.getVorname()+ " " + student.getNachname());
         if(student.hasLebenslauf()) {
