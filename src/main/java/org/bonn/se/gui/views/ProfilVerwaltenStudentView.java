@@ -72,6 +72,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                         ProfilControl.getInstance().updateStudentDaten(student);
                         grid.setReadOnly(true);
                         change =false;
+                        UI.getCurrent().getSession().setAttribute(Roles.STUDENT,student);
                         /*
                         grid.setReadOnly(true);
                         grid2.setReadOnly(true);
@@ -103,7 +104,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                         grid1.setReadOnly(true);
                         change =false;
 
-
+                        UI.getCurrent().getSession().setAttribute(Roles.STUDENT,student);
 
 
                     }
