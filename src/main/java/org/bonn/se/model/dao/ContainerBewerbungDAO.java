@@ -59,10 +59,9 @@ public class ContainerBewerbungDAO {
                 );*/
 
 
-
-
                 //System.out.println("contbewDao String: "+ res.toString());
                 //System.out.println("contbewDao JSON: "+ res2.toString());
+
                 liste.add(res);
 
 
