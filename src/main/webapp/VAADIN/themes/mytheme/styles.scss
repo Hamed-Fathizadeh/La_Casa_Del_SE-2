@@ -1,0 +1,150 @@
+//$mat-background-color: #303030;
+
+// If you edit this file you need to compile the theme. See README.md for details.
+
+// Global variable overrides. Must be declared before importing Valo.
+
+// Defines the plaintext font size, weight and family. Font size affects general component sizing.
+//$v-font-size: 16px;
+//$v-font-weight: 300;
+//$v-font-family: "Open Sans", sans-serif;
+
+// Defines the border used by all components.
+//$v-border: 1px solid (v-shade 0.7);
+//$v-border-radius: 4px;
+
+// Affects the color of some component elements, e.g Button, Panel title, etc
+//$v-background-color: hsl(210, 0%, 98%);
+// Affects the color of content areas, e.g  Panel and Window content, TextField input etc
+//$v-app-background-color: $v-background-color;
+
+// Affects the visual appearance of all components
+//$v-gradient: v-linear 8%;
+//$v-bevel-depth: 30%;
+//$v-shadow-opacity: 5%;
+
+// Defines colors for indicating status (focus, success, failure)
+//$v-focus-color: valo-focus-color(); // Calculates a suitable color automatically
+//$v-friendly-color: #2c9720;
+//$v-error-indicator-color: #ed473b;
+
+// For more information, see: https://vaadin.com/book/-/page/themes.valo.html
+// Example variants can be copy/pasted from https://vaadin.com/docs/v8/framework/articles/ValoExamples.html
+//0f2a54
+
+.NameUserWhite{
+  color:white !important;
+  :hover {color:white; }
+}
+
+.v-caption-inline-label{
+  display: inline-block;
+}
+
+input.v-textfield.v-widget.v-required.v-textfield-required.v-has-width.v-has-height.v-textfield-focus {
+  color:black;
+}
+input.v-textfield.v-widget.v-required.v-textfield-required.v-has-width.v-has-height {
+  color: black;
+}
+$green: #40b527;
+div .onoffswitch-slider {
+  background-color: #d32f2f;
+  border-color: #d32f2f;
+
+}
+div .onoffswitch-slider:before {
+  border-color: #d32f2f;
+}
+
+div .onoffswitch-slider.on {
+  background-color: $green;
+  border-color: $green;
+}
+
+div .onoffswitch-slider.on:before {
+  border-color: $green;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: black;
+  opacity: 1; /* Firefox */
+}
+
+.backSeite{
+  background-color: #3D82AB !important;
+}
+.AnzeigeUnternehmen{
+  background-color: #ffeeee ;
+}
+
+.toppanelUser{
+  background-color: #0f3853;
+  span.v-menubar-menuitem-caption{
+    color: white;
+  }
+
+}
+.toppanel {
+  background-color: #0f3853;
+
+}
+
+.anzeigeErstellen_formgrid{
+  background-color: white;
+  .v-gridlayout-spacing-on
+  {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 9px;
+  }
+
+
+}
+.anzeige{
+  background-color: #3d82ab
+
+}
+
+.profilBar {
+  background-color: #45BB89 !important;
+}
+//.v-slot .v-slot-pic .v-align-right { /* Font & Text */
+//background-color: #2c9720 !important;
+//}
+
+.bottomGridBewNeu {
+  background-color: #3D82AB !important;
+}
+/*
+.demo .v-label-undef-w{
+  white-space: nowrap;
+  font-size: xx-large;
+  font-weight: 800;
+  color: black;
+}
+
+ */
+
+.grid{
+  background-color: #91d4c2
+}
+
+.demo .v-textfield{
+  color: black !important;
+}
+.demo .v-datefield {
+  color: black !important;
+}
+.demo .v-filterselect [class*="input"] {
+  color: black !important;
+}
+div.v-ui.v-scrollable{
+  background-color: #91d4c2 !important
+}
+
+@import "../material/material.scss";
+
+.demo {
+  @include material;
+}
