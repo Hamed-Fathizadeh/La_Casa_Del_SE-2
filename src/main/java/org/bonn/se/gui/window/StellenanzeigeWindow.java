@@ -5,6 +5,7 @@ import com.vaadin.data.HasValue;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.bonn.se.control.AnzStatusControl;
+import org.bonn.se.control.BewertungControl;
 import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.gui.ui.MyUI;
 import org.bonn.se.model.dao.UserDAO;
@@ -18,6 +19,7 @@ import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -79,6 +81,7 @@ public class StellenanzeigeWindow extends Window {
         Label email = new Label("<b>E-Mail</b>",ContentMode.HTML);
         Label kontaktnummer1 = new Label("<b>Kontaktnummer</b>",ContentMode.HTML);
         Label stellenbeschreibung = new Label("<b>Stellenbezeichnung</b>",ContentMode.HTML);
+        Label bewertung = new Label("<b>Bewertung</b>",ContentMode.HTML);
 
 
         Label titel = new Label("<h2><b>"+stellenanzeige.getTitel()+"</font></b></h3>" ,ContentMode.HTML);
@@ -100,8 +103,10 @@ public class StellenanzeigeWindow extends Window {
         beschreibungData.setSizeFull();
         beschreibungData.setValue(stellenanzeige.getBeschreibung());
         beschreibungData.setReadOnly(true);
-
-
+        RatingStars rating = new RatingStars();
+        rating.setMaxValue(5);
+        rating.setReadOnly(true);
+        rating.setValue(BewertungControl.bewertungByID(unternehmenData.getHauptsitz(),unternehmenData.getCname()));
 
 
         gridLayout.addComponent(logo,0,1);
@@ -118,6 +123,7 @@ public class StellenanzeigeWindow extends Window {
         gridLayout.addComponent(firmenname,3,3);
         gridLayout.addComponent(branche,3,4);
         gridLayout.addComponent(hauptsitz,3,5);
+        gridLayout.addComponent(bewertung,3,6);
         gridLayout.addComponent(kontakt,3,7,4,7);
         gridLayout.addComponent(ansprechpartner,3,8);
         gridLayout.addComponent(email,3,9);
@@ -134,6 +140,7 @@ public class StellenanzeigeWindow extends Window {
         gridLayout.addComponent(firmennameData,4,3);
         gridLayout.addComponent(brancheData,4,4);
         gridLayout.addComponent(hauptsitzData,4,5);
+        gridLayout.addComponent(rating,4,6);
         gridLayout.addComponent(ansprechpartnerData,4,8);
         gridLayout.addComponent(emailData,4,9);
         gridLayout.addComponent(kontaktnummer1Data,4,10);
