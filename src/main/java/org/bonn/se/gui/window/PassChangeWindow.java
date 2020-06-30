@@ -120,14 +120,24 @@ public class PassChangeWindow extends Window {
 
        vNummerButton.addClickListener(
                event -> {
-                   try {
 
-                       JavaMailUtil.sendMail(email.getValue(),getVnummer(),"");
-                       UI.getCurrent().addWindow(new ConfirmationWindow("Wir haben einen Email an diese Adresse gesendet: "+email.getValue()));
-                   } catch (Exception e) {
-                       UI.getCurrent().addWindow(new ConfirmationWindow("Fehler beim Email senden!"));
-                       Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
-                   }
+                  if( UserSearchControl.getInstance().existUser(email.getValue())) {
+                      try {
+
+                          JavaMailUtil.sendMail(email.getValue(), getVnummer(), "");
+                          UI.getCurrent().addWindow(new ConfirmationWindow("Wir haben einen Email an diese Adresse gesendet: " + email.getValue()));
+                      } catch (Exception e) {
+                          ConfirmationWindow confirmationWindow = new ConfirmationWindow("Fehler beim Email senden!");
+                          confirmationWindow.setCaption("");
+                          UI.getCurrent().addWindow(confirmationWindow);
+                          Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
+                      }
+                  }else{
+                      ConfirmationWindow confirmationWindow = new ConfirmationWindow("Mit der E-Mail: "+email.getValue()+" ist kein User registriert!");
+                      confirmationWindow.setCaption("");
+                      UI.getCurrent().addWindow(confirmationWindow);
+                      email.clear();
+                  }
 
                });
 

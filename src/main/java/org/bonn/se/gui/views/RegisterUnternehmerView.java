@@ -37,11 +37,11 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         String ls1 = "<div class=WordSection1>\n" +
                 "\n" +
                 "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
-                "font-family:\"Arial Black\";color:#002635'>Willkommen bei <span\n" +
+                "font-family:\"\"YACgEa4Wckw 0\", _fb_, auto\";color:#003853'>Willkommen bei <span\n" +
                 "class=SpellE>Lacolsco</span><o:p></o:p></span></b></p>\n" +
                 "\n" +
                 "<p class=MsoNormal><b><span style='font-size:36.0pt;line-height:107%;\n" +
-                "font-family:\"Arial Black\";color:#002635'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
+                "font-family:\"\"YACgEa4Wckw 0\", _fb_, auto\";color:#003853'>Registrieren Sie sich jetzt!<o:p></o:p></span></b></p>\n" +
                 "\n" +
                 "</div>";
 
@@ -109,7 +109,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
 
         });
         ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
-        ThemeResource resources = new ThemeResource("img/RegisterStudent/Anzeige.png");
+        ThemeResource resources = new ThemeResource("img/RegisterStudent/AnzeigeB.png");
 
         Image bildUnt = new Image(null,resource);
         Image bild_Register = new Image(null,resources);
@@ -122,7 +122,7 @@ public class RegisterUnternehmerView extends GridLayout implements View {
         this.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
         this.setComponentAlignment(formUnt, Alignment.MIDDLE_LEFT);
         this.setComponentAlignment(bildUnt, Alignment.MIDDLE_RIGHT);
-        this.setComponentAlignment(bild_Register, Alignment.MIDDLE_LEFT);
+        this.setComponentAlignment(bild_Register, Alignment.MIDDLE_CENTER);
         this.setMargin(false);
 
         registerUntButton.addClickListener(
