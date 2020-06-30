@@ -19,12 +19,14 @@ import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.Views;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.verification.VerificationMode;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -32,6 +34,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -62,11 +65,14 @@ public class MockitoTest {
 
     @Test
     public void buttonClick() throws DatabaseException, NoSuchUserOrPassword, SQLException {
+
         LoginControl loginControl = Mockito.mock(LoginControl.class);
         Mockito.doCallRealMethod().when(loginControl).checkAuthentication(USERNAME,login);
         LoginControl.getInstance().checkAuthentication(USERNAME,login);
-        when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(true);
-        //verify
+        VerificationMode verificationMode = Mockito.times(1);
+        verify(navigator,verificationMode).navigateTo(Views.LOGINVIEW);
+  //      verify(ui.getSession(),verificationMode).setAttribute(Roles.STUDENT,ProfilDAO.getInstance().getStudent(USERNAME));
+
     }
 
     @Test
