@@ -47,6 +47,7 @@ public class AnzeigeErstellenView extends GridLayout implements View {
 
         Label label = new Label("<h1>Allgemeine Angaben</h1>",ContentMode.HTML);
         RegistrationTextField titel = new RegistrationTextField("Titel der Anzeige");
+        titel.setMaxLength(60);
         titel.setWidth("600px");
 
 
