@@ -22,11 +22,9 @@ public class AnzStatusControl {
 
                 statement.executeUpdate("UPDATE lacasa.tab_stellen_anzeige " +
                         "SET status = '" +stellenanzeige.getStatus()+ "' WHERE s_anzeige_id = '" +stellenanzeige.getId()+ "'");
-                } catch (DatabaseException e) {
+                } catch (DatabaseException | SQLException e) {
                     Logger.getLogger(AnzStatusControl.class.getName()).log(Level.SEVERE, null, e);
-                } catch (SQLException throwables) {
-                 Logger.getLogger(AnzStatusControl.class.getName()).log(Level.SEVERE, null, throwables);
-            } finally {
+                } finally {
                 try {
                     JDBCConnection.getInstance().closeConnection();
                 } catch (DatabaseException e) {

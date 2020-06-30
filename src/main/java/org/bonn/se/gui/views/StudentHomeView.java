@@ -44,15 +44,6 @@ public class StudentHomeView extends VerticalLayout implements View {
     static Grid gridAnzeige = null;
     static GridLayout mainGrid = new GridLayout(2, 5);
 
-    public static Grid getGridAnzeige() {
-        return gridAnzeige;
-    }
-
-
-    public static GridLayout getMaingrid() {
-        return mainGrid;
-    }
-
 
     static GridLayout bottomGridBewNeu;
     private String suchArt = "Einfache";
@@ -142,13 +133,8 @@ public class StudentHomeView extends VerticalLayout implements View {
                 comboBranche.setHeight("56px");
                 comboBranche.setWidth("300px");
                 BrancheService sServiceBranche = null;
-                try {
-                    sServiceBranche = new BrancheService();
-                } catch (DatabaseException e) {
-                    Logger.getLogger(StudentHomeView.class.getName()).log(Level.SEVERE,null,e);
-                } catch (SQLException throwables) {
-                    Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE,null,throwables);
-                }
+
+                sServiceBranche = new BrancheService();
                 comboBranche.setDataProvider(sServiceBranche::fetch, sServiceBranche::count);
 
                 //Datum

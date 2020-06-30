@@ -19,11 +19,6 @@ public class Anzeigen< T extends StellenanzeigeDTO > extends Grid<T> {
     List<T> data;
     static int gesamtNeuBewerbungen = 0;
 
-    public int getGesamtNeuBewerbungen() {
-
-        return gesamtNeuBewerbungen;
-    }
-
     public int setGesamtNeuBewerbungen(int gesamtNeuBew) {
         gesamtNeuBewerbungen += gesamtNeuBew;
         return gesamtNeuBew;

@@ -1,7 +1,5 @@
 package org.bonn.se.gui.window.wizard;
 
-import com.vaadin.data.Binder;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
 import org.bonn.se.gui.component.StudentTaetigkeitenView;
@@ -12,13 +10,9 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.teemu.wizards.WizardStep;
 
-import java.util.ArrayList;
-
 public class WizardStudentTaetigkeitenStep implements WizardStep {
 
-    final ArrayList<Taetigkeit> taetigkeitArrayList = new ArrayList<>();
-    final Binder<Taetigkeit> binder = new Binder<>(Taetigkeit.class);
-    Button plus;
+
     StudentTaetigkeitenView studentTaetigkeitenView;
 
     @Override

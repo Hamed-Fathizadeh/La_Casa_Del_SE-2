@@ -10,10 +10,6 @@ import java.util.logging.Logger;
 
 public class BewertungControl {
 
-    public BewertungControl(){
-
-    }
-
     public static double bewertungByID(String hauptsitz, String firmenname) {
         Double res = 0.0;
         try {

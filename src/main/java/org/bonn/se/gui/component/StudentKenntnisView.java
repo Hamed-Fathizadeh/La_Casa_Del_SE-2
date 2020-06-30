@@ -360,38 +360,6 @@ public class StudentKenntnisView extends GridLayout implements Comparable<Studen
 
     }
 
-    public ArrayList<Student.ITKenntnis> getITKenntnisValue() {
-
-            if (binder.isValid()) {
-                Student.ITKenntnis itKenntnis = new Student.ITKenntnis();
-                try {
-                    binder.writeBean(itKenntnis);
-                } catch (ValidationException e) {
-                    e.printStackTrace();
-                }
-                if(this.compareTo(itKenntnis) == 1 ) {
-                    itKenntnisArrayList.add(itKenntnis);
-                }
-            }
-
-        return itKenntnisArrayList;
-    }
-
-    public ArrayList<Student.SprachKenntnis> getSprachenValue() {
-
-        if(binder1.isValid()) {
-            Student.SprachKenntnis sprachKenntnis = new Student.SprachKenntnis();
-            try {
-                binder1.writeBean(sprachKenntnis);
-            } catch (ValidationException e) {
-                e.printStackTrace();
-            }
-            sprachKenntnisArrayList.add(sprachKenntnis);
-        }
-
-        return sprachKenntnisArrayList;
-    }
-
     @Override
     public int compareTo(@NotNull Student.ITKenntnis o) {
         Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);

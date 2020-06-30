@@ -20,8 +20,6 @@ public class Student extends User {
     private  ArrayList<ITKenntnis> itKenntnisList = new ArrayList<>();
     private String ausbildung;
     private boolean hasLebenslauf;
-    private ITKenntnis itKenntnis;
-    private SprachKenntnis sprachKenntnis;
 
 
 
@@ -103,9 +101,6 @@ public class Student extends User {
         this.ausbildung = ausbildung;
     }
 
-    public int getBenachrichtigung() {
-        return benachrichtigung;
-    }
     public void setBenachrichtigung(int benachrichtigung) {
         this.benachrichtigung = benachrichtigung;
     }

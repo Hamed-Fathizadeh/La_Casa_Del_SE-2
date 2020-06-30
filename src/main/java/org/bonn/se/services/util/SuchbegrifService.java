@@ -21,9 +21,6 @@ public class SuchbegrifService extends AbstractDAO {
         return listeBeg;
     }
 
-    public int count() {
-        return listeBeg.size();
-    }
 
     public int count(String filter) {
         return (int) getSuchbegriffe().stream()

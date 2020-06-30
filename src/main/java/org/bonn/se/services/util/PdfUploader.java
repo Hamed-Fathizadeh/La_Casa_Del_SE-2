@@ -22,11 +22,6 @@ public class PdfUploader implements Upload.Receiver, Upload.SucceededListener {
     final Student student = (Student) UI.getCurrent().getSession().getAttribute(Roles.STUDENT);
 
 
-
-    public static File getFile() {
-        return file;
-    }
-
     public OutputStream receiveUpload(String filename,
                                       String mimeType) {
         FileOutputStream fos = null;

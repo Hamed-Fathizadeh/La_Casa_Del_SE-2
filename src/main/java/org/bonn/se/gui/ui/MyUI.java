@@ -7,8 +7,6 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import org.bonn.se.control.CheckSMTP;
 import org.bonn.se.control.FeatureToggleControl;
-import org.bonn.se.gui.views.LoginView;
-import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.gui.views.*;
 
 import javax.servlet.annotation.WebServlet;

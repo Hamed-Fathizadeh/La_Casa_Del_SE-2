@@ -16,7 +16,6 @@ import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
-import org.vaadin.easyuploads.UploadField;
 
 public class ProfilVerwaltenStudentView extends GridLayout implements View {
 
@@ -35,7 +34,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
     StudentDatenView grid;
     StudentTaetigkeitenView grid1;
     StudentKenntnisView grid2;
-    UploadField uploadProfil;
+
 
     private void addSaveDatenClickListener(Button.ClickEvent clickEvent) {
         ConfirmDialog.Factory df = new DefaultConfirmDialogFactory(){
@@ -270,7 +269,7 @@ public class ProfilVerwaltenStudentView extends GridLayout implements View {
                 item.setChecked(false);
             }
 
-            if(change == true) {
+            if(change) {
                Notification.show("Achtung", "Bitte speichern sie ihre Änderungen oder brechen Sie ihre Änderungen ab!", Notification.Type.WARNING_MESSAGE)
                .setDelayMsec(300);
             } else {

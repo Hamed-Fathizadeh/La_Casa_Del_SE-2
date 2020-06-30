@@ -38,11 +38,6 @@ public class BewerbungDTO {
     }
 
 
-    public Date getStudentGDatum() {
-        return studentGDatum;
-    }
-
-
     public void setStudentGDatum(Date studentGDatum) {
         this.studentGDatum = studentGDatum;
     }

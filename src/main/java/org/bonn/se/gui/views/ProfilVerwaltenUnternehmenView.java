@@ -5,7 +5,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-import org.bonn.se.control.BewertungControl;
 import org.bonn.se.control.ProfilControl;
 import org.bonn.se.gui.component.TopPanelUser;
 import org.bonn.se.gui.component.UnternehmenBeschreibungView;
@@ -16,7 +15,6 @@ import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.dialogs.DefaultConfirmDialogFactory;
-import org.vaadin.teemu.ratingstars.RatingStars;
 
 public class ProfilVerwaltenUnternehmenView extends GridLayout implements View {
     private final Unternehmen unternehmen = (Unternehmen) UI.getCurrent().getSession().getAttribute(Roles.UNTERNEHMEN);

@@ -29,7 +29,7 @@ public class FeatureToggleControl {
    public void setSMTPFeature(boolean status) {
        try {
            FeatureToggleDAO.getInstance().setFeatureSMTP(status);
-       } catch (DatabaseException | SQLException e) {
+       } catch (DatabaseException e) {
            e.printStackTrace();
        }
    }

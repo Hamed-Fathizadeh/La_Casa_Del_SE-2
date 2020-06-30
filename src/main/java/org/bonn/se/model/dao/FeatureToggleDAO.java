@@ -42,7 +42,7 @@ public class FeatureToggleDAO {
         return true;
     }
 
-    public void setFeatureSMTP(boolean status) throws DatabaseException, SQLException {
+    public void setFeatureSMTP(boolean status) throws DatabaseException {
         Statement statement = null;
         try {
             statement = JDBCConnection.getInstance().getStatement();

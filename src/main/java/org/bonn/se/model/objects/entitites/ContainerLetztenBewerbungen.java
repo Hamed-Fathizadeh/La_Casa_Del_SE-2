@@ -54,10 +54,6 @@ public class ContainerLetztenBewerbungen {
         }
     }
 
-    public BewerbungDTO getBewerbung(int i){
-        return liste.get(i);
-    }
-
     public List<BewerbungDTO> getListe(){
         return liste;
     }

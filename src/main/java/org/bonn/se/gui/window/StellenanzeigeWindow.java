@@ -36,10 +36,8 @@ public class StellenanzeigeWindow extends Window {
         try {
             Unternehmen unternehmenData =  UserDAO.getUnternehmenByStellAnz(stellenanzeige);
             setUp(stellenanzeige, unternehmenData);
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             Logger.getLogger(StellenanzeigeWindow.class.getName()).log(Level.SEVERE, null, e);
-        } catch (SQLException throwables) {
-            Logger.getLogger(StellenanzeigeWindow.class.getName()).log(Level.SEVERE,null,throwables);
         }
 
     }

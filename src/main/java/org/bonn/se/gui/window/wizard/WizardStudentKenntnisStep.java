@@ -1,6 +1,5 @@
 package org.bonn.se.gui.window.wizard;
 
-import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.UI;
@@ -11,14 +10,8 @@ import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
 import org.vaadin.teemu.wizards.WizardStep;
 
-import java.util.ArrayList;
-
 public class WizardStudentKenntnisStep implements WizardStep {
 
-        ArrayList<Student.SprachKenntnis> sprachKenntnisArrayList;
-        Binder<Student.SprachKenntnis> binder1;
-        Binder<Student.ITKenntnis> binder;
-        ArrayList<Student.ITKenntnis> itKenntnisArrayList;
         StudentKenntnisView studentKenntnisView;
         @Override
         public String getCaption() {

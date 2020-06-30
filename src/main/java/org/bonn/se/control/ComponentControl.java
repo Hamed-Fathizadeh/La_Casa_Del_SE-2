@@ -29,10 +29,8 @@ public class ComponentControl {
     public List<String> getBranche ()  {
         try {
             return SuchbegriffDAO.getInstance().getBranche();
-        } catch (SQLException throwables) {
+        } catch (SQLException | DatabaseException throwables) {
             Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, throwables);
-        } catch (DatabaseException e) {
-            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;
     }
@@ -41,10 +39,8 @@ public class ComponentControl {
 
         try {
             return OrtDAO.getInstance().getOrt();
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, e);
-        } catch (SQLException throwables) {
-            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, throwables);
         }
         return null;
     }
@@ -52,10 +48,8 @@ public class ComponentControl {
     public List<String> getBund ()  {
         try {
             return OrtDAO.getInstance().getBund();
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, e);
-        } catch (SQLException throwables) {
-            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, throwables);
         }
         return null;
     }
@@ -63,20 +57,16 @@ public class ComponentControl {
     public Collection<String> getAbschluss ()  {
         try {
             return SuchbegriffDAO.getInstance().getAbschluss();
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, e);
-        } catch (SQLException throwables) {
-            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, throwables);
         }
         return null;
     }
     public Collection<String> getSpracheNiveau ()  {
         try {
             return SuchbegriffDAO.getInstance().getSpracheNiveau();
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, e);
-        } catch (SQLException throwables) {
-            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, throwables);
         }
         return null;
     }
@@ -84,10 +74,8 @@ public class ComponentControl {
     public Collection<String> getITNiveau ()  {
         try {
             return SuchbegriffDAO.getInstance().getITNiveau();
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, e);
-        } catch (SQLException throwables) {
-            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, throwables);
         }
         return null;
     }
@@ -96,10 +84,8 @@ public class ComponentControl {
     public Collection<String> getEinstellungsArt()  {
         try {
             return SuchbegriffDAO.getInstance().getEinstellungsart();
-        } catch (DatabaseException e) {
+        } catch (DatabaseException | SQLException e) {
             Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, e);
-        } catch (SQLException throwables) {
-            Logger.getLogger(ComponentControl.class.getName()).log(Level.SEVERE, null, throwables);
         }
         return null;
     }

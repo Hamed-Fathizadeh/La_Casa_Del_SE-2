@@ -20,7 +20,6 @@ public class StudentDatenView extends GridLayout {
     private UploadField uploadProfil;
     private Image image = ImageConverter.getUnknownProfilImage();
     private UploadField lebenslauf;
-    private Label filename;
     private FormLayout form1;
     private Link link = new Link();
 
