@@ -4,7 +4,6 @@ package junit.Mockito;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
-import junit.util.StudentBuilder;
 import org.bonn.se.control.LoginControl;
 import org.bonn.se.control.exception.NoSuchUserOrPassword;
 import org.bonn.se.gui.component.Anzeigen;
@@ -13,7 +12,6 @@ import org.bonn.se.gui.views.StudentHomeView;
 import org.bonn.se.gui.views.UnternehmenHomeView;
 import org.bonn.se.gui.window.BewerbungWindow;
 import org.bonn.se.gui.window.StellenanzeigeWindow;
-import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Adresse;
@@ -21,7 +19,6 @@ import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.Roles;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,14 +38,11 @@ import static org.mockito.Mockito.when;
 public class MockitoTest {
 
 
-    Student student = new StudentBuilder()
-                .withVorname("Tobias")
-                .withNachname("Fellechner")
-                .withPasswort("12345678")
-                .withEmail("abc@abc.de")
-                .createStudent();
-    Unternehmen unternehmen;
 
+    Student student;
+    Unternehmen unternehmen;
+    public static final String USERNAME = "tobias.fellechner@365h-brs.de";
+    public static final String login = "12345678";
 
     @Mock
     private UI ui;
@@ -60,31 +54,26 @@ public class MockitoTest {
     Navigator navigator;
 
     @Before
-    public void init() throws DatabaseException {
+    public void init() {
         UI.setCurrent(ui);
         when(ui.getSession()).thenReturn(vaadinSession);
         when(ui.getNavigator()).thenReturn(navigator);
-
-        UserDAO.getInstance().registerUser(student);
     }
-    @After
-    public void ende() throws DatabaseException, SQLException {
-       UserDAO.deleteUser(student);
-    }
-
 
     @Test
-    public void testLogin() throws DatabaseException, NoSuchUserOrPassword, SQLException {
+    public void buttonClick() throws DatabaseException, NoSuchUserOrPassword, SQLException {
         LoginControl loginControl = Mockito.mock(LoginControl.class);
-        Mockito.doCallRealMethod().when(loginControl).checkAuthentication(student.getEmail(),student.getPasswort());
-        LoginControl.getInstance().checkAuthentication(student.getEmail(),student.getPasswort());
+        Mockito.doCallRealMethod().when(loginControl).checkAuthentication(USERNAME,login);
+        LoginControl.getInstance().checkAuthentication(USERNAME,login);
         when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(true);
         //verify
     }
 
     @Test
     public void testStudentHomeView() throws DatabaseException, SQLException {
-
+        student = new Student();
+        student.setEmail("abc.de");
+        student.setVorname("Test");
         when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(student);
 
         StudentHomeView studentHomeView = new StudentHomeView();
@@ -103,8 +92,6 @@ public class MockitoTest {
     }
 
 
-
-
     //Putriana Test
     List<StellenanzeigeDTO> dataInput;
     Anzeigen anz;
@@ -112,7 +99,9 @@ public class MockitoTest {
 
     @Test
     public void getTest() {
-
+        student = new Student();
+        student.setEmail("abc.de");
+        student.setVorname("Test");
         when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(student);
         // Assert.assertTrue( instanceof  );
         dataInput = new ArrayList<StellenanzeigeDTO>();
@@ -139,6 +128,16 @@ public class MockitoTest {
 
     @Test
     public void testStudentView() {
+        student = new Student();
+        student.setEmail("abc.de");
+        student.setVorname("Test");
+        student.setStudiengang("");
+        student.setAusbildung("");
+        student.setKontaktNr("");
+        Adresse adresse = new Adresse();
+        adresse.setPlz("0");
+        student.setAdresse(adresse);
+        when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(student);
         StudentDatenView studentDatenView = new StudentDatenView();
         studentDatenView.setStudentValue();
 
@@ -160,11 +159,6 @@ public class MockitoTest {
         unternehmen = new Unternehmen();
         unternehmen.setEmail("abc.de");
         unternehmen.setCname("Test");
-        unternehmen.setPasswort("11111111");
-        unternehmen.setVorname("vorname");
-        unternehmen.setNachname("nachname");
-        unternehmen.setHauptsitz("Bonn");
-        unternehmen.setBundesland("Nordrhein-Westfalen");
         when(vaadinSession.getAttribute(Roles.UNTERNEHMEN)).thenReturn(unternehmen);
         StellenanzeigeDTO stellenanzeigeDTO = new StellenanzeigeDTO();
         stellenanzeigeDTO.setId(102);
@@ -173,11 +167,11 @@ public class MockitoTest {
         StellenanzeigeWindow stellenanzeigeWindow = new StellenanzeigeWindow(stellenanzeigeDTO);
     }
 
-
-
     @Test
     public void testBewerbungUnternehmen() {
-
+        student = new Student();
+        student.setEmail("abc.de");
+        student.setVorname("Test");
         Adresse adresse = new Adresse();
         student.setAdresse(adresse);
         when(vaadinSession.getAttribute(Roles.STUDENT)).thenReturn(student);

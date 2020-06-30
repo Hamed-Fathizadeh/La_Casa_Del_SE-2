@@ -1,5 +1,6 @@
 
 package junit;
+/*
 import org.bonn.se.model.dao.BewerbungDAO;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.junit.Test;
@@ -22,3 +23,5 @@ public class BewerbungDAOTest {
         Assertions.assertNull(bewerb.downloadLebenslauf(16,"Markus","Müller"));
     }
 }
+
+ */
