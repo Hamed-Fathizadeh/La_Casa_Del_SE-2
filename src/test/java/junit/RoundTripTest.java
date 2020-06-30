@@ -19,18 +19,20 @@ public class RoundTripTest {
             .withPasswort("12345678")
             .withEmail("abc@abc.de")
             .createStudent();
-    //RoundTripTest mit Builder
-    //C-R-Ass-D
+
     @Test
     public void createReadDeleteStudent() throws DatabaseException, SQLException {
+
         UserDAO.getInstance().registerUser(student);
+
         Assert.assertEquals("S",UserDAO.getInstance().getUserType(student.getEmail()));
         Assert.assertTrue(UserDAO.getInstance().getUserbyEmail(student.getEmail()));
 
 
         System.out.println("Create erfolgreich");
 
-        User actual = UserDAO.getInstance().getUser(student.getEmail());
+        User actual = UserDAO.getInstance()
+                .getUser(student.getEmail());
         Assert.assertEquals(student.getVorname(),actual.getVorname());
         Assert.assertEquals(student.getNachname(),actual.getNachname());
         Assert.assertEquals(student.getPasswort(),actual.getPasswort());
