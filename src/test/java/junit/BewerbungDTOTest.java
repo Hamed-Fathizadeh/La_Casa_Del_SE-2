@@ -1,5 +1,7 @@
 package junit;
 import org.bonn.se.model.objects.dto.BewerbungDTO;
+import org.bonn.se.services.util.ConcreteFactoryCollHbrs;
+import org.bonn.se.services.util.DTOFactory;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -28,7 +30,9 @@ public class BewerbungDTOTest {
     private boolean bewerbungMarkiert=true;
 
 
-    BewerbungDTO bewerb = new BewerbungDTO();
+
+    DTOFactory bewerbungF = new ConcreteFactoryCollHbrs();
+    BewerbungDTO bewerb = bewerbungF.createBewerbungDTO();
     @Test
     public void setUp() {
         bewerb.setAnzeigeID(anzeigeID);

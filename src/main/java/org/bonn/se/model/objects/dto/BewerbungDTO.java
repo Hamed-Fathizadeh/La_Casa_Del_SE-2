@@ -4,262 +4,105 @@ import com.vaadin.ui.Image;
 import org.bonn.se.services.util.ImageConverter;
 
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.Objects;
 
-public class BewerbungDTO {
-    private int bewerbungID;
-    private Date datum;
-    private String description;
-    private byte[] lebenslauf;
-    private int status;
-    private int studentID;
-    private String unternehmenName;
-    private String unternehmenHauptsitz;
-    private Image unternehmenLogo;
-    private String sTitel;
-    private double rating;
-    private String emailStudent;
-    private Date studentGDatum;
-    private String studentStudiengang;
-    private String studentAusbildung;
-    private String studentKontaktNr;
-    private int studentBenachrichtigung;
-    private Image studentPicture;
-    private String studentHoesterAbschluss;
-    private String studentVorname;
-    private String studentNachname;
-    private boolean bewerbungMarkiert;
-
-    public boolean isBewerbungMarkiert() {
-        return bewerbungMarkiert;
-    }
-
-    public void setBewerbungMarkiert(boolean bewerbungMarkiert) {
-        this.bewerbungMarkiert = bewerbungMarkiert;
-    }
+public interface  BewerbungDTO extends AbstractBewerbungDTO{
 
 
-    public void setStudentGDatum(Date studentGDatum) {
-        this.studentGDatum = studentGDatum;
-    }
+    boolean isBewerbungMarkiert();
 
-    public String getStudentStudiengang() {
-        return studentStudiengang;
-    }
-
-    public void setStudentStudiengang(String studentStudiengang) {
-        this.studentStudiengang = studentStudiengang;
-    }
-
-    public String getStudentAusbildung() {
-        return studentAusbildung;
-    }
-
-    public void setStudentAusbildung(String studentAusbildung) {
-        this.studentAusbildung = studentAusbildung;
-    }
-
-    public String getStudentKontaktNr() {
-        return studentKontaktNr;
-    }
-
-    public void setStudentKontaktNr(String studentKontaktNr) {
-        this.studentKontaktNr = studentKontaktNr;
-    }
-
-    public int getStudentBenachrichtigung() {
-        return studentBenachrichtigung;
-    }
-
-    public void setStudentBenachrichtigung(int studentBenachrichtigung) {
-        this.studentBenachrichtigung = studentBenachrichtigung;
-    }
-
-    public Image getStudentPicture() {
-        return studentPicture;
-    }
-
-    public String getStudentHoesterAbschluss() {
-        return studentHoesterAbschluss;
-    }
-
-    public void setStudentHoesterAbschluss(String studentHoesterAbschluss) {
-        this.studentHoesterAbschluss = studentHoesterAbschluss;
-    }
-
-    public String getStudentVorname() {
-        return studentVorname;
-    }
-
-    public void setStudentVorname(String studentVorname) {
-        this.studentVorname = studentVorname;
-    }
-
-    public String getStudentNachname() {
-        return studentNachname;
-    }
-
-    public void setStudentNachname(String studentNachname) {
-        this.studentNachname = studentNachname;
-    }
-
-    public String getUnternehmenHauptsitz() {
-        return unternehmenHauptsitz;
-    }
-
-    public void setUnternehmenHauptsitz(String unternehmenHauptsitz) {
-        this.unternehmenHauptsitz = unternehmenHauptsitz;
-    }
-
-    public String getEmailStudent() {
-        return emailStudent;
-    }
-
-    public void setEmailStudent(String emailStudent) {
-        this.emailStudent = emailStudent;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public String getTitel() {
-        return sTitel;
-    }
+     void setBewerbungMarkiert(boolean bewerbungMarkiert);
 
 
-    public String getUnternehmenName() {
-        return unternehmenName;
-    }
+     void setStudentGDatum(Date studentGDatum);
 
-    public void setUnternehmenName(String unternehmenName) {
-        this.unternehmenName=unternehmenName;
-    }
+     String getStudentStudiengang();
 
-    public Image getUnternehmenLogo() {
-        return unternehmenLogo;
-    }
+     void setStudentStudiengang(String studentStudiengang);
 
-    public BewerbungDTO(){
+     String getStudentAusbildung();
 
-    }
+     void setStudentAusbildung(String studentAusbildung);
 
-    public BewerbungDTO(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
-                        String unternehmenName, String unternehmenHauptsitz, byte[] unternehmenLogo, String emailStudent, String sTitel,
-                        Date studentGDatum, String studentStudiengang, String studentAusbildung, String  studentKontaktNr, int studentBenachrichtigung,
-                        byte[] studentPicture, String studentHoesterAbschluss, String studentVorname, String studentNachname, double rating, boolean bewerbungMarkiert
-    ) {
-        this.bewerbungID = bewerbungID;
-        this.datum = datum;
-        this.description = description;
-        this.lebenslauf = lebenslauf;
-        this.status = status;
-        this.studentID = studentID;
-        this.anzeigeID = anzeigeID;
-        this.unternehmenName = unternehmenName;
-        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
-        this.sTitel = sTitel;
-        this.rating = rating;
-        this.emailStudent = emailStudent;
-        this.unternehmenHauptsitz = unternehmenHauptsitz;
-        this.studentGDatum = studentGDatum;
-        this.studentStudiengang =  studentStudiengang;
-        this.studentAusbildung = studentAusbildung;
-        this.studentKontaktNr = studentKontaktNr;
-        this.studentBenachrichtigung = studentBenachrichtigung;
-        this.studentPicture = ImageConverter.convertImagetoMenu(studentPicture);
-        this.studentHoesterAbschluss = studentHoesterAbschluss;
-        this.studentVorname = studentVorname;
-        this.studentNachname = studentNachname;
-        this.bewerbungMarkiert = bewerbungMarkiert;
+     String getStudentKontaktNr();
 
+     void setStudentKontaktNr(String studentKontaktNr);
 
+     int getStudentBenachrichtigung();
 
-    }
+     void setStudentBenachrichtigung(int studentBenachrichtigung) ;
 
-    public BewerbungDTO(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
-                        String unternehmenName,String unternehmenHauptsitz, byte[] unternehmenLogo,String emailStudent, String sTitel, double rating) {
-        this.bewerbungID = bewerbungID;
-        this.datum = datum;
-        this.description = description;
-        this.lebenslauf = lebenslauf;
-        this.status = status;
-        this.studentID = studentID;
-        this.anzeigeID = anzeigeID;
-        this.unternehmenName = unternehmenName;
-        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
-        this.sTitel = sTitel;
-        this.rating = rating;
-        this.emailStudent = emailStudent;
-        this.unternehmenHauptsitz = unternehmenHauptsitz;
+     Image getStudentPicture();
 
-    }
+     String getStudentHoesterAbschluss();
+
+     void setStudentHoesterAbschluss(String studentHoesterAbschluss) ;
+
+     String getStudentVorname();
+
+     void setStudentVorname(String studentVorname);
+
+     String getStudentNachname();
+
+     void setStudentNachname(String studentNachname);
+
+     String getUnternehmenHauptsitz();
+
+     void setUnternehmenHauptsitz(String unternehmenHauptsitz) ;
+
+     String getEmailStudent();
+
+     void setEmailStudent(String emailStudent);
+
+     double getRating();
+
+     void setRating(double rating);
+
+     String getTitel();
 
 
-    private int anzeigeID;
+     String getUnternehmenName();
 
-    public int getBewerbungID() {
-        return bewerbungID;
-    }
+     void setUnternehmenName(String unternehmenName);
 
-    public void setBewerbungID(int bewerbungID) {
-        this.bewerbungID = bewerbungID;
-    }
+     Image getUnternehmenLogo();
 
-    public Date getDatum() {
-        return datum;
-    }
 
-    public void setDatum(Date datum) {
-        this.datum = datum;
-    }
+     int getBewerbungID();
 
-    public String getDescription() {
-        return description;
-    }
+     void setBewerbungID(int bewerbungID);
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+     Date getDatum();
 
-    public byte[] getLebenslauf() {
-        return lebenslauf;
-    }
+     void setDatum(Date datum);
 
-    public void setLebenslauf(byte[] lebenslauf) {
-        this.lebenslauf = lebenslauf;
-    }
+     String getDescription();
 
-    public int getStatus() {
-        return status;
-    }
+     void setDescription(String description);
 
-    public void setStatus(int status) {
-        this.status = status;
-    }
+     byte[] getLebenslauf() ;
 
-    public int getStudentID() {
-        return studentID;
-    }
+     void setLebenslauf(byte[] lebenslauf) ;
 
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
-    }
+     int getStatus();
 
-    public int getAnzeigeID() {
-        return anzeigeID;
-    }
+     void setStatus(int status);
 
-    public void setAnzeigeID(int anzeigeID) {
-        this.anzeigeID = anzeigeID;
-    }
+     int getStudentID();
 
-    public String toString(){
-        return "BewerbungID : "+getBewerbungID()+" UnternehmenName  : "+ getUnternehmenName();
-    }
+     void setStudentID(int studentID);
+
+     int getAnzeigeID();
+
+     void setAnzeigeID(int anzeigeID);
+
+
+    @Override
+     String toString() ;
+
+    @Override
+     boolean equals(Object o) ;
 
 
 }

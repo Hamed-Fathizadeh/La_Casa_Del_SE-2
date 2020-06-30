@@ -1,8 +1,10 @@
 package org.bonn.se.model.dao;
 
 import org.bonn.se.model.objects.dto.BewerbungDTO;
+import org.bonn.se.model.objects.dto.BewerbungDTOCollHbrs;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.ConcreteFactoryCollHbrs;
 import org.bonn.se.services.util.DTOFactory;
 
 import java.sql.ResultSet;
@@ -12,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static org.bonn.se.services.util.ConcreteFactoryCollHbrs.*;
 
 public class ContainerBewerbungDAO {
 
@@ -38,12 +42,17 @@ public class ContainerBewerbungDAO {
 
 
             while (set.next()) {
-                BewerbungDTO bewerbung = DTOFactory.createBewerbungDTO(set.getInt(1),set.getDate(2),set.getString(3),
-                                                          set.getBytes(4),set.getInt(5),set.getInt(6),
-                                                          set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
-                                                          set.getString(11),set.getString(12),set.getDouble(22)
-                                                         );
-                liste.add(bewerbung);
+
+                DTOFactory bewerbung = new ConcreteFactoryCollHbrs();
+                BewerbungDTO res = bewerbung.createBewerbungDTO(set.getInt(1),set.getDate(2),set.getString(3),
+                        set.getBytes(4),set.getInt(5),set.getInt(6),
+                        set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
+                        set.getString(11),set.getString(12),set.getDouble(22)
+                );
+
+
+
+                liste.add(res);
 
 
             }
@@ -94,7 +103,8 @@ public class ContainerBewerbungDAO {
 
 
             while (set.next()) {
-                BewerbungDTO bewerbung = DTOFactory.createBewerbungDTO(
+                DTOFactory bewerbung = new ConcreteFactoryCollHbrs();
+                BewerbungDTO res = bewerbung.createBewerbungDTO(
                                                             set.getInt(1),set.getDate(2),set.getString(3),
                                                             set.getBytes(4),set.getInt(5),set.getInt(6),
                                                             set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
@@ -103,7 +113,9 @@ public class ContainerBewerbungDAO {
                                                             set.getString(19),set.getString(20),set.getString(21),
                                                             set.getDouble(22),set.getBoolean(23)
                                                         );
-                liste.add(bewerbung);
+
+                liste.add(res);
+
 
 
             }

@@ -13,9 +13,7 @@ import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Taetigkeit;
 import org.bonn.se.services.db.exception.DatabaseException;
-import org.bonn.se.services.util.ImageConverter;
-import org.bonn.se.services.util.PdfUploader;
-import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.*;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -175,8 +173,9 @@ public class BewerbungWindow extends CustomWindow {
             mainGridLayout.setComponentAlignment(bewerben, Alignment.BOTTOM_RIGHT);
 
             bewerben.addClickListener((Button.ClickListener) event -> {
+                DTOFactory bewerbungF = new ConcreteFactoryCollHbrs();
+                BewerbungDTO bewerbungDTO = bewerbungF.createBewerbungDTO();
 
-                BewerbungDTO bewerbungDTO = new BewerbungDTO();
                 bewerbungDTO.setDescription(richTextArea.getValue());
                 bewerbungDTO.setLebenslauf(PdfUploader.getByte());
                 bewerbungDTO.setStatus(9);

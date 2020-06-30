@@ -18,6 +18,8 @@ import org.bonn.se.model.objects.entitites.Adresse;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.ConcreteFactoryCollHbrs;
+import org.bonn.se.services.util.DTOFactory;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.Views;
 import org.junit.Before;
@@ -185,7 +187,8 @@ public class MockitoTest {
         stellenanzeigeDTO.setId(102);
         stellenanzeigeDTO.setFirmenname("BargoBank");
         stellenanzeigeDTO.setBeschreibung("Test");
-        BewerbungDTO bewerbungDTO = new BewerbungDTO();
+        DTOFactory bewerbungF = new ConcreteFactoryCollHbrs();
+        BewerbungDTO bewerbungDTO = bewerbungF.createBewerbungDTO();
         BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeigeDTO,"Student",bewerbungDTO);
     }
 
