@@ -101,18 +101,22 @@ public class RegisterStudentView extends GridLayout implements View {
         binder.setBean(user);
 
         ThemeResource resource = new ThemeResource("img/RegisterStudent/student_pic.png");
-
+        ThemeResource resources = new ThemeResource("img/RegisterStudent/Job_finden.png");
 
         Image bildStudent = new Image(null,resource);
+        Image bild_Register = new Image(null,resources);
 
         formStudent.setMargin(false);
         this.addComponent(topPanelStudent, 0, 0, 9, 1);
         this.addComponent(formStudent, 0, 5, 0, 5);
         this.addComponent(bildStudent, 9, 5, 9, 5);
+        this.addComponent(bild_Register, 1, 6, 1, 6);
         this.setComponentAlignment(topPanelStudent, Alignment.TOP_LEFT);
         this.setComponentAlignment(formStudent, Alignment.MIDDLE_LEFT);
 
         this.setComponentAlignment(bildStudent, Alignment.MIDDLE_RIGHT);
+        this.setComponentAlignment(bild_Register, Alignment.MIDDLE_LEFT);
+
 
 
         this.setMargin(false);
