@@ -85,7 +85,7 @@ public class StellenanzeigeWindow extends Window {
         Label titel = new Label("<h2><b>"+stellenanzeige.getTitel()+"</font></b></h3>" ,ContentMode.HTML);
         Label unternehmensbeschreibungLabel = new Label("<h3><b><font color=\"blue\">Informationen über das Unternehmen</font></b></h3>",ContentMode.HTML);
         RichTextArea unternehmensbeschreibung = new RichTextArea();
-        unternehmensbeschreibung.setValue(unternehmenData.getDescription());
+        unternehmensbeschreibung.setValue(unternehmenData.getDescription() == null ? "Keine Angabe" :unternehmenData.getDescription());
         unternehmensbeschreibung.setReadOnly(true);
         unternehmensbeschreibung.setWidth("600px");
 
