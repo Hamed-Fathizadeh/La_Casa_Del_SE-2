@@ -24,7 +24,8 @@ public class TestUtil {
     }
     @Test
     public void utilDTOFactory() {
-        DTOFactory.createBewerbungDTO(1,null,"Test",null ,1,1,1,"name","bonn"
+        DTOFactory bewerbung = new ConcreteFactoryCollHbrs();
+        bewerbung.createBewerbungDTO(1,null,"Test",null ,1,1,1,"name","bonn"
                 ,null,"email","titel",null,"studium","ausbildung","konakt",1,null,"abschluss","vorname","nachname",0.0,true);
     }
     @Test
