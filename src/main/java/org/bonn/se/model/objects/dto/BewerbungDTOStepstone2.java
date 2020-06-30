@@ -261,34 +261,33 @@ package org.bonn.se.model.objects.dto;
          this.anzeigeID = anzeigeID;
      }
 
-
      @Override
      public String toString() {
-         return "BewerbungDTO{" +
-                 "bewerbungID=" + bewerbungID +
-                 ", datum=" + datum +
-                 ", description='" + description + '\'' +
-                 ", lebenslauf=" + Arrays.toString(lebenslauf) +
-                 ", status=" + status +
-                 ", studentID=" + studentID +
-                 ", unternehmenName='" + unternehmenName + '\'' +
-                 ", unternehmenHauptsitz='" + unternehmenHauptsitz + '\'' +
-                 ", unternehmenLogo=" + unternehmenLogo +
-                 ", sTitel='" + sTitel + '\'' +
-                 ", rating=" + rating +
-                 ", emailStudent='" + emailStudent + '\'' +
-                 ", studentGDatum=" + studentGDatum +
-                 ", studentStudiengang='" + studentStudiengang + '\'' +
-                 ", studentAusbildung='" + studentAusbildung + '\'' +
-                 ", studentKontaktNr='" + studentKontaktNr + '\'' +
-                 ", studentBenachrichtigung=" + studentBenachrichtigung +
-                 ", studentPicture=" + studentPicture +
-                 ", studentHoesterAbschluss='" + studentHoesterAbschluss + '\'' +
-                 ", studentVorname='" + studentVorname + '\'' +
-                 ", studentNachname='" + studentNachname + '\'' +
-                 ", bewerbungMarkiert=" + bewerbungMarkiert +
-                 ", anzeigeID=" + anzeigeID +
-                 '}';
+         return "{\"BewerbungDTOStepstone2\":{"
+                 + "                        \"bewerbungID\":\"" + bewerbungID + "\""
+                 + ",                         \"datum\":" + datum
+                 + ",                         \"description\":\"" + description + "\""
+                 + ",                         \"lebenslauf\":" + "Arrays.toString(lebenslauf)"
+                 + ",                         \"status\":\"" + status + "\""
+                 + ",                         \"studentID\":\"" + studentID + "\""
+                 + ",                         \"unternehmenName\":\"" + unternehmenName + "\""
+                 + ",                         \"unternehmenHauptsitz\":\"" + unternehmenHauptsitz + "\""
+                 + ",                         \"unternehmenLogo\":" + "unternehmenLogo"
+                 + ",                         \"sTitel\":\"" + sTitel + "\""
+                 + ",                         \"rating\":\"" + rating + "\""
+                 + ",                         \"emailStudent\":\"" + emailStudent + "\""
+                 + ",                         \"studentGDatum\":" + studentGDatum
+                 + ",                         \"studentStudiengang\":\"" + studentStudiengang + "\""
+                 + ",                         \"studentAusbildung\":\"" + studentAusbildung + "\""
+                 + ",                         \"studentKontaktNr\":\"" + studentKontaktNr + "\""
+                 + ",                         \"studentBenachrichtigung\":\"" + studentBenachrichtigung + "\""
+                 + ",                         \"studentPicture\":" + "studentPicture"
+                 + ",                         \"studentHoesterAbschluss\":\"" + studentHoesterAbschluss + "\""
+                 + ",                         \"studentVorname\":\"" + studentVorname + "\""
+                 + ",                         \"studentNachname\":\"" + studentNachname + "\""
+                 + ",                         \"bewerbungMarkiert\":\"" + bewerbungMarkiert + "\""
+                 + ",                         \"anzeigeID\":\"" + anzeigeID + "\""
+                 + "}}";
      }
 
      @Override
