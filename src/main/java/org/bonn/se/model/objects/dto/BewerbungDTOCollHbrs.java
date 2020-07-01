@@ -6,7 +6,8 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class BewerbungDTOCollHbrs implements BewerbungDTO{
+public class BewerbungDTOCollHbrs extends BewerbungDTO{
+
     private int bewerbungID;
     private Date datum;
     private String description;
@@ -29,6 +30,7 @@ public class BewerbungDTOCollHbrs implements BewerbungDTO{
     private String studentVorname;
     private String studentNachname;
     private boolean bewerbungMarkiert;
+    private int anzeigeID;
 
     public boolean isBewerbungMarkiert() {
         return bewerbungMarkiert;
@@ -144,63 +146,7 @@ public class BewerbungDTOCollHbrs implements BewerbungDTO{
         return unternehmenLogo;
     }
 
-    public BewerbungDTOCollHbrs(){
-
-    }
-
-    public BewerbungDTOCollHbrs(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
-                        String unternehmenName, String unternehmenHauptsitz, byte[] unternehmenLogo, String emailStudent, String sTitel,
-                        Date studentGDatum, String studentStudiengang, String studentAusbildung, String  studentKontaktNr, int studentBenachrichtigung,
-                        byte[] studentPicture, String studentHoesterAbschluss, String studentVorname, String studentNachname, double rating, boolean bewerbungMarkiert
-    ) {
-        this.bewerbungID = bewerbungID;
-        this.datum = datum;
-        this.description = description;
-        this.lebenslauf = lebenslauf;
-        this.status = status;
-        this.studentID = studentID;
-        this.anzeigeID = anzeigeID;
-        this.unternehmenName = unternehmenName;
-        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
-        this.sTitel = sTitel;
-        this.rating = rating;
-        this.emailStudent = emailStudent;
-        this.unternehmenHauptsitz = unternehmenHauptsitz;
-        this.studentGDatum = studentGDatum;
-        this.studentStudiengang =  studentStudiengang;
-        this.studentAusbildung = studentAusbildung;
-        this.studentKontaktNr = studentKontaktNr;
-        this.studentBenachrichtigung = studentBenachrichtigung;
-        this.studentPicture = ImageConverter.convertImagetoMenu(studentPicture);
-        this.studentHoesterAbschluss = studentHoesterAbschluss;
-        this.studentVorname = studentVorname;
-        this.studentNachname = studentNachname;
-        this.bewerbungMarkiert = bewerbungMarkiert;
-
-
-
-    }
-
-    public BewerbungDTOCollHbrs(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
-                        String unternehmenName,String unternehmenHauptsitz, byte[] unternehmenLogo,String emailStudent, String sTitel, double rating) {
-        this.bewerbungID = bewerbungID;
-        this.datum = datum;
-        this.description = description;
-        this.lebenslauf = lebenslauf;
-        this.status = status;
-        this.studentID = studentID;
-        this.anzeigeID = anzeigeID;
-        this.unternehmenName = unternehmenName;
-        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
-        this.sTitel = sTitel;
-        this.rating = rating;
-        this.emailStudent = emailStudent;
-        this.unternehmenHauptsitz = unternehmenHauptsitz;
-
-    }
-
-
-    private int anzeigeID;
+    public BewerbungDTOCollHbrs(){ }
 
     public int getBewerbungID() {
         return bewerbungID;
@@ -257,6 +203,59 @@ public class BewerbungDTOCollHbrs implements BewerbungDTO{
     public void setAnzeigeID(int anzeigeID) {
         this.anzeigeID = anzeigeID;
     }
+
+    public BewerbungDTOCollHbrs(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
+                        String unternehmenName, String unternehmenHauptsitz, byte[] unternehmenLogo, String emailStudent, String sTitel,
+                        Date studentGDatum, String studentStudiengang, String studentAusbildung, String  studentKontaktNr, int studentBenachrichtigung,
+                        byte[] studentPicture, String studentHoesterAbschluss, String studentVorname, String studentNachname, double rating, boolean bewerbungMarkiert
+    ) {
+        this.bewerbungID = bewerbungID;
+        this.datum = datum;
+        this.description = description;
+        this.lebenslauf = lebenslauf;
+        this.status = status;
+        this.studentID = studentID;
+        this.anzeigeID = anzeigeID;
+        this.unternehmenName = unternehmenName;
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
+        this.sTitel = sTitel;
+        this.rating = rating;
+        this.emailStudent = emailStudent;
+        this.unternehmenHauptsitz = unternehmenHauptsitz;
+        this.studentGDatum = studentGDatum;
+        this.studentStudiengang =  studentStudiengang;
+        this.studentAusbildung = studentAusbildung;
+        this.studentKontaktNr = studentKontaktNr;
+        this.studentBenachrichtigung = studentBenachrichtigung;
+        this.studentPicture = ImageConverter.convertImagetoMenu(studentPicture);
+        this.studentHoesterAbschluss = studentHoesterAbschluss;
+        this.studentVorname = studentVorname;
+        this.studentNachname = studentNachname;
+        this.bewerbungMarkiert = bewerbungMarkiert;
+
+
+
+    }
+
+    public BewerbungDTOCollHbrs(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
+                        String unternehmenName,String unternehmenHauptsitz, byte[] unternehmenLogo,String emailStudent, String sTitel, double rating) {
+        this.bewerbungID = bewerbungID;
+        this.datum = datum;
+        this.description = description;
+        this.lebenslauf = lebenslauf;
+        this.status = status;
+        this.studentID = studentID;
+        this.anzeigeID = anzeigeID;
+        this.unternehmenName = unternehmenName;
+        this.unternehmenLogo = ImageConverter.convertImagetoMenu(unternehmenLogo);
+        this.sTitel = sTitel;
+        this.rating = rating;
+        this.emailStudent = emailStudent;
+        this.unternehmenHauptsitz = unternehmenHauptsitz;
+
+    }
+
+
 
 
     @Override

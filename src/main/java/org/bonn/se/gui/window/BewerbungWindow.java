@@ -173,7 +173,7 @@ public class BewerbungWindow extends CustomWindow {
             mainGridLayout.setComponentAlignment(bewerben, Alignment.BOTTOM_RIGHT);
 
             bewerben.addClickListener((Button.ClickListener) event -> {
-                DTOFactory bewerbungF = new ConcreteFactoryCollHbrs();
+                ConcreteFactoryCollHbrs bewerbungF = new ConcreteFactoryCollHbrs();
                 BewerbungDTO bewerbungDTO = bewerbungF.createBewerbungDTO();
 
                 bewerbungDTO.setDescription(richTextArea.getValue());

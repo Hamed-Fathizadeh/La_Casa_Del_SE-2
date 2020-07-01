@@ -31,7 +31,7 @@ public class BewerbungDTOTest {
 
 
 
-    DTOFactory bewerbungF = new ConcreteFactoryCollHbrs();
+    ConcreteFactoryCollHbrs bewerbungF = new ConcreteFactoryCollHbrs();
     BewerbungDTO bewerb = bewerbungF.createBewerbungDTO();
     @Test
     public void setUp() {

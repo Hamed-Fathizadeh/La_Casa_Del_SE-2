@@ -187,7 +187,7 @@ public class MockitoTest {
         stellenanzeigeDTO.setId(102);
         stellenanzeigeDTO.setFirmenname("BargoBank");
         stellenanzeigeDTO.setBeschreibung("Test");
-        DTOFactory bewerbungF = new ConcreteFactoryCollHbrs();
+        ConcreteFactoryCollHbrs bewerbungF = new ConcreteFactoryCollHbrs();
         BewerbungDTO bewerbungDTO = bewerbungF.createBewerbungDTO();
         BewerbungWindow bewerbungWindow = new BewerbungWindow(stellenanzeigeDTO,"Student",bewerbungDTO);
     }

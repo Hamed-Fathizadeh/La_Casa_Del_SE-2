@@ -41,23 +41,17 @@ public class ContainerBewerbungDAO {
 
             while (set.next()) {
 
-                DTOFactory bewerbung = new ConcreteFactoryCollHbrs();
+                ConcreteFactoryCollHbrs bewerbung = new ConcreteFactoryCollHbrs();
                 BewerbungDTO res = bewerbung.createBewerbungDTO(set.getInt(1),set.getDate(2),set.getString(3),
                         set.getBytes(4),set.getInt(5),set.getInt(6),
                         set.getInt(7),set.getString(8), set.getString(9),set.getBytes(10),
                         set.getString(11),set.getString(12),set.getDouble(22)
                 );
-
-
-
-
-                //System.out.println("contbewDao String: "+ res.toString());
-
-
+                System.out.println("conbewdao "+ res.toString());
                 liste.add(res);
 
-
             }
+
 
         } catch (SQLException throwables) {
             Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
@@ -105,7 +99,7 @@ public class ContainerBewerbungDAO {
 
 
             while (set.next()) {
-                DTOFactory bewerbung = new ConcreteFactoryCollHbrs();
+                ConcreteFactoryCollHbrs bewerbung = new ConcreteFactoryCollHbrs();
                 BewerbungDTO res = bewerbung.createBewerbungDTO(
                                                             set.getInt(1),set.getDate(2),set.getString(3),
                                                             set.getBytes(4),set.getInt(5),set.getInt(6),

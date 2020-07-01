@@ -2,10 +2,11 @@ package org.bonn.se.services.util;
 
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.BewerbungDTOCollHbrs;
+import org.bonn.se.model.objects.dto.BewerbungDTOStepstone2;
 
 import java.sql.Date;
 
-public class ConcreteFactoryCollHbrs implements DTOFactory{
+public class ConcreteFactoryCollHbrs extends DTOFactory {
 
 
     @Override
@@ -14,6 +15,8 @@ public class ConcreteFactoryCollHbrs implements DTOFactory{
                                                    java.sql.Date studentGDatum, String studentStudiengang, String studentAusbildung, String  studentKontaktNr, int studentBenachrichtigung,
                                                    byte[] studentPicture, String studentHoesterAbschluss, String studentVorname, String studentNachname, double rating, boolean bewerbungMarkiert
     ) {
+
+
         BewerbungDTOCollHbrs bewerbungDTO = new BewerbungDTOCollHbrs( bewerbungID,  datum,  description,  lebenslauf,  status,  studentID,  anzeigeID,
                 unternehmenName, unternehmenHauptsitz,  unternehmenLogo, emailStudent,  sTitel,
                 studentGDatum, studentStudiengang,  studentAusbildung,  studentKontaktNr, studentBenachrichtigung,
@@ -23,6 +26,7 @@ public class ConcreteFactoryCollHbrs implements DTOFactory{
     }
 
 
+    @Override
     public  BewerbungDTOCollHbrs createBewerbungDTO(int bewerbungID, Date datum, String description, byte[] lebenslauf, int status, int studentID, int anzeigeID,
                                                           String unternehmenName,String unternehmenHauptsitz, byte[] unternehmenLogo,String emailStudent, String sTitel, double rating
     ){

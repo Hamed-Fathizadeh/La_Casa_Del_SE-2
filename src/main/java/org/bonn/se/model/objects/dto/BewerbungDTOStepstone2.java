@@ -1,15 +1,13 @@
-
-
-
 package org.bonn.se.model.objects.dto;
- import com.vaadin.ui.Image;
- import org.bonn.se.services.util.ImageConverter;
+import com.vaadin.ui.Image;
+import org.bonn.se.services.util.ImageConverter;
+import java.sql.Date;
+import java.util.Arrays;
+import java.util.Objects;
 
- import java.sql.Date;
- import java.util.Arrays;
- import java.util.Objects;
+ public class BewerbungDTOStepstone2 extends BewerbungDTO {
 
- public class BewerbungDTOStepstone2 implements BewerbungDTO { private int bewerbungID;
+     private int bewerbungID;
      private Date datum;
      private String description;
      private byte[] lebenslauf;
@@ -31,6 +29,7 @@ package org.bonn.se.model.objects.dto;
      private String studentVorname;
      private String studentNachname;
      private boolean bewerbungMarkiert;
+     private int anzeigeID;
 
      public boolean isBewerbungMarkiert() {
          return bewerbungMarkiert;
@@ -146,6 +145,61 @@ package org.bonn.se.model.objects.dto;
          return unternehmenLogo;
      }
 
+     public int getBewerbungID() {
+         return bewerbungID;
+     }
+
+     public void setBewerbungID(int bewerbungID) {
+         this.bewerbungID = bewerbungID;
+     }
+
+     public Date getDatum() {
+         return datum;
+     }
+
+     public void setDatum(Date datum) {
+         this.datum = datum;
+     }
+
+     public String getDescription() {
+         return description;
+     }
+
+     public void setDescription(String description) {
+         this.description = description;
+     }
+
+     public byte[] getLebenslauf() {
+         return lebenslauf;
+     }
+
+     public void setLebenslauf(byte[] lebenslauf) {
+         this.lebenslauf = lebenslauf;
+     }
+
+     public int getStatus() {
+         return status;
+     }
+
+     public void setStatus(int status) {
+         this.status = status;
+     }
+
+     public int getStudentID() {
+         return studentID;
+     }
+
+     public void setStudentID(int studentID) {
+         this.studentID = studentID;
+     }
+
+     public int getAnzeigeID() {
+         return anzeigeID;
+     }
+
+     public void setAnzeigeID(int anzeigeID) {
+         this.anzeigeID = anzeigeID;
+     }
      public BewerbungDTOStepstone2(){
 
      }
@@ -202,64 +256,6 @@ package org.bonn.se.model.objects.dto;
      }
 
 
-     private int anzeigeID;
-
-     public int getBewerbungID() {
-         return bewerbungID;
-     }
-
-     public void setBewerbungID(int bewerbungID) {
-         this.bewerbungID = bewerbungID;
-     }
-
-     public Date getDatum() {
-         return datum;
-     }
-
-     public void setDatum(Date datum) {
-         this.datum = datum;
-     }
-
-     public String getDescription() {
-         return description;
-     }
-
-     public void setDescription(String description) {
-         this.description = description;
-     }
-
-     public byte[] getLebenslauf() {
-         return lebenslauf;
-     }
-
-     public void setLebenslauf(byte[] lebenslauf) {
-         this.lebenslauf = lebenslauf;
-     }
-
-     public int getStatus() {
-         return status;
-     }
-
-     public void setStatus(int status) {
-         this.status = status;
-     }
-
-     public int getStudentID() {
-         return studentID;
-     }
-
-     public void setStudentID(int studentID) {
-         this.studentID = studentID;
-     }
-
-     public int getAnzeigeID() {
-         return anzeigeID;
-     }
-
-     public void setAnzeigeID(int anzeigeID) {
-         this.anzeigeID = anzeigeID;
-     }
-
      @Override
      public String toString() {
          return "{\"BewerbungDTOStepstone2\":{"
@@ -294,16 +290,16 @@ package org.bonn.se.model.objects.dto;
          if (this == o) return true;
          if (!(o instanceof BewerbungDTOStepstone2)) return false;
          BewerbungDTOStepstone2 that = (BewerbungDTOStepstone2) o;
-         return getBewerbungID() == that.getBewerbungID() &&
-                 getStatus() == that.getStatus() &&
-                 getStudentID() == that.getStudentID() &&
+         return bewerbungID == that.bewerbungID &&
+                 status == that.status &&
+                 studentID == that.studentID &&
                  Double.compare(that.getRating(), getRating()) == 0 &&
                  getStudentBenachrichtigung() == that.getStudentBenachrichtigung() &&
                  isBewerbungMarkiert() == that.isBewerbungMarkiert() &&
-                 getAnzeigeID() == that.getAnzeigeID() &&
-                 Objects.equals(getDatum(), that.getDatum()) &&
-                 Objects.equals(getDescription(), that.getDescription()) &&
-                 Arrays.equals(getLebenslauf(), that.getLebenslauf()) &&
+                 anzeigeID == that.anzeigeID &&
+                 Objects.equals(datum, that.datum) &&
+                 Objects.equals(description, that.description) &&
+                 Arrays.equals(lebenslauf, that.lebenslauf) &&
                  Objects.equals(getUnternehmenName(), that.getUnternehmenName()) &&
                  Objects.equals(getUnternehmenHauptsitz(), that.getUnternehmenHauptsitz()) &&
                  Objects.equals(getUnternehmenLogo(), that.getUnternehmenLogo()) &&
@@ -321,8 +317,8 @@ package org.bonn.se.model.objects.dto;
 
      @Override
      public int hashCode() {
-         int result = Objects.hash(getBewerbungID(), getDatum(), getDescription(), getStatus(), getStudentID(), getUnternehmenName(), getUnternehmenHauptsitz(), getUnternehmenLogo(), sTitel, getRating(), getEmailStudent(), studentGDatum, getStudentStudiengang(), getStudentAusbildung(), getStudentKontaktNr(), getStudentBenachrichtigung(), getStudentPicture(), getStudentHoesterAbschluss(), getStudentVorname(), getStudentNachname(), isBewerbungMarkiert(), getAnzeigeID());
-         result = 31 * result + Arrays.hashCode(getLebenslauf());
+         int result = Objects.hash(bewerbungID, datum, description, status, studentID, getUnternehmenName(), getUnternehmenHauptsitz(), getUnternehmenLogo(), sTitel, getRating(), getEmailStudent(), studentGDatum, getStudentStudiengang(), getStudentAusbildung(), getStudentKontaktNr(), getStudentBenachrichtigung(), getStudentPicture(), getStudentHoesterAbschluss(), getStudentVorname(), getStudentNachname(), isBewerbungMarkiert(), anzeigeID);
+         result = 31 * result + Arrays.hashCode(lebenslauf);
          return result;
      }
  }

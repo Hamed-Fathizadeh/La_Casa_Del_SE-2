@@ -99,13 +99,13 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
 
 
 
-        }else{
+            }else{
 
 
-                 BewerbungDTO bewDTOtemp = selection.getValue();
-                 if(bewDTOtemp != null){
-                     setBewerbungDTO(bewDTOtemp);
-                 }
+                BewerbungDTO bewDTOtemp = selection.getValue();
+                if(bewDTOtemp != null){
+                    setBewerbungDTO(bewDTOtemp);
+                }
 
                 BewerbungWindow bewerbungWindow = new BewerbungWindow(null, "Unternehmen", bewerbungDTO);
                 if(bewerbungDTO.getStatus() == 9){
@@ -113,7 +113,7 @@ public class Bewerbungen<T extends BewerbungDTO> extends Grid<T>{
                 }
                 UI.getCurrent().addWindow(bewerbungWindow);
 
-        }
+            }
         });
 
         setUP(container);
