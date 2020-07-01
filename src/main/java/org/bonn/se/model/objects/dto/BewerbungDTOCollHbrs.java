@@ -265,12 +265,12 @@ public class BewerbungDTOCollHbrs implements BewerbungDTO{
                 "bewerbungID=" + bewerbungID +
                 ", datum=" + datum +
                 ", description='" + description + '\'' +
-                ", lebenslauf=" + Arrays.toString(lebenslauf) +
+                ", lebenslauf=" + "Arrays.toString(lebenslauf)" +
                 ", status=" + status +
                 ", studentID=" + studentID +
                 ", unternehmenName='" + unternehmenName + '\'' +
                 ", unternehmenHauptsitz='" + unternehmenHauptsitz + '\'' +
-                ", unternehmenLogo=" + unternehmenLogo +
+                ", unternehmenLogo=" + "unternehmenLogo" +
                 ", sTitel='" + sTitel + '\'' +
                 ", rating=" + rating +
                 ", emailStudent='" + emailStudent + '\'' +
@@ -279,7 +279,7 @@ public class BewerbungDTOCollHbrs implements BewerbungDTO{
                 ", studentAusbildung='" + studentAusbildung + '\'' +
                 ", studentKontaktNr='" + studentKontaktNr + '\'' +
                 ", studentBenachrichtigung=" + studentBenachrichtigung +
-                ", studentPicture=" + studentPicture +
+                ", studentPicture=" + "studentPicture" +
                 ", studentHoesterAbschluss='" + studentHoesterAbschluss + '\'' +
                 ", studentVorname='" + studentVorname + '\'' +
                 ", studentNachname='" + studentNachname + '\'' +
