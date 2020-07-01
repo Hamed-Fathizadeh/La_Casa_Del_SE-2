@@ -1,4 +1,5 @@
 package org.bonn.se.model.objects.dto;
+/*
 import com.vaadin.ui.Image;
 import org.bonn.se.services.util.ImageConverter;
 import java.sql.Date;
@@ -324,3 +325,5 @@ import java.util.Objects;
  }
 
 
+
+ */

@@ -1,5 +1,5 @@
 package org.bonn.se.services.util;
-
+/*
 import org.bonn.se.model.objects.dto.BewerbungDTO;
 import org.bonn.se.model.objects.dto.BewerbungDTOCollHbrs;
 import org.bonn.se.model.objects.dto.BewerbungDTOStepstone2;
@@ -40,3 +40,6 @@ public class ConcreteFactoryStepston2 extends DTOFactory {
         return new BewerbungDTOStepstone2();
     }
 }
+
+
+ */
