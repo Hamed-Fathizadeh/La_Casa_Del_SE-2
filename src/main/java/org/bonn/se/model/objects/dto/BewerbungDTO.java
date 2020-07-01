@@ -1,11 +1,8 @@
 package org.bonn.se.model.objects.dto;
 
 import com.vaadin.ui.Image;
-import org.bonn.se.services.util.ImageConverter;
 
 import java.sql.Date;
-import java.util.Arrays;
-import java.util.Objects;
 
 public abstract class BewerbungDTO {
 
@@ -104,6 +101,7 @@ public abstract class BewerbungDTO {
  @Override
  public abstract boolean equals(Object o) ;
 
+ @Override
+ public abstract int hashCode();
 
-
-}
+ }
