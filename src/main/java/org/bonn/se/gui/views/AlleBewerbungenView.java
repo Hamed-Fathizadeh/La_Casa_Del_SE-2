@@ -39,6 +39,7 @@ public class AlleBewerbungenView extends VerticalLayout implements View {
         containerBewerbungen.load(student.getEmail());
         Bewerbungen<BewerbungDTO> bewerbungen = new Bewerbungen(containerBewerbungen,"ALLEBEWERBUNGENVIEW");
         bewerbungen.setHeightMode(HeightMode.UNDEFINED);
+        bewerbungen.setWidth("1000px");
 
         GridLayout bottomGridBewNeu = new GridLayout(1, 1);
         bottomGridBewNeu.setSizeFull();
