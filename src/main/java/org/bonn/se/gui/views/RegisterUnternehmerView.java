@@ -102,7 +102,7 @@ public class RegisterUnternehmerView extends Panel implements View {
             System.out.println(hauptsitz.getBundesland());
 
         });
-        ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen.png");
+        ThemeResource resource = new ThemeResource("img/RegisterUnternehmen/unternehmen2.png");
         ThemeResource resources = new ThemeResource("img/RegisterStudent/JobfindenB.png");
 
         Image bildUnt = new Image(null,resource);
@@ -110,9 +110,9 @@ public class RegisterUnternehmerView extends Panel implements View {
 
         formUnt.setMargin(false);
         mainGrid.addComponent(topPanelUnt, 0, 0, 9, 1);
+        mainGrid.addComponent(lPatzhalter, 0, 2, 9, 2);
         mainGrid.addComponent(formUnt, 0, 5, 0, 5);
         mainGrid.addComponent(bildUnt, 9, 5, 9, 5);
-        mainGrid.addComponent(lPatzhalter, 0, 6, 9, 6);
         mainGrid.addComponent(bild_Register, 0, 7, 9, 7);
         mainGrid.setComponentAlignment(topPanelUnt, Alignment.TOP_LEFT);
         mainGrid.setComponentAlignment(formUnt, Alignment.BOTTOM_LEFT);

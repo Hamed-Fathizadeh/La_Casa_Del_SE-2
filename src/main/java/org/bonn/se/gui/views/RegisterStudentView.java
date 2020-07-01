@@ -99,7 +99,7 @@ public class RegisterStudentView extends Panel implements View {
 
         binder.setBean(user);
 
-        ThemeResource resource = new ThemeResource("img/RegisterStudent/student_pic.png");
+        ThemeResource resource = new ThemeResource("img/RegisterStudent/student_pic2.png");
         ThemeResource resources = new ThemeResource("img/RegisterStudent/JobfindenB.png");
 
         Image bildStudent = new Image(null,resource);
@@ -107,9 +107,9 @@ public class RegisterStudentView extends Panel implements View {
 
         formStudent.setMargin(false);
         mainGrid.addComponent(topPanelStudent, 0, 0, 9, 1);
+        mainGrid.addComponent(lPatzhalter, 0, 2, 9, 2);
         mainGrid.addComponent(formStudent, 0, 5, 0, 5);
         mainGrid.addComponent(bildStudent, 9, 5, 9, 5);
-        mainGrid.addComponent(lPatzhalter, 0, 6, 9, 6);
         mainGrid.addComponent(bild_Register, 0, 7, 9, 7);
         mainGrid.setComponentAlignment(topPanelStudent, Alignment.TOP_LEFT);
         mainGrid.setComponentAlignment(formStudent, Alignment.BOTTOM_LEFT);
