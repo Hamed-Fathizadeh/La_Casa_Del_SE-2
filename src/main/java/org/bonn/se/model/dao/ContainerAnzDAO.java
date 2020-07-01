@@ -1,15 +1,18 @@
 package org.bonn.se.model.dao;
 
+import com.vaadin.ui.UI;
+import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.model.objects.dto.StellenanzeigeDTO;
 import org.bonn.se.model.objects.entitites.Unternehmen;
 import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.JavaMailUtil;
 
-import java.sql.Date;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -320,7 +323,19 @@ public class ContainerAnzDAO extends AbstractDAO{
             statement.setString(11, user.getStellenanzeigeDTO().getArt());
 
             statement.executeUpdate();
-            sendEmail(user);
+
+
+            if(FeatureToggleControl.getInstance().featureIsEnabled("SMTP")) {
+                UI.getCurrent().access(() -> {
+                    try {
+                        sendEmail(user);
+                    } catch (DatabaseException e) {
+                        Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
+                    } catch (SQLException throwables) {
+                        Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, throwables);
+                    }
+                });
+            }
 
 
         } catch (SQLException throwables) {

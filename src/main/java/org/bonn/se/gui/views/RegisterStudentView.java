@@ -12,16 +12,20 @@ import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.bonn.se.control.FeatureToggleControl;
 import org.bonn.se.control.UserSearchControl;
 import org.bonn.se.gui.component.RegistrationPasswordField;
 import org.bonn.se.gui.component.RegistrationTextField;
 import org.bonn.se.gui.component.TopPanel;
+import org.bonn.se.gui.window.ConfirmationWindow;
 import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.User;
 import org.bonn.se.services.db.exception.DatabaseException;
+import org.bonn.se.services.util.JavaMailUtil;
 import org.bonn.se.services.util.Roles;
+import org.bonn.se.services.util.VerifikationNummer;
 import org.bonn.se.services.util.Views;
 
 
@@ -71,8 +75,7 @@ public class RegisterStudentView extends Panel implements View {
         Button registerStudentButton = new Button("Registrieren");
         registerStudentButton.setEnabled(false);
 
-        Button vNummerButton = new Button("Verifikation");
-        vNummerButton.setEnabled(false);
+
         Label lPatzhalter = new Label("&nbsp", ContentMode.HTML);
 
         formStudent.addComponents(lPatzhalter,head,vorname,nachname,email,passwort,registerStudentButton);
@@ -131,6 +134,7 @@ public class RegisterStudentView extends Panel implements View {
                             email.setValue("");
                             email.setPlaceholder("E-Mail existiert schon!");
                             email.setComponentError(new UserError("Bitte eine andere E-Mail verwenden."));
+
                         } else {
                             user.setType("S");
                             UserDAO.getInstance().registerUser(user);
@@ -159,6 +163,67 @@ public class RegisterStudentView extends Panel implements View {
         binder.addStatusChangeListener(
                 event -> registerStudentButton.setEnabled(binder.isValid()));
 
+
+
+        if(FeatureToggleControl.getInstance().featureIsEnabled("SMTP")) {
+            UI.getCurrent().access(() -> {
+                Button vNummerButton = new Button("Verifikation");
+                vNummerButton.setEnabled(false);
+                RegistrationPasswordField vNummerField = new RegistrationPasswordField("Verifizierungscode");
+
+        binder.forField(vNummerField)
+                .asRequired("Verification Nummer")
+                .withValidator(new StringLengthValidator(
+                        "Verification Nummer ist falsch!", 5, 5));
+
+
+        Binder<User> binder2 = new Binder<>(User.class);
+
+        binder2.forField(vorname)
+                .asRequired("Vorname muss angegeben werden!")
+                .bind(User::getVorname, User::setVorname);
+
+        binder2.forField(nachname)
+                .asRequired("Nachname muss angegeben werden!")
+                .bind(User::getNachname, User::setNachname);
+
+        binder2.forField(email)
+                .asRequired("Password may not be empty")
+                .withValidator(new StringLengthValidator(
+                        "Passwort muss mindestens 8 Zeichen lang sein", 8, null))
+                .bind(User::getPasswort, User::setPasswort);
+        binder2.forField(passwort)
+                .asRequired("Password may not be empty")
+                .withValidator(new StringLengthValidator(
+                        "Passwort muss mindestens 8 Zeichen lang sein", 8, null))
+                .bind(User::getPasswort, User::setPasswort);
+
+                vNummerButton.addClickListener(
+                event -> {
+                    try {
+
+                        JavaMailUtil.sendMail(email.getValue(),getVnummer(),vorname.getValue());
+                        //Notification.show("Wir haben Ihnen einen Email gesendet!");
+                        UI.getCurrent().addWindow(new ConfirmationWindow("Wir haben einen Email an diese Adresse gesendet: "+email.getValue()));
+                    } catch (Exception e) {
+                        UI.getCurrent().addWindow(new ConfirmationWindow("Fehler beim email senden!"));
+                        e.printStackTrace();
+                    }
+
+                });
+
+        binder2.addStatusChangeListener(
+                event -> vNummerButton.setEnabled(binder2.isValid()));
+
+
+                formStudent.addComponent(vNummerField,5);
+                formStudent.addComponent(vNummerButton,6);
+
+            });
+
+
+        }
+
     }
 
     @Override
@@ -171,6 +236,12 @@ public class RegisterStudentView extends Panel implements View {
         } else {
             this.setUp();
         }
+    }
+
+    String vnummer;
+    public String getVnummer(){
+        vnummer = new VerifikationNummer().getRandNummer();
+        return vnummer;
     }
 
 }
