@@ -1,7 +1,6 @@
 package org.bonn.se.services.util;
-/*
+
 import org.bonn.se.model.objects.dto.BewerbungDTO;
-import org.bonn.se.model.objects.dto.BewerbungDTOCollHbrs;
 import org.bonn.se.model.objects.dto.BewerbungDTOStepstone2;
 
 import java.sql.Date;
@@ -42,4 +41,3 @@ public class ConcreteFactoryStepston2 extends DTOFactory {
 }
 
 
- */
