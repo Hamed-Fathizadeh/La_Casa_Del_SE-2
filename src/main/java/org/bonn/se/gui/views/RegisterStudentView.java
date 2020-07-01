@@ -22,11 +22,15 @@ import org.bonn.se.gui.window.RegisterStudentWindow;
 import org.bonn.se.model.dao.UserDAO;
 import org.bonn.se.model.objects.entitites.Student;
 import org.bonn.se.model.objects.entitites.User;
+import org.bonn.se.services.db.JDBCConnection;
 import org.bonn.se.services.db.exception.DatabaseException;
 import org.bonn.se.services.util.JavaMailUtil;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.VerifikationNummer;
 import org.bonn.se.services.util.Views;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class RegisterStudentView extends Panel implements View {
@@ -207,7 +211,7 @@ public class RegisterStudentView extends Panel implements View {
                         UI.getCurrent().addWindow(new ConfirmationWindow("Wir haben einen Email an diese Adresse gesendet: "+email.getValue()));
                     } catch (Exception e) {
                         UI.getCurrent().addWindow(new ConfirmationWindow("Fehler beim email senden!"));
-                        e.printStackTrace();
+                        Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
                     }
 
                 });
