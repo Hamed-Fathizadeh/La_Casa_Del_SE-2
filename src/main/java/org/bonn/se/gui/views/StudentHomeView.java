@@ -31,6 +31,7 @@ import org.bonn.se.services.util.BrancheService;
 import org.bonn.se.services.util.Roles;
 import org.bonn.se.services.util.SuchbegrifService;
 import org.bonn.se.services.util.Views;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -188,11 +189,18 @@ public class StudentHomeView extends VerticalLayout implements View {
         grid1.setVisible(false);
         grid1.addComponentColumn(StellenanzeigeDTO::getUnternehmenLogo).setCaption("Logo").setWidth(80.0);
         grid1.addColumn(StellenanzeigeDTO::getFirmenname).setCaption("Firmenname");
+        grid1.addComponentColumn(p -> {
+            RatingStars rating = new RatingStars();
+            rating.setMaxValue(5);
+            rating.setValue(p.getBewertung());
+            rating.setReadOnly(true);
+            return rating;
+        }).setCaption("Bewertung").setWidth(150.0);
         grid1.addColumn(StellenanzeigeDTO::getTitel).setCaption("Titel");
         grid1.addColumn(StellenanzeigeDTO::getArt).setCaption("Art");
         grid1.addColumn(StellenanzeigeDTO::getSuchbegriff).setCaption("Berufsbezeichnung");
         grid1.addColumn(StellenanzeigeDTO::getStandort).setCaption("Standort");
-        grid1.addColumn(StellenanzeigeDTO::getDatum).setCaption("Einstellungsdatum").setWidth(150.0);
+        grid1.addColumn(StellenanzeigeDTO::getDatum).setCaption("Einstellungsdatum").setWidth(200.0);
 
         //ValueChangeListener für Suche
 
@@ -225,9 +233,9 @@ public class StudentHomeView extends VerticalLayout implements View {
 
         Anzeigen<StellenanzeigeDTO> gAnzeigen = new Anzeigen<>("Student", dataTop5);
         gAnzeigen.setHeightMode(HeightMode.UNDEFINED);
-        gAnzeigen.setWidth("680px");
+        gAnzeigen.setWidth("808px");
         gAnzeigen.removeColumn("Online seit");
-        gAnzeigen.removeColumn("Bewertung");
+
 
 
 
@@ -308,7 +316,7 @@ public class StudentHomeView extends VerticalLayout implements View {
                 containerBewerbungen.load("Top 5",student.getEmail());
                 Bewerbungen<BewerbungDTO> gBewerbungen = new Bewerbungen<>(containerBewerbungen, "STUDENTHOMEVIEW");
                 gBewerbungen.setHeightMode(HeightMode.UNDEFINED);
-                gBewerbungen.setWidth("608px");
+                gBewerbungen.setWidth("808px");
                 gBewerbungen.removeColumn("Bewertung");
                 bottomGridBewNeuTwo.addComponent(gBewerbungen,0,1,1,1);
                 bottomGridBewNeuTwo.setComponentAlignment(gBewerbungen,Alignment.TOP_CENTER);

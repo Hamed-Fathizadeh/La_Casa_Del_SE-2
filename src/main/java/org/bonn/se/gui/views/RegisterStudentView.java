@@ -244,7 +244,7 @@ public class RegisterStudentView extends Panel implements View {
 
     String vnummer;
     public String getVnummer(){
-        vnummer = new VerifikationNummer().getRandNummer();
+        vnummer = "12345";//new VerifikationNummer().getRandNummer();
         return vnummer;
     }
 

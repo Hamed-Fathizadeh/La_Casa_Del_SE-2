@@ -329,6 +329,7 @@ public class ContainerAnzDAO extends AbstractDAO{
                 UI.getCurrent().access(() -> {
                     try {
                         sendEmail(user);
+                        System.out.println();
                     } catch (DatabaseException e) {
                         Logger.getLogger(JDBCConnection.class.getName()).log(Level.SEVERE, null, e);
                     } catch (SQLException throwables) {
